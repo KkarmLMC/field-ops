@@ -68,27 +68,21 @@ export default function Installs() {
             </button>
           ))}
         </div>
-        <div className="list-search-wrap">
-          <button
-            className="search-icon-btn"
-            onClick={() => setSearchOpen(true)}
-            style={{ opacity: searchOpen ? 0 : 1, pointerEvents: searchOpen ? 'none' : 'auto' }}
-          >
-            <Search size={15} />
-          </button>
-          <div className={`list-search-expand${searchOpen ? ' list-search-expand--open' : ''}`}>
-            <Search size={13} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
-            <input
-              placeholder="Search installs…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              onBlur={() => { if (!search) setSearchOpen(false) }}
-              ref={el => { if (searchOpen && el) el.focus() }}
-            />
-            {search && (
-              <button className="search-clear-btn" onClick={() => { setSearch(''); setSearchOpen(false) }}>✕</button>
-            )}
-          </div>
+        <div
+          className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}
+          onClick={() => { if (!searchOpen) setSearchOpen(true) }}
+        >
+          <span className="list-search-icon"><Search size={15} /></span>
+          <input
+            placeholder="Search installs…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            onBlur={() => { if (!search) setSearchOpen(false) }}
+            ref={el => { if (searchOpen && el) el.focus() }}
+          />
+          {search && (
+            <button className="search-clear-btn" onClick={e => { e.stopPropagation(); setSearch(''); setSearchOpen(false) }}>✕</button>
+          )}
         </div>
       </div>
 

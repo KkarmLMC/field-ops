@@ -576,43 +576,38 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .list-filters {
   display: flex; gap: 4px; flex-wrap: wrap;
 }
-/* Search icon button */
-.search-icon-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface);
-  color: var(--text-2); cursor: pointer; flex-shrink: 0;
-  transition: border-color 0.12s, color 0.12s, opacity 0.2s;
-}
-.search-icon-btn:hover { border-color: var(--text-3); color: var(--text-1); }
-/* Expandable search — always in DOM, animates via max-width */
+/* Expandable search — single element, grows rightward from icon */
 .list-search-wrap {
-  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
-  height: 34px;
+  display: flex; align-items: center; gap: 0;
+  height: 34px; width: 34px; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); cursor: pointer;
+  padding: 0 9px; box-sizing: border-box; flex-shrink: 0;
+  color: var(--text-2);
+  transition: width 0.25s ease, border-color 0.15s, color 0.12s;
 }
-.list-search-expand {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 0 10px;
-  height: 34px; overflow: hidden;
-  max-width: 0; opacity: 0;
-  transition: max-width 0.25s ease, opacity 0.2s ease, border-color 0.12s;
-  box-sizing: border-box;
+.list-search-wrap:hover { border-color: var(--text-3); color: var(--text-1); }
+.list-search-wrap--open {
+  width: 220px; cursor: default;
+  border-color: #000000; color: var(--text-3);
 }
-.list-search-expand--open {
-  max-width: 220px; opacity: 1;
-  border-color: var(--text-1);
-}
-.list-search-expand input {
+.list-search-wrap .list-search-icon { flex-shrink: 0; display: flex; align-items: center; }
+.list-search-wrap input {
   border: none; outline: none; background: none;
   font-family: var(--font); font-size: 13px;
-  color: var(--text-1); width: 100%; min-width: 0;
+  color: var(--text-1); width: 0; opacity: 0; margin-left: 0;
+  transition: opacity 0.15s 0s, margin-left 0.1s;
+  pointer-events: none;
+}
+.list-search-wrap--open input {
+  width: 100%; opacity: 1; margin-left: 8px;
+  pointer-events: auto;
 }
 .search-clear-btn {
   background: none; border: none; cursor: pointer;
   color: var(--text-3); padding: 0; display: flex;
   align-items: center; flex-shrink: 0; font-size: 13px;
-  transition: color 0.12s;
+  transition: color 0.12s; margin-left: 4px;
 }
 .search-clear-btn:hover { color: var(--text-1); }
 .filter-chip {
