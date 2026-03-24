@@ -31,10 +31,10 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       // Navy — Lightning Master
       bgActive:    '#04245C',
       textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.55)',
+      subActive:   'rgba(255,255,255,0.70)',
       bgInactive:  '#F0F3FA',
       textInactive:'#000000',
-      subInactive: '#9CA3AF',
+      subInactive: '#5C5C5C',
     },
     {
       id:      'bolt',
@@ -45,10 +45,10 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       // Red — Bolt Florida
       bgActive:    '#C0101B',
       textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.55)',
+      subActive:   'rgba(255,255,255,0.70)',
       bgInactive:  '#FEF0F1',
       textInactive:'#000000',
-      subInactive: '#9CA3AF',
+      subInactive: '#5C5C5C',
     },
     {
       id:      'bolt-dallas',
@@ -59,10 +59,10 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       // Slate grey — Bolt Dallas
       bgActive:    '#1F2937',
       textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.55)',
+      subActive:   'rgba(255,255,255,0.70)',
       bgInactive:  '#ECEEF0',
       textInactive:'#000000',
-      subInactive: '#9CA3AF',
+      subInactive: '#5C5C5C',
     },
   ]
 
