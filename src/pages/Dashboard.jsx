@@ -114,11 +114,11 @@ export default function Dashboard() {
               background: a.bg, border: `1px solid ${a.color}22`,
               borderRadius: 10, padding: '12px 14px',
               display: 'flex', alignItems: 'center', gap: 10,
-              cursor: 'pointer', transition: 'transform 0.12s, box-shadow 0.12s',
+              cursor: 'pointer', transition: 'opacity 0.12s',
               textAlign: 'left',
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform='scale(1.02)'; e.currentTarget.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='none'; }}
+            onMouseEnter={e => { e.currentTarget.style.opacity='0.82'; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity='1'; }}
             onTouchStart={e => e.currentTarget.style.transform='scale(0.97)'}
             onTouchEnd={e => e.currentTarget.style.transform='scale(1)'}
           >
