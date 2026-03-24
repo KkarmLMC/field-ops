@@ -498,3 +498,140 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Header subtitle */
 .app-subtitle { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; }
+
+/* ─── Dashboard ───────────────────────────────────────────────── */
+
+/* Banner */
+.dash-banner {
+  background: var(--navy); border-radius: 12px;
+  padding: 20px; margin-bottom: 12px; color: white;
+  display: flex; flex-direction: column; gap: 16px;
+  position: relative; overflow: hidden;
+}
+.dash-banner::after {
+  content: '⚡'; position: absolute; right: -4px; top: -10px;
+  font-size: 90px; opacity: 0.05; line-height: 1;
+}
+.dash-banner-greeting {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.5; margin-bottom: 3px;
+}
+.dash-banner-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+.dash-banner-date {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; opacity: 0.5;
+}
+.dash-stats-row {
+  display: flex; background: rgba(255,255,255,0.07);
+  border-radius: 8px; overflow: hidden;
+}
+.dash-stat {
+  flex: 1; padding: 10px 6px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.dash-stat:last-child { border-right: none; }
+.dash-stat-value { font-size: 20px; font-weight: 700; line-height: 1; }
+.dash-stat-label {
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.07em; opacity: 0.5; margin-top: 3px;
+}
+
+/* Quick-nav tiles */
+.dash-tiles {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-bottom: 16px;
+}
+.dash-tile {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 10px;
+  background: var(--tile-bg, var(--bg)); border: 1px solid transparent;
+  cursor: pointer; transition: opacity 0.12s; text-align: left;
+}
+.dash-tile:hover { opacity: 0.8; }
+.dash-tile-icon { font-size: 20px; flex-shrink: 0; }
+.dash-tile-text { flex: 1; min-width: 0; }
+.dash-tile-label { font-size: 13px; font-weight: 600; color: var(--tile-color, var(--text-1)); }
+.dash-tile-sub   { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.dash-tile-arrow { color: var(--tile-color, var(--text-3)); opacity: 0.5; flex-shrink: 0; }
+
+/* 2-column card grid */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 767px) {
+  .dash-grid { grid-template-columns: 1fr; }
+  .dash-tiles { grid-template-columns: 1fr 1fr; }
+}
+
+/* Individual card */
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.dash-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dash-card-title {
+  font-size: 13px; font-weight: 700; color: var(--text-1);
+  display: flex; align-items: center; gap: 7px;
+}
+.dash-card-meta { font-size: 11px; color: var(--text-3); }
+.dash-card-link {
+  font-size: 11px; font-weight: 600; color: var(--red);
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 2px;
+}
+.dash-card-link:hover { opacity: 0.75; }
+
+/* Live pulsing dot */
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #EA580C; flex-shrink: 0;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* Job row inside a card */
+.dash-job-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; cursor: pointer;
+  border-bottom: 1px solid var(--border-l);
+  transition: background 0.1s;
+}
+.dash-job-row:last-child { border-bottom: none; }
+.dash-job-row:hover { background: var(--hover); }
+.dash-job-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.dash-job-info { flex: 1; min-width: 0; }
+.dash-job-name {
+  font-size: 13px; font-weight: 600; color: var(--text-1);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.dash-job-meta {
+  font-size: 11px; color: var(--text-3);
+  display: flex; align-items: center; gap: 5px;
+}
+.dash-job-dot { opacity: 0.4; }
+.dash-progress-bar {
+  width: 36px; height: 3px; border-radius: 2px;
+  background: var(--border); overflow: hidden;
+}
+.dash-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+.dash-progress-pct { font-size: 10px; font-family: var(--mono); color: var(--text-3); }
+.dash-status-pill {
+  flex-shrink: 0; padding: 3px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
