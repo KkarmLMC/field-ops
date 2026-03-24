@@ -1,19 +1,27 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle, Info } from 'lucide-react';
-import { FORM_TEMPLATES } from '../data/mockData.js';
+import { useParams, useNavigate } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
+import { JOBS, FORM_TEMPLATES } from '../data/mockData.js';
 
-export default function FormRunner({ job, formId, navigate }) {
-  const template = FORM_TEMPLATES[formId];
+export default function FormRunner() {
+  const { jobId, formId } = useParams()
+  const navigate = useNavigate()
+  const job = JOBS.find(j => j.id === jobId)
+  const template = FORM_TEMPLATES[formId]
   const [values, setValues] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
   if (!template || !job) {
     return (
-      <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-dim)' }}>
-        <p>Form not found.</p>
-        <button onClick={() => navigate('jobs')} style={{ color: 'var(--accent)', marginTop: 12 }}>
-          &larr; Back to Jobs
-        </button>
+      <div className="page-content fade-in">
+        <div className="empty">
+          <div className="empty-icon">📝</div>
+          <div className="empty-title">Form not found</div>
+          <div className="empty-desc">The requested form could not be loaded.</div>
+          <button className="btn btn-primary" style={{ marginTop: 12 }} onClick={() => navigate('/jobs')}>
+            Back to Jobs
+          </button>
+        </div>
       </div>
     );
   }
@@ -29,74 +37,43 @@ export default function FormRunner({ job, formId, navigate }) {
 
   if (submitted) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '80px 20px', textAlign: 'center' }}>
-        <CheckCircle size={48} style={{ color: 'var(--green)' }} />
-        <h2 style={{ fontFamily: 'var(--head)', fontSize: 24, fontWeight: 700 }}>Form Submitted</h2>
-        <p style={{ color: 'var(--text-dim)', maxWidth: 400 }}>
-          {template.label} for <strong>{job.client}</strong> has been saved locally.
-        </p>
-        <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
-          <button
-            onClick={() => navigate('job-detail', { job })}
-            style={{
-              padding: '10px 20px',
-              background: 'var(--accent)',
-              color: 'var(--bg)',
-              fontWeight: 600,
-              borderRadius: 4,
-              fontSize: 13,
-            }}
-          >
-            Back to Job
-          </button>
-          <button
-            onClick={() => { setSubmitted(false); setValues({}); }}
-            style={{
-              padding: '10px 20px',
-              background: 'var(--bg-3)',
-              border: '1px solid var(--border)',
-              borderRadius: 4,
-              fontSize: 13,
-            }}
-          >
-            Fill Again
-          </button>
+      <div className="page-content fade-in">
+        <div className="empty" style={{ padding: '60px 24px' }}>
+          <CheckCircle size={48} style={{ color: 'var(--green)' }} />
+          <div className="empty-title" style={{ fontSize: 20 }}>Form Submitted</div>
+          <div className="empty-desc" style={{ maxWidth: 300 }}>
+            {template.label} for {job.client} has been saved locally.
+          </div>
+          <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+            <button className="btn btn-primary" onClick={() => navigate(`/jobs/${job.id}`)}>
+              Back to Job
+            </button>
+            <button className="btn btn-secondary" onClick={() => { setSubmitted(false); setValues({}); }}>
+              Fill Again
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 720 }}>
-      {/* Header */}
-      <div>
-        <button
-          onClick={() => navigate('job-detail', { job })}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-dim)', fontSize: 13, marginBottom: 12 }}
-        >
-          <ArrowLeft size={14} /> Back to Job
-        </button>
-        <h1 style={{ fontFamily: 'var(--head)', fontSize: 28, fontWeight: 700 }}>{template.label}</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 6 }}>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{template.nfpaRef}</span>
-          <span style={{ color: 'var(--border-bright)' }}>|</span>
-          <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>{job.client}</span>
+    <div className="page-content fade-in">
+      {/* Header info */}
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)' }}>{template.nfpaRef}</span>
+          <span style={{ color: 'var(--border)' }}>|</span>
+          <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{job.client}</span>
         </div>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <form onSubmit={handleSubmit}>
         {template.sections.map(section => (
-          <div key={section.id} style={{
-            background: 'var(--bg-2)',
-            border: '1px solid var(--border)',
-            borderRadius: 6,
-            padding: 20,
-          }}>
-            <h3 style={{ fontFamily: 'var(--head)', fontSize: 16, fontWeight: 600, marginBottom: 18 }}>
-              {section.title}
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div key={section.id} className="card" style={{ marginBottom: 12 }}>
+            <div className="section-header">{section.title}</div>
+            <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: 14 }}>
               {section.fields.map(field => (
                 <FieldRenderer
                   key={field.id}
@@ -109,24 +86,8 @@ export default function FormRunner({ job, formId, navigate }) {
           </div>
         ))}
 
-        <button
-          type="submit"
-          style={{
-            padding: '14px 28px',
-            background: 'var(--accent)',
-            color: 'var(--bg)',
-            fontFamily: 'var(--head)',
-            fontSize: 16,
-            fontWeight: 700,
-            letterSpacing: '0.04em',
-            borderRadius: 4,
-            alignSelf: 'flex-start',
-            transition: 'opacity 0.15s',
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-        >
-          SUBMIT FORM
+        <button type="submit" className="btn btn-primary btn-full" style={{ marginTop: 8 }}>
+          Submit {template.label}
         </button>
       </form>
     </div>
@@ -135,15 +96,15 @@ export default function FormRunner({ job, formId, navigate }) {
 
 function FieldRenderer({ field, value, onChange }) {
   const labelEl = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-      <label className="label" style={{ fontSize: 11 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
+      <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-2)' }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 2 }}>*</span>}
       </label>
       {field.nfpa && (
         <span style={{
           fontFamily: 'var(--mono)', fontSize: 9, color: 'var(--blue)',
-          background: 'var(--blue-dim)', padding: '1px 5px', borderRadius: 2,
+          background: 'var(--blue-soft)', padding: '1px 5px', borderRadius: 2,
         }}>
           {field.nfpa}
         </span>
@@ -162,7 +123,7 @@ function FieldRenderer({ field, value, onChange }) {
             value={value}
             onChange={e => onChange(e.target.value)}
             required={field.required}
-            style={{ width: '100%' }}
+            className="form-input"
           />
         </div>
       );
@@ -175,7 +136,7 @@ function FieldRenderer({ field, value, onChange }) {
             value={value}
             onChange={e => onChange(e.target.value)}
             required={field.required}
-            style={{ width: '100%' }}
+            className="form-select"
           >
             <option value="">— Select —</option>
             {(field.options || []).map(opt => (
@@ -189,33 +150,28 @@ function FieldRenderer({ field, value, onChange }) {
       return (
         <div>
           {labelEl}
-          <button
-            type="button"
+          <div
             onClick={() => onChange(value === true ? false : true)}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 14px',
-              background: value === true ? 'var(--green-dim)' : 'var(--bg-3)',
-              border: `1px solid ${value === true ? 'rgba(29,185,84,0.3)' : 'var(--border)'}`,
-              borderRadius: 4,
-              fontSize: 13,
-              color: value === true ? 'var(--green)' : 'var(--text-dim)',
-              transition: 'all 0.15s',
+              display: 'flex', alignItems: 'center', gap: 10,
+              padding: '10px 12px',
+              background: value === true ? 'var(--green-s)' : 'var(--bg)',
+              border: `1px solid ${value === true ? 'var(--green)' : 'var(--border)'}`,
+              borderRadius: 6, cursor: 'pointer', transition: 'all 0.15s',
             }}
           >
             <div style={{
-              width: 18, height: 18, borderRadius: 3,
-              border: `2px solid ${value === true ? 'var(--green)' : 'var(--border-bright)'}`,
+              width: 20, height: 20, borderRadius: 4,
+              border: `2px solid ${value === true ? 'var(--green)' : 'var(--border)'}`,
               background: value === true ? 'var(--green)' : 'transparent',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'all 0.15s',
             }}>
-              {value === true && <span style={{ color: '#fff', fontSize: 11, fontWeight: 700 }}>✓</span>}
+              {value === true && <span style={{ color: '#fff', fontSize: 12, fontWeight: 700 }}>✓</span>}
             </div>
-            {value === true ? 'Yes' : value === false ? 'No' : 'Not Set'}
-          </button>
+            <span style={{ fontSize: 13, color: value === true ? 'var(--green)' : 'var(--text-3)' }}>
+              {value === true ? 'Yes' : value === false ? 'No' : 'Not Set'}
+            </span>
+          </div>
         </div>
       );
 
@@ -228,7 +184,7 @@ function FieldRenderer({ field, value, onChange }) {
             onChange={e => onChange(e.target.value)}
             required={field.required}
             rows={3}
-            style={{ width: '100%', resize: 'vertical' }}
+            className="form-textarea"
           />
         </div>
       );

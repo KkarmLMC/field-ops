@@ -1,138 +1,117 @@
 import { useState } from 'react';
-import { Search, Filter, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { JOBS, TECHNICIANS } from '../data/mockData.js';
 
 function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—';
 }
 
-const STATUSES = ['all', 'active', 'scheduled', 'completed', 'failed'];
-const TYPES = ['all', 'installation', 'inspection', 'site-survey', 'certification', 'annual-test'];
+const STATUSES = ['All', 'active', 'scheduled', 'completed', 'failed'];
 
-export default function Jobs({ navigate }) {
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
-  const [techFilter, setTechFilter] = useState('all');
+export default function Jobs() {
+  const navigate = useNavigate()
+  const [statusFilter, setStatusFilter] = useState('All');
   const [search, setSearch] = useState('');
 
   const filtered = JOBS.filter(j => {
-    if (statusFilter !== 'all' && j.status !== statusFilter) return false;
-    if (typeFilter !== 'all' && j.type !== typeFilter) return false;
-    if (techFilter !== 'all' && j.assignedTo !== techFilter) return false;
+    if (statusFilter !== 'All' && j.status !== statusFilter) return false;
     if (search && !j.client.toLowerCase().includes(search.toLowerCase()) && !j.id.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
 
+  const active    = JOBS.filter(j => j.status === 'active').length
+  const scheduled = JOBS.filter(j => j.status === 'scheduled').length
+  const completed = JOBS.filter(j => j.status === 'completed').length
+  const failed    = JOBS.filter(j => j.status === 'failed').length
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* Header */}
-      <div>
-        <h1 style={{ fontFamily: 'var(--head)', fontSize: 28, fontWeight: 700, letterSpacing: '0.02em' }}>Jobs</h1>
-        <p style={{ color: 'var(--text-dim)', marginTop: 4 }}>{filtered.length} of {JOBS.length} jobs</p>
-      </div>
-
-      {/* Filter Bar */}
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 10,
-        alignItems: 'center',
-        background: 'var(--bg-2)',
-        border: '1px solid var(--border)',
-        borderRadius: 6,
-        padding: '12px 16px',
-      }}>
-        <div style={{ position: 'relative', flex: '1 1 200px' }}>
-          <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
-          <input
-            placeholder="Search jobs..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            style={{ width: '100%', paddingLeft: 32 }}
-          />
+    <div className="page-content fade-in">
+      {/* Stat cards */}
+      <div className="stat-grid">
+        <div className="stat-card">
+          <div className="stat-label">Active</div>
+          <div className="stat-value" style={{ color: 'var(--orange)' }}>{active}</div>
         </div>
-        <Filter size={14} style={{ color: 'var(--text-dim)' }} />
-        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
-          {STATUSES.map(s => <option key={s} value={s}>{s === 'all' ? 'All Statuses' : s}</option>)}
-        </select>
-        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
-          {TYPES.map(t => <option key={t} value={t}>{t === 'all' ? 'All Types' : t}</option>)}
-        </select>
-        <select value={techFilter} onChange={e => setTechFilter(e.target.value)}>
-          <option value="all">All Techs</option>
-          {TECHNICIANS.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-        </select>
+        <div className="stat-card">
+          <div className="stat-label">Scheduled</div>
+          <div className="stat-value amber">{scheduled}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Completed</div>
+          <div className="stat-value green">{completed}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Failed</div>
+          <div className="stat-value red">{failed}</div>
+        </div>
       </div>
 
-      {/* Table header */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '110px 1.5fr 100px 90px 120px 90px 80px 24px',
-        gap: 12,
-        padding: '0 16px',
-        alignItems: 'center',
-      }}>
-        <span className="label">Job ID</span>
-        <span className="label">Client</span>
-        <span className="label">Type</span>
-        <span className="label">Status</span>
-        <span className="label">Technician</span>
-        <span className="label">Date</span>
-        <span className="label">Progress</span>
-        <span />
+      {/* Search */}
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', marginBottom: 12 }}>
+        <span style={{ color: 'var(--text-3)' }}>🔍</span>
+        <input
+          style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 14, color: 'var(--text-1)', width: '100%', boxShadow: 'none' }}
+          placeholder="Search jobs..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
       </div>
 
-      {/* Job rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {filtered.map(job => (
+      {/* Filter pills */}
+      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 12, scrollbarWidth: 'none' }}>
+        {STATUSES.map(f => (
           <button
-            key={job.id}
-            onClick={() => navigate('job-detail', { job })}
+            key={f}
+            onClick={() => setStatusFilter(f)}
             style={{
-              display: 'grid',
-              gridTemplateColumns: '110px 1.5fr 100px 90px 120px 90px 80px 24px',
-              gap: 12,
-              alignItems: 'center',
-              background: 'var(--bg-2)',
-              border: '1px solid var(--border)',
-              borderRadius: 4,
-              padding: '12px 16px',
-              textAlign: 'left',
-              width: '100%',
-              transition: 'border-color 0.15s',
+              flexShrink: 0, padding: '5px 12px', borderRadius: 20,
+              border: '1px solid var(--border)', background: statusFilter === f ? 'var(--navy)' : 'var(--surface)',
+              color: statusFilter === f ? 'white' : 'var(--text-2)',
+              fontFamily: 'var(--font)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
             }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-bright)'}
-            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-          >
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{job.id}</span>
-            <span style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{job.client}</span>
-            <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`} style={{ fontSize: 10 }}>{job.type}</span>
-            <span className={`badge badge-${job.status}`}>{job.status}</span>
-            <span style={{ fontSize: 12, color: 'var(--text-dim)' }}>{getTechName(job.assignedTo)}</span>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{job.scheduledDate}</span>
-            {/* Progress bar */}
-            <div style={{
-              height: 4,
-              borderRadius: 2,
-              background: 'var(--bg-4)',
-              overflow: 'hidden',
-            }}>
-              <div style={{
-                height: '100%',
-                width: `${job.progress}%`,
-                background: job.status === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--accent)',
-                borderRadius: 2,
-                transition: 'width 0.3s',
-              }} />
-            </div>
-            <ChevronRight size={14} style={{ color: 'var(--text-dim)' }} />
-          </button>
+          >{f === 'All' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}</button>
         ))}
-        {filtered.length === 0 && (
-          <p style={{ color: 'var(--text-dim)', fontStyle: 'italic', padding: '20px 0', textAlign: 'center' }}>
-            No jobs match your filters.
-          </p>
-        )}
+      </div>
+
+      {/* Job list */}
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title"><span className="card-dot" style={{ background: 'var(--orange)' }} />Jobs ({filtered.length})</span>
+        </div>
+        {filtered.length === 0 ? (
+          <div className="empty">
+            <div className="empty-icon">⚡</div>
+            <div className="empty-title">No jobs match</div>
+            <div className="empty-desc">Try adjusting your search or filters.</div>
+          </div>
+        ) : filtered.map(job => (
+          <div key={job.id} className="project-item" onClick={() => navigate(`/jobs/${job.id}`)}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="project-name">{job.client}</div>
+              <div className="project-meta">
+                {getTechName(job.assignedTo)} · {job.scheduledDate}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)' }}>{job.id}</span>
+                <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`} style={{ fontSize: 10 }}>{job.type}</span>
+              </div>
+              {/* Progress bar */}
+              {job.progress > 0 && (
+                <div style={{ height: 3, borderRadius: 2, background: 'var(--bg-4)', overflow: 'hidden', marginTop: 6 }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${job.progress}%`,
+                    background: job.status === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--orange)',
+                    borderRadius: 2,
+                  }} />
+                </div>
+              )}
+            </div>
+            <span className={`badge badge-${job.status}`} style={{ flexShrink: 0 }}>
+              {job.status}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

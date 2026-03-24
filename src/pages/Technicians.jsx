@@ -1,110 +1,75 @@
-import { Phone, Shield, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { TECHNICIANS, JOBS } from '../data/mockData.js';
 
-export default function Technicians({ navigate }) {
+export default function Technicians() {
+  const navigate = useNavigate()
+  const inField = TECHNICIANS.filter(t => t.status === 'field').length
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <div>
-        <h1 style={{ fontFamily: 'var(--head)', fontSize: 28, fontWeight: 700, letterSpacing: '0.02em' }}>Technicians</h1>
-        <p style={{ color: 'var(--text-dim)', marginTop: 4 }}>{TECHNICIANS.length} registered technicians</p>
+    <div className="page-content fade-in">
+      <div className="stat-grid">
+        <div className="stat-card">
+          <div className="stat-label">Total Techs</div>
+          <div className="stat-value blue">{TECHNICIANS.length}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">In Field</div>
+          <div className="stat-value" style={{ color: 'var(--orange)' }}>{inField}</div>
+        </div>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: 16,
-      }}>
-        {TECHNICIANS.map(tech => {
-          const techJobs = JOBS.filter(j => j.assignedTo === tech.id);
-          return (
-            <div
-              key={tech.id}
-              style={{
-                background: 'var(--bg-2)',
-                border: '1px solid var(--border)',
-                borderRadius: 6,
-                overflow: 'hidden',
-              }}
-            >
-              {/* Tech Header */}
-              <div style={{ padding: '18px 20px', borderBottom: '1px solid var(--border)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{
-                    width: 44, height: 44, borderRadius: 4,
-                    background: tech.status === 'field' ? 'var(--accent-dim)' : 'var(--bg-4)',
-                    color: tech.status === 'field' ? 'var(--accent)' : 'var(--text-dim)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 500,
-                  }}>
-                    {tech.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: 15 }}>{tech.name}</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
-                      <Shield size={11} style={{ color: 'var(--text-dim)' }} />
-                      <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{tech.license}</span>
-                    </div>
-                  </div>
-                  <span className={`badge badge-${tech.status === 'field' ? 'active' : 'completed'}`}>
-                    {tech.status === 'field' ? 'In Field' : 'Active'}
-                  </span>
+      {TECHNICIANS.map(tech => {
+        const techJobs = JOBS.filter(j => j.assignedTo === tech.id);
+        return (
+          <div key={tech.id} className="card" style={{ marginBottom: 12 }}>
+            <div style={{ padding: '14px', borderBottom: techJobs.length > 0 ? '1px solid var(--border-l)' : 'none' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 6,
+                  background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
+                  color: tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 600,
+                }}>
+                  {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 12 }}>
-                  <Phone size={12} style={{ color: 'var(--text-dim)' }} />
-                  <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{tech.phone}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: 14 }}>{tech.name}</div>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-3)', marginTop: 2 }}>
+                    {tech.license} · {tech.phone}
+                  </div>
                 </div>
-              </div>
-
-              {/* Assigned Jobs */}
-              <div style={{ padding: '12px 16px' }}>
-                <span className="label" style={{ marginBottom: 8, display: 'block' }}>
-                  Assigned Jobs ({techJobs.length})
+                <span className={`badge badge-${tech.status === 'field' ? 'active' : 'completed'}`}>
+                  {tech.status === 'field' ? 'In Field' : 'Active'}
                 </span>
-                {techJobs.length === 0 && (
-                  <p style={{ color: 'var(--text-muted)', fontSize: 12, fontStyle: 'italic', padding: '4px 0' }}>
-                    No jobs assigned
-                  </p>
-                )}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  {techJobs.map(job => (
-                    <button
-                      key={job.id}
-                      onClick={() => navigate('job-detail', { job })}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '8px 10px',
-                        background: 'var(--bg-3)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 3,
-                        textAlign: 'left',
-                        width: '100%',
-                        transition: 'border-color 0.15s',
-                      }}
-                      onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-bright)'}
-                      onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-                        <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-dim)', flexShrink: 0 }}>
-                          {job.id}
-                        </span>
-                        <span style={{ fontSize: 12, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {job.client}
-                        </span>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                        <span className={`badge badge-${job.status}`} style={{ fontSize: 9 }}>{job.status}</span>
-                        <ChevronRight size={12} style={{ color: 'var(--text-dim)' }} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+
+            {/* Assigned jobs */}
+            {techJobs.length > 0 && (
+              <div style={{ padding: '8px 14px 10px' }}>
+                <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 6 }}>
+                  Assigned Jobs ({techJobs.length})
+                </div>
+                {techJobs.map(job => (
+                  <div
+                    key={job.id}
+                    className="project-item"
+                    style={{ padding: '8px 0', gap: 8 }}
+                    onClick={() => navigate(`/jobs/${job.id}`)}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 500 }}>{job.client}</div>
+                      <div style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-3)' }}>{job.id}</div>
+                    </div>
+                    <span className={`badge badge-${job.status}`} style={{ fontSize: 10 }}>{job.status}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

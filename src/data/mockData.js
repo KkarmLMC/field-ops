@@ -1,3 +1,36 @@
+// Mock projects for when Supabase is empty — maps to real NFPA field ops
+export const MOCK_PROJECTS = [
+  { id: 'p-001', name: 'Ritz-Carlton LPS Installation', customer_account: 'Ritz-Carlton Amelia Island', address: '4750 Amelia Island Pkwy', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0312', stage: 'In Progress', primary_contact: 'Michael Torres', primary_contact_phone: '904-555-0301', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-24', archived: false, created_at: '2026-03-10T08:00:00Z' },
+  { id: 'p-002', name: 'Nassau County Courthouse LPS', customer_account: 'Nassau County Government', address: '76 S 4th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0318', stage: 'In Progress', primary_contact: 'Judge Patricia Lane', primary_contact_phone: '904-555-0302', lmc_representative: 'Tamika Russell', scheduled_date: '2026-03-24', archived: false, created_at: '2026-03-12T08:00:00Z' },
+  { id: 'p-003', name: 'Omni Resort Annual Inspection', customer_account: 'Omni Amelia Island Resort', address: '39 Beach Lagoon Rd', city: 'Amelia Island', state: 'FL', job_number: 'JOB-2026-0321', stage: 'In Progress', primary_contact: 'Sarah Chen', primary_contact_phone: '904-555-0303', lmc_representative: 'Priya Nair', scheduled_date: '2026-03-24', archived: false, created_at: '2026-03-14T08:00:00Z' },
+  { id: 'p-004', name: 'Port of Fernandina Crane Inspection', customer_account: 'Port of Fernandina', address: '1 Front St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0298', stage: 'Scheduled', primary_contact: 'Dave Rawlings', primary_contact_phone: '904-555-0304', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-25', archived: false, created_at: '2026-03-08T08:00:00Z' },
+  { id: 'p-005', name: 'Baptist Medical Center Survey', customer_account: 'Baptist Medical Center Nassau', address: '1250 S 18th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0287', stage: 'Scheduled', primary_contact: 'Dr. Angela Reeves', primary_contact_phone: '904-555-0305', lmc_representative: 'Diane Okafor', scheduled_date: '2026-03-26', archived: false, created_at: '2026-03-05T08:00:00Z' },
+  { id: 'p-006', name: 'Rayonier Advanced Materials Cert', customer_account: 'Rayonier Advanced Materials', address: '1301 Rayonier Way', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0271', stage: 'Complete', primary_contact: 'Tom Bradley', primary_contact_phone: '904-555-0306', lmc_representative: 'Priya Nair', scheduled_date: '2026-03-20', archived: false, created_at: '2026-02-28T08:00:00Z' },
+  { id: 'p-007', name: 'Amelia Island Lighthouse Install', customer_account: 'FL State Parks', address: "215 O'Hagan Ln", city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0255', stage: 'Complete', primary_contact: 'Ranger Williams', primary_contact_phone: '904-555-0307', lmc_representative: 'Diane Okafor', scheduled_date: '2026-03-14', archived: false, created_at: '2026-02-20T08:00:00Z' },
+  { id: 'p-008', name: 'Amelia Island Plantation — FAILED', customer_account: 'Amelia Island Plantation', address: '39 Beach Lagoon Rd', city: 'Amelia Island', state: 'FL', job_number: 'JOB-2026-0263', stage: 'Pending Review', primary_contact: 'Karen Mitchell', primary_contact_phone: '904-555-0308', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-18', archived: false, created_at: '2026-03-01T08:00:00Z' },
+  { id: 'p-009', name: 'WestRock Paper Mill Annual Test', customer_account: 'WestRock Company', address: '1500 N 8th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0334', stage: 'Awarded', primary_contact: 'Plant Safety Office', primary_contact_phone: '904-555-0309', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-29', archived: false, created_at: '2026-03-15T08:00:00Z' },
+  { id: 'p-010', name: 'First Baptist Church Install', customer_account: 'First Baptist Church', address: '1600 S 8th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0220', stage: 'Complete', primary_contact: 'Pastor James', primary_contact_phone: '904-555-0310', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-05', archived: false, created_at: '2026-02-15T08:00:00Z' },
+];
+
+// Mock daily field reports
+export const MOCK_REPORTS = [
+  { id: 'r-001', project_id: 'p-001', report_date: '2026-03-24', submitted_by: 'Ray Thibodaux', hours_worked: 8, status: 'Submitted', projects: { name: 'Ritz-Carlton LPS Installation' } },
+  { id: 'r-002', project_id: 'p-001', report_date: '2026-03-23', submitted_by: 'Ray Thibodaux', hours_worked: 7.5, status: 'Reviewed', projects: { name: 'Ritz-Carlton LPS Installation' } },
+  { id: 'r-003', project_id: 'p-002', report_date: '2026-03-24', submitted_by: 'Tamika Russell', hours_worked: 6, status: 'Draft', projects: { name: 'Nassau County Courthouse LPS' } },
+  { id: 'r-004', project_id: 'p-003', report_date: '2026-03-24', submitted_by: 'Priya Nair', hours_worked: 5, status: 'Submitted', projects: { name: 'Omni Resort Annual Inspection' } },
+  { id: 'r-005', project_id: 'p-006', report_date: '2026-03-20', submitted_by: 'Priya Nair', hours_worked: 9, status: 'Reviewed', projects: { name: 'Rayonier Advanced Materials Cert' } },
+  { id: 'r-006', project_id: 'p-007', report_date: '2026-03-14', submitted_by: 'Diane Okafor', hours_worked: 8, status: 'Reviewed', projects: { name: 'Amelia Island Lighthouse Install' } },
+];
+
+// Mock form submissions
+export const MOCK_SUBMISSIONS = [
+  { id: 's-001', project_id: 'p-001', submitted_by: 'Ray Thibodaux', status: 'Submitted', created_at: '2026-03-22T10:00:00Z', projects: { name: 'Ritz-Carlton LPS Installation' } },
+  { id: 's-002', project_id: 'p-006', submitted_by: 'Priya Nair', status: 'Complete', created_at: '2026-03-20T14:00:00Z', projects: { name: 'Rayonier Advanced Materials Cert' } },
+  { id: 's-003', project_id: 'p-007', submitted_by: 'Diane Okafor', status: 'Complete', created_at: '2026-03-14T16:00:00Z', projects: { name: 'Amelia Island Lighthouse Install' } },
+  { id: 's-004', project_id: 'p-008', submitted_by: 'Marcus Webb', status: 'Under Review', created_at: '2026-03-18T11:00:00Z', projects: { name: 'Amelia Island Plantation — FAILED' } },
+  { id: 's-005', project_id: 'p-002', submitted_by: 'Tamika Russell', status: 'Pending Customer', created_at: '2026-03-23T09:00:00Z', projects: { name: 'Nassau County Courthouse LPS' } },
+];
+
 export const TECHNICIANS = [
   { id: 'T001', name: 'Marcus Webb', license: 'LPI-3847', status: 'active', phone: '904-555-0142' },
   { id: 'T002', name: 'Diane Okafor', license: 'LPI-2291', status: 'active', phone: '904-555-0187' },

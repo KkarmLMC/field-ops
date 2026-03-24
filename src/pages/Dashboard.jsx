@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Activity, CheckCircle, Clock, AlertTriangle, Users, Zap, ChevronRight } from 'lucide-react';
 import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js';
 
@@ -13,133 +14,68 @@ function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—';
 }
 
-export default function Dashboard({ navigate }) {
+export default function Dashboard() {
+  const navigate = useNavigate()
   const today = new Date().toISOString().slice(0, 10);
   const activeJobs = JOBS.filter(j => j.status === 'active' || (j.status === 'scheduled' && j.scheduledDate <= today));
   const recentJobs = JOBS.slice(0, 5);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      {/* Header */}
-      <div>
-        <h1 style={{ fontFamily: 'var(--head)', fontSize: 28, fontWeight: 700, letterSpacing: '0.02em' }}>
-          Dashboard
-        </h1>
-        <p style={{ color: 'var(--text-dim)', marginTop: 4 }}>Bolt Lightning Protection — Ops Overview</p>
-      </div>
-
+    <div className="page-content fade-in">
       {/* Stat Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-        gap: 12,
-      }}>
+      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
         {STAT_CARDS.map(({ label, value, icon: Icon, color }) => (
-          <div key={label} style={{
-            background: 'var(--bg-2)',
-            border: '1px solid var(--border)',
-            borderRadius: 6,
-            padding: '16px 18px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="label">{label}</span>
+          <div key={label} className="stat-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+              <div className="stat-label">{label}</div>
               <Icon size={14} style={{ color }} />
             </div>
-            <span style={{ fontFamily: 'var(--head)', fontSize: 32, fontWeight: 700, color }}>
-              {value}
-            </span>
+            <div className="stat-value" style={{ color }}>{value}</div>
           </div>
         ))}
       </div>
 
       {/* Active Jobs */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-          <h2 style={{ fontFamily: 'var(--head)', fontSize: 18, fontWeight: 600 }}>
-            <Activity size={14} style={{ marginRight: 8, color: 'var(--accent)' }} />
-            Active &amp; Today
-          </h2>
-          <button
-            onClick={() => navigate('jobs')}
-            style={{ fontSize: 12, color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: 4 }}
-          >
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">
+            <Activity size={14} style={{ color: 'var(--accent)' }} />
+            Active & Today
+          </span>
+          <button className="btn btn-sm btn-secondary" onClick={() => navigate('/jobs')}>
             View All <ChevronRight size={12} />
           </button>
         </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {activeJobs.length === 0 && (
-            <p style={{ color: 'var(--text-dim)', fontStyle: 'italic' }}>No active jobs today.</p>
-          )}
-          {activeJobs.map(job => (
-            <button
-              key={job.id}
-              onClick={() => navigate('job-detail', { job })}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '110px 1fr auto auto auto',
-                alignItems: 'center',
-                gap: 16,
-                background: 'var(--bg-2)',
-                border: '1px solid var(--border)',
-                borderRadius: 4,
-                padding: '12px 16px',
-                textAlign: 'left',
-                width: '100%',
-                transition: 'border-color 0.15s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-bright)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-            >
-              <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{job.id}</span>
-              <span style={{ fontWeight: 500 }}>{job.client}</span>
-              <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`}>{job.type}</span>
-              <span className={`badge badge-${job.status}`}>{job.status}</span>
-              <ChevronRight size={14} style={{ color: 'var(--text-dim)' }} />
-            </button>
-          ))}
-        </div>
+        {activeJobs.length === 0 ? (
+          <div className="empty">
+            <div className="empty-desc">No active jobs today.</div>
+          </div>
+        ) : activeJobs.map(job => (
+          <div key={job.id} className="project-item" onClick={() => navigate(`/jobs/${job.id}`)}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="project-name">{job.client}</div>
+              <div className="project-meta" style={{ fontFamily: 'var(--mono)' }}>{job.id}</div>
+            </div>
+            <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`} style={{ marginRight: 4 }}>{job.type}</span>
+            <span className={`badge badge-${job.status}`}>{job.status}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Recent Activity */}
-      <div>
-        <h2 style={{ fontFamily: 'var(--head)', fontSize: 18, fontWeight: 600, marginBottom: 12 }}>
-          Recent Jobs
-        </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {recentJobs.map(job => (
-            <button
-              key={job.id}
-              onClick={() => navigate('job-detail', { job })}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                background: 'var(--bg-2)',
-                border: '1px solid var(--border)',
-                borderRadius: 4,
-                padding: '10px 16px',
-                textAlign: 'left',
-                width: '100%',
-                transition: 'border-color 0.15s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-bright)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>{job.id}</span>
-                <span style={{ fontWeight: 500 }}>{job.client}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 12, color: 'var(--text-dim)' }}>{getTechName(job.assignedTo)}</span>
-                <span className={`badge badge-${job.status}`}>{job.status}</span>
-              </div>
-            </button>
-          ))}
+      {/* Recent Jobs */}
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">Recent Jobs</span>
         </div>
+        {recentJobs.map(job => (
+          <div key={job.id} className="project-item" onClick={() => navigate(`/jobs/${job.id}`)}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="project-name">{job.client}</div>
+              <div className="project-meta">{getTechName(job.assignedTo)} · {job.scheduledDate}</div>
+            </div>
+            <span className={`badge badge-${job.status}`}>{job.status}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

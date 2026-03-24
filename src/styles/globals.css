@@ -30,6 +30,20 @@
   --font:      'DM Sans', sans-serif;
   --mono:      'DM Mono', monospace;
   --tab-h:     64px;
+
+  /* Aliases for SKILL.md pages compatibility */
+  --accent:      var(--red);
+  --accent-dim:  var(--red-soft);
+  --head:        var(--font);
+  --text:        var(--text-1);
+  --text-dim:    var(--text-3);
+  --text-muted:  var(--text-3);
+  --bg-2:        var(--surface);
+  --bg-3:        var(--bg);
+  --bg-4:        #E5E7EB;
+  --border-bright: #D1D5DB;
+  --green-dim:   var(--green-s);
+  --blue-dim:    var(--blue-soft);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -158,6 +172,31 @@ body {
 .badge-complete  { background: var(--green-s);    color: #047857; }
 .badge-hold      { background: var(--bg);          color: var(--text-3); }
 .badge-cancelled { background: var(--bg);          color: var(--text-3); }
+.badge-active    { background: var(--orange-s);   color: var(--orange); }
+.badge-completed { background: var(--green-s);    color: #047857; }
+.badge-failed    { background: var(--red-soft);   color: var(--red); }
+.badge-pending   { background: var(--amber-s);    color: #B45309; }
+
+/* Generic label text */
+.label { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Generic input/select/textarea for new pages */
+input, select, textarea {
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-1);
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-mid);
+}
+button { background: none; border: none; cursor: pointer; font-family: var(--font); color: var(--text-1); }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; font-family: var(--font); font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; white-space: nowrap; }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../lib/supabase'
+import { MOCK_SUBMISSIONS } from '../data/mockData'
 
 const STATUS_BADGE = {
   'Draft':            'badge-hold',
@@ -21,7 +22,14 @@ export default function Forms() {
     db.from('form_submissions')
       .select('*, projects(name)')
       .order('created_at', { ascending: false })
-      .then(({ data }) => { setSubmissions(data || []); setLoading(false) })
+      .then(({ data }) => {
+        setSubmissions(data && data.length > 0 ? data : MOCK_SUBMISSIONS)
+        setLoading(false)
+      })
+      .catch(() => {
+        setSubmissions(MOCK_SUBMISSIONS)
+        setLoading(false)
+      })
   }, [])
 
   const pending = submissions.filter(s => ['Submitted', 'Under Review'].includes(s.status)).length

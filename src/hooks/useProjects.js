@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { db } from '../lib/supabase'
+import { MOCK_PROJECTS } from '../data/mockData'
 
 export function useProjects() {
   const [projects, setProjects] = useState([])
@@ -7,12 +8,18 @@ export function useProjects() {
 
   const load = useCallback(async () => {
     setLoading(true)
-    const { data } = await db
-      .from('projects')
-      .select('*')
-      .eq('archived', false)
-      .order('created_at', { ascending: false })
-    setProjects(data || [])
+    try {
+      const { data } = await db
+        .from('projects')
+        .select('*')
+        .eq('archived', false)
+        .order('created_at', { ascending: false })
+      // Fall back to mock data when Supabase returns empty
+      setProjects(data && data.length > 0 ? data : MOCK_PROJECTS)
+    } catch {
+      // On error (offline, no connection), use mock data
+      setProjects(MOCK_PROJECTS)
+    }
     setLoading(false)
   }, [])
 

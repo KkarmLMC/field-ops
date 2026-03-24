@@ -1,9 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const TABS = [
-  { path: '/projects', icon: '🏗️', label: 'Projects' },
-  { path: '/reports',  icon: '📋', label: 'Reports'  },
-  { path: '/forms',    icon: '📝', label: 'Forms'    },
+  { path: '/dashboard',   icon: '📊', label: 'Dashboard'  },
+  { path: '/projects',    icon: '🏗️', label: 'Projects'   },
+  { path: '/jobs',        icon: '⚡', label: 'Jobs'       },
+  { path: '/reports',     icon: '📋', label: 'Reports'    },
+  { path: '/technicians', icon: '👷', label: 'Techs'      },
 ]
 
 export default function TabBar() {
@@ -13,7 +15,7 @@ export default function TabBar() {
   return (
     <div className="tab-bar">
       {TABS.map(tab => {
-        const active = location.pathname.startsWith(tab.path)
+        const active = location.pathname === tab.path || location.pathname.startsWith(tab.path + '/')
         return (
           <button
             key={tab.path}
