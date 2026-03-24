@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { STATS, JOBS } from '../data/mockData.js'
 
 export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
+  const [hoveredId, setHoveredId] = useState(null)
+
   // Live counts from JOBS data
   const lmStats = {
     active:    JOBS.filter(j => j.branch === 'lm'         && j.status === 'active').length,
@@ -44,7 +47,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#FEF0F1',
-      textInactive:'#C0101B',
+      textInactive:'#111827',
       subInactive: '#C0667A',
     },
     {
@@ -58,7 +61,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#ECEEF0',
-      textInactive:'#1F2937',
+      textInactive:'#111827',
       subInactive: '#6B7280',
     },
   ]
@@ -66,29 +69,35 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   return (
     <div className="branch-tabs">
       {tabs.map(tab => {
-        const isActive = active === tab.id
-        const bg       = isActive ? tab.bgActive       : tab.bgInactive
-        const text     = isActive ? tab.textActive     : tab.textInactive
-        const sub      = isActive ? tab.subActive      : tab.subInactive
-        const total    = tab.total || 1  // avoid divide-by-zero
+        const isActive  = active === tab.id
+        const isHovered = hoveredId === tab.id && !isActive
+        // Active card: always show active palette. Inactive + hovered: preview active palette.
+        const showActive = isActive || isHovered
+        const bg   = showActive ? tab.bgActive   : tab.bgInactive
+        const text = showActive ? tab.textActive : tab.textInactive
+        const sub  = showActive ? tab.subActive  : tab.subInactive
+        const total = tab.total || 1
 
         return (
           <button
             key={tab.id}
-            className="branch-card"
+            className={`branch-card${isActive ? ' branch-card--active' : ''}`}
             onClick={() => onChange(tab.id)}
-            style={{ background: bg }}
+            onMouseEnter={() => setHoveredId(tab.id)}
+            onMouseLeave={() => setHoveredId(null)}
+            style={{ background: bg, transition: 'background 0.15s, transform 0.12s' }}
           >
             {/* Top row: entity name + active pill */}
             <div className="branch-card-top">
-              <div className="branch-card-name" style={{ color: text }}>
+              <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>
                 {tab.label}
               </div>
               <div
                 className="branch-card-pill"
                 style={{
-                  background: isActive ? 'rgba(255,255,255,0.2)' : tab.bgActive + '22',
-                  color: isActive ? '#fff' : tab.bgActive,
+                  background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive + '22',
+                  color:      showActive ? '#fff' : tab.bgActive,
+                  transition: 'background 0.15s, color 0.15s',
                 }}
               >
                 {tab.stats.active} active
@@ -96,27 +105,27 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
             </div>
 
             {/* Sectors subtitle */}
-            <div className="branch-card-sectors" style={{ color: sub }}>
+            <div className="branch-card-sectors" style={{ color: sub, transition: 'color 0.15s' }}>
               {tab.sectors}
             </div>
 
-            {/* Progress bar — active / total */}
+            {/* Progress bar */}
             <div className="branch-card-bar-wrap">
               <div
                 className="branch-card-bar-track"
-                style={{ background: isActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}
+                style={{ background: showActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}
               >
                 <div
                   className="branch-card-bar-fill"
                   style={{
                     width: `${Math.round((tab.stats.active / total) * 100)}%`,
-                    background: isActive ? '#ffffff' : tab.bgActive,
+                    background: showActive ? '#ffffff' : tab.bgActive,
                   }}
                 />
               </div>
             </div>
 
-            {/* Stat row: active · scheduled · completed */}
+            {/* Stat row */}
             <div className="branch-card-stats">
               {[
                 { label: 'Active',    value: tab.stats.active },
@@ -124,8 +133,8 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
                 { label: 'Done',      value: tab.stats.completed },
               ].map((s, i) => (
                 <div key={i} className="branch-card-stat">
-                  <span className="branch-card-stat-value" style={{ color: text }}>{s.value}</span>
-                  <span className="branch-card-stat-label" style={{ color: sub }}>{s.label}</span>
+                  <span className="branch-card-stat-value" style={{ color: text, transition: 'color 0.15s' }}>{s.value}</span>
+                  <span className="branch-card-stat-label" style={{ color: sub, transition: 'color 0.15s' }}>{s.label}</span>
                 </div>
               ))}
             </div>

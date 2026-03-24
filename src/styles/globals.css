@@ -510,8 +510,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   border: none; cursor: pointer; text-align: left;
   transition: opacity 0.15s, transform 0.12s;
 }
-.branch-card:hover  { opacity: 0.9; }
-.branch-card:active { transform: scale(0.98); }
+.branch-card:not(.branch-card--active):active { transform: scale(0.98); }
 .branch-card-top {
   display: flex; align-items: flex-start;
   justify-content: space-between; gap: 8px; margin-bottom: 3px;
