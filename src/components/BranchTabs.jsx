@@ -34,7 +34,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#F0F3FA',
       textInactive:'#000000',
-      subInactive: '#6B7BA4',
+      subInactive: '#9CA3AF',
     },
     {
       id:      'bolt',
@@ -48,7 +48,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#FEF0F1',
       textInactive:'#000000',
-      subInactive: '#C0667A',
+      subInactive: '#9CA3AF',
     },
     {
       id:      'bolt-dallas',
@@ -62,7 +62,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#ECEEF0',
       textInactive:'#000000',
-      subInactive: '#6B7280',
+      subInactive: '#9CA3AF',
     },
   ]
 
