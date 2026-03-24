@@ -70,7 +70,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   // Using a radial-gradient means no extra DOM elements — the page's white
   // background shows through the transparent circle naturally.
   const notchBg = (color) =>
-    `radial-gradient(circle at 100% 44%, transparent 18px, ${color} 18px)`
+    `radial-gradient(circle at 100% 0%, transparent 28px, ${color} 28px)`
 
   return (
     <div className="branch-tabs">
