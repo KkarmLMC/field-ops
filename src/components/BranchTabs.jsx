@@ -54,12 +54,12 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       stats:   dallasStats,
       total:   boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed),
       // Slate grey — Bolt Dallas
-      bgActive:    '#374151',
+      bgActive:    '#1F2937',
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
-      bgInactive:  '#F3F4F6',
-      textInactive:'#374151',
-      subInactive: '#9CA3AF',
+      bgInactive:  '#ECEEF0',
+      textInactive:'#1F2937',
+      subInactive: '#6B7280',
     },
   ]
 
