@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0a0c0f;
+  --bg-2: #111418;
+  --bg-3: #181c22;
+  --bg-4: #1e242d;
+  --border: #252c38;
+  --border-bright: #2e3847;
+  --text: #c8d4e0;
+  --text-dim: #5a6a7a;
+  --text-muted: #3a4a5a;
+  --accent: #e8a020;
+  --accent-dim: #7a5210;
+  --accent-glow: rgba(232,160,32,0.12);
+  --green: #1db954;
+  --green-dim: #0a4020;
+  --red: #e03030;
+  --red-dim: #4a0f0f;
+  --blue: #2080e0;
+  --blue-dim: #0a2a50;
+  --yellow: #e8c020;
+  --mono: 'DM Mono', monospace;
+  --head: 'Barlow Condensed', sans-serif;
+  --body: 'Barlow', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+}
+select option { background: var(--bg-3); }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+/* Status badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 8px; border-radius: 3px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.badge-scheduled { background: var(--blue-dim); color: var(--blue); }
+.badge-active     { background: var(--accent-glow); color: var(--accent); }
+.badge-completed  { background: var(--green-dim); color: var(--green); }
+.badge-failed     { background: var(--red-dim); color: var(--red); }
+.badge-pending    { background: var(--bg-4); color: var(--text-dim); }
+
+/* Utility */
+.label {
+  font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
