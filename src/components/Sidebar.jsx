@@ -37,23 +37,39 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
 
       <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''} ${mobileOpen ? 'sidebar-open' : ''}`}>
 
-        {/* Brand header */}
-        <div className="sidebar-brand-row">
-          <div className="sidebar-logo-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
+        {/* Brand header — layout changes based on collapsed state */}
+        {collapsed ? (
+          <div className="sidebar-brand-row sidebar-brand-collapsed">
+            <div className="sidebar-logo-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            {/* Full-width expand button so it's always easy to find */}
+            <button
+              className="sidebar-expand-btn"
+              onClick={onToggle}
+              title="Expand sidebar"
+            >
+              <ChevronRight size={15} />
+            </button>
           </div>
-          {!collapsed && (
+        ) : (
+          <div className="sidebar-brand-row">
+            <div className="sidebar-logo-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
             <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
               <div className="sidebar-brand-name">Bolt LP</div>
               <div className="sidebar-brand-sub">Field Operations</div>
             </div>
-          )}
-          <button className="sidebar-toggle-btn" onClick={onToggle} title={collapsed ? 'Expand' : 'Collapse'}>
-            {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
-          </button>
-        </div>
+            <button className="sidebar-toggle-btn" onClick={onToggle} title="Collapse sidebar">
+              <ChevronLeft size={13} />
+            </button>
+          </div>
+        )}
 
         {/* Main navigation */}
         <nav className="sidebar-nav">

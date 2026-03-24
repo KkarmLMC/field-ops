@@ -131,6 +131,25 @@ body {
 }
 .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.1); color: white; }
 
+/* Collapsed brand row — stacks logo + expand button vertically */
+.sidebar-brand-collapsed {
+  flex-direction: column !important;
+  padding: 12px 8px 10px !important;
+  gap: 8px !important;
+  align-items: center !important;
+  min-height: unset !important;
+}
+/* Wide tappable expand button shown when sidebar is icon-only */
+.sidebar-expand-btn {
+  width: 40px; height: 32px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.14s, color 0.14s;
+}
+.sidebar-expand-btn:hover { background: rgba(255,255,255,0.14); color: white; }
+
 /* Nav items */
 .sidebar-nav {
   flex: 1; padding: 10px 8px; display: flex; flex-direction: column;
