@@ -66,12 +66,6 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
     },
   ]
 
-  // Ticket-notch: punches a circular cutout into the right edge of each card.
-  // Using a radial-gradient means no extra DOM elements — the page's white
-  // background shows through the transparent circle naturally.
-  const notchBg = (color) =>
-    `radial-gradient(circle at 100% 0%, transparent 28px, ${color} 28px)`
-
   return (
     <div className="branch-tabs">
       {tabs.map(tab => {
@@ -91,7 +85,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
             onClick={() => onChange(tab.id)}
             onMouseEnter={() => setHoveredId(tab.id)}
             onMouseLeave={() => setHoveredId(null)}
-            style={{ background: notchBg(bg), transition: 'background 0.15s, transform 0.12s' }}
+            style={{ background: bg, transition: 'background 0.15s, transform 0.12s' }}
           >
             {/* Top row: entity name + active pill */}
             <div className="branch-card-top">
