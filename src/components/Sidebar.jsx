@@ -40,11 +40,11 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
         {/* Brand header — layout changes based on collapsed state */}
         {collapsed ? (
           <div className="sidebar-brand-row sidebar-brand-collapsed">
-            <div className="sidebar-logo-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </div>
+            <img
+              src="/lm-icon.svg"
+              alt="Lightning Master"
+              className="sidebar-logo-icon-img"
+            />
             {/* Full-width expand button so it's always easy to find */}
             <button
               className="sidebar-expand-btn"
@@ -56,15 +56,12 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
           </div>
         ) : (
           <div className="sidebar-brand-row">
-            <div className="sidebar-logo-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </div>
-            <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
-              <div className="sidebar-brand-name">Bolt LP</div>
-              <div className="sidebar-brand-sub">Field Operations</div>
-            </div>
+            <img
+              src="/lightning-master-logo.svg"
+              alt="Lightning Master"
+              className="sidebar-logo-img"
+            />
+            <div style={{ flex: 1, minWidth: 0 }} />
             <button className="sidebar-toggle-btn" onClick={onToggle} title="Collapse sidebar">
               <ChevronLeft size={13} />
             </button>
