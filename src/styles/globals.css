@@ -576,23 +576,45 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .list-filters {
   display: flex; gap: 4px; flex-wrap: wrap;
 }
-/* Search icon button — collapsed state */
+/* Search icon button */
 .search-icon-btn {
   display: flex; align-items: center; justify-content: center;
   width: 34px; height: 34px; border-radius: 8px;
   border: 1px solid var(--border); background: var(--surface);
   color: var(--text-2); cursor: pointer; flex-shrink: 0;
-  transition: border-color 0.12s, color 0.12s;
+  transition: border-color 0.12s, color 0.12s, opacity 0.2s;
 }
 .search-icon-btn:hover { border-color: var(--text-3); color: var(--text-1); }
-/* Search wrap — expanded state */
-.list-search-wrap { flex-shrink: 0; }
-.list-search-wrap--open { flex: 0 1 220px; }
-.list-search-input {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid var(--text-1);
-  border-radius: 8px; padding: 7px 10px;
+/* Expandable search — always in DOM, animates via max-width */
+.list-search-wrap {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  height: 34px;
 }
+.list-search-expand {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0 10px;
+  height: 34px; overflow: hidden;
+  max-width: 0; opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease, border-color 0.12s;
+  box-sizing: border-box;
+}
+.list-search-expand--open {
+  max-width: 220px; opacity: 1;
+  border-color: var(--text-1);
+}
+.list-search-expand input {
+  border: none; outline: none; background: none;
+  font-family: var(--font); font-size: 13px;
+  color: var(--text-1); width: 100%; min-width: 0;
+}
+.search-clear-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-3); padding: 0; display: flex;
+  align-items: center; flex-shrink: 0; font-size: 13px;
+  transition: color 0.12s;
+}
+.search-clear-btn:hover { color: var(--text-1); }
 .filter-chip {
   padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border);
   background: var(--surface); color: var(--text-2);

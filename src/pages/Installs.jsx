@@ -68,28 +68,27 @@ export default function Installs() {
             </button>
           ))}
         </div>
-        <div className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}>
-          {searchOpen ? (
-            <div className="list-search-input">
-              <Search size={13} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
-              <input
-                autoFocus
-                placeholder="Search installs…"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                onBlur={() => { if (!search) setSearchOpen(false) }}
-                style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 13, color: 'var(--text-1)', width: '100%' }}
-              />
-              <button
-                onClick={() => { setSearch(''); setSearchOpen(false) }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex', alignItems: 'center' }}
-              >✕</button>
-            </div>
-          ) : (
-            <button className="search-icon-btn" onClick={() => setSearchOpen(true)}>
-              <Search size={15} />
-            </button>
-          )}
+        <div className="list-search-wrap">
+          <button
+            className="search-icon-btn"
+            onClick={() => setSearchOpen(true)}
+            style={{ opacity: searchOpen ? 0 : 1, pointerEvents: searchOpen ? 'none' : 'auto' }}
+          >
+            <Search size={15} />
+          </button>
+          <div className={`list-search-expand${searchOpen ? ' list-search-expand--open' : ''}`}>
+            <Search size={13} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <input
+              placeholder="Search installs…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              onBlur={() => { if (!search) setSearchOpen(false) }}
+              ref={el => { if (searchOpen && el) el.focus() }}
+            />
+            {search && (
+              <button className="search-clear-btn" onClick={() => { setSearch(''); setSearchOpen(false) }}>✕</button>
+            )}
+          </div>
         </div>
       </div>
 
