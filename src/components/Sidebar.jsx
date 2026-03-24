@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FolderOpen, Zap, ClipboardList,
   Users, Settings, HelpCircle, ChevronLeft, ChevronRight,
-  FileText,
+  FileText, PanelLeftClose, PanelLeftOpen,
 } from 'lucide-react'
 
 const NAV_ITEMS = [
@@ -37,36 +37,22 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
 
       <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''} ${mobileOpen ? 'sidebar-open' : ''}`}>
 
-        {/* Brand header — layout changes based on collapsed state */}
-        {collapsed ? (
-          <div className="sidebar-brand-row sidebar-brand-collapsed">
+        {/* Brand header — logo takes full width, no toggle button here */}
+        <div className="sidebar-brand-row">
+          {collapsed ? (
             <img
               src="/lm-icon.svg"
               alt="Lightning Master"
               className="sidebar-logo-icon-img"
             />
-            {/* Full-width expand button so it's always easy to find */}
-            <button
-              className="sidebar-expand-btn"
-              onClick={onToggle}
-              title="Expand sidebar"
-            >
-              <ChevronRight size={15} />
-            </button>
-          </div>
-        ) : (
-          <div className="sidebar-brand-row">
+          ) : (
             <img
               src="/lightning-master-logo.svg"
               alt="Lightning Master"
               className="sidebar-logo-img"
             />
-            <div style={{ flex: 1, minWidth: 0 }} />
-            <button className="sidebar-toggle-btn" onClick={onToggle} title="Collapse sidebar">
-              <ChevronLeft size={13} />
-            </button>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Main navigation */}
         <nav className="sidebar-nav">
@@ -82,7 +68,6 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
               >
                 <Icon size={17} style={{ flexShrink: 0 }} />
                 {!collapsed && <span className="sidebar-item-label">{label}</span>}
-                {/* Active dot for collapsed state */}
                 {collapsed && active && (
                   <div style={{
                     position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
@@ -94,7 +79,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
           })}
         </nav>
 
-        {/* Footer */}
+        {/* Footer — settings, help, + collapse toggle at the very bottom */}
         <div className="sidebar-footer-nav">
           {!collapsed && <div className="sidebar-section-label">ACCOUNT</div>}
           {FOOTER_ITEMS.map(({ Icon, label }) => (
@@ -103,6 +88,18 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
               {!collapsed && <span className="sidebar-item-label">{label}</span>}
             </button>
           ))}
+          {/* Collapse / expand toggle lives here */}
+          <button
+            className="sidebar-item sidebar-collapse-btn"
+            onClick={onToggle}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {collapsed
+              ? <PanelLeftOpen size={17} style={{ flexShrink: 0 }} />
+              : <PanelLeftClose size={17} style={{ flexShrink: 0 }} />
+            }
+            {!collapsed && <span className="sidebar-item-label">Collapse</span>}
+          </button>
         </div>
       </aside>
     </>

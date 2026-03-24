@@ -110,57 +110,29 @@ body {
   }
 }
 
-/* Brand header */
+/* Brand header — logo only, no toggle button */
 .sidebar-brand-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 12px 14px 14px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px 16px;
   border-bottom: 1px solid var(--border);
   min-height: 64px; flex-shrink: 0;
 }
 .sidebar-logo-img {
-  /* Full logo in expanded state */
-  height: 32px; width: auto; max-width: 140px;
-  object-fit: contain; flex-shrink: 0;
+  /* Full logo — fills available width */
+  height: 28px; width: auto; max-width: 160px;
+  object-fit: contain;
 }
 .sidebar-logo-icon-img {
   /* Burst icon in collapsed state */
-  width: 32px; height: 32px; object-fit: contain; flex-shrink: 0;
+  width: 30px; height: 30px; object-fit: contain;
 }
-/* Legacy icon box — kept for fallback */
-.sidebar-logo-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: var(--red);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+/* Collapse/expand button in footer */
+.sidebar-collapse-btn {
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 !important;
+  padding-top: 12px !important;
 }
-.sidebar-brand-name { font-size: 14px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
-.sidebar-brand-sub  { font-size: 10px; color: var(--text-3); white-space: nowrap; }
-.sidebar-toggle-btn {
-  width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0;
-  border: 1px solid var(--border); background: none;
-  color: var(--text-3); display: flex; align-items: center;
-  justify-content: center; cursor: pointer; transition: background 0.14s, color 0.14s;
-}
-.sidebar-toggle-btn:hover { background: var(--hover); color: var(--text-1); }
-
-/* Collapsed brand row — stacks logo + expand button vertically */
-.sidebar-brand-collapsed {
-  flex-direction: column !important;
-  padding: 12px 8px 10px !important;
-  gap: 8px !important;
-  align-items: center !important;
-  min-height: unset !important;
-}
-/* Wide tappable expand button shown when sidebar is icon-only */
-.sidebar-expand-btn {
-  width: 40px; height: 32px; border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--hover);
-  color: var(--text-3);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: background 0.14s, color 0.14s;
-}
-.sidebar-expand-btn:hover { background: var(--border); color: var(--text-1); }
 
 /* Nav items */
 .sidebar-nav {
