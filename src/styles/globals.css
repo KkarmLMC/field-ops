@@ -501,7 +501,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px; margin-bottom: 16px;
 }
 .branch-card {
@@ -547,6 +547,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .branch-card-stat-label {
   font-size: 9px; text-transform: uppercase;
   letter-spacing: 0.06em; margin-top: 1px; font-family: var(--font);
+}
+@media (max-width: 640px) {
+  .branch-tabs            { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .branch-card-name       { font-size: 13px; }
@@ -630,7 +633,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Quick-nav tiles */
 .dash-tiles {
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 8px; margin-bottom: 16px;
 }
 .dash-tile {
@@ -649,12 +652,12 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* 2-column card grid */
 .dash-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 @media (max-width: 767px) {
   .dash-grid { grid-template-columns: 1fr; }
-  .dash-tiles { grid-template-columns: 1fr 1fr; }
+  .dash-tiles { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* Individual card */

@@ -29,8 +29,9 @@ export default function Installations() {
     j.branch === branch && j.status === 'active' && j.type === 'inspection'
   )
 
-  const lmCount   = MOCK_PROJECTS.filter(p => p.branch === 'lm').length
-  const boltCount = MOCK_PROJECTS.filter(p => p.branch === 'bolt').length
+  const lmCount         = MOCK_PROJECTS.filter(p => p.branch === 'lm').length
+  const boltCount       = MOCK_PROJECTS.filter(p => p.branch === 'bolt').length
+  const boltDallasCount = MOCK_PROJECTS.filter(p => p.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
@@ -40,6 +41,7 @@ export default function Installations() {
         onChange={setBranch}
         lmCount={lmCount}
         boltCount={boltCount}
+        boltDallasCount={boltDallasCount}
       />
 
       {/* Quick links */}

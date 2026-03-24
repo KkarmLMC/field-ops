@@ -1,51 +1,65 @@
 import { STATS, JOBS } from '../data/mockData.js'
 
-export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
-  const lm   = STATS.lm
-  const bolt = STATS.bolt
-
+export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
   // Live counts from JOBS data
   const lmStats = {
-    active:    JOBS.filter(j => j.branch === 'lm' && j.status === 'active').length,
-    scheduled: JOBS.filter(j => j.branch === 'lm' && j.status === 'scheduled').length,
-    completed: JOBS.filter(j => j.branch === 'lm' && j.status === 'completed').length,
+    active:    JOBS.filter(j => j.branch === 'lm'         && j.status === 'active').length,
+    scheduled: JOBS.filter(j => j.branch === 'lm'         && j.status === 'scheduled').length,
+    completed: JOBS.filter(j => j.branch === 'lm'         && j.status === 'completed').length,
   }
   const boltStats = {
-    active:    JOBS.filter(j => j.branch === 'bolt' && j.status === 'active').length,
-    scheduled: JOBS.filter(j => j.branch === 'bolt' && j.status === 'scheduled').length,
-    completed: JOBS.filter(j => j.branch === 'bolt' && j.status === 'completed').length,
+    active:    JOBS.filter(j => j.branch === 'bolt'        && j.status === 'active').length,
+    scheduled: JOBS.filter(j => j.branch === 'bolt'        && j.status === 'scheduled').length,
+    completed: JOBS.filter(j => j.branch === 'bolt'        && j.status === 'completed').length,
+  }
+  const dallasStats = {
+    active:    JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'active').length,
+    scheduled: JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'scheduled').length,
+    completed: JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'completed').length,
   }
 
   const tabs = [
     {
       id:      'lm',
-      label:   'Lightning Master',
-      sectors: 'Oilfield · Chemical · Industrial',
+      label:   STATS.lm.label,
+      sectors: STATS.lm.sectors,
       stats:   lmStats,
       total:   lmCount ?? (lmStats.active + lmStats.scheduled + lmStats.completed),
-      // Active palette
-      bgActive:   '#04245C',   // navy
-      textActive: '#ffffff',
-      subActive:  'rgba(255,255,255,0.55)',
-      // Inactive palette
-      bgInactive:   '#F0F3FA',
-      textInactive: '#04245C',
-      subInactive:  '#6B7BA4',
+      // Navy — Lightning Master
+      bgActive:    '#04245C',
+      textActive:  '#ffffff',
+      subActive:   'rgba(255,255,255,0.55)',
+      bgInactive:  '#F0F3FA',
+      textInactive:'#04245C',
+      subInactive: '#6B7BA4',
     },
     {
       id:      'bolt',
-      label:   'Bolt Lightning',
-      sectors: 'Commercial · Municipal · Hotels',
+      label:   STATS.bolt.label,
+      sectors: STATS.bolt.sectors,
       stats:   boltStats,
       total:   boltCount ?? (boltStats.active + boltStats.scheduled + boltStats.completed),
-      // Active palette
-      bgActive:   '#04245C',   // navy (same as LM)
-      textActive: '#ffffff',
-      subActive:  'rgba(255,255,255,0.55)',
-      // Inactive palette
-      bgInactive:   '#F0F3FA',
-      textInactive: '#04245C',
-      subInactive:  '#6B7BA4',
+      // Red — Bolt Florida
+      bgActive:    '#C0101B',
+      textActive:  '#ffffff',
+      subActive:   'rgba(255,255,255,0.55)',
+      bgInactive:  '#FEF0F1',
+      textInactive:'#C0101B',
+      subInactive: '#C0667A',
+    },
+    {
+      id:      'bolt-dallas',
+      label:   STATS['bolt-dallas'].label,
+      sectors: STATS['bolt-dallas'].sectors,
+      stats:   dallasStats,
+      total:   boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed),
+      // Slate grey — Bolt Dallas
+      bgActive:    '#374151',
+      textActive:  '#ffffff',
+      subActive:   'rgba(255,255,255,0.55)',
+      bgInactive:  '#F3F4F6',
+      textInactive:'#374151',
+      subInactive: '#9CA3AF',
     },
   ]
 

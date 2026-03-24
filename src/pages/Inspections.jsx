@@ -30,8 +30,9 @@ export default function Inspections() {
   const [statusFilter, setStatusFilter] = useState('all')
   const [search, setSearch]           = useState('')
 
-  const lmCount   = JOBS.filter(j => j.branch === 'lm'   && INSPECT_TYPES.includes(j.type)).length
-  const boltCount = JOBS.filter(j => j.branch === 'bolt' && INSPECT_TYPES.includes(j.type)).length
+  const lmCount         = JOBS.filter(j => j.branch === 'lm'         && INSPECT_TYPES.includes(j.type)).length
+  const boltCount       = JOBS.filter(j => j.branch === 'bolt'        && INSPECT_TYPES.includes(j.type)).length
+  const boltDallasCount = JOBS.filter(j => j.branch === 'bolt-dallas' && INSPECT_TYPES.includes(j.type)).length
 
   const jobs = JOBS.filter(j =>
     j.branch === branch &&
@@ -48,6 +49,7 @@ export default function Inspections() {
         onChange={setBranch}
         lmCount={lmCount}
         boltCount={boltCount}
+        boltDallasCount={boltDallasCount}
       />
 
       {/* Toolbar */}

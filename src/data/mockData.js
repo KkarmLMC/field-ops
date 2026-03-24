@@ -1,6 +1,7 @@
 // Mock projects for when Supabase is empty — maps to real NFPA field ops
-// branch: 'lm' = Lightning Master (Oilfield, Chemical, Industrial)
-//         'bolt' = Bolt Lightning (Commercial, Municipal, Hotels, Data Centers)
+// branch: 'lm'         = Lightning Master (Oilfield, Chemical, Industrial)
+//         'bolt'        = Bolt Florida     (Commercial, Municipal, Hotels)
+//         'bolt-dallas' = Bolt Dallas      (Commercial, Industrial, Energy)
 
 export const MOCK_PROJECTS = [
   { id: 'p-001', branch: 'bolt', name: 'Ritz-Carlton LPS Installation', customer_account: 'Ritz-Carlton Amelia Island', address: '4750 Amelia Island Pkwy', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0312', stage: 'In Progress', primary_contact: 'Michael Torres', primary_contact_phone: '904-555-0301', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-24', archived: false, created_at: '2026-03-10T08:00:00Z' },
@@ -11,8 +12,13 @@ export const MOCK_PROJECTS = [
   { id: 'p-006', branch: 'lm',   name: 'Rayonier Advanced Materials Cert', customer_account: 'Rayonier Advanced Materials', address: '1301 Rayonier Way', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0271', stage: 'Complete', primary_contact: 'Tom Bradley', primary_contact_phone: '904-555-0306', lmc_representative: 'Priya Nair', scheduled_date: '2026-03-20', archived: false, created_at: '2026-02-28T08:00:00Z' },
   { id: 'p-007', branch: 'bolt', name: 'Amelia Island Lighthouse Install', customer_account: 'FL State Parks', address: "215 O'Hagan Ln", city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0255', stage: 'Complete', primary_contact: 'Ranger Williams', primary_contact_phone: '904-555-0307', lmc_representative: 'Diane Okafor', scheduled_date: '2026-03-14', archived: false, created_at: '2026-02-20T08:00:00Z' },
   { id: 'p-008', branch: 'bolt', name: 'Amelia Island Plantation — FAILED', customer_account: 'Amelia Island Plantation', address: '39 Beach Lagoon Rd', city: 'Amelia Island', state: 'FL', job_number: 'JOB-2026-0263', stage: 'Pending Review', primary_contact: 'Karen Mitchell', primary_contact_phone: '904-555-0308', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-18', archived: false, created_at: '2026-03-01T08:00:00Z' },
-  { id: 'p-009', branch: 'lm',   name: 'WestRock Paper Mill Annual Test', customer_account: 'WestRock Company', address: '1500 N 8th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0334', stage: 'Awarded', primary_contact: 'Plant Safety Office', primary_contact_phone: '904-555-0309', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-29', archived: false, created_at: '2026-03-15T08:00:00Z' },
-  { id: 'p-010', branch: 'bolt', name: 'First Baptist Church Install', customer_account: 'First Baptist Church', address: '1600 S 8th St', city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0220', stage: 'Complete', primary_contact: 'Pastor James', primary_contact_phone: '904-555-0310', lmc_representative: 'Marcus Webb', scheduled_date: '2026-03-05', archived: false, created_at: '2026-02-15T08:00:00Z' },
+  { id: 'p-009', branch: 'lm',           name: 'WestRock Paper Mill Annual Test',       customer_account: 'WestRock Company',             address: '1500 N 8th St',         city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0334', stage: 'Awarded',      primary_contact: 'Plant Safety Office', primary_contact_phone: '904-555-0309', lmc_representative: 'Marcus Webb',  scheduled_date: '2026-03-29', archived: false, created_at: '2026-03-15T08:00:00Z' },
+  { id: 'p-010', branch: 'bolt',         name: 'First Baptist Church Install',           customer_account: 'First Baptist Church',          address: '1600 S 8th St',         city: 'Fernandina Beach', state: 'FL', job_number: 'JOB-2026-0220', stage: 'Complete',     primary_contact: 'Pastor James',        primary_contact_phone: '904-555-0310', lmc_representative: 'Marcus Webb',  scheduled_date: '2026-03-05', archived: false, created_at: '2026-02-15T08:00:00Z' },
+  // ── Bolt Dallas ──
+  { id: 'p-011', branch: 'bolt-dallas',  name: 'Oncor Substation LPS Install',           customer_account: 'Oncor Electric Delivery',       address: '1616 Woodall Rodgers Fwy', city: 'Dallas',         state: 'TX', job_number: 'JOB-2026-0401', stage: 'In Progress',  primary_contact: 'Kyle Brandt',         primary_contact_phone: '214-555-0401', lmc_representative: 'Chris Navarro', scheduled_date: '2026-03-24', archived: false, created_at: '2026-03-10T08:00:00Z' },
+  { id: 'p-012', branch: 'bolt-dallas',  name: 'AT&T Discovery District Inspection',     customer_account: 'AT&T Inc.',                     address: '208 S Akard St',        city: 'Dallas',         state: 'TX', job_number: 'JOB-2026-0408', stage: 'Scheduled',    primary_contact: 'Facilities Manager',  primary_contact_phone: '214-555-0402', lmc_representative: 'Chris Navarro', scheduled_date: '2026-03-27', archived: false, created_at: '2026-03-12T08:00:00Z' },
+  { id: 'p-013', branch: 'bolt-dallas',  name: 'Dallas Cowboys Training Facility LPS',   customer_account: 'Dallas Cowboys / AT&T Stadium', address: '9 Cowboys Way',         city: 'Frisco',         state: 'TX', job_number: 'JOB-2026-0415', stage: 'Complete',     primary_contact: 'Ryan Scott',          primary_contact_phone: '214-555-0403', lmc_representative: 'Chris Navarro', scheduled_date: '2026-03-15', archived: false, created_at: '2026-03-01T08:00:00Z' },
+  { id: 'p-014', branch: 'bolt-dallas',  name: 'Pioneer Natural Resources Cert',         customer_account: 'Pioneer Natural Resources',     address: '777 Hidden Ridge',      city: 'Irving',         state: 'TX', job_number: 'JOB-2026-0422', stage: 'Pending Review', primary_contact: 'Safety Director',   primary_contact_phone: '214-555-0404', lmc_representative: 'Chris Navarro', scheduled_date: '2026-03-19', archived: false, created_at: '2026-03-05T08:00:00Z' },
 ];
 
 // Mock daily field reports
@@ -40,7 +46,9 @@ export const TECHNICIANS = [
   { id: 'T003', branch: 'bolt', name: 'Ray Thibodaux',  license: 'LPI-4056', status: 'field',  phone: '904-555-0203' },
   { id: 'T004', branch: 'bolt', name: 'Priya Nair',     license: 'LPI-3312', status: 'field',  phone: '904-555-0219' },
   { id: 'T005', branch: 'lm',   name: 'Jake Herrera',   license: 'LPI-4410', status: 'active', phone: '904-555-0238' },
-  { id: 'T006', branch: 'bolt', name: 'Tamika Russell', license: 'LPI-3780', status: 'field',  phone: '904-555-0251' },
+  { id: 'T006', branch: 'bolt',        name: 'Tamika Russell', license: 'LPI-3780', status: 'field',  phone: '904-555-0251' },
+  { id: 'T007', branch: 'bolt-dallas', name: 'Chris Navarro',  license: 'LPI-5102', status: 'field',  phone: '214-555-0701' },
+  { id: 'T008', branch: 'bolt-dallas', name: 'Lena Kowalski',  license: 'LPI-5218', status: 'active', phone: '214-555-0702' },
 ];
 
 export const JOBS = [
@@ -66,6 +74,12 @@ export const JOBS = [
   { id: 'JOB-2026-0240', branch: 'lm',   type: 'inspection',   status: 'completed', client: 'Publix Distribution Center',    address: '4500 Buccaneer Trail, Yulee, FL 32097',              structure: 'Industrial — Warehouse complex, 42ft, steel frame',    assignedTo: 'T006', scheduledDate: '2026-03-10', nfpaClass: 'III', priority: 'low',    progress: 100, forms: ['site-survey', 'inspection'],  notes: 'Minor corrosion on NE corner down conductor bracket — noted for next service.' },
   { id: 'JOB-2026-0232', branch: 'bolt', type: 'certification',status: 'completed', client: 'Osprey Village Retirement Community', address: '600 Osprey Village Dr, Amelia Island, FL 32034', structure: 'Residential — 6 buildings, tallest 3-story, 38ft',     assignedTo: 'T003', scheduledDate: '2026-03-08', nfpaClass: 'III', priority: 'medium', progress: 100, forms: ['site-survey', 'installation', 'inspection'], notes: 'Full LPS across all 6 buildings. Certificate #BOLT-2026-0232 issued.' },
   { id: 'JOB-2026-0220', branch: 'bolt', type: 'installation', status: 'completed', client: 'First Baptist Church — Fernandina', address: '1600 S 8th St, Fernandina Beach, FL 32034',       structure: 'Religious — Sanctuary + steeple, 85ft',                assignedTo: 'T001', scheduledDate: '2026-03-05', nfpaClass: 'I',   priority: 'medium', progress: 100, forms: ['site-survey', 'installation', 'inspection'], notes: 'Steeple custom air terminal mount. Ground resistance 3.2Ω at all stations.' },
+
+  // ── BOLT DALLAS ──
+  { id: 'JOB-2026-0401', branch: 'bolt-dallas', type: 'installation', status: 'active',    client: 'Oncor Electric Delivery',          address: '1616 Woodall Rodgers Fwy, Dallas, TX 75202',       structure: 'Utility — Transmission substation, 85ft steel lattice', assignedTo: 'T007', scheduledDate: '2026-03-24', nfpaClass: 'II',  priority: 'high',   progress: 50,  forms: ['site-survey', 'installation'], notes: 'High-voltage substation. Full PPE and utility coordination required.' },
+  { id: 'JOB-2026-0408', branch: 'bolt-dallas', type: 'inspection',   status: 'scheduled', client: 'AT&T Discovery District',          address: '208 S Akard St, Dallas, TX 75202',                 structure: 'Commercial — 29-story tower, 430ft',                    assignedTo: 'T008', scheduledDate: '2026-03-27', nfpaClass: 'I',   priority: 'medium', progress: 0,   forms: [],                             notes: 'Annual high-rise inspection. Elevator machine room bonding required.' },
+  { id: 'JOB-2026-0415', branch: 'bolt-dallas', type: 'certification',status: 'completed', client: 'Dallas Cowboys Training Facility', address: '9 Cowboys Way, Frisco, TX 75034',                  structure: 'Sports — Training complex, 3 buildings, max 60ft',      assignedTo: 'T007', scheduledDate: '2026-03-15', nfpaClass: 'I',   priority: 'medium', progress: 100, forms: ['site-survey', 'installation', 'inspection'], notes: 'Full LPS across 3 buildings. All readings <4Ω. Certificate issued.' },
+  { id: 'JOB-2026-0422', branch: 'bolt-dallas', type: 'annual-test',  status: 'scheduled', client: 'Pioneer Natural Resources HQ',     address: '777 Hidden Ridge, Irving, TX 75038',               structure: 'Energy — Corporate campus, 8-story, 130ft',             assignedTo: 'T008', scheduledDate: '2026-03-30', nfpaClass: 'II',  priority: 'high',   progress: 0,   forms: ['site-survey'],                notes: 'Annual test for energy sector compliance. Wind turbine bonding included.' },
 
   // ── FAILED ──
   { id: 'JOB-2026-0263', branch: 'bolt', type: 'annual-test',  status: 'failed',    client: 'Amelia Island Plantation',     address: '39 Beach Lagoon Rd, Amelia Island, FL 32034',        structure: 'Resort — Multiple buildings, tallest 45ft',            assignedTo: 'T001', scheduledDate: '2026-03-18', nfpaClass: 'I',   priority: 'high',   progress: 90,  forms: ['site-survey', 'inspection'],  notes: 'FAILED: Ground resistance 28Ω at Building C. Exceeds 10Ω limit. Remediation order issued.' },
@@ -201,7 +215,12 @@ export const STATS = {
   },
   bolt: {
     active: 3, scheduled: 3, completed: 4, failed: 1,
-    techsInField: 2, label: 'Bolt Lightning',
+    techsInField: 2, label: 'Bolt Florida',
     sectors: 'Commercial · Municipal · Hotels',
+  },
+  'bolt-dallas': {
+    active: 1, scheduled: 2, completed: 1, failed: 0,
+    techsInField: 1, label: 'Bolt Dallas',
+    sectors: 'Commercial · Industrial · Energy',
   },
 };
