@@ -7,10 +7,10 @@ import { JOBS, TECHNICIANS } from '../data/mockData.js'
 const INSTALL_TYPES = ['installation', 'site-survey', 'certification', 'annual-test']
 
 const STATUS_COLOR = {
-  active:    { bg: '#FFF7ED', color: '#EA580C' },
-  scheduled: { bg: '#FFFBEB', color: '#D97706' },
-  completed: { bg: '#F0FDF4', color: '#16A34A' },
-  failed:    { bg: '#FEF2F2', color: '#DC2626' },
+  active:    { bg: '#F3F4F6', color: '#000000' },
+  scheduled: { bg: '#F3F4F6', color: '#000000' },
+  completed: { bg: '#F3F4F6', color: '#000000' },
+  failed:    { bg: '#F3F4F6', color: '#000000' },
 }
 
 const TYPE_ICON = {
@@ -109,7 +109,7 @@ export default function Installs() {
                         <>
                           <span className="dash-job-dot">·</span>
                           <div className="dash-progress-bar">
-                            <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: job.status === 'failed' ? '#DC2626' : '#16A34A' }} />
+                            <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: '#000000' }} />
                           </div>
                           <span className="dash-progress-pct">{job.progress}%</span>
                         </>

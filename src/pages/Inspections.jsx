@@ -7,10 +7,10 @@ import { JOBS, TECHNICIANS } from '../data/mockData.js'
 const INSPECT_TYPES = ['inspection', 'annual-test']
 
 const STATUS_COLOR = {
-  active:    { bg: '#FFF7ED', color: '#EA580C' },
-  scheduled: { bg: '#FFFBEB', color: '#D97706' },
-  completed: { bg: '#F0FDF4', color: '#16A34A' },
-  failed:    { bg: '#FEF2F2', color: '#DC2626' },
+  active:    { bg: '#F3F4F6', color: '#000000' },
+  scheduled: { bg: '#F3F4F6', color: '#000000' },
+  completed: { bg: '#F3F4F6', color: '#000000' },
+  failed:    { bg: '#F3F4F6', color: '#000000' },
 }
 
 const TYPE_ICON = {

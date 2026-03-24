@@ -5,11 +5,11 @@ import BranchTabs from '../components/BranchTabs'
 import { JOBS, MOCK_PROJECTS, TECHNICIANS } from '../data/mockData.js'
 
 const STAGE_COLOR = {
-  'In Progress': { color: '#EA580C', bg: '#FFF7ED' },
-  'Scheduled':   { color: '#D97706', bg: '#FFFBEB' },
-  'Awarded':     { color: '#2563EB', bg: '#EFF6FF' },
-  'Complete':    { color: '#16A34A', bg: '#F0FDF4' },
-  'Pending Review': { color: '#DC2626', bg: '#FEF2F2' },
+  'In Progress':    { color: '#000000', bg: '#F3F4F6' },
+  'Scheduled':      { color: '#000000', bg: '#F3F4F6' },
+  'Awarded':        { color: '#000000', bg: '#F3F4F6' },
+  'Complete':       { color: '#000000', bg: '#F3F4F6' },
+  'Pending Review': { color: '#000000', bg: '#F3F4F6' },
 }
 
 function getTech(id) {
@@ -47,7 +47,7 @@ export default function Installations() {
       {/* Quick links */}
       <div className="dash-tiles" style={{ marginBottom: 16 }}>
         <button className="dash-tile" onClick={() => navigate('/installations/installs')}
-          style={{ '--tile-color': '#EA580C', '--tile-bg': '#FFF7ED' }}>
+          style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}>
           <div className="dash-tile-icon"><Wrench size={18} /></div>
           <div className="dash-tile-text">
             <div className="dash-tile-label">Installs</div>
@@ -56,7 +56,7 @@ export default function Installations() {
           <ChevronRight size={14} className="dash-tile-arrow" />
         </button>
         <button className="dash-tile" onClick={() => navigate('/inspections')}
-          style={{ '--tile-color': '#2563EB', '--tile-bg': '#EFF6FF' }}>
+          style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}>
           <div className="dash-tile-icon"><Search size={18} /></div>
           <div className="dash-tile-text">
             <div className="dash-tile-label">Inspections</div>

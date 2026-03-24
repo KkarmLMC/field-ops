@@ -4,9 +4,9 @@ import BranchTabs from '../components/BranchTabs'
 import { MOCK_REPORTS, TECHNICIANS } from '../data/mockData.js'
 
 const STATUS_COLOR = {
-  Draft:     { bg: '#F3F4F6', color: '#374151' },
-  Submitted: { bg: '#EFF6FF', color: '#2563EB' },
-  Reviewed:  { bg: '#F0FDF4', color: '#16A34A' },
+  Draft:     { bg: '#F3F4F6', color: '#000000' },
+  Submitted: { bg: '#F3F4F6', color: '#000000' },
+  Reviewed:  { bg: '#F3F4F6', color: '#000000' },
 }
 
 function getTech(name) {
@@ -41,9 +41,9 @@ export default function DailyFieldLog() {
       {/* Summary strip */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
         {[
-          { label: 'Total Entries', value: reports.length, icon: <FileText size={14} />, color: '#374151' },
-          { label: 'Hours Logged',  value: `${totalHours}h`, icon: <Clock size={14} />, color: '#2563EB' },
-          { label: 'Reviewed',      value: submitted, icon: <CheckCircle size={14} />, color: '#16A34A' },
+          { label: 'Total Entries', value: reports.length, icon: <FileText size={14} />, color: '#000000' },
+          { label: 'Hours Logged',  value: `${totalHours}h`, icon: <Clock size={14} />, color: '#000000' },
+          { label: 'Reviewed',      value: submitted, icon: <CheckCircle size={14} />, color: '#000000' },
         ].map(s => (
           <div key={s.label} className="dash-card" style={{ flex: 1, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{ color: s.color }}>{s.icon}</div>
