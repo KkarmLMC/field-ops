@@ -37,10 +37,10 @@ export default function Dashboard() {
   const today = new Date()
   const todayStr = today.toISOString().slice(0, 10)
 
-  const todayJobs    = JOBS.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled'))
-  const activeJobs   = JOBS.filter(j => j.status === 'active')
-  const failedJobs   = JOBS.filter(j => j.status === 'failed')
-  const upcomingJobs = JOBS.filter(j => j.status === 'scheduled' && j.scheduledDate > todayStr).slice(0, 5)
+  const todayJobs    = JOBS.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled')).slice(0, 4)
+  const activeJobs   = JOBS.filter(j => j.status === 'active').slice(0, 4)
+  const failedJobs   = JOBS.filter(j => j.status === 'failed').slice(0, 4)
+  const upcomingJobs = JOBS.filter(j => j.status === 'scheduled' && j.scheduledDate > todayStr).slice(0, 4)
 
   return (
     <div className="page-content fade-in">
@@ -106,10 +106,12 @@ export default function Dashboard() {
             </span>
             <span className="dash-card-meta">{todayStr}</span>
           </div>
-          {todayJobs.length === 0
-            ? <EmptyState message="No jobs scheduled today" />
-            : todayJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
-          }
+          <div className="dash-card-body">
+            {todayJobs.length === 0
+              ? <EmptyState message="No jobs scheduled today" />
+              : todayJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
+            }
+          </div>
         </div>
 
         {/* Active Jobs */}
@@ -123,10 +125,12 @@ export default function Dashboard() {
               View all <ChevronRight size={11} />
             </button>
           </div>
-          {activeJobs.length === 0
-            ? <EmptyState message="No active jobs" />
-            : activeJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
-          }
+          <div className="dash-card-body">
+            {activeJobs.length === 0
+              ? <EmptyState message="No active jobs" />
+              : activeJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
+            }
+          </div>
         </div>
 
         {/* Needs Attention */}
@@ -140,10 +144,12 @@ export default function Dashboard() {
               <span style={{ fontSize: 11, fontWeight: 700, color: '#DC2626' }}>{failedJobs.length} failed</span>
             )}
           </div>
-          {failedJobs.length === 0
-            ? <EmptyState message="All clear — no issues" icon="✅" />
-            : failedJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
-          }
+          <div className="dash-card-body">
+            {failedJobs.length === 0
+              ? <EmptyState message="All clear — no issues" icon="✅" />
+              : failedJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
+            }
+          </div>
         </div>
 
         {/* Upcoming */}
@@ -154,10 +160,12 @@ export default function Dashboard() {
               Upcoming
             </span>
           </div>
-          {upcomingJobs.length === 0
-            ? <EmptyState message="Nothing scheduled ahead" />
-            : upcomingJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
-          }
+          <div className="dash-card-body">
+            {upcomingJobs.length === 0
+              ? <EmptyState message="Nothing scheduled ahead" />
+              : upcomingJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
+            }
+          </div>
         </div>
 
       </div>
