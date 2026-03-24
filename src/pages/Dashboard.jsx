@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, Zap, ChevronRight, Calendar, Clock, ArrowRight } from 'lucide-react';
-import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js';
+import { AlertTriangle, Zap, ChevronRight, Calendar, Clock, ArrowRight } from 'lucide-react'
+import BranchTabs from '../components/BranchTabs'
+import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
 
 function getTechName(id) {
-  return TECHNICIANS.find(t => t.id === id)?.name ?? '—';
+  return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
 }
 
 function getGreeting() {
@@ -17,13 +19,6 @@ function formatDate(d) {
   return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
 }
 
-const STATUS_COLOR = {
-  active:    { bg: '#FFF7ED', color: '#EA580C', dot: '#EA580C' },
-  scheduled: { bg: '#FFFBEB', color: '#D97706', dot: '#D97706' },
-  completed: { bg: '#F0FDF4', color: '#16A34A', dot: '#16A34A' },
-  failed:    { bg: '#FEF2F2', color: '#DC2626', dot: '#DC2626' },
-}
-
 const TYPE_ICON = {
   installation: '⚡',
   inspection:   '🔍',
@@ -34,13 +29,20 @@ const TYPE_ICON = {
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const today = new Date()
+  const [branch, setBranch] = useState('lm')
+
+  const today    = new Date()
   const todayStr = today.toISOString().slice(0, 10)
 
-  const todayJobs    = JOBS.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled')).slice(0, 4)
-  const activeJobs   = JOBS.filter(j => j.status === 'active').slice(0, 4)
-  const failedJobs   = JOBS.filter(j => j.status === 'failed').slice(0, 4)
-  const upcomingJobs = JOBS.filter(j => j.status === 'scheduled' && j.scheduledDate > todayStr).slice(0, 4)
+  const branchJobs   = JOBS.filter(j => j.branch === branch)
+  const todayJobs    = branchJobs.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled')).slice(0, 4)
+  const activeJobs   = branchJobs.filter(j => j.status === 'active').slice(0, 4)
+  const failedJobs   = branchJobs.filter(j => j.status === 'failed').slice(0, 4)
+  const upcomingJobs = branchJobs.filter(j => j.status === 'scheduled' && j.scheduledDate > todayStr).slice(0, 4)
+
+  const techsInField = JOBS.filter(j => j.branch === branch && j.status === 'active')
+    .map(j => j.assignedTo)
+    .filter((id, i, arr) => arr.indexOf(id) === i).length
 
   return (
     <div className="page-content fade-in">
@@ -58,9 +60,9 @@ export default function Dashboard() {
         <div className="dash-stats-row">
           {[
             { value: todayJobs.length,    label: 'Today',    color: 'white' },
-            { value: STATS.jobsCompleted, label: 'Done',     color: '#4ade80' },
-            { value: failedJobs.length,   label: 'Failed',   color: '#f87171' },
-            { value: STATS.techsInField,  label: 'In Field', color: '#fb923c' },
+            { value: activeJobs.length,   label: 'Active',   color: 'white' },
+            { value: failedJobs.length,   label: 'Failed',   color: 'white' },
+            { value: techsInField,        label: 'In Field', color: 'white' },
           ].map((s, i) => (
             <div key={i} className="dash-stat">
               <div className="dash-stat-value" style={{ color: s.color }}>{s.value}</div>
@@ -70,13 +72,16 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Branch selector */}
+      <BranchTabs active={branch} onChange={setBranch} />
+
       {/* Quick nav tiles */}
       <div className="dash-tiles">
         {[
-          { icon: '⚡', label: 'Installs',       sub: `${activeJobs.length} active`,       path: '/installations/installs', color: '#EA580C', bg: '#FFF7ED' },
-          { icon: '👷', label: 'Technicians',   sub: `${STATS.techsInField} in field`,    path: '/technicians',            color: '#2563EB', bg: '#EFF6FF' },
-          { icon: '📋', label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',                color: '#16A34A', bg: '#F0FDF4' },
-          { icon: '🏗️', label: 'Installations', sub: `${STATS.activeProjects} open`,      path: '/installations',          color: '#D97706', bg: '#FFFBEB' },
+          { icon: '⚡', label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: '#F3F4F6' },
+          { icon: '👷', label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: '#F3F4F6' },
+          { icon: '📋', label: 'Field Reports',  sub: `${STATS.reportsThisMonth} this mo`,path: '/reports',                color: '#000000', bg: '#F3F4F6' },
+          { icon: '🏗️', label: 'Installations', sub: `${branchJobs.length} total`,        path: '/installations',          color: '#000000', bg: '#F3F4F6' },
         ].map(a => (
           <button
             key={a.path}
@@ -121,7 +126,7 @@ export default function Dashboard() {
               <span className="live-dot" />
               Active Jobs
             </span>
-            <button className="dash-card-link" onClick={() => navigate('/jobs')}>
+            <button className="dash-card-link" onClick={() => navigate('/installations/installs')}>
               View all <ChevronRight size={11} />
             </button>
           </div>
@@ -134,14 +139,14 @@ export default function Dashboard() {
         </div>
 
         {/* Needs Attention */}
-        <div className="dash-card" style={failedJobs.length > 0 ? { borderColor: '#FECACA' } : {}}>
-          <div className="dash-card-head" style={failedJobs.length > 0 ? { background: '#FEF2F2' } : {}}>
-            <span className="dash-card-title" style={failedJobs.length > 0 ? { color: '#DC2626' } : {}}>
+        <div className="dash-card">
+          <div className="dash-card-head">
+            <span className="dash-card-title">
               <AlertTriangle size={14} />
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#DC2626' }}>{failedJobs.length} failed</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#000000' }}>{failedJobs.length} failed</span>
             )}
           </div>
           <div className="dash-card-body">
@@ -156,7 +161,7 @@ export default function Dashboard() {
         <div className="dash-card">
           <div className="dash-card-head">
             <span className="dash-card-title">
-              <Zap size={14} style={{ color: 'var(--blue)' }} />
+              <Zap size={14} />
               Upcoming
             </span>
           </div>
@@ -173,7 +178,7 @@ export default function Dashboard() {
   )
 }
 
-function EmptyState({ message, icon = '—' }) {
+function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
@@ -185,11 +190,9 @@ function EmptyState({ message, icon = '—' }) {
 }
 
 function JobRow({ job, navigate }) {
-  const sc = STATUS_COLOR[job.status] || STATUS_COLOR.scheduled
-
   return (
-    <div className="dash-job-row" onClick={() => navigate(`/jobs/${job.id}`)}>
-      <div className="dash-job-icon" style={{ background: sc.bg }}>
+    <div className="dash-job-row" onClick={() => navigate(`/installations/installs/${job.id}`)}>
+      <div className="dash-job-icon" style={{ background: '#F3F4F6', fontSize: 16 }}>
         {TYPE_ICON[job.type] || '⚡'}
       </div>
       <div className="dash-job-info">
@@ -200,20 +203,14 @@ function JobRow({ job, navigate }) {
             <>
               <span className="dash-job-dot">·</span>
               <div className="dash-progress-bar">
-                <div
-                  className="dash-progress-fill"
-                  style={{
-                    width: `${job.progress}%`,
-                    background: job.status === 'failed' ? '#DC2626' : '#16A34A',
-                  }}
-                />
+                <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: '#000000' }} />
               </div>
               <span className="dash-progress-pct">{job.progress}%</span>
             </>
           )}
         </div>
       </div>
-      <div className="dash-status-pill" style={{ background: sc.bg, color: sc.color }}>
+      <div className="dash-status-pill" style={{ background: '#F3F4F6', color: '#000000' }}>
         {job.status}
       </div>
     </div>
