@@ -93,7 +93,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
                 {tab.label}
               </div>
               <div
-                className="branch-card-pill"
+                className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
                 style={{
                   background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive + '22',
                   color:      showActive ? '#fff' : tab.bgActive,

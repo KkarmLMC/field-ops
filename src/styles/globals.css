@@ -157,7 +157,7 @@ body {
 }
 .sidebar-item:hover { background: var(--hover); color: var(--text-1); }
 .sidebar-item-active {
-  background: var(--navy) !important;
+  background: #000000 !important;
   color: #ffffff !important;
   font-weight: 600;
 }
@@ -524,6 +524,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   font-size: 10px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;
 }
+.branch-card-pill--on { color: #ffffff !important; }
 .branch-card-sectors {
   font-size: 11px; margin-bottom: 14px; font-family: var(--font);
 }
@@ -563,7 +564,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   color: var(--text-2) !important;
 }
 .sidebar-sub-item.sidebar-item-active {
-  background: var(--navy) !important;
+  background: #000000 !important;
   color: white !important;
 }
 
