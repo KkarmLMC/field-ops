@@ -499,34 +499,59 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* Header subtitle */
 .app-subtitle { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; }
 
-/* ─── Branch Tabs ──────────────────────────────────────────────── */
+/* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; margin-bottom: 16px;
+  gap: 10px; margin-bottom: 16px;
 }
-.branch-tab {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px; border-radius: 10px;
-  background: var(--surface); border: 1px solid var(--border);
-  cursor: pointer; text-align: left; transition: border-color 0.15s, background 0.15s;
+.branch-card {
+  display: flex; flex-direction: column;
+  padding: 16px 18px 14px; border-radius: 16px;
+  border: none; cursor: pointer; text-align: left;
+  transition: opacity 0.15s, transform 0.12s;
 }
-.branch-tab:hover { border-color: var(--text-3); }
-.branch-tab-active { font-weight: 600; }
-.branch-tab-icon { font-size: 20px; flex-shrink: 0; }
-.branch-tab-text { flex: 1; min-width: 0; }
-.branch-tab-name  { font-size: 13px; font-weight: 600; color: var(--text-1); }
-.branch-tab-sectors { font-size: 10px; color: var(--text-3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.branch-tab-badge {
-  flex-shrink: 0; min-width: 22px; height: 22px;
-  border-radius: 11px; padding: 0 6px;
-  background: var(--hover); color: var(--text-2);
-  font-size: 11px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s, color 0.15s;
+.branch-card:hover  { opacity: 0.9; }
+.branch-card:active { transform: scale(0.98); }
+.branch-card-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 8px; margin-bottom: 3px;
 }
-@media (max-width: 767px) {
-  .branch-tabs { grid-template-columns: 1fr 1fr; }
-  .branch-tab-sectors { display: none; }
+.branch-card-name {
+  font-size: 15px; font-weight: 800; line-height: 1.2;
+  font-family: var(--font);
+}
+.branch-card-pill {
+  flex-shrink: 0; padding: 3px 9px; border-radius: 20px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;
+}
+.branch-card-sectors {
+  font-size: 11px; margin-bottom: 14px; font-family: var(--font);
+}
+.branch-card-bar-wrap  { margin-bottom: 12px; }
+.branch-card-bar-track { height: 4px; border-radius: 4px; overflow: hidden; }
+.branch-card-bar-fill  { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.branch-card-stats     { display: flex; }
+.branch-card-stat {
+  flex: 1; display: flex; flex-direction: column; gap: 1px;
+  padding-right: 10px;
+}
+.branch-card-stat + .branch-card-stat {
+  padding-left: 10px; padding-right: 0;
+  border-left: 1px solid rgba(128,128,128,0.2);
+}
+.branch-card-stat-value {
+  font-size: 20px; font-weight: 800; line-height: 1;
+  font-variant-numeric: tabular-nums; font-family: var(--font);
+}
+.branch-card-stat-label {
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.06em; margin-top: 1px; font-family: var(--font);
+}
+@media (max-width: 480px) {
+  .branch-card-name       { font-size: 13px; }
+  .branch-card-sectors    { font-size: 10px; margin-bottom: 10px; }
+  .branch-card-stat-value { font-size: 16px; }
 }
 
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
