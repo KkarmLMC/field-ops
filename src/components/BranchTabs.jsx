@@ -30,7 +30,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#F0F3FA',
-      textInactive:'#04245C',
+      textInactive:'#111827',
       subInactive: '#6B7BA4',
     },
     {
