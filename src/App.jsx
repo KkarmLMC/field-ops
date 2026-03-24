@@ -1,44 +1,50 @@
 import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, ArrowLeft, Wifi } from 'lucide-react'
-import Sidebar    from './components/Sidebar'
-import SyncBadge  from './components/SyncBadge'
-import Projects      from './pages/Projects'
-import ProjectDetail from './pages/ProjectDetail'
-import Reports   from './pages/Reports'
-import Forms     from './pages/Forms'
+import { Menu, ArrowLeft } from 'lucide-react'
+import Sidebar       from './components/Sidebar'
+import SyncBadge     from './components/SyncBadge'
 import Dashboard     from './pages/Dashboard'
-import Jobs          from './pages/Jobs'
+import Installations from './pages/Installations'
+import Installs      from './pages/Installs'
+import ProjectDetail from './pages/ProjectDetail'
+import Inspections   from './pages/Inspections'
+import DailyFieldLog from './pages/DailyFieldLog'
+import Reports       from './pages/Reports'
+import Forms         from './pages/Forms'
+import Technicians   from './pages/Technicians'
 import JobDetail     from './pages/JobDetail'
 import FormRunner    from './pages/FormRunner'
-import Technicians   from './pages/Technicians'
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
-  '/dashboard':   { title: 'Dashboard',    parent: null },
-  '/projects':    { title: 'Projects',     parent: null },
-  '/reports':     { title: 'Reports',      parent: null },
-  '/forms':       { title: 'Forms',        parent: null },
-  '/jobs':        { title: 'Jobs',         parent: null },
-  '/technicians': { title: 'Technicians',  parent: null },
+  '/dashboard':              { title: 'Dashboard',        parent: null },
+  '/installations':          { title: 'Installations',    parent: null },
+  '/installations/installs': { title: 'Installs',         parent: '/installations' },
+  '/inspections':            { title: 'Inspections',      parent: null },
+  '/daily-field-log':        { title: 'Daily Field Log',  parent: null },
+  '/reports':                { title: 'Reports',          parent: null },
+  '/forms':                  { title: 'Forms',            parent: null },
+  '/technicians':            { title: 'Technicians',      parent: null },
 }
 
 function getPageMeta(pathname) {
-  if (/^\/projects\/[^/]+$/.test(pathname))                     return { title: 'Project Detail', parent: '/projects' }
-  if (/^\/jobs\/[^/]+$/.test(pathname) && !/\/form\//.test(pathname)) return { title: 'Job Detail', parent: '/jobs' }
-  if (/^\/jobs\/[^/]+\/form\/[^/]+$/.test(pathname)) {
-    const jobId = pathname.split('/')[2]
-    const fid   = pathname.split('/')[4]
+  if (/^\/installations\/[^/]+$/.test(pathname) && pathname !== '/installations/installs')
+    return { title: 'Installation Detail', parent: '/installations' }
+  if (/^\/installations\/installs\/[^/]+$/.test(pathname) && !/\/form\//.test(pathname))
+    return { title: 'Install Detail', parent: '/installations/installs' }
+  if (/^\/installations\/installs\/[^/]+\/form\/[^/]+$/.test(pathname)) {
+    const jobId = pathname.split('/')[3]
+    const fid   = pathname.split('/')[5]
     const labels = { 'site-survey': 'Site Survey', installation: 'Installation', inspection: 'Inspection' }
-    return { title: labels[fid] || 'Form', sub: 'NFPA 780', parent: `/jobs/${jobId}` }
+    return { title: labels[fid] || 'Form', sub: 'NFPA 780', parent: `/installations/installs/${jobId}` }
   }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
 
-// ─── Mobile top bar (hidden ≥768 px) ──────────────────────────────────────────
+// ─── Mobile top bar ────────────────────────────────────────────────────────────
 function MobileHeader({ onMenuOpen }) {
   const location = useLocation()
-  const navigate  = useNavigate()
+  const navigate = useNavigate()
   const meta = getPageMeta(location.pathname)
 
   return (
@@ -61,10 +67,10 @@ function MobileHeader({ onMenuOpen }) {
   )
 }
 
-// ─── Desktop top bar (hidden <768 px) ─────────────────────────────────────────
+// ─── Desktop top bar ───────────────────────────────────────────────────────────
 function DesktopTopBar() {
   const location = useLocation()
-  const navigate  = useNavigate()
+  const navigate = useNavigate()
   const meta = getPageMeta(location.pathname)
 
   return (
@@ -100,8 +106,11 @@ function DesktopTopBar() {
   )
 }
 
-// ─── Page transition wrapper ───────────────────────────────────────────────────
-const TOP_TABS = ['/dashboard', '/projects', '/jobs', '/reports', '/forms', '/technicians']
+// ─── Page transition ───────────────────────────────────────────────────────────
+const TOP_TABS = [
+  '/dashboard', '/installations', '/inspections',
+  '/daily-field-log', '/reports', '/forms', '/technicians',
+]
 
 function getTabIndex(path) {
   const idx = TOP_TABS.findIndex(t => path === t || path.startsWith(t + '/'))
@@ -109,8 +118,8 @@ function getTabIndex(path) {
 }
 
 function PageTransition({ children }) {
-  const location  = useLocation()
-  const prevRef   = useRef(location.pathname)
+  const location     = useLocation()
+  const prevRef      = useRef(location.pathname)
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -122,11 +131,10 @@ function PageTransition({ children }) {
     const prevTop = TOP_TABS.some(t => prev === t)
     const currTop = TOP_TABS.some(t => curr === t)
     let anim = 'fadeIn'
-    if (prevTop && !currTop) anim = 'slideInRight'
-    else if (!prevTop && currTop) anim = 'slideInLeft'
-    else if (prevTop && currTop) {
-      anim = getTabIndex(curr) > getTabIndex(prev) ? 'slideInRight' : 'slideInLeft'
-    }
+    if (prevTop && !currTop)       anim = 'slideInRight'
+    else if (!prevTop && currTop)  anim = 'slideInLeft'
+    else if (prevTop && currTop)   anim = getTabIndex(curr) > getTabIndex(prev) ? 'slideInRight' : 'slideInLeft'
+
     const el = containerRef.current
     el.style.animation = 'none'
     void el.offsetWidth
@@ -140,10 +148,10 @@ function PageTransition({ children }) {
   )
 }
 
-// ─── Root app ─────────────────────────────────────────────────────────────────
+// ─── Root ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [collapsed,   setCollapsed]   = useState(false)
-  const [mobileOpen,  setMobileOpen]  = useState(false)
+  const [collapsed,  setCollapsed]  = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
     <div className="app-shell">
@@ -153,27 +161,33 @@ export default function App() {
         mobileOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
       />
-
       <div className="main-area">
-        {/* Visible on mobile only */}
         <MobileHeader onMenuOpen={() => setMobileOpen(true)} />
-
-        {/* Visible on desktop only */}
         <DesktopTopBar />
-
         <PageTransition>
           <Routes>
-            <Route path="/"                         element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard"                element={<Dashboard />} />
-            <Route path="/projects"                 element={<Projects />} />
-            <Route path="/projects/:id"             element={<ProjectDetail />} />
-            <Route path="/jobs"                     element={<Jobs />} />
-            <Route path="/jobs/:jobId"              element={<JobDetail />} />
-            <Route path="/jobs/:jobId/form/:formId" element={<FormRunner />} />
-            <Route path="/reports"                  element={<Reports />} />
-            <Route path="/forms"                    element={<Forms />} />
-            <Route path="/technicians"              element={<Technicians />} />
-            <Route path="*"                         element={<Navigate to="/dashboard" replace />} />
+            <Route path="/"                                                    element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard"                                           element={<Dashboard />} />
+
+            {/* Installations group */}
+            <Route path="/installations"                                       element={<Installations />} />
+            <Route path="/installations/:id"                                   element={<ProjectDetail />} />
+            <Route path="/installations/installs"                              element={<Installs />} />
+            <Route path="/installations/installs/:jobId"                       element={<JobDetail />} />
+            <Route path="/installations/installs/:jobId/form/:formId"          element={<FormRunner />} />
+
+            {/* Legacy redirects */}
+            <Route path="/projects"                                            element={<Navigate to="/installations" replace />} />
+            <Route path="/projects/:id"                                        element={<Navigate to="/installations" replace />} />
+            <Route path="/jobs"                                                element={<Navigate to="/installations/installs" replace />} />
+            <Route path="/jobs/:jobId"                                         element={<Navigate to="/installations/installs" replace />} />
+
+            <Route path="/inspections"                                         element={<Inspections />} />
+            <Route path="/daily-field-log"                                     element={<DailyFieldLog />} />
+            <Route path="/reports"                                             element={<Reports />} />
+            <Route path="/forms"                                               element={<Forms />} />
+            <Route path="/technicians"                                         element={<Technicians />} />
+            <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </PageTransition>
       </div>

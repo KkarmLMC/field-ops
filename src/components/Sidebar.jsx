@@ -1,17 +1,30 @@
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
-  LayoutDashboard, FolderOpen, Zap, ClipboardList,
-  Users, Settings, HelpCircle, ChevronLeft, ChevronRight,
-  FileText, PanelLeftClose, PanelLeftOpen,
+  LayoutDashboard, HardHat, Wrench, Search,
+  ClipboardList, FileText, Users, Settings,
+  HelpCircle, ChevronRight, PanelLeftClose, PanelLeftOpen,
+  BookOpen,
 } from 'lucide-react'
 
+// ── Nav structure ─────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { path: '/dashboard',   Icon: LayoutDashboard, label: 'Dashboard'   },
-  { path: '/projects',    Icon: FolderOpen,       label: 'Projects'    },
-  { path: '/jobs',        Icon: Zap,              label: 'Jobs'        },
-  { path: '/reports',     Icon: ClipboardList,    label: 'Reports'     },
-  { path: '/forms',       Icon: FileText,          label: 'Forms'       },
-  { path: '/technicians', Icon: Users,            label: 'Technicians' },
+  { path: '/dashboard',     Icon: LayoutDashboard, label: 'Dashboard' },
+  {
+    // Expandable group
+    groupId: 'installations',
+    Icon: HardHat,
+    label: 'Installations',
+    basePath: '/installations',
+    children: [
+      { path: '/installations/installs', Icon: Wrench,  label: 'Installs' },
+    ],
+  },
+  { path: '/inspections',   Icon: Search,          label: 'Inspections' },
+  { path: '/daily-field-log', Icon: BookOpen,      label: 'Daily Field Log' },
+  { path: '/reports',       Icon: ClipboardList,   label: 'Reports' },
+  { path: '/forms',         Icon: FileText,        label: 'Forms' },
+  { path: '/technicians',   Icon: Users,           label: 'Technicians' },
 ]
 
 const FOOTER_ITEMS = [
@@ -20,54 +33,102 @@ const FOOTER_ITEMS = [
 ]
 
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate  = useNavigate()
+  const location  = useLocation()
+
+  // Keep Installations open if currently on an installations sub-route
+  const [groupsOpen, setGroupsOpen] = useState(() => ({
+    installations: location.pathname.startsWith('/installations'),
+  }))
 
   const goTo = (path) => {
     navigate(path)
     onClose?.()
   }
 
+  const toggleGroup = (groupId) => {
+    setGroupsOpen(s => ({ ...s, [groupId]: !s[groupId] }))
+  }
+
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + '/')
+
   return (
     <>
-      {/* Mobile dim overlay */}
-      {mobileOpen && (
-        <div className="sidebar-overlay" onClick={onClose} />
-      )}
+      {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
 
       <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''} ${mobileOpen ? 'sidebar-open' : ''}`}>
 
-        {/* Brand header — logo takes full width, no toggle button here */}
+        {/* Logo */}
         <div className="sidebar-brand-row">
-          {collapsed ? (
-            <img
-              src="/lm-icon.svg"
-              alt="Lightning Master"
-              className="sidebar-logo-icon-img"
-            />
-          ) : (
-            <img
-              src="/lightning-master-logo.svg"
-              alt="Lightning Master"
-              className="sidebar-logo-img"
-            />
-          )}
+          {collapsed
+            ? <img src="/lm-icon.svg"              alt="Lightning Master" className="sidebar-logo-icon-img" />
+            : <img src="/lightning-master-logo.svg" alt="Lightning Master" className="sidebar-logo-img" />
+          }
         </div>
 
-        {/* Main navigation */}
+        {/* Main nav */}
         <nav className="sidebar-nav">
           {!collapsed && <div className="sidebar-section-label">MENU</div>}
-          {NAV_ITEMS.map(({ path, Icon, label }) => {
-            const active = location.pathname === path || location.pathname.startsWith(path + '/')
+
+          {NAV_ITEMS.map((item) => {
+            // ── Expandable group ────────────────────────────────────────────
+            if (item.groupId) {
+              const groupActive  = location.pathname.startsWith(item.basePath)
+              const open         = !collapsed && groupsOpen[item.groupId]
+
+              return (
+                <div key={item.groupId}>
+                  {/* Group parent button */}
+                  <button
+                    className={`sidebar-item ${groupActive && collapsed ? 'sidebar-item-active' : ''}`}
+                    onClick={() => collapsed ? goTo(item.basePath) : toggleGroup(item.groupId)}
+                    title={collapsed ? item.label : undefined}
+                  >
+                    <item.Icon size={17} style={{ flexShrink: 0 }} />
+                    {!collapsed && (
+                      <>
+                        <span className="sidebar-item-label">{item.label}</span>
+                        <ChevronRight
+                          size={13}
+                          style={{
+                            marginLeft: 'auto',
+                            flexShrink: 0,
+                            transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+                            transition: 'transform 0.18s',
+                            color: 'var(--text-3)',
+                          }}
+                        />
+                      </>
+                    )}
+                  </button>
+
+                  {/* Children — only when expanded and not collapsed */}
+                  {open && item.children.map(({ path, Icon, label }) => (
+                    <button
+                      key={path}
+                      className={`sidebar-item sidebar-sub-item ${isActive(path) ? 'sidebar-item-active' : ''}`}
+                      onClick={() => goTo(path)}
+                    >
+                      <Icon size={15} style={{ flexShrink: 0 }} />
+                      <span className="sidebar-item-label">{label}</span>
+                    </button>
+                  ))}
+                </div>
+              )
+            }
+
+            // ── Regular item ────────────────────────────────────────────────
+            const active = isActive(item.path)
             return (
               <button
-                key={path}
+                key={item.path}
                 className={`sidebar-item ${active ? 'sidebar-item-active' : ''}`}
-                onClick={() => goTo(path)}
-                title={collapsed ? label : undefined}
+                onClick={() => goTo(item.path)}
+                title={collapsed ? item.label : undefined}
               >
-                <Icon size={17} style={{ flexShrink: 0 }} />
-                {!collapsed && <span className="sidebar-item-label">{label}</span>}
+                <item.Icon size={17} style={{ flexShrink: 0 }} />
+                {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
                 {collapsed && active && (
                   <div style={{
                     position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
@@ -79,7 +140,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
           })}
         </nav>
 
-        {/* Footer — settings, help, + collapse toggle at the very bottom */}
+        {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && <div className="sidebar-section-label">ACCOUNT</div>}
           {FOOTER_ITEMS.map(({ Icon, label }) => (
@@ -88,19 +149,19 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
               {!collapsed && <span className="sidebar-item-label">{label}</span>}
             </button>
           ))}
-          {/* Collapse / expand toggle lives here */}
           <button
             className="sidebar-item sidebar-collapse-btn"
             onClick={onToggle}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed
-              ? <PanelLeftOpen size={17} style={{ flexShrink: 0 }} />
+              ? <PanelLeftOpen  size={17} style={{ flexShrink: 0 }} />
               : <PanelLeftClose size={17} style={{ flexShrink: 0 }} />
             }
             {!collapsed && <span className="sidebar-item-label">Collapse</span>}
           </button>
         </div>
+
       </aside>
     </>
   )

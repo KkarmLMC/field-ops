@@ -73,10 +73,10 @@ export default function Dashboard() {
       {/* Quick nav tiles */}
       <div className="dash-tiles">
         {[
-          { icon: '⚡', label: 'View Jobs',     sub: `${activeJobs.length} active`,      path: '/jobs',         color: '#EA580C', bg: '#FFF7ED' },
-          { icon: '👷', label: 'Technicians',   sub: `${STATS.techsInField} in field`,   path: '/technicians',  color: '#2563EB', bg: '#EFF6FF' },
-          { icon: '📋', label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',     color: '#16A34A', bg: '#F0FDF4' },
-          { icon: '🏗️', label: 'Projects',      sub: `${STATS.activeProjects} open`,     path: '/projects',    color: '#D97706', bg: '#FFFBEB' },
+          { icon: '⚡', label: 'Installs',       sub: `${activeJobs.length} active`,       path: '/installations/installs', color: '#EA580C', bg: '#FFF7ED' },
+          { icon: '👷', label: 'Technicians',   sub: `${STATS.techsInField} in field`,    path: '/technicians',            color: '#2563EB', bg: '#EFF6FF' },
+          { icon: '📋', label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',                color: '#16A34A', bg: '#F0FDF4' },
+          { icon: '🏗️', label: 'Installations', sub: `${STATS.activeProjects} open`,      path: '/installations',          color: '#D97706', bg: '#FFFBEB' },
         ].map(a => (
           <button
             key={a.path}
