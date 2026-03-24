@@ -33,7 +33,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#F0F3FA',
-      textInactive:'#111827',
+      textInactive:'#000000',
       subInactive: '#6B7BA4',
     },
     {
@@ -47,7 +47,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#FEF0F1',
-      textInactive:'#111827',
+      textInactive:'#000000',
       subInactive: '#C0667A',
     },
     {
@@ -61,7 +61,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       textActive:  '#ffffff',
       subActive:   'rgba(255,255,255,0.55)',
       bgInactive:  '#ECEEF0',
-      textInactive:'#111827',
+      textInactive:'#000000',
       subInactive: '#6B7280',
     },
   ]
