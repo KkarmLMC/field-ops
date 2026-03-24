@@ -29,6 +29,7 @@ export default function Inspections() {
   const [branch, setBranch]           = useState('bolt')
   const [statusFilter, setStatusFilter] = useState('all')
   const [search, setSearch]           = useState('')
+  const [searchOpen, setSearchOpen]   = useState(false)
 
   const lmCount         = JOBS.filter(j => j.branch === 'lm'         && INSPECT_TYPES.includes(j.type)).length
   const boltCount       = JOBS.filter(j => j.branch === 'bolt'        && INSPECT_TYPES.includes(j.type)).length
@@ -52,17 +53,8 @@ export default function Inspections() {
         boltDallasCount={boltDallasCount}
       />
 
-      {/* Toolbar */}
+      {/* Filters + expandable search */}
       <div className="list-toolbar">
-        <div className="list-search">
-          <Search size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
-          <input
-            placeholder="Search inspections…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 13, color: 'var(--text-1)', width: '100%' }}
-          />
-        </div>
         <div className="list-filters">
           {STATUS_FILTERS.map(s => (
             <button
@@ -73,6 +65,29 @@ export default function Inspections() {
               {s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
           ))}
+        </div>
+        <div className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}>
+          {searchOpen ? (
+            <div className="list-search-input">
+              <Search size={13} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              <input
+                autoFocus
+                placeholder="Search inspections…"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                onBlur={() => { if (!search) setSearchOpen(false) }}
+                style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 13, color: 'var(--text-1)', width: '100%' }}
+              />
+              <button
+                onClick={() => { setSearch(''); setSearchOpen(false) }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex', alignItems: 'center' }}
+              >✕</button>
+            </div>
+          ) : (
+            <button className="search-icon-btn" onClick={() => setSearchOpen(true)}>
+              <Search size={15} />
+            </button>
+          )}
         </div>
       </div>
 

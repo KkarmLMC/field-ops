@@ -570,17 +570,28 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── List page toolbar ────────────────────────────────────────── */
 .list-toolbar {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 12px; flex-wrap: wrap;
-}
-.list-search {
-  display: flex; align-items: center; gap: 8px;
-  flex: 1; min-width: 180px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 8px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-bottom: 12px;
 }
 .list-filters {
   display: flex; gap: 4px; flex-wrap: wrap;
+}
+/* Search icon button — collapsed state */
+.search-icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-2); cursor: pointer; flex-shrink: 0;
+  transition: border-color 0.12s, color 0.12s;
+}
+.search-icon-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+/* Search wrap — expanded state */
+.list-search-wrap { flex-shrink: 0; }
+.list-search-wrap--open { flex: 0 1 220px; }
+.list-search-input {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--text-1);
+  border-radius: 8px; padding: 7px 10px;
 }
 .filter-chip {
   padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border);
