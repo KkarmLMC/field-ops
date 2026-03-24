@@ -39,13 +39,13 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
       stats:   boltStats,
       total:   boltCount ?? (boltStats.active + boltStats.scheduled + boltStats.completed),
       // Active palette
-      bgActive:   '#F5333F',   // red brand
+      bgActive:   '#04245C',   // navy (same as LM)
       textActive: '#ffffff',
       subActive:  'rgba(255,255,255,0.55)',
       // Inactive palette
-      bgInactive:   '#FEF0F1',
-      textInactive: '#C0101B',
-      subInactive:  '#C0667A',
+      bgInactive:   '#F0F3FA',
+      textInactive: '#04245C',
+      subInactive:  '#6B7BA4',
     },
   ]
 
