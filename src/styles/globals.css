@@ -8,12 +8,13 @@
   --blue-soft: #EEF3FC;
   --blue-mid:  rgba(0,71,186,0.1);
   --navy:      #04245C;
-  --bg:        #F4F5F7;
+  --bg:        #FFFFFF;
   --surface:   #FFFFFF;
-  --border:    #E8EAF0;
-  --border-l:  #F0F1F5;
-  --text-1:    #111827;
-  --text-2:    #4B5563;
+  --border:    #E5E7EB;
+  --border-l:  #F3F4F6;
+  --hover:     #F3F4F6;
+  --text-1:    #000000;
+  --text-2:    #374151;
   --text-3:    #9CA3AF;
   --text-4:    #D1D5DB;
   --green:     #10B981;
@@ -140,7 +141,7 @@ body {
   color: var(--text-3); display: flex; align-items: center;
   justify-content: center; cursor: pointer; transition: background 0.14s, color 0.14s;
 }
-.sidebar-toggle-btn:hover { background: var(--border-l); color: var(--text-1); }
+.sidebar-toggle-btn:hover { background: var(--hover); color: var(--text-1); }
 
 /* Collapsed brand row — stacks logo + expand button vertically */
 .sidebar-brand-collapsed {
@@ -154,7 +155,7 @@ body {
 .sidebar-expand-btn {
   width: 40px; height: 32px; border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--hover);
   color: var(--text-3);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: background 0.14s, color 0.14s;
@@ -177,12 +178,12 @@ body {
   display: flex; align-items: center; gap: 10px;
   padding: 9px 10px; border-radius: 8px; width: 100%;
   background: none; border: none; cursor: pointer;
-  color: var(--text-2);
+  color: var(--text-1);
   font-family: var(--font); font-size: 13px; font-weight: 500;
   text-align: left; white-space: nowrap;
   transition: background 0.12s, color 0.12s;
 }
-.sidebar-item:hover { background: var(--bg); color: var(--text-1); }
+.sidebar-item:hover { background: var(--hover); color: var(--text-1); }
 .sidebar-item-active {
   background: var(--navy) !important;
   color: #ffffff !important;
