@@ -4,7 +4,6 @@ import { List, ArrowLeft } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
 import Dashboard     from './pages/Dashboard'
-import Installations from './pages/Installations'
 import Installs      from './pages/Installs'
 import ProjectDetail from './pages/ProjectDetail'
 import Inspections   from './pages/Inspections'
@@ -19,7 +18,6 @@ import FormRunner    from './pages/FormRunner'
 const PAGE_META = {
   '/dashboard':              { title: 'Field Overview',   parent: null },
   '/installations':          { title: 'Installations',    parent: null },
-  '/installations/installs': { title: 'Installs',         parent: '/installations' },
   '/inspections':            { title: 'Inspections',      parent: null },
   '/daily-field-log':        { title: 'Daily Field Log',  parent: null },
   '/reports':                { title: 'Reports',          parent: null },
@@ -31,7 +29,7 @@ function getPageMeta(pathname) {
   if (/^\/installations\/[^/]+$/.test(pathname) && pathname !== '/installations/installs')
     return { title: 'Installation Detail', parent: '/installations' }
   if (/^\/installations\/installs\/[^/]+$/.test(pathname) && !/\/form\//.test(pathname))
-    return { title: 'Install Detail', parent: '/installations/installs' }
+    return { title: 'Install Detail', parent: '/installations' }
   if (/^\/installations\/installs\/[^/]+\/form\/[^/]+$/.test(pathname)) {
     const jobId = pathname.split('/')[3]
     const fid   = pathname.split('/')[5]
@@ -169,10 +167,9 @@ export default function App() {
             <Route path="/"                                                    element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard"                                           element={<Dashboard />} />
 
-            {/* Installations group */}
-            <Route path="/installations"                                       element={<Installations />} />
-            <Route path="/installations/:id"                                   element={<ProjectDetail />} />
-            <Route path="/installations/installs"                              element={<Installs />} />
+            {/* Installations */}
+            <Route path="/installations"                                       element={<Installs />} />
+            <Route path="/installations/installs"                              element={<Navigate to="/installations" replace />} />
             <Route path="/installations/installs/:jobId"                       element={<JobDetail />} />
             <Route path="/installations/installs/:jobId/form/:formId"          element={<FormRunner />} />
 
