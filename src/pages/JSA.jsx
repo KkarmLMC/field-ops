@@ -386,13 +386,13 @@ function NewJSAForm({ onSave, onCancel, branch }) {
       onSave({ id:`jsa-${Date.now()}`, branch, siteName:values.site_name||'Unnamed Site',
         date:values.jsa_date||new Date().toISOString().slice(0,10),
         tech:values.person_1?.name||'—', status:'signed',
-        permits:values.permit_required||[], pdfUrl })
+        permits:values.permit_required||[], formData:values, pdfUrl })
     } catch(err) {
       setError('PDF upload failed — saved without PDF link.')
       onSave({ id:`jsa-${Date.now()}`, branch, siteName:values.site_name||'Unnamed Site',
         date:values.jsa_date||new Date().toISOString().slice(0,10),
         tech:values.person_1?.name||'—', status:'signed',
-        permits:values.permit_required||[], pdfUrl:null })
+        permits:values.permit_required||[], formData:values, pdfUrl:null })
     }
     setSubmitting(false)
   }
@@ -495,20 +495,52 @@ function JSARow({ jsa }) {
   )
 }
 
-// ─── Mock data ─────────────────────────────────────────────────────────────────
-const MOCK_JSAS = [
-  { id:'jsa-001', branch:'bolt', siteName:'Ritz-Carlton Amelia Island',  date:'2026-03-24', tech:'Ray Thibodaux',  status:'signed', permits:['Working over Water or at Height','Lifts'], pdfUrl:null },
-  { id:'jsa-002', branch:'bolt', siteName:'Nassau County Courthouse',    date:'2026-03-24', tech:'Tamika Russell', status:'draft',  permits:['Working in Unguarded / Unprotected Areas'],  pdfUrl:null },
-  { id:'jsa-003', branch:'lm',   siteName:'Rayonier Advanced Materials', date:'2026-03-20', tech:'Priya Nair',     status:'signed', permits:['Working on Pressurized Equipment','Hot Work'], pdfUrl:null },
-]
-
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function JSA() {
-  const [view,   setView]   = useState('list')
-  const [branch, setBranch] = useState('lm')
-  const [jsas,   setJsas]   = useState(MOCK_JSAS)
+  const [view,    setView]    = useState('list')
+  const [branch,  setBranch]  = useState('lm')
+  const [jsas,    setJsas]    = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const handleSave = (j) => { setJsas(p=>[j,...p]); setView('list') }
+  useEffect(() => {
+    async function load() {
+      setLoading(true)
+      const { data, error } = await db
+        .from('jsa_submissions')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (!error && data) {
+        setJsas(data.map(r => ({
+          id:       r.id,
+          branch:   r.branch,
+          siteName: r.site_name,
+          date:     r.jsa_date,
+          tech:     r.tech_name,
+          status:   r.status,
+          permits:  r.permits || [],
+          pdfUrl:   r.pdf_url,
+        })))
+      }
+      setLoading(false)
+    }
+    load()
+  }, [])
+
+  const handleSave = async (j) => {
+    await db.from('jsa_submissions').insert({
+      id:        j.id,
+      branch:    j.branch,
+      site_name: j.siteName,
+      jsa_date:  j.date,
+      tech_name: j.tech,
+      status:    j.status,
+      permits:   j.permits,
+      form_data: j.formData || {},
+      pdf_url:   j.pdfUrl,
+    })
+    setJsas(p => [j, ...p])
+    setView('list')
+  }
 
   if (view === 'new') return <NewJSAForm onSave={handleSave} onCancel={()=>setView('list')} branch={branch} />
 
@@ -521,7 +553,7 @@ export default function JSA() {
 
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:8, marginBottom:12 }}>
         {[
-          { label:'Total JSAs', val:branchJsas.length,                              color:'var(--text)'  },
+          { label:'Total JSAs', val:branchJsas.length,                               color:'var(--text)'  },
           { label:'Signed',     val:branchJsas.filter(j=>j.status==='signed').length, color:'var(--green)' },
           { label:'Draft',      val:branchJsas.filter(j=>j.status==='draft').length,  color:'var(--accent)'},
         ].map(({label,val,color}) => (
@@ -539,9 +571,11 @@ export default function JSA() {
             <Plus size={11} /> New JSA
           </button>
         </div>
-        {branchJsas.length===0
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>No JSAs for this branch yet</div>
-          : branchJsas.map(j=><JSARow key={j.id} jsa={j} />)
+        {loading
+          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>Loading…</div>
+          : branchJsas.length===0
+            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>No JSAs for this branch yet</div>
+            : branchJsas.map(j=><JSARow key={j.id} jsa={j} />)
         }
       </div>
 
