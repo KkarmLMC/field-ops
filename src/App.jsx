@@ -32,7 +32,7 @@ const PAGE_META = {
 
 function getPageMeta(pathname) {
   if (pathname === '/installations/kanban')
-    return { title: 'Kanban Board', parent: '/installations' }
+    return { title: 'Project Pipeline', parent: '/installations' }
   if (/^\/installations\/[^/]+$/.test(pathname))
     return { title: 'Project Detail', parent: '/installations' }
   if (/^\/installations\/installs\/[^/]+\/form\/[^/]+$/.test(pathname)) {

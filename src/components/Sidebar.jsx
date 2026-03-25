@@ -22,7 +22,7 @@ const NAV_ITEMS = [
     Icon: HardHat,
     label: 'Installations',
     children: [
-      { path: '/installations/kanban', Icon: Rows,          label: 'Kanban Board' },
+      { path: '/installations/kanban', Icon: Rows,          label: 'Project Pipeline' },
       { path: '/reports',              Icon: ClipboardText,  label: 'Reports'      },
     ],
   },

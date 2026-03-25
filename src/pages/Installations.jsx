@@ -316,7 +316,7 @@ export default function Installations() {
           >
             <div className="dash-tile-icon"><SquaresFour size={18} /></div>
             <div className="dash-tile-text">
-              <div className="dash-tile-label">Kanban Board</div>
+              <div className="dash-tile-label">Project Pipeline</div>
               <div className="dash-tile-sub">{stageCounts['in-progress'] || 0} active</div>
             </div>
             <ArrowRight size={14} className="dash-tile-arrow" />
