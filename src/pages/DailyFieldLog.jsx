@@ -7,8 +7,10 @@ import {
   Crosshair, SpinnerGap,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { MOCK_REPORTS, FORM_TEMPLATES, JOBS, TECHNICIANS } from '../data/mockData.js'
+import { FORM_TEMPLATES, JOBS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { db } from '../lib/supabase.js'
+import { generateAndUploadDFLPdf } from '../lib/generateDFLPdf.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 const WORK_TYPES = ['Inspection', 'Installation', 'Remediation', 'Site Revisit', 'Other']
@@ -672,6 +674,26 @@ function EntryCard({ entry, bc, onCloseOut }) {
             Close Out Day
             <ArrowRight size={13} />
           </button>
+        </div>
+      )}
+
+      {/* Submitted: View PDF Submission */}
+      {!isDraft && entry.pdf_url && (
+        <div className="dfl-closeout-row">
+          <div className="dfl-closeout-hint" style={{ color: '#16A34A' }}>
+            <SealCheck size={11} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />
+            Log finalized and stored
+          </div>
+          <a
+            className="dfl-closeout-btn"
+            style={{ background: '#16A34A', textDecoration: 'none' }}
+            href={entry.pdf_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FileText size={13} />
+            View Submission
+          </a>
         </div>
       )}
 
@@ -1524,9 +1546,25 @@ export default function DailyFieldLog() {
   const [branch, setBranch]           = useState('lm')
   const [formMode, setFormMode]       = useState(null) // null | 'part1' | 'part2'
   const [closeoutId, setCloseoutId]   = useState(null)
-  const [entries, setEntries]         = useState(MOCK_REPORTS)
+  const [entries, setEntries]         = useState([])
+  const [loading, setLoading]         = useState(true)
+  const [savingPdf, setSavingPdf]     = useState(false)
 
   const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
+
+  // ── Load entries from Supabase on mount ─────────────────────────────────────
+  useEffect(() => {
+    async function load() {
+      setLoading(true)
+      const { data, error } = await db
+        .from('daily_field_logs')
+        .select('*')
+        .order('report_date', { ascending: false })
+      if (!error && data) setEntries(data)
+      setLoading(false)
+    }
+    load()
+  }, [])
 
   const lmCount         = entries.filter(r => r.branch === 'lm').length
   const boltCount       = entries.filter(r => r.branch === 'bolt').length
@@ -1541,54 +1579,68 @@ export default function DailyFieldLog() {
   const reviewedCount = reports.filter(r => r.status === 'Reviewed').length
   const unsignedCount = reports.filter(r => r.status === 'Submitted' && !r.signed).length
 
-  // Part 1 save → creates a Draft entry
-  const handlePart1Save = (form) => {
+  // Part 1 save → inserts a Draft row into Supabase
+  const handlePart1Save = async (form) => {
     const job = JOBS.find(j => j.id === form.jobsite_id)
-    const newEntry = {
-      id:                `r-${Date.now()}`,
+    const payload = {
       branch,
       status:            'Draft',
       customer:          form.customer,
       jobsite_id:        form.jobsite_id,
-      // customer_site kept for backward compat with card display
       customer_site:     job ? `${form.customer} — ${job.id}` : form.customer,
       report_date:       form.report_date,
       gps_location:      form.gps_location,
       supervisor_name:   form.supervisor_name,
+      submitted_by:      form.supervisor_name,
       crew_on_site:      form.crew_on_site,
       jsa_uploaded:      form.jsa_uploaded,
       manlift_checklist: form.manlift_checklist,
       fall_protection:   form.fall_protection,
-      submitted_by:      form.supervisor_name,
-      // Part 2 fields — empty until close-out
-      hours_worked:      '',
-      work_types:        [],
-      miles_driven:      '',
-      drive_time:        '',
-      other_tasks:       '',
-      signed:            false,
     }
-    setEntries(e => [newEntry, ...e])
+    const { data, error } = await db
+      .from('daily_field_logs')
+      .insert(payload)
+      .select()
+      .single()
+    if (!error && data) setEntries(e => [data, ...e])
     setFormMode(null)
   }
 
-  // Part 2 submit → updates Draft → Submitted
-  const handlePart2Submit = (form) => {
+  // Part 2 submit → update DB, generate PDF, upload, store pdf_url
+  const handlePart2Submit = async (form) => {
+    setSavingPdf(true)
+    const entry = entries.find(r => r.id === closeoutId)
+    const updates = {
+      status:       'Submitted',
+      hours_worked: form.hours_worked,
+      work_types:   form.work_types,
+      work_other:   form.work_other,
+      miles_driven: form.miles_driven,
+      drive_time:   form.drive_time,
+      other_tasks:  form.other_tasks,
+      signed:       form.signed,
+      submitted_at: new Date().toISOString(),
+      finalized_at: new Date().toISOString(),
+    }
+
+    // First update the DB record
+    await db.from('daily_field_logs').update(updates).eq('id', closeoutId)
+
+    // Generate PDF with merged data and upload
+    const merged = { ...entry, ...updates }
+    let pdfUrl = null
+    try {
+      pdfUrl = await generateAndUploadDFLPdf(merged)
+      await db.from('daily_field_logs').update({ pdf_url: pdfUrl }).eq('id', closeoutId)
+    } catch (e) {
+      console.error('PDF generation failed', e)
+    }
+
+    // Reflect in local state
     setEntries(e => e.map(r =>
-      r.id === closeoutId
-        ? {
-            ...r,
-            status:       'Submitted',
-            hours_worked: form.hours_worked,
-            work_types:   form.work_types,
-            work_other:   form.work_other,
-            miles_driven: form.miles_driven,
-            drive_time:   form.drive_time,
-            other_tasks:  form.other_tasks,
-            signed:       form.signed,
-          }
-        : r
+      r.id === closeoutId ? { ...r, ...updates, pdf_url: pdfUrl } : r
     ))
+    setSavingPdf(false)
     setFormMode(null)
     setCloseoutId(null)
   }
@@ -1716,6 +1768,14 @@ export default function DailyFieldLog() {
           onSubmit={handlePart2Submit}
           bc={bc}
         />
+      )}
+
+      {/* PDF saving overlay */}
+      {savingPdf && (
+        <div className="dfl-pdf-overlay">
+          <SpinnerGap size={28} weight="bold" className="dfl-spin" />
+          <span>Finalizing report &amp; generating PDF…</span>
+        </div>
       )}
 
     </div>
