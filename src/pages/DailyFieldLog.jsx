@@ -100,11 +100,24 @@ function SafetyDot({ ok, label }) {
   )
 }
 
+// ─── Shared: compute fixed dropdown position from input wrapper ref ────────────
+function useDropdownPos(wrapRef) {
+  const [pos, setPos] = useState({ top: 0, left: 0, width: 0 })
+  const update = () => {
+    if (!wrapRef.current) return
+    const r = wrapRef.current.getBoundingClientRect()
+    setPos({ top: r.bottom + 4, left: r.left, width: r.width })
+  }
+  return [pos, update]
+}
+
 // ─── Customer Typeahead ─────────────────────────────────────────────────────────
 function CustomerTypeahead({ value, onChange, branch }) {
   const [open, setOpen]   = useState(false)
   const [query, setQuery] = useState(value || '')
   const ref               = useRef(null)
+  const inputWrapRef      = useRef(null)
+  const [pos, updatePos]  = useDropdownPos(inputWrapRef)
 
   // Sync query when value changes externally (e.g. auto-filled from job select)
   useEffect(() => { setQuery(value || '') }, [value])
@@ -129,16 +142,18 @@ function CustomerTypeahead({ value, onChange, branch }) {
     setOpen(false)
   }
 
+  const openDropdown = () => { updatePos(); setOpen(true) }
+
   return (
     <div className="dfl-typeahead" ref={ref}>
-      <div className="dfl-typeahead-input-wrap">
+      <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
         <input
           className="dfl-input dfl-typeahead-input"
           placeholder="Search customers…"
           value={query}
-          onChange={e => { setQuery(e.target.value); onChange(e.target.value); setOpen(true) }}
-          onFocus={() => setOpen(true)}
+          onChange={e => { setQuery(e.target.value); onChange(e.target.value); openDropdown() }}
+          onFocus={openDropdown}
           autoComplete="off"
         />
         {query && (
@@ -148,7 +163,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
         )}
       </div>
       {open && filtered.length > 0 && (
-        <ul className="dfl-typeahead-list">
+        <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
           {filtered.slice(0, 8).map(name => (
             <li
               key={name}
@@ -267,6 +282,8 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   const [open, setOpen]   = useState(false)
   const [query, setQuery] = useState(value || '')
   const ref               = useRef(null)
+  const inputWrapRef      = useRef(null)
+  const [pos, updatePos]  = useDropdownPos(inputWrapRef)
 
   useEffect(() => { setQuery(value || '') }, [value])
 
@@ -282,17 +299,18 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   )
 
   const select = (tech) => { onChange(tech.name); setQuery(tech.name); setOpen(false) }
+  const openDropdown = () => { updatePos(); setOpen(true) }
 
   return (
     <div className="dfl-typeahead" ref={ref}>
-      <div className="dfl-typeahead-input-wrap">
+      <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
         <input
           className="dfl-input dfl-typeahead-input"
           placeholder={placeholder}
           value={query}
-          onChange={e => { setQuery(e.target.value); onChange(e.target.value); setOpen(true) }}
-          onFocus={() => setOpen(true)}
+          onChange={e => { setQuery(e.target.value); onChange(e.target.value); openDropdown() }}
+          onFocus={openDropdown}
           autoComplete="off"
         />
         {query && (
@@ -302,7 +320,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
         )}
       </div>
       {open && filtered.length > 0 && (
-        <ul className="dfl-typeahead-list">
+        <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
           {filtered.slice(0, 8).map(tech => (
             <li
               key={tech.id}
@@ -326,6 +344,8 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
   const [open, setOpen]   = useState(false)
   const [query, setQuery] = useState('')
   const ref               = useRef(null)
+  const inputWrapRef      = useRef(null)
+  const [pos, updatePos]  = useDropdownPos(inputWrapRef)
 
   useEffect(() => {
     const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
@@ -352,6 +372,8 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
     if (e.key === 'Backspace' && !query && value.length > 0) remove(value[value.length - 1])
   }
 
+  const openDropdown = () => { updatePos(); setOpen(true) }
+
   return (
     <div className="dfl-multi-wrap" ref={ref}>
       {value.length > 0 && (
@@ -364,14 +386,14 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
           ))}
         </div>
       )}
-      <div className="dfl-typeahead-input-wrap">
+      <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
         <input
           className="dfl-input dfl-typeahead-input"
           placeholder={placeholder}
           value={query}
-          onChange={e => { setQuery(e.target.value); setOpen(true) }}
-          onFocus={() => setOpen(true)}
+          onChange={e => { setQuery(e.target.value); openDropdown() }}
+          onFocus={openDropdown}
           onKeyDown={handleKeyDown}
           autoComplete="off"
         />
@@ -382,7 +404,7 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
         )}
       </div>
       {open && filtered.length > 0 && (
-        <ul className="dfl-typeahead-list">
+        <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
           {filtered.slice(0, 8).map(tech => (
             <li key={tech.id} className="dfl-typeahead-item" onMouseDown={() => add(tech.name)}>
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>

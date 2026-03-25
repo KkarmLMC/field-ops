@@ -1335,10 +1335,11 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dfl-typeahead-clear:hover { color: var(--text-1); }
 .dfl-typeahead-list {
-  position: absolute; top: calc(100% + 0.25rem); left: 0; right: 0;
+  position: fixed;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 0.625rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  max-height: 22rem; overflow-y: auto; z-index: 300; list-style: none; padding: 0.25rem; margin: 0;
+  border-radius: 0.625rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  max-height: 22rem; overflow-y: auto; z-index: 9999; list-style: none; padding: 0.25rem; margin: 0;
+  min-width: 16rem;
 }
 .dfl-typeahead-item {
   display: flex; align-items: center; gap: 0.5rem;
