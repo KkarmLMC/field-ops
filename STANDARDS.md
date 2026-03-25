@@ -152,8 +152,22 @@ This app uses a **flat, borderless, shadowless** design. Cards are defined by a 
 - No `border` on cards, inputs, or panels
 - No `box-shadow` anywhere
 - Cards sit on `--surface-raised` background
-- Card/section headers use `--card-header-bg` (light navy tint) instead of a border-bottom
+- **Card/section headers default to `--navy`** with white text
+- **Branch-aware card headers inherit the branch primary color** via `bc.bgActive` — always override the header background when a branch is in context
 - Row dividers inside cards use `--border-l` only
+
+```jsx
+// ✅ Non-branch card header — uses navy default via .card-header class
+<div className="card-header">
+  <span className="card-title">All Submissions</span>
+</div>
+
+// ✅ Branch-aware card header — overrides with branch color
+const bc = BRANCH_COLORS[branch]
+<div className="card-header" style={{ background: bc.bgActive }}>
+  <span className="card-title">Daily Field Reports</span>
+</div>
+```
 
 ### 4.1.1 Text Color Usage Rules
 

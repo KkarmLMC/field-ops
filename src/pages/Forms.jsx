@@ -636,8 +636,8 @@ export default function Forms() {
       {/* Completion submissions by branch */}
       <BranchTabs active={branch} onChange={setBranch} />
       <div className="card" style={{ marginBottom:'var(--sp-3)' }}>
-        <div className="card-header">
-          <span className="card-title"><span className="card-dot" style={{ background:'var(--green)' }} />Completed Forms</span>
+        <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
+          <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
         </div>
         {branchCompletions.length === 0
           ? <div className="empty"><div className="empty-desc">No completions for this branch yet.</div></div>
