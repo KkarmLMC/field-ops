@@ -1281,7 +1281,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Close Out Day</div>
             {entry && (
               <div style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.65)', marginTop: '0.125rem' }}>
-                {entry.customer_site} · {fmtDate(entry.report_date)}
+                {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
               </div>
             )}
           </div>
@@ -1383,7 +1383,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               <div className="dfl-signoff-context">
                 <div className="dfl-signoff-context-row">
                   <span className="dfl-detail-label"><FileText size={11} /> Site</span>
-                  <span>{entry?.customer_site || '—'}</span>
+                  <span>{entry?.customer_site || entry?.customer || '—'}</span>
                 </div>
                 <div className="dfl-signoff-context-row">
                   <span className="dfl-detail-label"><Clock size={11} /> Date</span>
@@ -1391,7 +1391,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
                 </div>
                 <div className="dfl-signoff-context-row">
                   <span className="dfl-detail-label"><User size={11} /> Supervisor</span>
-                  <span>{entry?.supervisor_name || '—'}</span>
+                  <span>{entry?.supervisor_name || entry?.submitted_by || '—'}</span>
                 </div>
               </div>
               <div className="dfl-field">
