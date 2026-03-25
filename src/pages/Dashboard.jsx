@@ -34,7 +34,7 @@ export default function Dashboard() {
     .filter((id, i, arr) => arr.indexOf(id) === i).length
 
   const bc = BRANCH_COLORS[branch]
-  const headStyle = { background: bc.bgInactive, transition: 'background 0.2s' }
+  const headStyle = { background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s, color 0.2s' }
 
   return (
     <div className="page-content fade-in">
@@ -113,7 +113,7 @@ export default function Dashboard() {
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#000000' }}>{failedJobs.length} failed</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: 'inherit' }}>{failedJobs.length} failed</span>
             )}
           </div>
           <div className="dash-card-body">
