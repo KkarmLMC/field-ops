@@ -117,12 +117,12 @@ function CustomerTypeahead({ value, onChange, branch }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  // Only show customers who have at least one job on the current branch
-  const branchCustomers = [...new Set(JOBS.filter(j => j.branch === branch).map(j => j.customer))].sort()
+  // All unique customers across all branches
+  const allCustomers = [...new Set(JOBS.map(j => j.customer))].sort()
 
   const filtered = query.length >= 1
-    ? branchCustomers.filter(c => c.toLowerCase().includes(query.toLowerCase()))
-    : branchCustomers
+    ? allCustomers.filter(c => c.toLowerCase().includes(query.toLowerCase()))
+    : allCustomers
 
   const select = (name) => {
     onChange(name)
@@ -180,9 +180,9 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
   const ORDER          = ['active', 'scheduled', 'ul-inspection', 'postponed', 'awaiting-po', 'completed', 'failed']
   const customerLocked = Boolean(customer && customer.trim())
 
-  // Filter by branch always; filter by customer once one is selected
+  // All jobs across all branches; filter by customer once one is selected
   const visibleJobs = JOBS
-    .filter(j => j.branch === branch && (!customerLocked || j.customer === customer.trim()))
+    .filter(j => !customerLocked || j.customer === customer.trim())
     .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
 
   const selected = JOBS.find(j => j.id === value)
@@ -866,13 +866,6 @@ function Part1Form({ onClose, onSave, bc, branch }) {
                   customer={form.customer}
                   onChange={handleJobSelect}
                 />
-                {selectedJob && (
-                  <div className="dfl-jobsite-context">
-                    <span className="dfl-jobsite-context-type">{selectedJob.type.replace(/-/g, ' ')}</span>
-                    <span className="dfl-dot">·</span>
-                    <span>{selectedJob.structure}</span>
-                  </div>
-                )}
               </div>
 
               <div className="dfl-field">
