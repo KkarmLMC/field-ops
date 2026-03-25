@@ -126,14 +126,23 @@ All colors are defined in `src/styles/globals.css` as CSS custom properties. **N
 /* Neutrals */
 --bg:        #FFFFFF   /* Page background */
 --surface:   #FFFFFF   /* Card/panel surface */
---border:    #E5E7EB   /* Default border */
---border-l:  #F3F4F6   /* Light border, dividers */
+--border:    #111827   /* Card/component outer borders — dark, visible on white */
+--border-l:  #E5E7EB   /* Internal dividers only — row separators, card-header bottom */
 --hover:     #F3F4F6   /* Hover state background */
 --text-1:    #000000   /* Primary text — default for all body copy */
 --text-2:    #374151   /* Secondary text — subtitles, descriptions, back buttons */
 --text-3:    #9CA3AF   /* Muted text — timestamps, IDs, labels, meta only */
 --text-4:    #D1D5DB   /* Disabled text */
 ```
+
+### Border Usage Rules
+
+| Token | Value | Use |
+|---|---|---|
+| `--border` | `#111827` | Outer card borders, input borders, panel outlines — anything on a white/light background that needs to be clearly visible |
+| `--border-l` | `#E5E7EB` | Internal dividers only — row separators inside cards, card-header bottom border, sheet dividers |
+
+**Rule:** Cards and components on a white background must use `--border` for their outline. Only use `--border-l` for dividers between items *inside* an already-bordered container.
 
 ### 4.1.1 Text Color Usage Rules
 

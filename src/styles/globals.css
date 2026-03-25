@@ -10,8 +10,8 @@
   --navy:      #04245C;
   --bg:        #FFFFFF;
   --surface:   #FFFFFF;
-  --border:    #E5E7EB;
-  --border-l:  #F3F4F6;
+  --border:    #111827;
+  --border-l:  #E5E7EB;
   --hover:     #F3F4F6;
   --text-1:    #000000;
   --text-2:    #374151;
@@ -42,7 +42,7 @@
   --bg-2:        var(--surface);
   --bg-3:        var(--bg);
   --bg-4:        #E5E7EB;
-  --border-bright: #D1D5DB;
+  --border-bright: #111827;
   --green-dim:   var(--green-s);
   --blue-dim:    var(--blue-soft);
 
