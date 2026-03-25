@@ -35,7 +35,7 @@ const KANBAN_COLS = [
   { id: 'scheduled',     label: 'Upcoming Installations',  Icon: CalendarBlank, accent: '#A855F7', statuses: ['scheduled']            },
   { id: 'active',        label: 'Active Installations',    Icon: HardHat,       accent: '#EAB308', statuses: ['active']               },
   { id: 'completed',     label: 'Completed Installations', Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed']  },
-  { id: 'ul-inspection', label: 'UL Inspection',          Icon: Clipboard,     accent: '#2563EB', statuses: ['ul-inspection']        },
+  { id: 'ul-inspection', label: 'UL Inspection',          Icon: Clipboard,     accent: '#38BDF8', statuses: ['ul-inspection']        },
   { id: 'postponed',     label: 'Postponed Installations',Icon: PauseCircle,   accent: '#F97316', statuses: ['postponed']            },
 ]
 
