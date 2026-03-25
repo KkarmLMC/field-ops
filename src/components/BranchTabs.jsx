@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { STATS, JOBS } from '../data/mockData.js'
+import { BRANCH_COLORS } from '../config/branches.js'
 
 export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
   const [hoveredId, setHoveredId] = useState(null)
@@ -28,13 +29,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       sectors: STATS.lm.sectors,
       stats:   lmStats,
       total:   lmCount ?? (lmStats.active + lmStats.scheduled + lmStats.completed),
-      // Navy — Lightning Master
-      bgActive:    '#04245C',
-      textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.70)',
-      bgInactive:  '#F0F3FA',
-      textInactive:'#000000',
-      subInactive: '#5C5C5C',
+      ...BRANCH_COLORS['lm'],
     },
     {
       id:      'bolt',
@@ -42,13 +37,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       sectors: STATS.bolt.sectors,
       stats:   boltStats,
       total:   boltCount ?? (boltStats.active + boltStats.scheduled + boltStats.completed),
-      // Red — Bolt Florida
-      bgActive:    '#C0101B',
-      textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.70)',
-      bgInactive:  '#FEF0F1',
-      textInactive:'#000000',
-      subInactive: '#5C5C5C',
+      ...BRANCH_COLORS['bolt'],
     },
     {
       id:      'bolt-dallas',
@@ -56,13 +45,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
       sectors: STATS['bolt-dallas'].sectors,
       stats:   dallasStats,
       total:   boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed),
-      // Slate grey — Bolt Dallas
-      bgActive:    '#1F2937',
-      textActive:  '#ffffff',
-      subActive:   'rgba(255,255,255,0.70)',
-      bgInactive:  '#ECEEF0',
-      textInactive:'#000000',
-      subInactive: '#5C5C5C',
+      ...BRANCH_COLORS['bolt-dallas'],
     },
   ]
 

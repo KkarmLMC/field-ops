@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Ruler, Seal, ClipboardText, HardHat, Buildings, CheckCircle } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
+import { BRANCH_COLORS } from '../config/branches.js'
 
 function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
@@ -31,6 +32,9 @@ export default function Dashboard() {
   const techsInField = JOBS.filter(j => j.branch === branch && j.status === 'active')
     .map(j => j.assignedTo)
     .filter((id, i, arr) => arr.indexOf(id) === i).length
+
+  const bc = BRANCH_COLORS[branch]
+  const headStyle = { background: bc.bgInactive, transition: 'background 0.2s' }
 
   return (
     <div className="page-content fade-in">
@@ -67,7 +71,7 @@ export default function Dashboard() {
 
         {/* Today's Schedule */}
         <div className="dash-card">
-          <div className="dash-card-head">
+          <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Clock size={14} />
               Today's Schedule
@@ -84,7 +88,7 @@ export default function Dashboard() {
 
         {/* Active Jobs */}
         <div className="dash-card">
-          <div className="dash-card-head">
+          <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <span className="live-dot" />
               Active Jobs
@@ -103,7 +107,7 @@ export default function Dashboard() {
 
         {/* Needs Attention */}
         <div className="dash-card">
-          <div className="dash-card-head">
+          <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Warning size={14} />
               Needs Attention
@@ -122,7 +126,7 @@ export default function Dashboard() {
 
         {/* Upcoming */}
         <div className="dash-card">
-          <div className="dash-card-head">
+          <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Lightning size={14} />
               Upcoming
