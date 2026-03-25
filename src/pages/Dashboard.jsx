@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Warning, Lightning, CaretRight, Clock, ArrowRight } from '@phosphor-icons/react'
+import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Ruler, Seal, ClipboardText, HardHat, Buildings, CheckCircle } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
 
@@ -8,13 +8,12 @@ function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
 }
 
-
 const TYPE_ICON = {
-  installation: '⚡',
-  inspection:   '🔍',
-  'site-survey':'📐',
-  certification:'🏆',
-  'annual-test':'📋',
+  installation:  Lightning,
+  inspection:    MagnifyingGlass,
+  'site-survey': Ruler,
+  certification: Seal,
+  'annual-test': ClipboardText,
 }
 
 export default function Dashboard() {
@@ -42,10 +41,10 @@ export default function Dashboard() {
       {/* Quick nav tiles */}
       <div className="dash-tiles">
         {[
-          { icon: '⚡', label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: '#F3F4F6' },
-          { icon: '👷', label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: '#F3F4F6' },
-          { icon: '📋', label: 'Field Reports',  sub: `${STATS.reportsThisMonth} this mo`,path: '/reports',                color: '#000000', bg: '#F3F4F6' },
-          { icon: '🏗️', label: 'Installations', sub: `${branchJobs.length} total`,        path: '/installations',          color: '#000000', bg: '#F3F4F6' },
+          { Icon: Lightning,   label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: '#F3F4F6' },
+          { Icon: HardHat,     label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: '#F3F4F6' },
+          { Icon: ClipboardText, label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',              color: '#000000', bg: '#F3F4F6' },
+          { Icon: Buildings,   label: 'Installations',  sub: `${branchJobs.length} total`,       path: '/installations',          color: '#000000', bg: '#F3F4F6' },
         ].map(a => (
           <button
             key={a.path}
@@ -53,7 +52,7 @@ export default function Dashboard() {
             onClick={() => navigate(a.path)}
             style={{ '--tile-color': a.color, '--tile-bg': a.bg }}
           >
-            <div className="dash-tile-icon">{a.icon}</div>
+            <div className="dash-tile-icon"><a.Icon size={18} /></div>
             <div className="dash-tile-text">
               <div className="dash-tile-label">{a.label}</div>
               <div className="dash-tile-sub">{a.sub}</div>
@@ -115,7 +114,7 @@ export default function Dashboard() {
           </div>
           <div className="dash-card-body">
             {failedJobs.length === 0
-              ? <EmptyState message="All clear — no issues" icon="✅" />
+              ? <EmptyState message="All clear — no issues" />
               : failedJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
             }
           </div>
@@ -156,8 +155,8 @@ function EmptyState({ message }) {
 function JobRow({ job, navigate }) {
   return (
     <div className="dash-job-row" onClick={() => navigate(`/installations/installs/${job.id}`)}>
-      <div className="dash-job-icon" style={{ background: '#F3F4F6', fontSize: 16 }}>
-        {TYPE_ICON[job.type] || '⚡'}
+      <div className="dash-job-icon" style={{ background: '#F3F4F6' }}>
+        {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
         <div className="dash-job-name">{job.client}</div>
