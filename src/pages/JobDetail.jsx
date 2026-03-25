@@ -33,29 +33,29 @@ export default function JobDetail() {
   return (
     <div className="page-content fade-in">
       {/* Job header card */}
-      <div className="card" style={{ marginBottom: 12 }}>
+      <div className="card" style={{ marginBottom: '0.75rem' }}>
         <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span>{job.client}</span>
           <span className={`badge badge-${job.status}`} style={{ color: 'white', background: 'rgba(255,255,255,0.2)' }}>{job.status}</span>
         </div>
         <div style={{ padding: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-3)' }}>{job.id}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)' }}>{job.id}</span>
             <span className={`badge badge-${job.priority === 'high' ? 'failed' : 'pending'}`}>{job.priority} priority</span>
           </div>
 
           {/* Progress bar */}
           <div style={{ marginTop: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontSize: 11, color: 'var(--text-3)' }}>Progress</span>
-              <span style={{ fontSize: 11, fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>{job.progress}%</span>
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)' }}>Progress</span>
+              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>{job.progress}%</span>
             </div>
-            <div style={{ height: 5, borderRadius: 3, background: 'var(--bg)', overflow: 'hidden' }}>
+            <div style={{ height: '0.3125rem', borderRadius: '0.1875rem', background: 'var(--bg)', overflow: 'hidden' }}>
               <div style={{
                 height: '100%',
                 width: `${job.progress}%`,
                 background: job.status === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--orange)',
-                borderRadius: 3,
+                borderRadius: '0.1875rem',
               }} />
             </div>
           </div>
@@ -63,11 +63,11 @@ export default function JobDetail() {
       </div>
 
       {/* Job info */}
-      <div className="card" style={{ marginBottom: 12 }}>
+      <div className="card" style={{ marginBottom: '0.75rem' }}>
         <div className="card-header">
           <span className="card-title">Job Details</span>
         </div>
-        <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ padding: '0.75rem 0.875rem', display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
           <InfoRow icon={MapPin} label="Address" value={job.address} />
           <InfoRow icon={Buildings} label="Structure" value={job.structure} />
           <InfoRow icon={CalendarBlank} label="Scheduled" value={job.scheduledDate} />
@@ -77,24 +77,24 @@ export default function JobDetail() {
       </div>
 
       {/* Technician */}
-      <div className="card" style={{ marginBottom: 12 }}>
+      <div className="card" style={{ marginBottom: '0.75rem' }}>
         <div className="card-header">
           <span className="card-title">Assigned Technician</span>
         </div>
-        <div style={{ padding: '12px 14px' }}>
+        <div style={{ padding: '0.75rem 0.875rem' }}>
           {tech ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{
-                width: 40, height: 40, borderRadius: 6,
+                width: '2.5rem', height: '2.5rem', borderRadius: '0.375rem',
                 background: 'var(--blue-soft)', color: 'var(--blue)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 600,
+                fontFamily: 'var(--mono)', fontSize: '0.8125rem', fontWeight: 600,
               }}>
                 {tech.name.split(' ').map(n => n[0]).join('')}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, fontSize: 14 }}>{tech.name}</div>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-3)' }}>{tech.license} · {tech.phone}</div>
+                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{tech.name}</div>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)' }}>{tech.license} · {tech.phone}</div>
               </div>
               <span className={`badge badge-${tech.status === 'field' ? 'active' : 'completed'}`}>
                 {tech.status === 'field' ? 'In Field' : 'Active'}
@@ -107,7 +107,7 @@ export default function JobDetail() {
       </div>
 
       {/* Forms checklist */}
-      <div className="card" style={{ marginBottom: 12 }}>
+      <div className="card" style={{ marginBottom: '0.75rem' }}>
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background: 'var(--red)' }} />NFPA Forms</span>
         </div>
@@ -126,7 +126,7 @@ export default function JobDetail() {
                 : <Circle size={18} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
               }
               <div style={{ flex: 1 }}>
-                <div className="project-name" style={{ fontSize: 13 }}>{template?.label ?? formId}</div>
+                <div className="project-name" style={{ fontSize: '0.8125rem' }}>{template?.label ?? formId}</div>
                 <div className="project-meta">{template?.nfpaRef}</div>
               </div>
               {completed
@@ -144,7 +144,7 @@ export default function JobDetail() {
           <div className="card-header">
             <span className="card-title">Notes</span>
           </div>
-          <div style={{ padding: '12px 14px', fontSize: 13, lineHeight: 1.6, color: 'var(--text-2)' }}>
+          <div style={{ padding: '0.75rem 0.875rem', fontSize: '0.8125rem', lineHeight: 1.6, color: 'var(--text-2)' }}>
             {job.notes}
           </div>
         </div>
@@ -155,11 +155,11 @@ export default function JobDetail() {
 
 function InfoRow({ icon: Icon, label, value }) {
   return (
-    <div style={{ display: 'flex', gap: 10 }}>
-      <Icon size={14} style={{ color: 'var(--text-3)', marginTop: 2, flexShrink: 0 }} />
+    <div style={{ display: 'flex', gap: '0.625rem' }}>
+      <Icon size={14} style={{ color: 'var(--text-3)', marginTop: '0.125rem', flexShrink: 0 }} />
       <div>
-        <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-3)', marginBottom: 2 }}>{label}</div>
-        <div style={{ fontSize: 13 }}>{value}</div>
+        <div style={{ fontSize: '0.6875rem', fontWeight: 600, color: 'var(--text-3)', marginBottom: '0.125rem' }}>{label}</div>
+        <div style={{ fontSize: '0.8125rem' }}>{value}</div>
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ function MobileHeader({ onMenuOpen }) {
         </button>
       )}
       <div className="mobile-header-title">
-        {meta.sub && <div style={{ fontSize: 9, opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{meta.sub}</div>}
+        {meta.sub && <div style={{ fontSize: '0.5625rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{meta.sub}</div>}
         {meta.title}
       </div>
       <SyncBadge compact />
@@ -75,14 +75,14 @@ function DesktopTopBar() {
 
   return (
     <div className="desktop-topbar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         {meta.parent && (
           <button
             onClick={() => navigate(meta.parent)}
             style={{
-              display: 'flex', alignItems: 'center', gap: 5,
-              fontSize: 12, color: 'var(--text-3)', background: 'none', border: 'none',
-              cursor: 'pointer', padding: '4px 8px', borderRadius: 6,
+              display: 'flex', alignItems: 'center', gap: '0.3125rem',
+              fontSize: '0.75rem', color: 'var(--text-3)', background: 'none', border: 'none',
+              cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
               transition: 'background 0.12s',
             }}
             onMouseEnter={e => e.currentTarget.style.background = 'var(--border-l)'}
@@ -94,11 +94,11 @@ function DesktopTopBar() {
         )}
         <div>
           {meta.sub && (
-            <div style={{ fontSize: 10, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 1 }}>
+            <div style={{ fontSize: '0.625rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.0625rem' }}>
               {meta.sub}
             </div>
           )}
-          <h1 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{meta.title}</h1>
+          <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{meta.title}</h1>
         </div>
       </div>
       <SyncBadge />

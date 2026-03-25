@@ -6,7 +6,7 @@ export default function SyncBadge({ compact }) {
   if (compact) {
     // Tiny dot-only version for mobile header
     return (
-      <div className={`sync-badge ${status}`} style={{ padding: '4px 8px', fontSize: 10 }}>
+      <div className={`sync-badge ${status}`} style={{ padding: '0.25rem 0.5rem', fontSize: '0.625rem' }}>
         <div className="sync-dot" />
         {label}
       </div>

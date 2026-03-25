@@ -47,10 +47,10 @@ export default function Jobs() {
       </div>
 
       {/* MagnifyingGlass */}
-      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', marginBottom: 12 }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.75rem', marginBottom: '0.75rem' }}>
         <span style={{ color: 'var(--text-3)' }}>🔍</span>
         <input
-          style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 14, color: 'var(--text-1)', width: '100%', boxShadow: 'none' }}
+          style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: '0.875rem', color: 'var(--text-1)', width: '100%', boxShadow: 'none' }}
           placeholder="MagnifyingGlass jobs..."
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -58,7 +58,7 @@ export default function Jobs() {
       </div>
 
       {/* Filter pills */}
-      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 12, scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: '0.375rem', overflowX: 'auto', paddingBottom: '0.75rem', scrollbarWidth: 'none' }}>
         {STATUSES.map(f => (
           <button
             key={f}
@@ -67,7 +67,7 @@ export default function Jobs() {
               flexShrink: 0, padding: '5px 12px', borderRadius: 20,
               border: '1px solid var(--border)', background: statusFilter === f ? 'var(--navy)' : 'var(--surface)',
               color: statusFilter === f ? 'white' : 'var(--text-2)',
-              fontFamily: 'var(--font)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+              fontFamily: 'var(--font)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer',
             }}
           >{f === 'All' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}</button>
         ))}
@@ -91,18 +91,18 @@ export default function Jobs() {
               <div className="project-meta">
                 {getTechName(job.assignedTo)} · {job.scheduledDate}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)' }}>{job.id}</span>
-                <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`} style={{ fontSize: 10 }}>{job.type}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem' }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '0.6875rem', color: 'var(--text-3)' }}>{job.id}</span>
+                <span className={`badge badge-${job.type === 'site-survey' ? 'pending' : job.status}`} style={{ fontSize: '0.625rem' }}>{job.type}</span>
               </div>
               {/* Progress bar */}
               {job.progress > 0 && (
-                <div style={{ height: 3, borderRadius: 2, background: 'var(--bg-4)', overflow: 'hidden', marginTop: 6 }}>
+                <div style={{ height: '0.1875rem', borderRadius: '0.125rem', background: 'var(--bg-4)', overflow: 'hidden', marginTop: 6 }}>
                   <div style={{
                     height: '100%',
                     width: `${job.progress}%`,
                     background: job.status === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--orange)',
-                    borderRadius: 2,
+                    borderRadius: '0.125rem',
                   }} />
                 </div>
               )}

@@ -45,10 +45,10 @@ export default function Projects() {
       </div>
 
       {/* MagnifyingGlass */}
-      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', marginBottom: 12 }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.75rem', marginBottom: '0.75rem' }}>
         <span style={{ color: 'var(--text-3)' }}>🔍</span>
         <input
-          style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 14, color: 'var(--text-1)', width: '100%' }}
+          style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: '0.875rem', color: 'var(--text-1)', width: '100%' }}
           placeholder="MagnifyingGlass projects..."
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -56,7 +56,7 @@ export default function Projects() {
       </div>
 
       {/* Filter pills */}
-      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 12, scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: '0.375rem', overflowX: 'auto', paddingBottom: '0.75rem', scrollbarWidth: 'none' }}>
         {FILTERS.map(f => (
           <button
             key={f}
@@ -65,7 +65,7 @@ export default function Projects() {
               flexShrink: 0, padding: '5px 12px', borderRadius: 20,
               border: '1px solid var(--border)', background: filter === f ? 'var(--navy)' : 'var(--surface)',
               color: filter === f ? 'white' : 'var(--text-2)',
-              fontFamily: 'var(--font)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+              fontFamily: 'var(--font)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer',
             }}
           >{f}</button>
         ))}
@@ -90,7 +90,7 @@ export default function Projects() {
                 {p.address || p.city || '—'}
               </div>
               {p.job_number && (
-                <div style={{ fontSize: 11, color: 'var(--text-3)', fontFamily: 'var(--mono)', marginTop: 2 }}>
+                <div style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)', marginTop: '0.125rem' }}>
                   {p.job_number}
                 </div>
               )}

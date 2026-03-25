@@ -132,7 +132,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
                 {collapsed && active && (
                   <div style={{
                     position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-                    width: 4, height: 4, borderRadius: '50%', background: 'var(--red)',
+                    width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)',
                   }} />
                 )}
               </button>

@@ -77,7 +77,7 @@ export default function Installations() {
         </div>
         <div>
           {projects.length === 0 ? (
-            <div style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>
+            <div style={{ padding: '2rem 1rem', textAlign: 'center', color: 'var(--text-3)', fontSize: '0.8125rem' }}>
               No installations for this branch
             </div>
           ) : (

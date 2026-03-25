@@ -28,7 +28,7 @@ export default function TabBar() {
               position: 'absolute',
               top: 0, left: '50%',
               width: active ? 28 : 0,
-              height: 2,
+              height: '0.125rem',
               background: 'var(--red)',
               borderRadius: '0 0 2px 2px',
               transform: 'translateX(-50%)',
