@@ -557,14 +557,16 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    gap: var(--gap-md);
+    gap: 0;
     padding-bottom: var(--sp-2);
     scrollbar-width: none;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
   .branch-tabs-mobile-track .branch-card {
     flex: 0 0 100%;
+    width: 100%;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 .branch-card {

@@ -32,8 +32,9 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   const handleScroll = () => {
     const track = trackRef.current
     if (!track) return
-    const idx = Math.round(track.scrollLeft / track.offsetWidth)
-    const tab = tabs[idx]
+    const cardWidth = track.scrollWidth / tabs.length
+    const idx = Math.round(track.scrollLeft / cardWidth)
+    const tab = tabs[Math.max(0, Math.min(idx, tabs.length - 1))]
     if (tab && tab.id !== active) onChange(tab.id)
   }
 
@@ -41,7 +42,10 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   const scrollToTab = (id) => {
     const idx = tabs.findIndex(t => t.id === id)
     const track = trackRef.current
-    if (track) track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' })
+    if (track) {
+      const cardWidth = track.scrollWidth / tabs.length
+      track.scrollTo({ left: idx * cardWidth, behavior: 'smooth' })
+    }
     onChange(id)
   }
 
