@@ -577,11 +577,11 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--gap-lg)', overflow:'hidden' }}>
+      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--gap-md)', overflow:'hidden' }}>
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md) 0' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
