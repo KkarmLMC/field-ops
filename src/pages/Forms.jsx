@@ -575,13 +575,14 @@ export default function Forms() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
 
       {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--gap-md)', overflow:'hidden' }}>
+      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', overflow:'hidden' }}>
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-sm) 0 0' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'1.25rem 0 0' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
@@ -618,12 +619,12 @@ export default function Forms() {
           { label: 'Complete',      value: branchCompletions.filter(f => f.status === 'complete').length },
         ]
         return (
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)', marginBottom:'var(--gap-lg)' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)' }}>
             {stats.map(({ label, value }) => (
               <div key={label} style={{
                 background: bc.bgInactive,
                 borderRadius: 'var(--r-xl)',
-                padding: '1.25rem 1rem 1.5rem',
+                padding: '1.25rem 1rem',
                 minHeight: '7rem',
               }}>
                 <div style={{
@@ -647,7 +648,7 @@ export default function Forms() {
           </div>
         )
       })()}
-      <div className="card" style={{ marginBottom:'var(--sp-3)' }}>
+      <div className="card">
         <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
           <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
         </div>
@@ -677,6 +678,7 @@ export default function Forms() {
             ))
         }
       </div>
+      </div>{/* end flex column */}
     </div>
   )
 }

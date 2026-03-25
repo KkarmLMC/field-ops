@@ -542,7 +542,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
-  margin-bottom: var(--gap-md);
+  /* gap managed by parent flex column */
 }
 
 /* Desktop: track is the 3-column grid, dots hidden */
