@@ -556,9 +556,7 @@ function CompletionRow({ form }) {
   const Icon = cfg.icon || ClipboardText
   return (
     <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'12px 14px', borderBottom:'1px solid var(--border)' }}>
-      <div style={{ width:36, height:36, borderRadius:'var(--r-sm)', flexShrink:0, background:cfg.colorDim||'var(--bg-4)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <Icon size={16} style={{ color: cfg.color||'var(--text-dim)' }} />
-      </div>
+      <Icon size={18} weight='regular' style={{ color:'var(--text-1)', flexShrink:0 }} />
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:2, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {form.site_name || 'Unnamed Site'}
@@ -647,9 +645,7 @@ export default function CompletionForms() {
                 onMouseLeave={e=>e.currentTarget.style.background='var(--bg-3)'}
               >
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <div style={{ width:32, height:32, borderRadius:'var(--r-md)', background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <Icon size={16} style={{ color: cfg.color }} />
-                  </div>
+                  <Icon size={18} weight='regular' style={{ color:'var(--text-1)', flexShrink:0 }} />
                   <CaretRight size={12} style={{ color:'var(--text-muted)' }} />
                 </div>
                 <div>

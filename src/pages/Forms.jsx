@@ -521,9 +521,7 @@ function CompletionRow({ form }) {
   const Icon = cfg.icon||ClipboardText
   return (
     <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'0.75rem var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
-      <div style={{ width:'2.25rem', height:'2.25rem', borderRadius:'var(--r-md)', flexShrink:0, background:cfg.colorDim||'var(--hover)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <Icon size={16} style={{ color:cfg.color||'var(--text-3)' }} />
-      </div>
+      <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{form.site_name||'Unnamed Site'}</div>
         <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)' }}>{cfg.short} · {form.tech_name} · {form.date_completed}</div>
