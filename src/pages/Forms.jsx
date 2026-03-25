@@ -597,9 +597,7 @@ export default function Forms() {
                 onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
                 onMouseLeave={e=>e.currentTarget.style.background='var(--bg)'}
               >
-                <div style={{ width:'1.875rem', height:'1.875rem', borderRadius:'var(--r-md)', background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                  <Icon size={14} style={{ color:cfg.color }} />
-                </div>
+                <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
                 <div style={{ flex:1, minWidth:0 }}>
                   <div style={{ fontWeight:600, fontSize:'var(--fs-base)', marginBottom:'0.125rem' }}>{cfg.short}</div>
                   <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-3)', textTransform:'uppercase' }}>{cfg.ref}</div>
