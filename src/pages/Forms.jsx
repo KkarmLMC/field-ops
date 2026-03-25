@@ -322,9 +322,9 @@ function FieldLabel({ label, required }) {
 function Section({ title, children, open, onToggle }) {
   return (
     <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
-      <button type="button" onClick={onToggle} style={{ width:'100%', padding:'var(--sp-2) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:open?'1px solid var(--border)':'none' }}>
-        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>{title}</span>
-        <CaretDown size={12} style={{ color:'var(--text-3)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
+      <button type="button" onClick={onToggle} style={{ width:'100%', padding:'var(--sp-2) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
+        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
+        <CaretDown size={12} style={{ color:'rgba(255,255,255,0.6)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && <div style={{ padding:'var(--sp-4)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
     </div>
@@ -384,7 +384,7 @@ function CompletionFormView({ formType, onSave, onCancel }) {
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
         <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
           <Icon size={14} style={{ color: cfg.color }} />
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>{cfg.ref}</span>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>{cfg.ref}</span>
         </div>
       </div>
 
@@ -582,7 +582,7 @@ export default function Forms() {
       {/* Completion forms tiles */}
       <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
         <div style={{ padding:'var(--sp-2) var(--sp-4)', borderBottom:'none' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>
             Completion Forms
           </span>
         </div>

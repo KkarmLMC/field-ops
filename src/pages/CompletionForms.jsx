@@ -333,7 +333,7 @@ function Section({ title, children, open, onToggle }) {
   return (
     <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={onToggle} style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:open?'1px solid var(--border)':'none' }}>
-        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
+        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>{title}</span>
         <CaretDown size={12} style={{ color:'var(--text-dim)', transform:open?'rotate(180deg)':'none', transition:'transform 0.15s' }} />
       </button>
       {open && <div style={{ padding:14, display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
@@ -414,7 +414,7 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
         <div style={{ width:1, height:16, background:'var(--border)' }} />
         <div style={{ display:'flex', alignItems:'center', gap:6 }}>
           <Icon size={14} style={{ color: cfg.color }} />
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{cfg.ref}</span>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>{cfg.ref}</span>
         </div>
       </div>
 
@@ -630,7 +630,7 @@ export default function CompletionForms() {
       {/* Form type tiles */}
       <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>
             Completion Forms
           </span>
         </div>

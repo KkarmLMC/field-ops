@@ -329,8 +329,8 @@ body {
 
 /* Cards */
 .card { background: var(--surface-raised); border: none; border-radius: var(--r-xl); overflow: hidden; margin-bottom: var(--sp-3); }
-.card-header { padding: 0.875rem 1rem; background: var(--card-header-bg); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.card-title { font-size: 0.8125rem; font-weight: 700; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
+.card-header { padding: 0.875rem 1rem; background: var(--navy); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-title { font-size: 0.8125rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; }
 .card-dot { width: 0.5rem; height: 0.5rem; border-radius: 0.125rem; flex-shrink: 0; }
 .card-body { padding: 0; }
 
@@ -1128,7 +1128,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dash-card-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 1.25rem; background: var(--card-header-bg); border-bottom: none;
+  padding: 1rem 1.25rem; background: var(--navy); border-bottom: none;
   flex-shrink: 0;
 }
 /* Fixed-height body keeps paired cards uniform — exactly 4 rows tall */

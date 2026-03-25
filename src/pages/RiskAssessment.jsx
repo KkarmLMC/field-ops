@@ -12,9 +12,9 @@ const S = {
     borderRadius: 'var(--r-lg)', marginBottom: 'var(--sp-3)', overflow: 'hidden',
   },
   cardHead: {
-    padding: '0.625rem 0.875rem', borderBottom: '1px solid var(--border)',
+    padding: '0.625rem 0.875rem', background: 'var(--navy)',
     fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)',
-    color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.08em',
+    color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '0.08em',
   },
   cardBody: { padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' },
   label: {
