@@ -306,14 +306,14 @@ function FieldRenderer({ field, value, onChange }) {
   if (field.type === 'checkbox-group') {
     const selected = value || []
     return (
-      <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+      <div style={{ display:'flex', flexWrap:'wrap', gap:'var(--sp-2)' }}>
         {field.options.map(opt => {
           const checked = selected.includes(opt)
           return (
             <button key={opt} type="button"
               onClick={() => onChange(checked ? selected.filter(s=>s!==opt) : [...selected,opt])}
               style={{
-                padding:'5px 10px', borderRadius:4, fontSize:12,
+                padding:'5px 10px', borderRadius:'var(--r-sm)', fontSize:'var(--fs-base)',
                 border:`1px solid ${checked?'var(--accent)':'var(--border)'}`,
                 background: checked?'var(--accent-glow)':'var(--bg-3)',
                 color: checked?'var(--accent)':'var(--text-dim)',
@@ -328,12 +328,12 @@ function FieldRenderer({ field, value, onChange }) {
 
   if (field.type === 'activity-row') {
     return (
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:6 }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--sp-2)' }}>
         {['Activity / Task','Potential Hazard','Risk Control Measure'].map((ph,i) => (
           <input key={i} type="text" placeholder={ph}
             value={(value||{})[i]||''}
             onChange={e => onChange({...(value||{}),[i]:e.target.value})}
-            style={{ width:'100%', fontSize:12 }}
+            style={{ width:'100%', fontSize:'var(--fs-base)' }}
           />
         ))}
       </div>
@@ -342,15 +342,15 @@ function FieldRenderer({ field, value, onChange }) {
 
   if (field.type === 'personnel-sig') {
     return (
-      <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--sp-2)' }}>
         <input type="text" placeholder="Full name"
           value={(value||{}).name||''}
           onChange={e => onChange({...(value||{}),name:e.target.value})}
-          style={{ width:'100%', fontSize:12 }}
+          style={{ width:'100%', fontSize:'var(--fs-base)' }}
         />
         {value?.name && (
           <div>
-            <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:4 }}>
+            <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-1)' }}>
               Signature
             </div>
             <SignaturePad
@@ -399,30 +399,30 @@ function NewJSAForm({ onSave, onCancel, branch }) {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:16 }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:4, color:'var(--text-dim)', fontSize:13 }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:16 }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:1, height:16, background:'var(--border)' }} />
-        <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
           LMC-Form-000-008
         </span>
       </div>
 
       {TEMPLATE.sections.map(section => (
-        <div key={section.id} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:10, overflow:'hidden' }}>
+        <div key={section.id} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
           <button type="button" onClick={()=>setOpenSections(s=>({...s,[section.id]:!s[section.id]}))}
             style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:openSections[section.id]?'1px solid var(--border)':'none' }}>
-            <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+            <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
               {section.title}
             </span>
             <CaretDown size={12} style={{ color:'var(--text-dim)', transform:openSections[section.id]?'rotate(180deg)':'none', transition:'transform 0.15s' }} />
           </button>
           {openSections[section.id] && (
-            <div style={{ padding:14, display:'flex', flexDirection:'column', gap:12 }}>
+            <div style={{ padding:14, display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>
               {section.fields.map(field => (
                 <div key={field.id}>
-                  <div style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:6 }}>
+                  <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-2)' }}>
                     {field.label}{field.required && <span style={{ color:'var(--red)', marginLeft:3 }}>*</span>}
                   </div>
                   <FieldRenderer field={field} value={values[field.id]} onChange={v=>set(field.id,v)} />
@@ -434,19 +434,19 @@ function NewJSAForm({ onSave, onCancel, branch }) {
       ))}
 
       {error && (
-        <div style={{ padding:'10px 14px', marginBottom:10, background:'var(--red-dim)', border:'1px solid var(--red)', borderRadius:5, fontSize:12, color:'var(--red)' }}>
+        <div style={{ padding:'10px 14px', marginBottom:'var(--sp-3)', background:'var(--red-dim)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-base)', color:'var(--red)' }}>
           {error}
         </div>
       )}
 
       <button onClick={handleSubmit} disabled={submitting} style={{
-        width:'100%', padding:'12px', borderRadius:5, marginBottom:16,
+        width:'100%', padding:'12px', borderRadius:'var(--r-md)', marginBottom:16,
         background: submitting?'var(--bg-4)':'var(--accent)',
         color: submitting?'var(--text-dim)':'#000',
-        fontFamily:'var(--mono)', fontSize:12, fontWeight:600,
+        fontFamily:'var(--mono)', fontSize:'var(--fs-base)', fontWeight:600,
         letterSpacing:'0.06em', textTransform:'uppercase',
         border:`1px solid ${submitting?'var(--border)':'var(--accent)'}`,
-        display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+        display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
       }}>
         {submitting
           ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Generating PDF…</>
@@ -461,30 +461,30 @@ function NewJSAForm({ onSave, onCancel, branch }) {
 function JSARow({ jsa }) {
   const signed = jsa.status === 'signed'
   return (
-    <div style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderBottom:'1px solid var(--border)' }}>
-      <div style={{ width:36, height:36, borderRadius:4, flexShrink:0, background:signed?'var(--green-dim)':'var(--bg-4)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'12px 14px', borderBottom:'1px solid var(--border)' }}>
+      <div style={{ width:36, height:36, borderRadius:'var(--r-sm)', flexShrink:0, background:signed?'var(--green-dim)':'var(--bg-4)', display:'flex', alignItems:'center', justifyContent:'center' }}>
         {signed ? <CheckCircle size={16} style={{ color:'var(--green)' }} /> : <ClipboardText size={16} style={{ color:'var(--text-dim)' }} />}
       </div>
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontWeight:600, fontSize:13, marginBottom:2, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+        <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:2, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {jsa.siteName}
         </div>
-        <div style={{ fontSize:11, color:'var(--text-dim)' }}>
+        <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-dim)' }}>
           {(jsa.permits||[]).slice(0,2).join(' · ')}{(jsa.permits||[]).length>2?` +${jsa.permits.length-2}`:''}
         </div>
       </div>
-      <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:4, flexShrink:0 }}>
-        <span style={{ padding:'2px 8px', borderRadius:3, fontFamily:'var(--mono)', fontSize:10, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', background:signed?'var(--green-dim)':'var(--bg-4)', color:signed?'var(--green)':'var(--text-dim)' }}>
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'var(--sp-1)', flexShrink:0 }}>
+        <span style={{ padding:'2px 8px', borderRadius:'var(--r-xs)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', background:signed?'var(--green-dim)':'var(--bg-4)', color:signed?'var(--green)':'var(--text-dim)' }}>
           {signed ? 'Signed' : 'Draft'}
         </span>
-        <div style={{ fontSize:10, color:'var(--text-muted)', fontFamily:'var(--mono)' }}>
+        <div style={{ fontSize:'var(--fs-xs)', color:'var(--text-muted)', fontFamily:'var(--mono)' }}>
           {jsa.date} · {jsa.tech}
         </div>
         {jsa.pdfUrl && (
           <a href={jsa.pdfUrl} target="_blank" rel="noopener noreferrer" style={{
-            display:'flex', alignItems:'center', gap:4, padding:'3px 8px', borderRadius:3,
+            display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'3px 8px', borderRadius:'var(--r-xs)',
             background:'var(--blue-dim)', color:'var(--blue)',
-            fontFamily:'var(--mono)', fontSize:10, fontWeight:600,
+            fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600,
             textTransform:'uppercase', letterSpacing:'0.04em', textDecoration:'none',
           }}>
             <Eye size={10} /> View PDF
@@ -551,35 +551,35 @@ export default function JSA() {
     <div className="page-content fade-in">
       <BranchTabs active={branch} onChange={setBranch} />
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:8, marginBottom:12 }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--sp-2)', marginBottom:'var(--sp-3)' }}>
         {[
           { label:'Total JSAs', val:branchJsas.length,                               color:'var(--text)'  },
           { label:'Signed',     val:branchJsas.filter(j=>j.status==='signed').length, color:'var(--green)' },
           { label:'Draft',      val:branchJsas.filter(j=>j.status==='draft').length,  color:'var(--accent)'},
         ].map(({label,val,color}) => (
-          <div key={label} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, padding:'10px 12px' }}>
-            <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:4 }}>{label}</div>
+          <div key={label} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-1)' }}>{label}</div>
             <div style={{ fontFamily:'var(--head)', fontSize:24, fontWeight:700, color }}>{val}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6 }}>
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between', background:bc.bgActive, transition:'background 0.2s' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:10, color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>Job Safety Analyses</span>
-          <button onClick={()=>setView('new')} style={{ display:'flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:4, background:'var(--accent)', color:'#000', fontFamily:'var(--mono)', fontSize:10, fontWeight:600, letterSpacing:'0.06em', textTransform:'uppercase' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>Job Safety Analyses</span>
+          <button onClick={()=>setView('new')} style={{ display:'flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:'var(--r-sm)', background:'var(--accent)', color:'#000', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, letterSpacing:'0.06em', textTransform:'uppercase' }}>
             <Plus size={11} /> New JSA
           </button>
         </div>
         {loading
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>Loading…</div>
+          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>Loading…</div>
           : branchJsas.length===0
-            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>No JSAs for this branch yet</div>
+            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>No JSAs for this branch yet</div>
             : branchJsas.map(j=><JSARow key={j.id} jsa={j} />)
         }
       </div>
 
-      <div style={{ marginTop:10, padding:'10px 14px', background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, fontSize:11, color:'var(--text-muted)', lineHeight:1.6 }}>
+      <div style={{ marginTop:10, padding:'10px 14px', background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--text-muted)', lineHeight:1.6 }}>
         <span style={{ fontFamily:'var(--mono)', color:'var(--text-dim)' }}>LMC-Form-000-008 · </span>
         Job Safety Analysis — required before any field work begins. Submitted PDFs are stored in Supabase and accessible via View PDF.
       </div>

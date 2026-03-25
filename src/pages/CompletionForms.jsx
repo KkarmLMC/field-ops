@@ -116,10 +116,10 @@ function SigPad({ value, onChange }) {
       <canvas ref={canvasRef} width={480} height={80}
         onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
         onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:80, borderRadius:4, display:'block', border:'1px solid var(--border)', background:'var(--bg-3)', cursor:'crosshair', touchAction:'none' }}
+        style={{ width:'100%', height:80, borderRadius:'var(--r-sm)', display:'block', border:'1px solid var(--border)', background:'var(--bg-3)', cursor:'crosshair', touchAction:'none' }}
       />
-      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-muted)', fontSize:12, pointerEvents:'none', fontFamily:'var(--mono)' }}>Sign here</div>}
-      {value && <button type="button" onClick={clear} style={{ position:'absolute', top:4, right:4, background:'var(--bg-4)', border:'1px solid var(--border)', borderRadius:3, padding:'2px 6px', fontSize:10, color:'var(--text-dim)', display:'flex', alignItems:'center', gap:3 }}><Trash size={10} /> Clear</button>}
+      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-muted)', fontSize:'var(--fs-base)', pointerEvents:'none', fontFamily:'var(--mono)' }}>Sign here</div>}
+      {value && <button type="button" onClick={clear} style={{ position:'absolute', top:4, right:4, background:'var(--bg-4)', border:'1px solid var(--border)', borderRadius:3, padding:'2px 6px', fontSize:'var(--fs-xs)', color:'var(--text-dim)', display:'flex', alignItems:'center', gap:3 }}><Trash size={10} /> Clear</button>}
     </div>
   )
 }
@@ -294,7 +294,7 @@ async function generateCompletionPdf(formType, formData, jobData) {
 
 // ─── Field renderer ────────────────────────────────────────────────────────────
 function FormField({ field, value, onChange }) {
-  const base = { width:'100%', fontSize:13 }
+  const base = { width:'100%', fontSize:'var(--fs-md)' }
 
   if (field.type === 'select') return (
     <select value={value||''} onChange={e=>onChange(e.target.value)} style={base}>
@@ -303,12 +303,12 @@ function FormField({ field, value, onChange }) {
     </select>
   )
   if (field.type === 'boolean') return (
-    <div style={{ display:'flex', gap:8 }}>
+    <div style={{ display:'flex', gap:'var(--sp-2)' }}>
       {['Yes','No'].map(opt => {
         const isOpt = opt==='Yes' ? value===true : value===false
         return (
           <button key={opt} type="button" onClick={()=>onChange(opt==='Yes')}
-            style={{ flex:1, padding:'8px', borderRadius:4, fontSize:13, border:`1px solid ${isOpt?'var(--accent)':'var(--border)'}`, background:isOpt?'var(--accent-glow)':'var(--bg-3)', color:isOpt?'var(--accent)':'var(--text-dim)', fontWeight:isOpt?600:400 }}>
+            style={{ flex:1, padding:'8px', borderRadius:'var(--r-sm)', fontSize:'var(--fs-md)', border:`1px solid ${isOpt?'var(--accent)':'var(--border)'}`, background:isOpt?'var(--accent-glow)':'var(--bg-3)', color:isOpt?'var(--accent)':'var(--text-dim)', fontWeight:isOpt?600:400 }}>
             {opt}
           </button>
         )
@@ -331,19 +331,19 @@ function FormField({ field, value, onChange }) {
 // ─── Section wrapper ───────────────────────────────────────────────────────────
 function Section({ title, children, open, onToggle }) {
   return (
-    <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:10, overflow:'hidden' }}>
+    <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={onToggle} style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:open?'1px solid var(--border)':'none' }}>
-        <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
+        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
         <CaretDown size={12} style={{ color:'var(--text-dim)', transform:open?'rotate(180deg)':'none', transition:'transform 0.15s' }} />
       </button>
-      {open && <div style={{ padding:14, display:'flex', flexDirection:'column', gap:12 }}>{children}</div>}
+      {open && <div style={{ padding:14, display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
     </div>
   )
 }
 
 function FieldLabel({ label, required }) {
   return (
-    <div style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:5 }}>
+    <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:5 }}>
       {label}{required && <span style={{ color:'var(--red)', marginLeft:3 }}>*</span>}
     </div>
   )
@@ -407,39 +407,39 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
   return (
     <div className="page-content fade-in">
       {/* Header */}
-      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:16 }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:4, color:'var(--text-dim)', fontSize:13 }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:16 }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:4, color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:1, height:16, background:'var(--border)' }} />
         <div style={{ display:'flex', alignItems:'center', gap:6 }}>
           <Icon size={14} style={{ color: cfg.color }} />
-          <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{cfg.ref}</span>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{cfg.ref}</span>
         </div>
       </div>
 
       {/* Job info section */}
       <Section title="Job Information" open={open.job} onToggle={()=>toggle('job')}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
           <div style={{ gridColumn:'1/-1' }}>
             <FieldLabel label="Site Name" required />
-            <input value={values.site_name||''} onChange={e=>set('site_name',e.target.value)} placeholder="Site name" style={{ width:'100%', fontSize:13 }} />
+            <input value={values.site_name||''} onChange={e=>set('site_name',e.target.value)} placeholder="Site name" style={{ width:'100%', fontSize:'var(--fs-md)' }} />
           </div>
           <div style={{ gridColumn:'1/-1' }}>
             <FieldLabel label="Address" />
-            <input value={values.site_address||''} onChange={e=>set('site_address',e.target.value)} placeholder="Street address" style={{ width:'100%', fontSize:13 }} />
+            <input value={values.site_address||''} onChange={e=>set('site_address',e.target.value)} placeholder="Street address" style={{ width:'100%', fontSize:'var(--fs-md)' }} />
           </div>
           <div>
             <FieldLabel label="Job Number" />
-            <input value={values.job_number||''} onChange={e=>set('job_number',e.target.value)} placeholder="JOB-2026-XXXX" style={{ width:'100%', fontSize:13 }} />
+            <input value={values.job_number||''} onChange={e=>set('job_number',e.target.value)} placeholder="JOB-2026-XXXX" style={{ width:'100%', fontSize:'var(--fs-md)' }} />
           </div>
           <div>
             <FieldLabel label="Date Completed" required />
-            <input type="date" value={values.date_completed||''} onChange={e=>set('date_completed',e.target.value)} style={{ width:'100%', fontSize:13 }} />
+            <input type="date" value={values.date_completed||''} onChange={e=>set('date_completed',e.target.value)} style={{ width:'100%', fontSize:'var(--fs-md)' }} />
           </div>
           <div style={{ gridColumn:'1/-1' }}>
             <FieldLabel label="Assigned Technician" required />
-            <input value={values.tech_name||''} onChange={e=>set('tech_name',e.target.value)} placeholder="Technician name" style={{ width:'100%', fontSize:13 }} />
+            <input value={values.tech_name||''} onChange={e=>set('tech_name',e.target.value)} placeholder="Technician name" style={{ width:'100%', fontSize:'var(--fs-md)' }} />
           </div>
         </div>
       </Section>
@@ -460,14 +460,14 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
           <FieldLabel label="Notes" />
           <textarea value={values.notes||''} onChange={e=>set('notes',e.target.value)} rows={3}
             placeholder="Any additional notes, observations, or follow-up items…"
-            style={{ width:'100%', fontSize:13, resize:'vertical', lineHeight:1.5, padding:'8px 12px' }} />
+            style={{ width:'100%', fontSize:'var(--fs-md)', resize:'vertical', lineHeight:1.5, padding:'8px 12px' }} />
         </div>
         <div>
           <FieldLabel label="Punch List Items" />
           {punchItems.map((item, i) => (
             <div key={i} style={{ display:'flex', gap:6, marginBottom:6 }}>
               <input value={item} onChange={e=>{ const n=[...punchItems]; n[i]=e.target.value; setPunchItems(n) }}
-                placeholder={`Item ${i+1}`} style={{ flex:1, fontSize:13 }} />
+                placeholder={`Item ${i+1}`} style={{ flex:1, fontSize:'var(--fs-md)' }} />
               {punchItems.length > 1 && (
                 <button type="button" onClick={()=>setPunchItems(p=>p.filter((_,j)=>j!==i))}
                   style={{ color:'var(--text-dim)', padding:'0 8px' }}><X size={13} /></button>
@@ -475,7 +475,7 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
             </div>
           ))}
           <button type="button" onClick={()=>setPunchItems(p=>[...p,''])}
-            style={{ fontSize:12, color:'var(--accent)', display:'flex', alignItems:'center', gap:4, marginTop:2 }}>
+            style={{ fontSize:'var(--fs-base)', color:'var(--accent)', display:'flex', alignItems:'center', gap:4, marginTop:2 }}>
             <Plus size={12} /> Add item
           </button>
         </div>
@@ -490,7 +490,7 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
           <div key={role}>
             <FieldLabel label={`${role} Sign-Off`} />
             <input value={values[nameKey]||''} onChange={e=>set(nameKey,e.target.value)}
-              placeholder={`${role} full name`} style={{ width:'100%', fontSize:13, marginBottom:6 }} />
+              placeholder={`${role} full name`} style={{ width:'100%', fontSize:'var(--fs-md)', marginBottom:6 }} />
             {values[nameKey] && (
               <SigPad value={values[sigKey]||null} onChange={v=>set(sigKey,v)} />
             )}
@@ -499,19 +499,19 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
       </Section>
 
       {error && (
-        <div style={{ padding:'10px 14px', marginBottom:10, background:'var(--red-dim)', border:'1px solid var(--red)', borderRadius:5, fontSize:12, color:'var(--red)' }}>
+        <div style={{ padding:'10px 14px', marginBottom:'var(--sp-3)', background:'var(--red-dim)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-base)', color:'var(--red)' }}>
           {error}
         </div>
       )}
 
       <button onClick={handleSubmit} disabled={submitting} style={{
-        width:'100%', padding:'13px', borderRadius:5, marginBottom:20,
+        width:'100%', padding:'13px', borderRadius:'var(--r-md)', marginBottom:20,
         background: submitting?'var(--bg-4)':'var(--accent)',
         color: submitting?'var(--text-dim)':'#000',
-        fontFamily:'var(--mono)', fontSize:12, fontWeight:600,
+        fontFamily:'var(--mono)', fontSize:'var(--fs-base)', fontWeight:600,
         letterSpacing:'0.06em', textTransform:'uppercase',
         border:`1px solid ${submitting?'var(--border)':'var(--accent)'}`,
-        display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+        display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
       }}>
         {submitting
           ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Generating PDF…</>
@@ -526,23 +526,23 @@ function CompletionFormView({ formType, jobId, onSave, onCancel }) {
 function SuccessView({ result, onBack }) {
   return (
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'60px 24px' }}>
-      <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:12 }} />
+      <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:'var(--sp-3)' }} />
       <div style={{ fontFamily:'var(--head)', fontSize:22, fontWeight:700, marginBottom:6 }}>Form Completed</div>
-      <div style={{ color:'var(--text-dim)', fontSize:13, marginBottom:24, textAlign:'center' }}>
+      <div style={{ color:'var(--text-dim)', fontSize:'var(--fs-md)', marginBottom:24, textAlign:'center' }}>
         {COMPLETION_TYPES[result.formType]?.label} for {result.siteName} has been saved and PDF generated.
       </div>
-      <div style={{ display:'flex', gap:10 }}>
+      <div style={{ display:'flex', gap:'var(--sp-3)' }}>
         {result.pdfUrl && (
           <a href={result.pdfUrl} target="_blank" rel="noopener noreferrer" style={{
-            display:'flex', alignItems:'center', gap:6, padding:'10px 18px', borderRadius:5,
+            display:'flex', alignItems:'center', gap:6, padding:'10px 18px', borderRadius:'var(--r-md)',
             background:'var(--blue-dim)', color:'var(--blue)',
-            fontFamily:'var(--mono)', fontSize:11, fontWeight:600,
+            fontFamily:'var(--mono)', fontSize:'var(--fs-sm)', fontWeight:600,
             textTransform:'uppercase', letterSpacing:'0.06em', textDecoration:'none',
           }}>
             <Eye size={13} /> View PDF
           </a>
         )}
-        <button onClick={onBack} style={{ padding:'10px 18px', borderRadius:5, background:'var(--bg-4)', border:'1px solid var(--border)', fontFamily:'var(--mono)', fontSize:11, color:'var(--text-dim)' }}>
+        <button onClick={onBack} style={{ padding:'10px 18px', borderRadius:'var(--r-md)', background:'var(--bg-4)', border:'1px solid var(--border)', fontFamily:'var(--mono)', fontSize:'var(--fs-sm)', color:'var(--text-dim)' }}>
           Back to Forms
         </button>
       </div>
@@ -555,24 +555,24 @@ function CompletionRow({ form }) {
   const cfg = COMPLETION_TYPES[form.form_type] || {}
   const Icon = cfg.icon || ClipboardText
   return (
-    <div style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderBottom:'1px solid var(--border)' }}>
-      <div style={{ width:36, height:36, borderRadius:4, flexShrink:0, background:cfg.colorDim||'var(--bg-4)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'12px 14px', borderBottom:'1px solid var(--border)' }}>
+      <div style={{ width:36, height:36, borderRadius:'var(--r-sm)', flexShrink:0, background:cfg.colorDim||'var(--bg-4)', display:'flex', alignItems:'center', justifyContent:'center' }}>
         <Icon size={16} style={{ color: cfg.color||'var(--text-dim)' }} />
       </div>
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontWeight:600, fontSize:13, marginBottom:2, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+        <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:2, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {form.site_name || 'Unnamed Site'}
         </div>
-        <div style={{ fontSize:11, color:'var(--text-dim)' }}>
+        <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-dim)' }}>
           {cfg.short} · {form.tech_name} · {form.date_completed}
         </div>
       </div>
       <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:4, flexShrink:0 }}>
-        <span style={{ padding:'2px 8px', borderRadius:3, fontFamily:'var(--mono)', fontSize:10, fontWeight:600, textTransform:'uppercase', background:'var(--green-dim)', color:'var(--green)' }}>
+        <span style={{ padding:'2px 8px', borderRadius:3, fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, textTransform:'uppercase', background:'var(--green-dim)', color:'var(--green)' }}>
           Complete
         </span>
         {form.pdf_url && (
-          <a href={form.pdf_url} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:4, padding:'3px 8px', borderRadius:3, background:'var(--blue-dim)', color:'var(--blue)', fontFamily:'var(--mono)', fontSize:10, fontWeight:600, textTransform:'uppercase', textDecoration:'none' }}>
+          <a href={form.pdf_url} target="_blank" rel="noopener noreferrer" style={{ display:'flex', alignItems:'center', gap:4, padding:'3px 8px', borderRadius:3, background:'var(--blue-dim)', color:'var(--blue)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, textTransform:'uppercase', textDecoration:'none' }}>
             <Eye size={10} /> View PDF
           </a>
         )}
@@ -586,9 +586,17 @@ export default function CompletionForms() {
   const [searchParams] = useSearchParams()
   const typeParam = searchParams.get('type')
 
-  const [view,      setView]      = useState(typeParam && COMPLETION_TYPES[typeParam] ? 'form' : 'list')
-  const [activeType,setActiveType]= useState(typeParam && COMPLETION_TYPES[typeParam] ? typeParam : null)
+  const [view,      setView]      = useState('list')
+  const [activeType,setActiveType]= useState(null)
   const [activeJob, setActiveJob] = useState(null)
+
+  // Handle ?type= query param — run after mount so refresh doesn't break
+  useEffect(() => {
+    if (typeParam && COMPLETION_TYPES[typeParam]) {
+      setActiveType(typeParam)
+      setView('form')
+    }
+  }, [typeParam])
   const [result,    setResult]    = useState(null)
   const [forms,     setForms]     = useState([])
   const [loading,   setLoading]   = useState(true)
@@ -620,35 +628,35 @@ export default function CompletionForms() {
     <div className="page-content fade-in">
 
       {/* Form type tiles */}
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:12, marginBottom:12, overflow:'hidden' }}>
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Completion Forms
           </span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, padding:8 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-2)', padding:8 }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
               <button key={type} onClick={()=>handleStart(type)} style={{
-                display:'flex', flexDirection:'column', gap:8, padding:'14px 12px',
+                display:'flex', flexDirection:'column', gap:'var(--sp-2)', padding:'14px 12px',
                 background:'var(--bg-3)', border:'1px solid var(--border)',
-                borderRadius:10, textAlign:'left', transition:'background 0.12s',
+                borderRadius:'var(--r-lg)', textAlign:'left', transition:'background 0.12s',
               }}
                 onMouseEnter={e=>e.currentTarget.style.background='var(--bg-4)'}
                 onMouseLeave={e=>e.currentTarget.style.background='var(--bg-3)'}
               >
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <div style={{ width:32, height:32, borderRadius:8, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <div style={{ width:32, height:32, borderRadius:'var(--r-md)', background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
                     <Icon size={16} style={{ color: cfg.color }} />
                   </div>
                   <CaretRight size={12} style={{ color:'var(--text-muted)' }} />
                 </div>
                 <div>
-                  <div style={{ fontWeight:600, fontSize:13, marginBottom:2 }}>{cfg.short}</div>
-                  <div style={{ fontSize:11, color:'var(--text-dim)', lineHeight:1.4 }}>{cfg.desc}</div>
+                  <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:2 }}>{cfg.short}</div>
+                  <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-dim)', lineHeight:1.4 }}>{cfg.desc}</div>
                 </div>
-                <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+                <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
                   {cfg.ref}
                 </div>
               </button>
@@ -660,28 +668,28 @@ export default function CompletionForms() {
       {/* Submissions list */}
       <BranchTabs active={branch} onChange={setBranch} />
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:12 }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-2)', marginBottom:'var(--sp-3)' }}>
         {[
           { label:'Total',    val: branchForms.length,                                                   color:'var(--text)'  },
           { label:'This Month', val: branchForms.filter(f=>f.date_completed?.startsWith('2026-03')).length, color:'var(--accent)' },
         ].map(({label,val,color}) => (
-          <div key={label} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, padding:'10px 12px' }}>
-            <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:4 }}>{label}</div>
+          <div key={label} style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:4 }}>{label}</div>
             <div style={{ fontFamily:'var(--head)', fontSize:24, fontWeight:700, color }}>{val}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6 }}>
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:'var(--r-md)' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)', background:bc.bgActive, transition:'background 0.2s' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:10, color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Recent Submissions
           </span>
         </div>
         {loading
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>Loading…</div>
+          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>Loading…</div>
           : branchForms.length === 0
-            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:13 }}>No completion forms for this branch yet</div>
+            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>No completion forms for this branch yet</div>
             : branchForms.map(f => <CompletionRow key={f.id} form={f} />)
         }
       </div>
