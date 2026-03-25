@@ -612,19 +612,44 @@ export default function Forms() {
       {/* Branch selector + branch-filtered stats */}
       <BranchTabs active={branch} onChange={setBranch} />
 
-      {/* 3 stats filtered by active branch — single row */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)', marginBottom:'var(--gap-lg)' }}>
-        {[
-          { label:'Needs Review',  value: branchCompletions.filter(f=>f.status==='submitted').length,  color:'var(--red)'    },
-          { label:'With Customer', value: branchCompletions.filter(f=>f.status==='pending_customer').length, color:'#7C3AED' },
-          { label:'Complete',      value: branchCompletions.filter(f=>f.status==='complete').length,   color:'var(--green)'  },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="stat-card">
-            <div className="stat-label">{label}</div>
-            <div className="stat-value" style={{ color, fontSize:'clamp(1.5rem,4vw,2rem)' }}>{value}</div>
+      {/* 3 stats filtered by active branch — single row, branch-colored */}
+      {(() => {
+        const bc = BRANCH_COLORS[branch]
+        const stats = [
+          { label: 'Needs Review',  value: branchCompletions.filter(f => f.status === 'submitted').length },
+          { label: 'With Customer', value: branchCompletions.filter(f => f.status === 'pending_customer').length },
+          { label: 'Complete',      value: branchCompletions.filter(f => f.status === 'complete').length },
+        ]
+        return (
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)', marginBottom:'var(--gap-lg)' }}>
+            {stats.map(({ label, value }) => (
+              <div key={label} style={{
+                background: bc.bgInactive,
+                borderRadius: 'var(--r-xl)',
+                padding: '1.25rem 1rem 1.5rem',
+                minHeight: '7rem',
+              }}>
+                <div style={{
+                  fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)',
+                  color: bc.bgActive, textTransform: 'uppercase',
+                  letterSpacing: '0.04em', marginBottom: 'var(--sp-2)',
+                  fontWeight: 500,
+                }}>
+                  {label}
+                </div>
+                <div style={{
+                  fontSize: 'clamp(1.75rem, 5vw, 2.25rem)',
+                  fontWeight: 700, lineHeight: 1,
+                  letterSpacing: '-0.02em',
+                  color: bc.bgActive,
+                }}>
+                  {value}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )
+      })()}
       <div className="card" style={{ marginBottom:'var(--sp-3)' }}>
         <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
           <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
