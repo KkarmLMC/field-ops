@@ -49,6 +49,46 @@
   /* Sidebar */
   --sidebar-w:   220px;
   --sidebar-wc:  60px;   /* collapsed */
+
+  /* ── Spacing scale (4px base) ─────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+
+  /* ── Fluid type scale (clamp: mobile → desktop) ────────────── */
+  --fs-2xs:  clamp(8px,  0.6vw, 9px);
+  --fs-xs:   clamp(9px,  0.7vw, 10px);
+  --fs-sm:   clamp(10px, 0.8vw, 11px);
+  --fs-base: clamp(12px, 0.9vw, 13px);
+  --fs-md:   clamp(13px, 1vw,   14px);
+  --fs-lg:   clamp(14px, 1.1vw, 15px);
+  --fs-xl:   clamp(16px, 1.3vw, 18px);
+  --fs-stat: clamp(16px, 1.6vw, 22px);
+
+  /* ── Radius scale ──────────────────────────────────────────── */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   16px;
+  --r-full: 9999px;
+
+  /* ── Transitions ───────────────────────────────────────────── */
+  --ease-fast:    0.12s ease;
+  --ease-base:    0.18s ease;
+  --ease-slow:    0.3s  ease;
+  --ease-sidebar: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout ────────────────────────────────────────────────── */
+  --content-pad: clamp(14px, 3vw, 28px);
+  --gap-sm:  clamp(6px,  1vw,  8px);
+  --gap-md:  clamp(8px,  1.5vw, 12px);
+  --gap-lg:  clamp(10px, 2vw,  16px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,7 +120,7 @@ body {
   flex-direction: column;
   flex-shrink: 0;
   overflow: hidden;
-  transition: width 0.22s cubic-bezier(0.4,0,0.2,1), min-width 0.22s cubic-bezier(0.4,0,0.2,1);
+  transition: width var(--ease-sidebar), min-width var(--ease-sidebar);
   z-index: 100;
 }
 .sidebar.sidebar-collapsed {
@@ -220,10 +260,7 @@ body {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 16px 16px 28px;
-}
-@media (min-width: 768px) {
-  .page-content { padding: 20px 24px 32px; }
+  padding: var(--content-pad) var(--content-pad) clamp(28px, 4vw, 40px);
 }
 
 /* Header */
@@ -501,14 +538,17 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 10px; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-lg);
 }
 .branch-card {
   display: flex; flex-direction: column;
-  padding: 22px 20px 18px; border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 22px) clamp(14px, 2vw, 20px) clamp(14px, 2vw, 18px);
+  border-radius: var(--r-xl);
   border: none; cursor: pointer; text-align: left;
-  transition: opacity 0.15s, transform 0.12s;
+  transition: background var(--ease-fast), transform var(--ease-fast);
 }
 .branch-card:not(.branch-card--active):active { transform: scale(0.98); }
 .branch-card-top {
@@ -516,19 +556,19 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   justify-content: space-between; gap: 8px; margin-bottom: 3px;
 }
 .branch-card-name {
-  font-size: 15px; font-weight: 800; line-height: 1.2;
+  font-size: var(--fs-lg); font-weight: 800; line-height: 1.2;
   font-family: var(--font);
 }
 .branch-card-pill {
-  flex-shrink: 0; padding: 3px 9px; border-radius: 20px;
-  font-size: 10px; font-weight: 700;
+  flex-shrink: 0; padding: var(--sp-1) var(--sp-2); border-radius: var(--r-full);
+  font-size: var(--fs-2xs); font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;
 }
 .branch-card-pill--on { color: #ffffff !important; }
 .branch-card-sectors {
-  font-size: 11px; margin-bottom: 18px; font-family: var(--font);
+  font-size: var(--fs-sm); margin-bottom: var(--sp-4); font-family: var(--font);
 }
-.branch-card-bar-wrap  { margin-bottom: 16px; }
+.branch-card-bar-wrap  { margin-bottom: var(--sp-4); }
 .branch-card-bar-track { height: 4px; border-radius: 4px; overflow: hidden; }
 .branch-card-bar-fill  { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
 .branch-card-stats     { display: flex; }
@@ -541,21 +581,14 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   border-left: 1px solid rgba(128,128,128,0.2);
 }
 .branch-card-stat-value {
-  font-size: 20px; font-weight: 800; line-height: 1;
+  font-size: var(--fs-stat); font-weight: 800; line-height: 1;
   font-variant-numeric: tabular-nums; font-family: var(--font);
 }
 .branch-card-stat-label {
-  font-size: 9px; text-transform: uppercase;
+  font-size: var(--fs-2xs); text-transform: uppercase;
   letter-spacing: 0.06em; margin-top: 1px; font-family: var(--font);
 }
-@media (max-width: 640px) {
-  .branch-tabs            { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .branch-card-name       { font-size: 13px; }
-  .branch-card-sectors    { font-size: 10px; margin-bottom: 10px; }
-  .branch-card-stat-value { font-size: 16px; }
-}
+/* Branch card responsive — handled by auto-fit grid + clamp() above */
 
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
 .sidebar-sub-item {
@@ -579,7 +612,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* Expandable search — single element, grows rightward from icon */
 .list-search-wrap {
   display: flex; align-items: center; gap: 0;
-  height: 34px; width: 34px; overflow: hidden;
+  height: calc(var(--sp-8) + var(--sp-1)); width: calc(var(--sp-8) + var(--sp-1)); overflow: hidden;
   border: 1px solid var(--border); border-radius: 8px;
   background: var(--surface); cursor: pointer;
   padding: 0 9px; box-sizing: border-box; flex-shrink: 0;
@@ -611,10 +644,10 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .search-clear-btn:hover { color: var(--text-1); }
 .filter-chip {
-  padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border);
+  padding: var(--sp-1) var(--sp-3); border-radius: var(--r-full); border: 1px solid var(--border);
   background: var(--surface); color: var(--text-2);
-  font-size: 12px; font-weight: 500; cursor: pointer;
-  font-family: var(--font); transition: all 0.12s;
+  font-size: var(--fs-base); font-weight: 500; cursor: pointer;
+  font-family: var(--font); transition: border-color var(--ease-fast), color var(--ease-fast), background var(--ease-fast);
 }
 .filter-chip:not(.filter-chip-active):hover { border-color: var(--text-3); color: var(--text-1); }
 .filter-chip-active {
@@ -661,8 +694,10 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Quick-nav tiles */
 .dash-tiles {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-lg);
 }
 .dash-tile {
   display: flex; align-items: center; gap: 10px;
@@ -677,21 +712,17 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .dash-tile-sub   { font-size: 11px; color: var(--text-3); margin-top: 1px; }
 .dash-tile-arrow { color: var(--tile-color, var(--text-3)); opacity: 0.5; flex-shrink: 0; }
 
-/* 2-column card grid */
+/* 2-column card grid — auto-collapses on narrow viewports */
 .dash-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-@media (max-width: 767px) {
-  .dash-grid { grid-template-columns: 1fr; }
-  .dash-tiles { grid-template-columns: repeat(3, 1fr); }
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--gap-lg);
 }
 
 /* Individual card */
 .dash-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
+  border-radius: var(--r-lg); overflow: hidden;
   display: flex; flex-direction: column;
 }
 .dash-card-head {
