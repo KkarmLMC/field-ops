@@ -32,7 +32,7 @@ const PRIORITY_DOT = {
 }
 
 const KANBAN_COLS = [
-  { id: 'scheduled',     label: 'Scheduled Installations', Icon: CalendarBlank, accent: '#A855F7', statuses: ['scheduled']            },
+  { id: 'scheduled',     label: 'Upcoming Installations',  Icon: CalendarBlank, accent: '#A855F7', statuses: ['scheduled']            },
   { id: 'active',        label: 'Active Installation',     Icon: HardHat,       accent: '#EAB308', statuses: ['active']               },
   { id: 'completed',     label: 'Completed',               Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed']  },
   { id: 'ul-inspection', label: 'UL Inspection',           Icon: Clipboard,     accent: '#E53E3A', statuses: ['ul-inspection']        },
