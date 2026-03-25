@@ -520,10 +520,9 @@ function CompletionRow({ form }) {
   const cfg = COMPLETION_TYPES[form.form_type]||{}
   const Icon = cfg.icon||ClipboardText
   return (
-    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'0.75rem var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
-      <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
+    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'0.875rem var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{form.site_name||'Unnamed Site'}</div>
+        <div style={{ fontWeight:600, fontSize:'var(--fs-lg)', marginBottom:'0.2rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{form.site_name||'Unnamed Site'}</div>
         <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)' }}>{cfg.short} · {form.tech_name} · {form.date_completed}</div>
       </div>
       <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'var(--sp-1)', flexShrink:0 }}>
