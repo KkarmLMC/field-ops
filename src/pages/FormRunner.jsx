@@ -40,7 +40,7 @@ export default function FormRunner() {
       <div className="page-content fade-in">
         <div className="empty" style={{ padding: '60px 24px' }}>
           <CheckCircle size={48} style={{ color: 'var(--green)' }} />
-          <div className="empty-title" style={{ fontSize: 20 }}>Form Submitted</div>
+          <div className="empty-title" style={{ fontSize: "var(--fs-xl)" }}>Form Submitted</div>
           <div className="empty-desc" style={{ maxWidth: 300 }}>
             {template.label} for {job.siteName} has been saved locally.
           </div>
@@ -180,7 +180,7 @@ function FieldRenderer({ field, value, onChange }) {
               background: value === true ? 'var(--green)' : 'transparent',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              {value === true && <span style={{ color: '#fff', fontSize: 12, fontWeight: 700 }}>✓</span>}
+              {value === true && <span style={{ color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700 }}>✓</span>}
             </div>
             <span style={{ fontSize: 13, color: value === true ? 'var(--green)' : 'var(--text-3)' }}>
               {value === true ? 'Yes' : value === false ? 'No' : 'Not Set'}

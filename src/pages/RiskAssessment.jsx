@@ -343,7 +343,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             </button>
             <button onClick={()=>setResult(null)} style={{
               padding:'0.625rem 0.875rem', borderRadius:'var(--r-sm)',
-              background:'var(--surface-raised)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
+              background:'var(--surface)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
             }}>
               Recalculate
             </button>
@@ -466,7 +466,7 @@ export default function RiskAssessment() {
       </div>
 
       {/* Note */}
-      <p style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)', lineHeight:1.6, padding:'0.625rem 0.875rem', background:'var(--surface-raised)', borderRadius:'var(--r-md)', margin:0 }}>
+      <p style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)', lineHeight:1.6, padding:'0.625rem 0.875rem', background:'var(--surface)', borderRadius:'var(--r-md)', margin:0 }}>
         <span style={{ fontFamily:'var(--mono)', color:'var(--text-2)' }}>NFPA 780 Annex L · </span>
         Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
       </p>

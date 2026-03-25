@@ -321,7 +321,7 @@ function FieldLabel({ label, required }) {
 
 function Section({ title, children, open, onToggle }) {
   return (
-    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+    <div style={{ background:'var(--surface)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={onToggle} style={{ width:'100%', padding:'var(--sp-2) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
         <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
         <CaretDown size={12} style={{ color:'rgba(255,255,255,0.6)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
@@ -506,7 +506,7 @@ function SuccessView({ result, onBack }) {
         )}
         <button onClick={onBack} style={{
           padding:'var(--sp-2) var(--sp-5)', borderRadius:'var(--r-md)',
-          background:'var(--surface-raised)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
+          background:'var(--surface)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
         }}>
           Back to Forms
         </button>
@@ -577,7 +577,7 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>

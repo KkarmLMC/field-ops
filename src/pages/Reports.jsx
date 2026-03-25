@@ -9,7 +9,7 @@ export default function Reports() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    db.from('daily_field_reports')
+    db.from('daily_field_logs')
       .select('*, projects(name)')
       .order('report_date', { ascending: false })
       .then(({ data }) => {
@@ -65,7 +65,7 @@ export default function Reports() {
             <div style={{ flex: 1 }}>
               <div className="project-name">{r.projects?.name || 'Unknown Project'}</div>
               <div className="project-meta">{r.report_date} · {r.submitted_by}</div>
-              {r.hours_worked && <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{r.hours_worked}h on site</div>}
+              {r.hours_worked && <div className="project-meta" style={{ marginTop: 'var(--sp-1)' }}>{r.hours_worked}h on site</div>}
             </div>
             <span className={`badge ${r.status === 'Submitted' ? 'badge-awarded' : r.status === 'Reviewed' ? 'badge-complete' : 'badge-hold'}`}>
               {r.status}

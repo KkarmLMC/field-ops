@@ -72,7 +72,7 @@ export default function Inspections() {
         >
           <span className="list-search-icon"><MagnifyingGlass size={15} /></span>
           <input
-            placeholder="MagnifyingGlass inspections…"
+            placeholder="Search inspections…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             onBlur={() => { if (!search) setSearchOpen(false) }}
@@ -92,7 +92,7 @@ export default function Inspections() {
         </div>
         <div>
           {jobs.length === 0 ? (
-            <div style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>
+            <div className="empty">
               No inspections match your filter
             </div>
           ) : (

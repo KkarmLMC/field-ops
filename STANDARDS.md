@@ -149,8 +149,9 @@ This app uses a **flat, borderless, shadowless** design. Cards are defined by a 
 | `--border-l` | `#EFEFEF` | Row dividers only — subtle internal separation between list items inside a card |
 
 **Rules:**
-- No `border` on cards, inputs, or panels
+- No `border` on cards or panels — flat design
 - No `box-shadow` anywhere
+- **Inputs, selects, and textareas are the exception** — they MUST have a visible border (`1px solid var(--border-l)`) and white (`var(--surface)`) background for UX clarity. Text must be `var(--text-1)` (black). Focus state uses `border-color: var(--navy)`. This is handled globally in `globals.css` — do not override with `border: none` on inputs.
 - Cards sit on `--surface-raised` background
 - **Card/section headers default to `--navy`** with white text
 - **Branch-aware card headers inherit the branch primary color** via `bc.bgActive` — always override the header background when a branch is in context

@@ -29,13 +29,13 @@ export default function Technicians() {
                   background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
                   color: tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--mono)', fontSize: '0.8125rem', fontWeight: 600,
+                  fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', fontWeight: 600,
                 }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{tech.name}</div>
-                  <div style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)', marginTop: '0.125rem' }}>
+                  <div style={{ fontWeight: 600, fontSize: 'var(--fs-lg)' }}>{tech.name}</div>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: '0.125rem' }}>
                     {tech.license} · {tech.phone}
                   </div>
                 </div>
@@ -48,7 +48,7 @@ export default function Technicians() {
             {/* Assigned jobs */}
             {techJobs.length > 0 && (
               <div style={{ padding: '8px 14px 10px' }}>
-                <div style={{ fontSize: '0.625rem', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 6 }}>
+                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 'var(--sp-1)' }}>
                   Assigned Jobs ({techJobs.length})
                 </div>
                 {techJobs.map(job => (
@@ -56,13 +56,13 @@ export default function Technicians() {
                     key={job.id}
                     className="project-item"
                     style={{ padding: '8px 0', gap: '0.5rem' }}
-                    onClick={() => navigate(`/jobs/${job.id}`)}
+                    onClick={() => navigate(`/installations/installs/${job.id}`)}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.8125rem', fontWeight: 500 }}>{job.siteName}</div>
+                      <div style={{ fontSize: 'var(--fs-md)', fontWeight: 500 }}>{job.siteName}</div>
                       <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.id}</div>
                     </div>
-                    <span className={`badge badge-${job.status}`} style={{ fontSize: '0.625rem' }}>{job.status}</span>
+                    <span className={`badge badge-${job.status}`} }>{job.status}</span>
                   </div>
                 ))}
               </div>

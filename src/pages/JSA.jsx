@@ -100,7 +100,7 @@ function SignaturePad({ value, onChange }) {
         <button type="button" onClick={clear} style={{
           position: 'absolute', top: 4, right: 4,
           background: 'var(--bg-4)', border: '1px solid var(--border)',
-          borderRadius: 3, padding: '2px 6px', fontSize: 10,
+          borderRadius: 3, padding: '2px 6px', fontSize: 'var(--fs-xs)',
           color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: 3,
         }}>
           <Trash size={10} /> Clear
@@ -410,7 +410,7 @@ function NewJSAForm({ onSave, onCancel, branch }) {
       </div>
 
       {TEMPLATE.sections.map(section => (
-        <div key={section.id} style={{ background:'var(--surface-raised)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+        <div key={section.id} style={{ background:'var(--surface)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
           <button type="button" onClick={()=>setOpenSections(s=>({...s,[section.id]:!s[section.id]}))}
             style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:openSections[section.id]?'1px solid var(--border)':'none' }}>
             <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
@@ -557,14 +557,14 @@ export default function JSA() {
           { label:'Signed',     val:branchJsas.filter(j=>j.status==='signed').length, color:'var(--green)' },
           { label:'Draft',      val:branchJsas.filter(j=>j.status==='draft').length,  color:'var(--accent)'},
         ].map(({label,val,color}) => (
-          <div key={label} style={{ background:'var(--surface-raised)', borderRadius:'var(--r-md)', padding:'10px 12px' }}>
+          <div key={label} style={{ background:'var(--surface)', borderRadius:'var(--r-md)', padding:'10px 12px' }}>
             <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-1)' }}>{label}</div>
             <div style={{ fontFamily:'var(--head)', fontSize:24, fontWeight:700, color }}>{val}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-md)' }}>
+      <div style={{ background:'var(--surface)', borderRadius:'var(--r-md)' }}>
         <div style={{ padding:'10px 14px', borderBottom:'none', display:'flex', alignItems:'center', justifyContent:'space-between', background:bc.bgActive, transition:'background 0.2s' }}>
           <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>Job Safety Analyses</span>
           <button onClick={()=>setView('new')} style={{ display:'flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:'var(--r-sm)', background:'var(--accent)', color:'#000', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, letterSpacing:'0.06em', textTransform:'uppercase' }}>
@@ -579,7 +579,7 @@ export default function JSA() {
         }
       </div>
 
-      <div style={{ marginTop:10, padding:'10px 14px', background:'var(--surface-raised)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--text-muted)', lineHeight:1.6 }}>
+      <div style={{ marginTop:10, padding:'10px 14px', background:'var(--surface)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--text-muted)', lineHeight:1.6 }}>
         <span style={{ fontFamily:'var(--mono)', color:'var(--text-dim)' }}>LMC-Form-000-008 · </span>
         Job Safety Analysis — required before any field work begins. Submitted PDFs are stored in Supabase and accessible via View PDF.
       </div>

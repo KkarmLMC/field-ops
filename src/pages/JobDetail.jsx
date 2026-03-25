@@ -47,8 +47,8 @@ export default function JobDetail() {
           {/* Progress bar */}
           <div style={{ marginTop: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)' }}>Progress</span>
-              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>{job.progress}%</span>
+              <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>Progress</span>
+              <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>{job.progress}%</span>
             </div>
             <div style={{ height: '0.3125rem', borderRadius: '0.1875rem', background: 'var(--bg)', overflow: 'hidden' }}>
               <div style={{
@@ -93,7 +93,7 @@ export default function JobDetail() {
                 {tech.name.split(' ').map(n => n[0]).join('')}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{tech.name}</div>
+                <div style={{ fontWeight: 600, fontSize: 'var(--fs-lg)' }}>{tech.name}</div>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)' }}>{tech.license} · {tech.phone}</div>
               </div>
               <span className={`badge badge-${tech.status === 'field' ? 'active' : 'completed'}`}>
@@ -126,7 +126,7 @@ export default function JobDetail() {
                 : <Circle size={18} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
               }
               <div style={{ flex: 1 }}>
-                <div className="project-name" style={{ fontSize: '0.8125rem' }}>{template?.label ?? formId}</div>
+                <div className="project-name">{template?.label ?? formId}</div>
                 <div className="project-meta">{template?.nfpaRef}</div>
               </div>
               {completed
@@ -159,7 +159,7 @@ function InfoRow({ icon: Icon, label, value }) {
       <Icon size={14} style={{ color: 'var(--text-3)', marginTop: '0.125rem', flexShrink: 0 }} />
       <div>
         <div style={{ fontSize: '0.6875rem', fontWeight: 600, color: 'var(--text-3)', marginBottom: '0.125rem' }}>{label}</div>
-        <div style={{ fontSize: '0.8125rem' }}>{value}</div>
+        <div style={{ fontSize: 'var(--fs-md)' }}>{value}</div>
       </div>
     </div>
   );
