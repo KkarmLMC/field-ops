@@ -425,9 +425,10 @@ export default function RiskAssessment() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
 
       {/* Stats */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)', marginBottom:'var(--gap-md)' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)' }}>
         {[
           { label:'Total',       val: assessments.length, color:'var(--text-1)' },
           { label:'LPS Required',val: required,           color:'var(--red)'    },
@@ -441,7 +442,7 @@ export default function RiskAssessment() {
       </div>
 
       {/* List */}
-      <div style={{ ...S.card, marginBottom:'var(--sp-3)' }}>
+      <div style={{ ...S.card }}>
         <div style={{
           padding:'0.625rem 0.875rem', borderBottom:'none',
           display:'flex', alignItems:'center', justifyContent:'space-between',
@@ -470,6 +471,7 @@ export default function RiskAssessment() {
         <span style={{ fontFamily:'var(--mono)', color:'var(--text-2)' }}>NFPA 780 Annex L · </span>
         Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
       </p>
+      </div>{/* end flex column */}
     </div>
   )
 }

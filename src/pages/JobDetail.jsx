@@ -32,8 +32,9 @@ export default function JobDetail() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
       {/* Job header card */}
-      <div className="card" style={{ marginBottom: '0.75rem' }}>
+      <div className="card">
         <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span>{job.siteName}</span>
           <span className={`badge badge-${job.status}`} style={{ color: 'white', background: 'rgba(255,255,255,0.2)' }}>{job.status}</span>
@@ -63,7 +64,7 @@ export default function JobDetail() {
       </div>
 
       {/* Job info */}
-      <div className="card" style={{ marginBottom: '0.75rem' }}>
+      <div className="card">
         <div className="card-header">
           <span className="card-title">Job Details</span>
         </div>
@@ -77,7 +78,7 @@ export default function JobDetail() {
       </div>
 
       {/* Technician */}
-      <div className="card" style={{ marginBottom: '0.75rem' }}>
+      <div className="card">
         <div className="card-header">
           <span className="card-title">Assigned Technician</span>
         </div>
@@ -107,7 +108,7 @@ export default function JobDetail() {
       </div>
 
       {/* Forms checklist */}
-      <div className="card" style={{ marginBottom: '0.75rem' }}>
+      <div className="card">
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background: 'var(--red)' }} />NFPA Forms</span>
         </div>
@@ -149,6 +150,7 @@ export default function JobDetail() {
           </div>
         </div>
       )}
+      </div>{/* end flex column */}
     </div>
   );
 }

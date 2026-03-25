@@ -25,6 +25,7 @@ export default function Projects() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
       <div className="stat-grid">
         <div className="stat-card">
           <div className="stat-label">In Progress</div>
@@ -45,7 +46,7 @@ export default function Projects() {
       </div>
 
       {/* MagnifyingGlass */}
-      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.75rem', marginBottom: '0.75rem' }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.75rem' }}>
         <span style={{ color: 'var(--text-3)' }}>🔍</span>
         <input
           style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: '0.875rem', color: 'var(--text-1)', width: '100%' }}
@@ -56,7 +57,7 @@ export default function Projects() {
       </div>
 
       {/* Filter pills */}
-      <div style={{ display: 'flex', gap: '0.375rem', overflowX: 'auto', paddingBottom: '0.75rem', scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: '0.375rem', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {FILTERS.map(f => (
           <button
             key={f}
@@ -101,6 +102,7 @@ export default function Projects() {
           </div>
         ))}
       </div>
+      </div>{/* end flex column */}
     </div>
   )
 }

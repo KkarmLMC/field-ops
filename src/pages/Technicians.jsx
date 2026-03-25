@@ -7,6 +7,7 @@ export default function Technicians() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
       <div className="stat-grid">
         <div className="stat-card">
           <div className="stat-label">Total Techs</div>
@@ -21,7 +22,7 @@ export default function Technicians() {
       {TECHNICIANS.map(tech => {
         const techJobs = JOBS.filter(j => j.assignedTo === tech.id);
         return (
-          <div key={tech.id} className="card" style={{ marginBottom: '0.75rem' }}>
+          <div key={tech.id} className="card">
             <div style={{ padding: '14px', borderBottom: techJobs.length > 0 ? '1px solid var(--border-l)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{
@@ -70,6 +71,7 @@ export default function Technicians() {
           </div>
         );
       })}
+      </div>{/* end flex column */}
     </div>
   );
 }
