@@ -38,8 +38,8 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* ── Completion Forms card ─────────────────────────────────────── */}
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:12 }}>
-        <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+      <div style={{ marginBottom:12 }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10 }}>
           <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Completion Forms
           </span>
@@ -47,23 +47,29 @@ export default function Forms() {
             View all <CaretRight size={10} />
           </button>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:1, background:'var(--border)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
               <button key={type} onClick={()=>navigate(`/forms/completion?type=${type}`)}
-                style={{ display:'flex', alignItems:'center', gap:10, padding:'12px 14px', background:'var(--bg-2)', textAlign:'left', transition:'background 0.12s' }}
-                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-3)'}
-                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-2)'}
+                style={{
+                  display:'flex', alignItems:'center', gap:10, padding:'12px 14px',
+                  background:'#EEF3FF', border:'1.5px solid #D0DBFF',
+                  borderRadius:14, textAlign:'left',
+                  transition:'transform 0.12s, box-shadow 0.12s',
+                  boxShadow:'0 1px 4px rgba(30,60,180,0.06)',
+                }}
+                onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-1px)'; e.currentTarget.style.boxShadow='0 4px 12px rgba(30,60,180,0.12)' }}
+                onMouseLeave={e=>{ e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 1px 4px rgba(30,60,180,0.06)' }}
               >
-                <div style={{ width:30, height:30, borderRadius:4, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                  <Icon size={14} style={{ color:cfg.color }} />
+                <div style={{ width:30, height:30, borderRadius:8, background:'#fff', border:'1.5px solid #D0DBFF', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                  <Icon size={14} style={{ color:'#1E3CB4' }} />
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontWeight:600, fontSize:12, marginBottom:1 }}>{cfg.short}</div>
-                  <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-muted)', textTransform:'uppercase' }}>{cfg.ref}</div>
+                  <div style={{ fontWeight:700, fontSize:12, color:'#0D1F6B', marginBottom:1 }}>{cfg.short}</div>
+                  <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'#8AAAE0', textTransform:'uppercase' }}>{cfg.ref}</div>
                 </div>
-                <CaretRight size={11} style={{ color:'var(--text-muted)', flexShrink:0 }} />
+                <CaretRight size={11} style={{ color:'#7A9EE0', flexShrink:0 }} />
               </button>
             )
           })}
