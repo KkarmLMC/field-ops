@@ -1381,3 +1381,30 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dfl-jobsite-context-type { text-transform: capitalize; font-weight: 600; color: #6D28D9; }
 .dfl-card-job-id { font-size: 0.625rem; font-family: var(--mono); opacity: 0.7; }
+
+/* ─── DFL: GPS Coordinate Capture ──────────────────────────────── */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.dfl-gps-field { display: flex; flex-direction: column; gap: 0.375rem; }
+.dfl-gps-input-row { display: flex; gap: 0.5rem; align-items: stretch; }
+.dfl-gps-coord-input { flex: 1; min-width: 0; }
+
+.dfl-gps-capture-btn {
+  display: inline-flex; align-items: center; gap: 0.375rem;
+  padding: 0.625rem 0.875rem; border-radius: 0.5rem; flex-shrink: 0;
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 0.8125rem; font-weight: 600; font-family: var(--font);
+  color: var(--text-2); cursor: pointer; white-space: nowrap;
+  transition: all 0.15s;
+}
+.dfl-gps-capture-btn:hover:not(:disabled) { border-color: var(--text-2); color: var(--text-1); background: var(--hover); }
+.dfl-gps-capture-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.dfl-gps-capture-btn.success { border-color: #22C55E; color: #16A34A; background: #F0FDF4; }
+
+.dfl-gps-feedback {
+  display: flex; align-items: center; gap: 0.375rem;
+  font-size: 0.6875rem; font-weight: 600; padding: 0.3125rem 0.5rem;
+  border-radius: 0.375rem;
+}
+.dfl-gps-feedback--ok  { color: #16A34A; background: #F0FDF4; }
+.dfl-gps-feedback--err { color: #DC2626; background: #FEF2F2; font-weight: 500; }

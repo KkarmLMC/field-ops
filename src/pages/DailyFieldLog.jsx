@@ -4,6 +4,7 @@ import {
   X, User, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
   ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
+  Crosshair, SpinnerGap,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { MOCK_REPORTS, FORM_TEMPLATES, JOBS } from '../data/mockData.js'
@@ -246,6 +247,85 @@ function JobsiteSelect({ value, branch, onChange }) {
   )
 }
 
+// ─── GPS Coordinate Field ──────────────────────────────────────────────────────
+function GpsCoordinateField({ value, onChange }) {
+  const [status,   setStatus]   = useState('idle') // idle | loading | success | error
+  const [errorMsg, setErrorMsg] = useState('')
+  const [accuracy, setAccuracy] = useState(null)
+
+  const capture = () => {
+    if (!navigator.geolocation) {
+      setStatus('error')
+      setErrorMsg('Geolocation not supported on this device')
+      return
+    }
+    setStatus('loading')
+    setErrorMsg('')
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude.toFixed(6)
+        const lng = pos.coords.longitude.toFixed(6)
+        onChange(`${lat}, ${lng}`)
+        setAccuracy(Math.round(pos.coords.accuracy))
+        setStatus('success')
+      },
+      (err) => {
+        setStatus('error')
+        setErrorMsg(
+          err.code === 1 ? 'Location access denied — enter coordinates manually' :
+          err.code === 2 ? 'Position unavailable — check device GPS' :
+                           'Location timed out — try again'
+        )
+      },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+    )
+  }
+
+  const handleManualEdit = (v) => {
+    onChange(v)
+    setStatus('idle')
+    setAccuracy(null)
+  }
+
+  return (
+    <div className="dfl-gps-field">
+      <div className="dfl-gps-input-row">
+        <input
+          className="dfl-input dfl-input-mono dfl-gps-coord-input"
+          placeholder="e.g. 30.642380, -81.446720"
+          value={value}
+          onChange={e => handleManualEdit(e.target.value)}
+        />
+        <button
+          type="button"
+          className={`dfl-gps-capture-btn ${status === 'success' ? 'success' : ''}`}
+          onClick={capture}
+          disabled={status === 'loading'}
+        >
+          {status === 'loading'
+            ? <SpinnerGap size={14} style={{ animation: 'spin 0.8s linear infinite' }} />
+            : <Crosshair size={14} weight={status === 'success' ? 'fill' : 'bold'} />
+          }
+          <span>{status === 'loading' ? 'Locating…' : 'Get Location'}</span>
+        </button>
+      </div>
+
+      {status === 'success' && accuracy !== null && (
+        <div className="dfl-gps-feedback dfl-gps-feedback--ok">
+          <CheckCircle size={11} weight="fill" />
+          GPS locked · ±{accuracy}m accuracy
+        </div>
+      )}
+      {status === 'error' && (
+        <div className="dfl-gps-feedback dfl-gps-feedback--err">
+          <Warning size={11} weight="fill" />
+          {errorMsg}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Entry Card ────────────────────────────────────────────────────────────────
 function EntryCard({ entry, bc, onCloseOut }) {
   const [expanded, setExpanded] = useState(false)
@@ -378,7 +458,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             </div>
 
             <div className="dfl-detail-item">
-              <span className="dfl-detail-label"><MapPin size={11} /> Site Location</span>
+              <span className="dfl-detail-label"><Crosshair size={11} /> GPS Coordinates</span>
               <span className="dfl-detail-value dfl-gps">{entry.gps_location || '—'}</span>
             </div>
 
@@ -695,11 +775,10 @@ function Part1Form({ onClose, onSave, bc, branch }) {
     form.supervisor_name.trim() &&
     safetyCount === SAFETY_FORMS.length
 
-  // When a job is selected from the dropdown, auto-fill customer + GPS
+  // When a job is selected from the dropdown, auto-fill customer (GPS is device-captured)
   const handleJobSelect = (job) => {
     set('jobsite_id', job.id)
     if (!form.customer.trim()) set('customer', job.client)
-    if (!form.gps_location.trim()) set('gps_location', job.address)
   }
 
   return (
@@ -782,17 +861,12 @@ function Part1Form({ onClose, onSave, bc, branch }) {
 
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <MapPin size={12} style={{ marginRight: '0.25rem' }} />
-                  Site Location
-                  <span className="dfl-gps-auto">
-                    {form.gps_location && selectedJob ? 'Auto-filled' : 'Auto-detected'}
-                  </span>
+                  <Crosshair size={12} style={{ marginRight: '0.25rem' }} />
+                  GPS Coordinates <span className="dfl-req">*</span>
                 </label>
-                <input
-                  className="dfl-input dfl-input-mono"
-                  placeholder="30.6423° N, 81.4467° W  or  Street address"
+                <GpsCoordinateField
                   value={form.gps_location}
-                  onChange={e => set('gps_location', e.target.value)}
+                  onChange={val => set('gps_location', val)}
                 />
               </div>
 
