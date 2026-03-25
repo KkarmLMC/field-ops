@@ -577,11 +577,11 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', marginBottom:'var(--gap-lg)', overflow:'hidden' }}>
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--sp-2)', padding:'var(--sp-2)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md)' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
@@ -618,7 +618,7 @@ export default function Forms() {
           { label: 'Complete',      value: branchCompletions.filter(f => f.status === 'complete').length },
         ]
         return (
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)', marginBottom:'var(--gap-lg)' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)', marginBottom:'var(--gap-lg)' }}>
             {stats.map(({ label, value }) => (
               <div key={label} style={{
                 background: bc.bgInactive,
