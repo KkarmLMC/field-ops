@@ -542,9 +542,14 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  grid-template-columns: 1fr;
   gap: var(--gap-md);
   margin-bottom: var(--gap-lg);
+}
+@media (min-width: 600px) {
+  .branch-tabs {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 }
 .branch-card {
   display: flex; flex-direction: column;
