@@ -581,7 +581,7 @@ export default function Forms() {
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md) 0' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-sm) 0 0' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
