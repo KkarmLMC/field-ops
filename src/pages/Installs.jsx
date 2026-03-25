@@ -121,7 +121,7 @@ function KanbanColumn({ col, jobs, bc, onCardClick }) {
         className="kanban-col-head"
         style={{
           background: bc.bgActive,
-          borderTopColor: bc.bgActive,
+          borderTopColor: bc.bgAccent,
           transition: 'background 0.2s ease, border-color 0.2s ease',
         }}
       >
