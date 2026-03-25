@@ -9,7 +9,7 @@ import {
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { path: '/dashboard',     Icon: SquaresFour, label: 'Dashboard' },
+  { path: '/dashboard',     Icon: SquaresFour, label: 'Field Overview' },
   {
     // Expandable group
     groupId: 'installations',

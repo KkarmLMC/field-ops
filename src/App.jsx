@@ -17,7 +17,7 @@ import FormRunner    from './pages/FormRunner'
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
-  '/dashboard':              { title: 'Dashboard',        parent: null },
+  '/dashboard':              { title: 'Field Overview',   parent: null },
   '/installations':          { title: 'Installations',    parent: null },
   '/installations/installs': { title: 'Installs',         parent: '/installations' },
   '/inspections':            { title: 'Inspections',      parent: null },

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './Layout.css';
 
 const NAV = [
-  { id: 'dashboard', label: 'Dashboard', icon: SquaresFour },
+  { id: 'dashboard', label: 'Field Overview', icon: SquaresFour },
   { id: 'jobs', label: 'Jobs', icon: Briefcase },
   { id: 'reports', label: 'Reports', icon: FileText },
   { id: 'technicians', label: 'Technicians', icon: Users },

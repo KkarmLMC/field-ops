@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { SquaresFour, Buildings, Lightning, ClipboardText, HardHat } from '@phosphor-icons/react'
 
 const TABS = [
-  { path: '/dashboard',   Icon: SquaresFour,   label: 'Dashboard'  },
+  { path: '/dashboard',   Icon: SquaresFour,   label: 'Overview'   },
   { path: '/projects',    Icon: Buildings,     label: 'Projects'   },
   { path: '/jobs',        Icon: Lightning,     label: 'Jobs'       },
   { path: '/reports',     Icon: ClipboardText, label: 'Reports'    },
