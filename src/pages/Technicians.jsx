@@ -59,7 +59,7 @@ export default function Technicians() {
                     onClick={() => navigate(`/jobs/${job.id}`)}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.8125rem', fontWeight: 500 }}>{job.client}</div>
+                      <div style={{ fontSize: '0.8125rem', fontWeight: 500 }}>{job.siteName}</div>
                       <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.id}</div>
                     </div>
                     <span className={`badge badge-${job.status}`} style={{ fontSize: '0.625rem' }}>{job.status}</span>

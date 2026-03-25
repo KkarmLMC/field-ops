@@ -15,7 +15,7 @@ export default function Jobs() {
 
   const filtered = JOBS.filter(j => {
     if (statusFilter !== 'All' && j.status !== statusFilter) return false;
-    if (search && !j.client.toLowerCase().includes(search.toLowerCase()) && !j.id.toLowerCase().includes(search.toLowerCase())) return false;
+    if (search && !j.siteName.toLowerCase().includes(search.toLowerCase()) && !j.id.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
 
@@ -87,7 +87,7 @@ export default function Jobs() {
         ) : filtered.map(job => (
           <div key={job.id} className="project-item" onClick={() => navigate(`/jobs/${job.id}`)}>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="project-name">{job.client}</div>
+              <div className="project-name">{job.siteName}</div>
               <div className="project-meta">
                 {getTechName(job.assignedTo)} · {job.scheduledDate}
               </div>

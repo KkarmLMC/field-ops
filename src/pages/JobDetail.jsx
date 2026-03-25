@@ -35,7 +35,7 @@ export default function JobDetail() {
       {/* Job header card */}
       <div className="card" style={{ marginBottom: '0.75rem' }}>
         <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span>{job.client}</span>
+          <span>{job.siteName}</span>
           <span className={`badge badge-${job.status}`} style={{ color: 'white', background: 'rgba(255,255,255,0.2)' }}>{job.status}</span>
         </div>
         <div style={{ padding: '14px' }}>

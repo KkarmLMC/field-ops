@@ -71,8 +71,8 @@ function KanbanCard({ job, onClick }) {
         />
       </div>
 
-      {/* Client name */}
-      <div className="kanban-card-client">{job.client}</div>
+      {/* Site name */}
+      <div className="kanban-card-client">{job.siteName}</div>
 
       {/* Structure short */}
       {job.structure && (
@@ -172,7 +172,7 @@ export default function Installs() {
   // All jobs for this branch, optionally filtered by search
   const branchJobs = JOBS.filter(j =>
     j.branch === branch &&
-    (search === '' || j.client.toLowerCase().includes(search.toLowerCase()))
+    (search === '' || j.siteName.toLowerCase().includes(search.toLowerCase()))
   )
 
   return (

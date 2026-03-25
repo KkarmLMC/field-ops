@@ -163,7 +163,7 @@ function JobRow({ job, navigate }) {
         {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
-        <div className="dash-job-name">{job.client}</div>
+        <div className="dash-job-name">{job.siteName}</div>
         <div className="dash-job-meta">
           {getTechName(job.assignedTo)}
           {job.progress > 0 && (

@@ -42,7 +42,7 @@ export default function FormRunner() {
           <CheckCircle size={48} style={{ color: 'var(--green)' }} />
           <div className="empty-title" style={{ fontSize: 20 }}>Form Submitted</div>
           <div className="empty-desc" style={{ maxWidth: 300 }}>
-            {template.label} for {job.client} has been saved locally.
+            {template.label} for {job.siteName} has been saved locally.
           </div>
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
             <button className="btn btn-primary" onClick={() => navigate(`/jobs/${job.id}`)}>
@@ -64,7 +64,7 @@ export default function FormRunner() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)' }}>{template.nfpaRef}</span>
           <span style={{ color: 'var(--border)' }}>|</span>
-          <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{job.client}</span>
+          <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{job.siteName}</span>
         </div>
       </div>
 

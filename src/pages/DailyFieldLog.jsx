@@ -53,7 +53,7 @@ const JOB_STATUS_STYLE = {
 }
 
 // Derive unique customer names from all JOBS (alphabetical)
-const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.client))].sort()
+const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.customer))].sort()
 
 const EMPTY_P1 = {
   customer:          '',
@@ -118,7 +118,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
   }, [])
 
   // Only show customers who have at least one job on the current branch
-  const branchCustomers = [...new Set(JOBS.filter(j => j.branch === branch).map(j => j.client))].sort()
+  const branchCustomers = [...new Set(JOBS.filter(j => j.branch === branch).map(j => j.customer))].sort()
 
   const filtered = query.length >= 1
     ? branchCustomers.filter(c => c.toLowerCase().includes(query.toLowerCase()))
@@ -182,7 +182,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
 
   // Filter by branch always; filter by customer once one is selected
   const visibleJobs = JOBS
-    .filter(j => j.branch === branch && (!customerLocked || j.client === customer.trim()))
+    .filter(j => j.branch === branch && (!customerLocked || j.customer === customer.trim()))
     .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
 
   const selected = JOBS.find(j => j.id === value)
@@ -213,7 +213,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
               className="dfl-jobsite-status-dot"
               style={{ background: JOB_STATUS_STYLE[selected.status]?.color || '#6B7280' }}
             />
-            <span className="dfl-jobsite-selected-name">{selected.client}</span>
+            <span className="dfl-jobsite-selected-name">{selected.siteName}</span>
             <span className="dfl-jobsite-selected-id">{selected.id}</span>
           </span>
         ) : customerLocked ? (
@@ -251,7 +251,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
                   <MapPin size={13} style={{ flexShrink: 0, color: '#6B7280' }} />
-                  <span style={{ flex: 1 }}>{job.client}</span>
+                  <span style={{ flex: 1 }}>{job.siteName}</span>
                   {isActive && <CheckCircle size={13} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
                 </div>
               )
@@ -795,7 +795,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
   const handleCustomerChange = (val) => {
     set('customer', val)
     const currentJob = JOBS.find(j => j.id === form.jobsite_id)
-    if (currentJob && currentJob.client !== val.trim()) {
+    if (currentJob && currentJob.customer !== val.trim()) {
       set('jobsite_id', null)
     }
   }
@@ -803,7 +803,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
   // When a job is selected from the dropdown, auto-fill customer (GPS is device-captured)
   const handleJobSelect = (job) => {
     set('jobsite_id', job.id)
-    if (!form.customer.trim()) set('customer', job.client)
+    if (!form.customer.trim()) set('customer', job.customer)
   }
 
   return (
@@ -1264,7 +1264,7 @@ function SignaturePad({ signed, onSign, onClear }) {
   const getPos = (e, canvas) => {
     const r = canvas.getBoundingClientRect()
     const src = e.touches ? e.touches[0] : e
-    return { x: src.clientX - r.left, y: src.clientY - r.top }
+    return { x: src.siteNameX - r.left, y: src.siteNameY - r.top }
   }
 
   const startDraw = (e) => {

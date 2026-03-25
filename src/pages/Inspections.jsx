@@ -39,7 +39,7 @@ export default function Inspections() {
     j.branch === branch &&
     INSPECT_TYPES.includes(j.type) &&
     (statusFilter === 'all' || j.status === statusFilter) &&
-    (search === '' || j.client.toLowerCase().includes(search.toLowerCase()))
+    (search === '' || j.siteName.toLowerCase().includes(search.toLowerCase()))
   )
 
   return (
@@ -108,7 +108,7 @@ export default function Inspections() {
                     {(() => { const I = TYPE_ICON[job.type] || MagnifyingGlass; return <I size={16} /> })()}
                   </div>
                   <div className="dash-job-info">
-                    <div className="dash-job-name">{job.client}</div>
+                    <div className="dash-job-name">{job.siteName}</div>
                     <div className="dash-job-meta">
                       {getTech(job.assignedTo)}
                       <span className="dash-job-dot">·</span>
