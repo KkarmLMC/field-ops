@@ -727,12 +727,12 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dash-card-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
 /* Fixed-height body keeps paired cards uniform — exactly 4 rows tall */
 .dash-card-body {
-  flex: 1; min-height: 260px;
+  flex: 1; min-height: clamp(220px, 25vh, 320px);
   display: flex; flex-direction: column;
 }
 .dash-card-title {
@@ -760,8 +760,8 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Job row inside a card */
 .dash-job-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 15px 20px; cursor: pointer;
+  display: flex; align-items: center; gap: 0.625rem;
+  padding: 0.875rem 1.25rem; cursor: pointer;
   border-bottom: 1px solid var(--border-l);
   transition: background 0.1s;
 }
