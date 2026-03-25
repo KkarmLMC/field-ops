@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react'
 import {
-  Clock, CheckCircle, FileText, Plus, MapPin, Camera,
+  Clock, CheckCircle, FileText, Plus, MapPin,
   X, User, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
+  ArrowsClockwise, SealCheck,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { MOCK_REPORTS } from '../data/mockData.js'
@@ -11,27 +12,54 @@ import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Config ────────────────────────────────────────────────────────────────────
 const WORK_TYPES = ['Inspection', 'Installation', 'Remediation', 'Site Revisit', 'Other']
 
+// Safety docs are digital forms linked from the form repository
+const SAFETY_FORMS = [
+  {
+    key:    'jsa_uploaded',
+    label:  'JSA — Job Safety Analysis',
+    desc:   'Hazard identification, controls & emergency procedures',
+    formId: 'site-survey',
+  },
+  {
+    key:    'manlift_checklist',
+    label:  'Man Lift Pre-Use Checklist',
+    desc:   'Equipment inspection before operation — required per OSHA 1926.453',
+    formId: 'inspection',
+  },
+  {
+    key:    'fall_protection',
+    label:  'Fall Protection Plan',
+    desc:   'PPE verification, anchor points & rescue procedures',
+    formId: 'inspection',
+  },
+]
+
 const STATUS_STYLE = {
-  Draft:     { bg: '#F3F4F6', color: '#374151' },
+  Draft:     { bg: '#FEF9C3', color: '#92400E' },
   Submitted: { bg: '#EFF6FF', color: '#1D4ED8' },
   Reviewed:  { bg: '#F0FDF4', color: '#16A34A' },
 }
 
-const EMPTY_ENTRY = {
-  customer_site: '',
-  report_date: new Date().toISOString().slice(0, 10),
-  gps_location: '',
-  crew_on_site: [],
-  crew_input: '',
-  hours_worked: '',
-  work_types: [],
-  work_other: '',
-  jsa_uploaded: false,
+const EMPTY_P1 = {
+  customer_site:     '',
+  report_date:       new Date().toISOString().slice(0, 10),
+  gps_location:      '',
+  supervisor_name:   '',
+  crew_on_site:      [],
+  crew_input:        '',
+  jsa_uploaded:      false,
   manlift_checklist: false,
-  fall_protection: false,
+  fall_protection:   false,
+}
+
+const EMPTY_P2 = {
+  hours_worked: '',
+  work_types:   [],
+  work_other:   '',
   miles_driven: '',
-  drive_time: '',
-  other_tasks: '',
+  drive_time:   '',
+  other_tasks:  '',
+  signed:       false,
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
@@ -49,84 +77,147 @@ function SafetyDot({ ok, label }) {
       style={{ background: ok ? '#22C55E' : '#E5E7EB', color: ok ? '#fff' : '#9CA3AF' }}
       title={label}
     >
-      {ok ? <CheckCircle size={9} weight="fill" /> : <Warning size={9} weight="fill" />}
+      {ok
+        ? <CheckCircle size={9} weight="fill" />
+        : <Warning size={9} weight="fill" />
+      }
     </span>
   )
 }
 
 // ─── Entry Card ────────────────────────────────────────────────────────────────
-function EntryCard({ entry, bc }) {
+function EntryCard({ entry, bc, onCloseOut }) {
   const [expanded, setExpanded] = useState(false)
   const ss = STATUS_STYLE[entry.status] || STATUS_STYLE.Draft
+  const isDraft = entry.status === 'Draft'
+
+  const safetyAllDone = entry.jsa_uploaded && entry.manlift_checklist && entry.fall_protection
 
   return (
-    <div className="dfl-card">
+    <div className={`dfl-card ${isDraft ? 'dfl-card--draft' : ''}`}>
+
+      {/* Draft: Part progress bar */}
+      {isDraft && (
+        <div className="dfl-entry-parts">
+          <span className="dfl-part-pill dfl-part-pill--done">
+            <CheckCircle size={10} weight="fill" />
+            Morning Check-In Complete
+          </span>
+          <span className="dfl-part-sep">→</span>
+          <span className="dfl-part-pill dfl-part-pill--pending">
+            <Clock size={10} />
+            Close-Out Pending
+          </span>
+        </div>
+      )}
+
       {/* Card header — always visible */}
-      <div className="dfl-card-head" onClick={() => setExpanded(e => !e)}>
+      <div
+        className="dfl-card-head"
+        onClick={() => !isDraft && setExpanded(e => !e)}
+        style={{ cursor: isDraft ? 'default' : 'pointer' }}
+      >
         <div className="dfl-card-head-left">
-          <div className="dfl-card-icon" style={{ background: bc.bgInactive, color: bc.bgActive }}>
-            <FileText size={15} weight="bold" />
+          <div
+            className="dfl-card-icon"
+            style={{
+              background: isDraft ? '#FEF9C3' : bc.bgInactive,
+              color:      isDraft ? '#92400E' : bc.bgActive,
+            }}
+          >
+            {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
           </div>
           <div>
             <div className="dfl-card-title">{entry.customer_site}</div>
             <div className="dfl-card-sub">
               {fmtDate(entry.report_date)}
               <span className="dfl-dot">·</span>
-              {entry.submitted_by}
+              {entry.supervisor_name || entry.submitted_by}
             </div>
           </div>
         </div>
         <div className="dfl-card-head-right">
-          <div className="dfl-card-hours">{entry.hours_worked}h</div>
+          {!isDraft && entry.hours_worked && (
+            <div className="dfl-card-hours">{entry.hours_worked}h</div>
+          )}
           <span className="dfl-status-pill" style={{ background: ss.bg, color: ss.color }}>
             {entry.status}
           </span>
-          <CaretDown
-            size={14}
-            style={{
-              color: 'var(--text-3)',
-              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-              transition: 'transform 0.18s',
-              flexShrink: 0,
-            }}
-          />
+          {!isDraft && (
+            <CaretDown
+              size={14}
+              style={{
+                color: 'var(--text-3)',
+                transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.18s',
+                flexShrink: 0,
+              }}
+            />
+          )}
         </div>
       </div>
 
-      {/* Work type chips — always visible */}
+      {/* Chips row */}
       <div className="dfl-card-chips">
-        {(entry.work_types || []).map(t => (
+        {!isDraft && (entry.work_types || []).map(t => (
           <span key={t} className="dfl-work-chip">{t}</span>
         ))}
         {/* Safety indicators */}
-        <div className="dfl-safety-row">
+        <div className="dfl-safety-row" style={{ marginLeft: isDraft ? 0 : 'auto' }}>
           <SafetyDot ok={entry.jsa_uploaded}     label="JSA" />
           <SafetyDot ok={entry.manlift_checklist} label="Man Lift" />
           <SafetyDot ok={entry.fall_protection}   label="Fall Protection" />
-          <span className="dfl-safety-label">Safety docs</span>
+          <span className="dfl-safety-label">Safety</span>
         </div>
+        {isDraft && (
+          <span
+            className="dfl-crew-preview"
+            style={{ marginLeft: 'auto' }}
+          >
+            <User size={10} />
+            {(entry.crew_on_site || []).length + (entry.supervisor_name ? 1 : 0)} on site
+          </span>
+        )}
       </div>
 
-      {/* Expanded detail */}
-      {expanded && (
+      {/* Draft: Close-Out CTA */}
+      {isDraft && (
+        <div className="dfl-closeout-row">
+          <div className="dfl-closeout-hint">
+            <Warning size={11} weight="fill" style={{ color: '#F59E0B', flexShrink: 0 }} />
+            Complete end-of-day close-out to submit this log
+          </div>
+          <button
+            className="dfl-closeout-btn"
+            style={{ background: bc.bgActive }}
+            onClick={() => onCloseOut(entry.id)}
+          >
+            Close Out Day
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      )}
+
+      {/* Submitted/Reviewed: Expanded detail */}
+      {!isDraft && expanded && (
         <div className="dfl-card-detail">
           <div className="dfl-detail-grid">
 
-            {/* Crew */}
             <div className="dfl-detail-item">
               <span className="dfl-detail-label"><User size={11} /> Crew on Site</span>
               <span className="dfl-detail-value">
-                {(entry.crew_on_site || []).join(', ') || '—'}
+                {entry.supervisor_name
+                  ? [entry.supervisor_name, ...(entry.crew_on_site || [])].join(', ')
+                  : (entry.crew_on_site || []).join(', ') || '—'
+                }
               </span>
             </div>
 
-            {/* GPS */}
             <div className="dfl-detail-item">
               <span className="dfl-detail-label"><MapPin size={11} /> Site Location</span>
               <span className="dfl-detail-value dfl-gps">{entry.gps_location || '—'}</span>
             </div>
 
-            {/* Travel */}
             <div className="dfl-detail-item">
               <span className="dfl-detail-label"><Truck size={11} /> Travel</span>
               <span className="dfl-detail-value">
@@ -135,23 +226,21 @@ function EntryCard({ entry, bc }) {
               </span>
             </div>
 
-            {/* Safety docs */}
-            <div className="dfl-detail-item dfl-detail-full">
+            <div className="dfl-detail-item">
               <span className="dfl-detail-label"><HardHat size={11} /> Safety Docs</span>
               <div className="dfl-safety-badges">
-                <span className={`dfl-safety-badge ${entry.jsa_uploaded ? 'ok' : 'missing'}`}>
-                  {entry.jsa_uploaded ? '✓' : '✗'} JSA
+                <span className={`dfl-safety-badge ${entry.jsa_uploaded      ? 'ok' : 'missing'}`}>
+                  {entry.jsa_uploaded      ? '✓' : '✗'} JSA
                 </span>
                 <span className={`dfl-safety-badge ${entry.manlift_checklist ? 'ok' : 'missing'}`}>
                   {entry.manlift_checklist ? '✓' : '✗'} Man Lift
                 </span>
-                <span className={`dfl-safety-badge ${entry.fall_protection ? 'ok' : 'missing'}`}>
-                  {entry.fall_protection ? '✓' : '✗'} Fall Protection
+                <span className={`dfl-safety-badge ${entry.fall_protection   ? 'ok' : 'missing'}`}>
+                  {entry.fall_protection   ? '✓' : '✗'} Fall Protection
                 </span>
               </div>
             </div>
 
-            {/* Notes */}
             {entry.other_tasks && (
               <div className="dfl-detail-item dfl-detail-full">
                 <span className="dfl-detail-label"><ClipboardText size={11} /> Notes</span>
@@ -161,7 +250,6 @@ function EntryCard({ entry, bc }) {
 
           </div>
 
-          {/* Sign-off status */}
           <div className="dfl-signoff-row">
             {entry.signed ? (
               <div className="dfl-signed-badge">
@@ -181,19 +269,12 @@ function EntryCard({ entry, bc }) {
   )
 }
 
-// ─── New Entry Form ─────────────────────────────────────────────────────────────
-function EntryForm({ onClose, onSave, branch, bc }) {
-  const [form, setForm] = useState({ ...EMPTY_ENTRY })
-  const [section, setSection] = useState(0)
+// ─── Part 1 Form — Morning Check-In ────────────────────────────────────────────
+function Part1Form({ onClose, onSave, bc }) {
+  const [form, setForm] = useState({ ...EMPTY_P1 })
+  const [step, setStep] = useState(0)
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
-
-  const toggleWorkType = (t) => {
-    set('work_types', form.work_types.includes(t)
-      ? form.work_types.filter(x => x !== t)
-      : [...form.work_types, t]
-    )
-  }
 
   const addCrew = () => {
     const name = form.crew_input.trim()
@@ -202,54 +283,56 @@ function EntryForm({ onClose, onSave, branch, bc }) {
     }
     set('crew_input', '')
   }
-
   const removeCrew = (name) => set('crew_on_site', form.crew_on_site.filter(n => n !== name))
 
-  const SECTIONS = [
-    { label: 'Job Info',   icon: <FileText size={13} /> },
-    { label: 'Daily Info', icon: <ClipboardText size={13} /> },
-    { label: 'Safety',     icon: <HardHat size={13} /> },
-    { label: 'Travel',     icon: <Truck size={13} /> },
-    { label: 'Sign Off',   icon: <Signature size={13} /> },
+  const STEPS = [
+    { label: 'Job Info', icon: <FileText size={12} /> },
+    { label: 'Crew',     icon: <User size={12} /> },
+    { label: 'Safety',   icon: <HardHat size={12} /> },
   ]
+
+  const safetyCount = SAFETY_FORMS.filter(f => form[f.key]).length
+
+  const canSave =
+    form.customer_site.trim() &&
+    form.supervisor_name.trim() &&
+    safetyCount === SAFETY_FORMS.length
 
   return (
     <div className="dfl-form-overlay" onClick={onClose}>
       <div className="dfl-form-panel" onClick={e => e.stopPropagation()}>
 
-        {/* Panel header */}
+        {/* Header */}
         <div className="dfl-form-header" style={{ background: bc.bgActive }}>
           <div>
-            <div style={{ fontSize: '0.625rem', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.125rem' }}>
-              New Entry
-            </div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Daily Field Log</div>
+            <div className="dfl-form-part-label">Part 1 of 2 · Before Work Begins</div>
+            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Morning Check-In</div>
           </div>
           <button className="dfl-form-close" onClick={onClose}><X size={16} /></button>
         </div>
 
         {/* Step tabs */}
         <div className="dfl-form-steps">
-          {SECTIONS.map((s, i) => (
+          {STEPS.map((s, i) => (
             <button
               key={i}
-              className={`dfl-form-step ${section === i ? 'active' : ''} ${i < section ? 'done' : ''}`}
-              onClick={() => setSection(i)}
+              className={`dfl-form-step ${step === i ? 'active' : ''} ${i < step ? 'done' : ''}`}
+              onClick={() => setStep(i)}
             >
-              {i < section ? <CheckCircle size={11} weight="fill" /> : s.icon}
+              {i < step ? <CheckCircle size={11} weight="fill" /> : s.icon}
               <span>{s.label}</span>
             </button>
           ))}
         </div>
 
-        {/* Section content */}
+        {/* Body */}
         <div className="dfl-form-body">
 
-          {/* ── Section 0: Job Info ── */}
-          {section === 0 && (
+          {/* Step 0: Job Info */}
+          {step === 0 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
-                <label className="dfl-label">Customer & Site <span className="dfl-req">*</span></label>
+                <label className="dfl-label">Customer &amp; Site <span className="dfl-req">*</span></label>
                 <input
                   className="dfl-input"
                   placeholder="e.g. Ritz-Carlton — Rooftop Level"
@@ -269,7 +352,7 @@ function EntryForm({ onClose, onSave, branch, bc }) {
               <div className="dfl-field">
                 <label className="dfl-label">
                   <MapPin size={12} style={{ marginRight: '0.25rem' }} />
-                  Site Location
+                  Site GPS Location
                   <span className="dfl-gps-auto">Auto-detected</span>
                 </label>
                 <input
@@ -282,11 +365,20 @@ function EntryForm({ onClose, onSave, branch, bc }) {
             </div>
           )}
 
-          {/* ── Section 1: Daily Info ── */}
-          {section === 1 && (
+          {/* Step 1: Crew */}
+          {step === 1 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
-                <label className="dfl-label">Who Was On Site? <span className="dfl-req">*</span></label>
+                <label className="dfl-label">Supervisor / Lead Tech <span className="dfl-req">*</span></label>
+                <input
+                  className="dfl-input"
+                  placeholder="Supervisor name"
+                  value={form.supervisor_name}
+                  onChange={e => set('supervisor_name', e.target.value)}
+                />
+              </div>
+              <div className="dfl-field">
+                <label className="dfl-label">Installers on Site</label>
                 <div className="dfl-crew-tags">
                   {form.crew_on_site.map(n => (
                     <span key={n} className="dfl-crew-tag">
@@ -305,8 +397,162 @@ function EntryForm({ onClose, onSave, branch, bc }) {
                   />
                   <button className="dfl-add-btn" onClick={addCrew}>Add</button>
                 </div>
+                {form.crew_on_site.length > 0 && (
+                  <div className="dfl-crew-count">
+                    {form.crew_on_site.length} installer{form.crew_on_site.length !== 1 ? 's' : ''} added
+                  </div>
+                )}
               </div>
+            </div>
+          )}
 
+          {/* Step 2: Safety Forms */}
+          {step === 2 && (
+            <div className="dfl-form-section">
+              <div className="dfl-section-note">
+                Complete all safety documentation below <strong>before work begins</strong>.
+                Each form links to the digital template in the Forms Repository.
+              </div>
+              {SAFETY_FORMS.map(({ key, label, desc }) => (
+                <div key={key} className={`dfl-safety-form-item ${form[key] ? 'completed' : ''}`}>
+                  <div className="dfl-safety-form-icon">
+                    {form[key]
+                      ? <CheckCircle size={18} weight="fill" style={{ color: '#16A34A' }} />
+                      : <HardHat size={18} weight="bold" style={{ color: '#6B7280' }} />
+                    }
+                  </div>
+                  <div className="dfl-safety-form-info">
+                    <div className="dfl-safety-form-label">{label} <span className="dfl-req">*</span></div>
+                    <div className="dfl-safety-form-desc">{desc}</div>
+                    {form[key] && (
+                      <div className="dfl-safety-form-completed-label">
+                        <CheckCircle size={10} weight="fill" /> Completed
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className={`dfl-safety-form-btn ${form[key] ? 'completed' : ''}`}
+                    onClick={() => set(key, !form[key])}
+                  >
+                    {form[key]
+                      ? <><ArrowsClockwise size={12} /> Redo</>
+                      : <>Fill Out Form <ArrowRight size={12} /></>
+                    }
+                  </button>
+                </div>
+              ))}
+              {safetyCount < SAFETY_FORMS.length && (
+                <div className="dfl-safety-warning">
+                  <Warning size={13} weight="fill" />
+                  {SAFETY_FORMS.length - safetyCount} of {SAFETY_FORMS.length} safety forms still required
+                </div>
+              )}
+              {safetyCount === SAFETY_FORMS.length && (
+                <div className="dfl-safety-all-done">
+                  <CheckCircle size={13} weight="fill" />
+                  All safety documentation complete — ready to start work
+                </div>
+              )}
+            </div>
+          )}
+
+        </div>
+
+        {/* Footer */}
+        <div className="dfl-form-footer">
+          <button
+            className="dfl-btn-secondary"
+            onClick={() => step > 0 ? setStep(s => s - 1) : onClose()}
+          >
+            {step === 0 ? 'Cancel' : 'Back'}
+          </button>
+          {step < STEPS.length - 1 ? (
+            <button
+              className="dfl-btn-primary"
+              style={{ background: bc.bgActive }}
+              onClick={() => setStep(s => s + 1)}
+              disabled={step === 0 && !form.customer_site.trim()}
+            >
+              Next <ArrowRight size={13} />
+            </button>
+          ) : (
+            <button
+              className="dfl-btn-primary"
+              style={{ background: canSave ? '#16A34A' : '#9CA3AF', cursor: canSave ? 'pointer' : 'not-allowed' }}
+              onClick={() => canSave && onSave(form)}
+              disabled={!canSave}
+            >
+              <CheckCircle size={14} weight="fill" />
+              Save &amp; Start Work
+            </button>
+          )}
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
+// ─── Part 2 Form — End-of-Day Close-Out ────────────────────────────────────────
+function Part2Form({ entry, onClose, onSubmit, bc }) {
+  const [form, setForm] = useState({ ...EMPTY_P2 })
+  const [step, setStep] = useState(0)
+
+  const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
+
+  const toggleWorkType = (t) => {
+    set('work_types', form.work_types.includes(t)
+      ? form.work_types.filter(x => x !== t)
+      : [...form.work_types, t]
+    )
+  }
+
+  const STEPS = [
+    { label: 'Work Summary', icon: <ClipboardText size={12} /> },
+    { label: 'Travel',       icon: <Truck size={12} /> },
+    { label: 'Sign Off',     icon: <Signature size={12} /> },
+  ]
+
+  const canSubmit = form.hours_worked && form.work_types.length > 0 && form.signed
+
+  return (
+    <div className="dfl-form-overlay" onClick={onClose}>
+      <div className="dfl-form-panel" onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className="dfl-form-header dfl-form-header--p2" style={{ background: bc.bgActive }}>
+          <div>
+            <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
+            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Close Out Day</div>
+            {entry && (
+              <div style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.65)', marginTop: '0.125rem' }}>
+                {entry.customer_site} · {fmtDate(entry.report_date)}
+              </div>
+            )}
+          </div>
+          <button className="dfl-form-close" onClick={onClose}><X size={16} /></button>
+        </div>
+
+        {/* Step tabs */}
+        <div className="dfl-form-steps">
+          {STEPS.map((s, i) => (
+            <button
+              key={i}
+              className={`dfl-form-step ${step === i ? 'active' : ''} ${i < step ? 'done' : ''}`}
+              onClick={() => setStep(i)}
+            >
+              {i < step ? <CheckCircle size={11} weight="fill" /> : s.icon}
+              <span>{s.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Body */}
+        <div className="dfl-form-body">
+
+          {/* Step 0: Work Summary */}
+          {step === 0 && (
+            <div className="dfl-form-section">
               <div className="dfl-field">
                 <label className="dfl-label">Hours Worked Today <span className="dfl-req">*</span></label>
                 <input
@@ -320,7 +566,6 @@ function EntryForm({ onClose, onSave, branch, bc }) {
                   onChange={e => set('hours_worked', e.target.value)}
                 />
               </div>
-
               <div className="dfl-field">
                 <label className="dfl-label">Type of Work Completed <span className="dfl-req">*</span></label>
                 <div className="dfl-type-chips">
@@ -348,41 +593,8 @@ function EntryForm({ onClose, onSave, branch, bc }) {
             </div>
           )}
 
-          {/* ── Section 2: Safety Docs ── */}
-          {section === 2 && (
-            <div className="dfl-form-section">
-              <p className="dfl-section-note">
-                Upload photos of required safety documentation for this job site.
-              </p>
-              {[
-                { key: 'jsa_uploaded',     label: 'JSA For Job',               note: 'Job Safety Analysis form' },
-                { key: 'manlift_checklist', label: 'Man Lift Checklist',        note: 'Pre-use equipment checklist' },
-                { key: 'fall_protection',  label: 'Fall Protection Checklist',  note: 'PPE and anchor point verification' },
-              ].map(({ key, label, note }) => (
-                <div key={key} className="dfl-photo-field">
-                  <div className="dfl-photo-info">
-                    <div className="dfl-photo-label">{label} <span className="dfl-req">*</span></div>
-                    <div className="dfl-photo-note">{note}</div>
-                  </div>
-                  <label className={`dfl-photo-btn ${form[key] ? 'uploaded' : ''}`}>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={() => set(key, true)}
-                    />
-                    {form[key]
-                      ? <><CheckCircle size={14} weight="fill" /> Uploaded</>
-                      : <><Camera size={14} /> Add Photo</>
-                    }
-                  </label>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* ── Section 3: Travel ── */}
-          {section === 3 && (
+          {/* Step 1: Travel */}
+          {step === 1 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
                 <label className="dfl-label"><Truck size={12} style={{ marginRight: '0.25rem' }} />Miles Driven <span className="dfl-req">*</span></label>
@@ -405,10 +617,10 @@ function EntryForm({ onClose, onSave, branch, bc }) {
                 />
               </div>
               <div className="dfl-field">
-                <label className="dfl-label">Other Tasks / Projects</label>
+                <label className="dfl-label">Other Tasks / Notes</label>
                 <textarea
                   className="dfl-input dfl-textarea"
-                  placeholder="Note anything else completed today — additional tasks, issues observed, follow-up needed..."
+                  placeholder="Additional tasks completed, issues observed, follow-up needed..."
                   value={form.other_tasks}
                   onChange={e => set('other_tasks', e.target.value)}
                 />
@@ -416,27 +628,22 @@ function EntryForm({ onClose, onSave, branch, bc }) {
             </div>
           )}
 
-          {/* ── Section 4: Sign Off ── */}
-          {section === 4 && (
+          {/* Step 2: Sign Off */}
+          {step === 2 && (
             <div className="dfl-form-section">
-              <div className="dfl-field">
-                <label className="dfl-label">Timesheet Date</label>
-                <input
-                  className="dfl-input"
-                  type="date"
-                  value={form.report_date}
-                  readOnly
-                  style={{ background: 'var(--border-l)', color: 'var(--text-2)' }}
-                />
-              </div>
-              <div className="dfl-field">
-                <label className="dfl-label">Supervisor Name <span className="dfl-req">*</span></label>
-                <input
-                  className="dfl-input"
-                  placeholder="Enter supervisor name"
-                  value={form.supervisor_name || ''}
-                  onChange={e => set('supervisor_name', e.target.value)}
-                />
+              <div className="dfl-signoff-context">
+                <div className="dfl-signoff-context-row">
+                  <span className="dfl-detail-label"><FileText size={11} /> Site</span>
+                  <span>{entry?.customer_site || '—'}</span>
+                </div>
+                <div className="dfl-signoff-context-row">
+                  <span className="dfl-detail-label"><Clock size={11} /> Date</span>
+                  <span>{fmtDate(entry?.report_date) || '—'}</span>
+                </div>
+                <div className="dfl-signoff-context-row">
+                  <span className="dfl-detail-label"><User size={11} /> Supervisor</span>
+                  <span>{entry?.supervisor_name || '—'}</span>
+                </div>
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">
@@ -449,34 +656,44 @@ function EntryForm({ onClose, onSave, branch, bc }) {
                   onClear={() => set('signed', false)}
                 />
               </div>
+              {!canSubmit && (
+                <div className="dfl-safety-warning">
+                  <Warning size={13} weight="fill" />
+                  {!form.hours_worked ? 'Hours worked required · ' : ''}
+                  {form.work_types.length === 0 ? 'Select at least one work type · ' : ''}
+                  {!form.signed ? 'Supervisor signature required' : ''}
+                </div>
+              )}
             </div>
           )}
 
         </div>
 
-        {/* Footer navigation */}
+        {/* Footer */}
         <div className="dfl-form-footer">
           <button
             className="dfl-btn-secondary"
-            onClick={() => section > 0 ? setSection(s => s - 1) : onClose()}
+            onClick={() => step > 0 ? setStep(s => s - 1) : onClose()}
           >
-            {section === 0 ? 'Cancel' : 'Back'}
+            {step === 0 ? 'Cancel' : 'Back'}
           </button>
-          {section < SECTIONS.length - 1 ? (
+          {step < STEPS.length - 1 ? (
             <button
               className="dfl-btn-primary"
               style={{ background: bc.bgActive }}
-              onClick={() => setSection(s => s + 1)}
+              onClick={() => setStep(s => s + 1)}
             >
               Next <ArrowRight size={13} />
             </button>
           ) : (
             <button
               className="dfl-btn-primary"
-              style={{ background: bc.bgActive }}
-              onClick={() => onSave(form)}
+              style={{ background: canSubmit ? bc.bgActive : '#9CA3AF', cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+              onClick={() => canSubmit && onSubmit(form)}
+              disabled={!canSubmit}
             >
-              <CheckCircle size={14} weight="fill" /> Submit Entry
+              <SealCheck size={14} weight="fill" />
+              Complete &amp; Submit
             </button>
           )}
         </div>
@@ -555,9 +772,10 @@ function SignaturePad({ signed, onSign, onClear }) {
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function DailyFieldLog() {
-  const [branch, setBranch]   = useState('lm')
-  const [showForm, setShowForm] = useState(false)
-  const [entries, setEntries]  = useState(MOCK_REPORTS)
+  const [branch, setBranch]           = useState('lm')
+  const [formMode, setFormMode]       = useState(null) // null | 'part1' | 'part2'
+  const [closeoutId, setCloseoutId]   = useState(null)
+  const [entries, setEntries]         = useState(MOCK_REPORTS)
 
   const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
 
@@ -569,22 +787,65 @@ export default function DailyFieldLog() {
     .filter(r => r.branch === branch)
     .sort((a, b) => b.report_date.localeCompare(a.report_date))
 
-  const totalHours   = reports.reduce((s, r) => s + Number(r.hours_worked || 0), 0)
+  const draftCount    = reports.filter(r => r.status === 'Draft').length
+  const totalHours    = reports.filter(r => r.status !== 'Draft').reduce((s, r) => s + Number(r.hours_worked || 0), 0)
   const reviewedCount = reports.filter(r => r.status === 'Reviewed').length
-  const unsignedCount = reports.filter(r => !r.signed).length
+  const unsignedCount = reports.filter(r => r.status === 'Submitted' && !r.signed).length
 
-  const handleSave = (form) => {
+  // Part 1 save → creates a Draft entry
+  const handlePart1Save = (form) => {
     const newEntry = {
-      ...form,
-      id: `r-${Date.now()}`,
+      id:                `r-${Date.now()}`,
       branch,
-      submitted_by: form.crew_on_site[0] || 'Field Tech',
-      status: form.signed ? 'Submitted' : 'Draft',
-      projects: { name: form.customer_site },
+      status:            'Draft',
+      customer_site:     form.customer_site,
+      report_date:       form.report_date,
+      gps_location:      form.gps_location,
+      supervisor_name:   form.supervisor_name,
+      crew_on_site:      form.crew_on_site,
+      jsa_uploaded:      form.jsa_uploaded,
+      manlift_checklist: form.manlift_checklist,
+      fall_protection:   form.fall_protection,
+      submitted_by:      form.supervisor_name,
+      // Part 2 fields — empty until close-out
+      hours_worked:      '',
+      work_types:        [],
+      miles_driven:      '',
+      drive_time:        '',
+      other_tasks:       '',
+      signed:            false,
     }
     setEntries(e => [newEntry, ...e])
-    setShowForm(false)
+    setFormMode(null)
   }
+
+  // Part 2 submit → updates Draft → Submitted
+  const handlePart2Submit = (form) => {
+    setEntries(e => e.map(r =>
+      r.id === closeoutId
+        ? {
+            ...r,
+            status:       'Submitted',
+            hours_worked: form.hours_worked,
+            work_types:   form.work_types,
+            work_other:   form.work_other,
+            miles_driven: form.miles_driven,
+            drive_time:   form.drive_time,
+            other_tasks:  form.other_tasks,
+            signed:       form.signed,
+          }
+        : r
+    ))
+    setFormMode(null)
+    setCloseoutId(null)
+  }
+
+  const openCloseOut = (id) => {
+    setCloseoutId(id)
+    setFormMode('part2')
+  }
+
+  const closeoutEntry = entries.find(r => r.id === closeoutId)
 
   return (
     <div className="page-content fade-in">
@@ -600,17 +861,27 @@ export default function DailyFieldLog() {
       {/* Summary strip */}
       <div className="dfl-summary-strip">
         {[
-          { label: 'Total Entries', value: reports.length,      icon: <FileText size={15} weight="bold" /> },
-          { label: 'Hours Logged',  value: `${totalHours}h`,    icon: <Clock size={15} weight="bold" />    },
-          { label: 'Reviewed',      value: reviewedCount,        icon: <CheckCircle size={15} weight="bold" /> },
-          { label: 'Awaiting Sign-Off', value: unsignedCount,   icon: <Pencil size={15} weight="bold" />,  alert: unsignedCount > 0 },
+          { label: 'Total Entries',     value: reports.length,         icon: <FileText size={15} weight="bold" /> },
+          { label: 'Hours Logged',      value: `${totalHours}h`,       icon: <Clock size={15} weight="bold" />    },
+          { label: 'Reviewed',          value: reviewedCount,           icon: <CheckCircle size={15} weight="bold" /> },
+          { label: 'Drafts In Progress', value: draftCount,             icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
         ].map(s => (
-          <div key={s.label} className="dfl-summary-card" style={s.alert && unsignedCount > 0 ? { borderColor: '#FCA5A5' } : {}}>
-            <div className="dfl-summary-icon" style={{ color: s.alert && unsignedCount > 0 ? '#EF4444' : bc.bgActive }}>
+          <div
+            key={s.label}
+            className="dfl-summary-card"
+            style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+          >
+            <div
+              className="dfl-summary-icon"
+              style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}
+            >
               {s.icon}
             </div>
             <div>
-              <div className="dfl-summary-value" style={{ color: s.alert && unsignedCount > 0 ? '#EF4444' : 'var(--text-1)' }}>
+              <div
+                className="dfl-summary-value"
+                style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}
+              >
                 {s.value}
               </div>
               <div className="dfl-summary-label">{s.label}</div>
@@ -619,17 +890,28 @@ export default function DailyFieldLog() {
         ))}
       </div>
 
+      {/* Draft entries callout */}
+      {draftCount > 0 && (
+        <div className="dfl-draft-callout" style={{ borderLeftColor: bc.bgActive }}>
+          <ArrowsClockwise size={14} weight="bold" style={{ color: bc.bgActive, flexShrink: 0 }} />
+          <span>
+            <strong>{draftCount} log{draftCount !== 1 ? 's' : ''} in progress</strong>
+            {' '}— morning check-in saved. Complete the end-of-day close-out when work is done.
+          </span>
+        </div>
+      )}
+
       {/* Entries list */}
       <div className="dash-card">
-        <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
+        <div
+          className="dash-card-head"
+          style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
+        >
           <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
             <Clock size={14} />
             Field Log Entries
           </span>
-          <button
-            className="dfl-new-entry-btn"
-            onClick={() => setShowForm(true)}
-          >
+          <button className="dfl-new-entry-btn" onClick={() => setFormMode('part1')}>
             <Plus size={13} weight="bold" />
             New Entry
           </button>
@@ -643,7 +925,7 @@ export default function DailyFieldLog() {
               <button
                 className="dfl-empty-cta"
                 style={{ color: bc.bgActive }}
-                onClick={() => setShowForm(true)}
+                onClick={() => setFormMode('part1')}
               >
                 Create first entry
               </button>
@@ -651,19 +933,33 @@ export default function DailyFieldLog() {
           ) : (
             <div className="dfl-entries-list">
               {reports.map(r => (
-                <EntryCard key={r.id} entry={r} bc={bc} />
+                <EntryCard
+                  key={r.id}
+                  entry={r}
+                  bc={bc}
+                  onCloseOut={openCloseOut}
+                />
               ))}
             </div>
           )}
         </div>
       </div>
 
-      {/* New entry form */}
-      {showForm && (
-        <EntryForm
-          onClose={() => setShowForm(false)}
-          onSave={handleSave}
-          branch={branch}
+      {/* Part 1 Form */}
+      {formMode === 'part1' && (
+        <Part1Form
+          onClose={() => setFormMode(null)}
+          onSave={handlePart1Save}
+          bc={bc}
+        />
+      )}
+
+      {/* Part 2 Form */}
+      {formMode === 'part2' && (
+        <Part2Form
+          entry={closeoutEntry}
+          onClose={() => { setFormMode(null); setCloseoutId(null) }}
+          onSubmit={handlePart2Submit}
           bc={bc}
         />
       )}
