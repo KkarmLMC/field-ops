@@ -1356,22 +1356,13 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   max-height: 18rem; overflow-y: auto; padding: 0.25rem;
 }
 .dfl-jobsite-item {
-  padding: 0.625rem 0.75rem; border-radius: 0.4375rem; cursor: pointer;
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5625rem 0.75rem; border-radius: 0.4375rem; cursor: pointer;
+  font-size: 0.875rem; color: var(--text-1);
   transition: background 0.1s; border: 1.5px solid transparent;
 }
 .dfl-jobsite-item:hover { background: var(--hover); }
-.dfl-jobsite-item.selected { background: #F5F3FF; border-color: #DDD6FE; }
-.dfl-jobsite-item-top { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
-.dfl-jobsite-badge {
-  font-size: 0.5625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-  padding: 0.125rem 0.4375rem; border-radius: 0.25rem;
-}
-.dfl-jobsite-item-id { font-size: 0.6875rem; color: var(--text-3); font-family: var(--mono); }
-.dfl-jobsite-item-name { font-size: 0.875rem; font-weight: 600; color: var(--text-1); }
-.dfl-jobsite-item-addr {
-  display: flex; align-items: center; gap: 0.25rem;
-  font-size: 0.6875rem; color: var(--text-3); margin-top: 0.125rem;
-}
+.dfl-jobsite-item.selected { background: #F5F3FF; border-color: #DDD6FE; font-weight: 600; }
 .dfl-jobsite-empty { padding: 0.75rem 0.875rem; font-size: 0.8125rem; color: var(--text-3); text-align: center; }
 
 .dfl-jobsite-context {

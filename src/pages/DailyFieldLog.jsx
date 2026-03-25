@@ -240,27 +240,16 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
             </div>
           ) : (
             visibleJobs.map(job => {
-              const ss        = JOB_STATUS_STYLE[job.status] || { label: job.status, bg: '#F3F4F6', color: '#374151' }
-              const shortAddr = job.address.split(',').slice(0, 2).join(',')
-              const isActive  = job.id === value
+              const isActive = job.id === value
               return (
                 <div
                   key={job.id}
                   className={`dfl-jobsite-item ${isActive ? 'selected' : ''}`}
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
-                  <div className="dfl-jobsite-item-top">
-                    <span className="dfl-jobsite-badge" style={{ background: ss.bg, color: ss.color }}>
-                      {ss.label}
-                    </span>
-                    <span className="dfl-jobsite-item-id">{job.id}</span>
-                    {isActive && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto' }} />}
-                  </div>
-                  <div className="dfl-jobsite-item-name">{job.client}</div>
-                  <div className="dfl-jobsite-item-addr">
-                    <MapPin size={10} />
-                    {shortAddr}
-                  </div>
+                  <MapPin size={13} style={{ flexShrink: 0, color: '#6B7280' }} />
+                  <span style={{ flex: 1 }}>{job.client}</span>
+                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
                 </div>
               )
             })
@@ -866,7 +855,6 @@ function Part1Form({ onClose, onSave, bc, branch }) {
                 <label className="dfl-label">
                   <MapPin size={12} style={{ marginRight: '0.25rem' }} />
                   Jobsite <span className="dfl-req">*</span>
-                  <span className="dfl-gps-auto" style={{ background: '#EDE9FE', color: '#6D28D9' }}>From Kanban</span>
                 </label>
                 <JobsiteSelect
                   value={form.jobsite_id}
