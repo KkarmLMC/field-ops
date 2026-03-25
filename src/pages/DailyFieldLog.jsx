@@ -170,17 +170,19 @@ function CustomerTypeahead({ value, onChange }) {
 }
 
 // ─── Jobsite Dropdown ──────────────────────────────────────────────────────────
-function JobsiteSelect({ value, branch, onChange }) {
+function JobsiteSelect({ value, branch, customer, onChange }) {
   const [open, setOpen] = useState(false)
   const ref             = useRef(null)
 
-  // Filter jobs to current branch, sorted by: active first, then scheduled, then others
-  const ORDER = ['active', 'scheduled', 'ul-inspection', 'postponed', 'awaiting-po', 'completed', 'failed']
-  const branchJobs = JOBS
-    .filter(j => j.branch === branch)
+  const ORDER          = ['active', 'scheduled', 'ul-inspection', 'postponed', 'awaiting-po', 'completed', 'failed']
+  const customerLocked = Boolean(customer && customer.trim())
+
+  // Filter by branch always; filter by customer once one is selected
+  const visibleJobs = JOBS
+    .filter(j => j.branch === branch && (!customerLocked || j.client === customer.trim()))
     .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
 
-  const selected = branchJobs.find(j => j.id === value)
+  const selected = JOBS.find(j => j.id === value)
 
   useEffect(() => {
     const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
@@ -188,12 +190,19 @@ function JobsiteSelect({ value, branch, onChange }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  // Block opening if no customer chosen yet
+  const handleTriggerClick = () => {
+    if (!customerLocked) return
+    setOpen(o => !o)
+  }
+
   return (
     <div className="dfl-jobsite-wrap" ref={ref}>
       <button
         type="button"
-        className={`dfl-jobsite-trigger ${open ? 'open' : ''} ${selected ? 'has-value' : ''}`}
-        onClick={() => setOpen(o => !o)}
+        className={`dfl-jobsite-trigger ${open ? 'open' : ''} ${selected ? 'has-value' : ''} ${!customerLocked ? 'locked' : ''}`}
+        onClick={handleTriggerClick}
+        title={!customerLocked ? 'Select a customer first' : undefined}
       >
         {selected ? (
           <span className="dfl-jobsite-selected">
@@ -204,19 +213,34 @@ function JobsiteSelect({ value, branch, onChange }) {
             <span className="dfl-jobsite-selected-name">{selected.client}</span>
             <span className="dfl-jobsite-selected-id">{selected.id}</span>
           </span>
+        ) : customerLocked ? (
+          <span className="dfl-jobsite-placeholder">
+            {visibleJobs.length > 0
+              ? `${visibleJobs.length} job${visibleJobs.length !== 1 ? 's' : ''} found — select one…`
+              : 'No jobs on Kanban for this customer'
+            }
+          </span>
         ) : (
-          <span className="dfl-jobsite-placeholder">Select jobsite from Kanban…</span>
+          <span className="dfl-jobsite-placeholder dfl-jobsite-placeholder--hint">
+            ← Select a customer first
+          </span>
         )}
-        <CaretDown size={13} className={`dfl-jobsite-caret ${open ? 'open' : ''}`} />
+        <CaretDown
+          size={13}
+          className={`dfl-jobsite-caret ${open ? 'open' : ''}`}
+          style={{ opacity: customerLocked ? 1 : 0.35 }}
+        />
       </button>
 
-      {open && (
+      {open && customerLocked && (
         <div className="dfl-jobsite-dropdown">
-          {branchJobs.length === 0 ? (
-            <div className="dfl-jobsite-empty">No jobs found for this branch</div>
+          {visibleJobs.length === 0 ? (
+            <div className="dfl-jobsite-empty">
+              No active jobs found for <strong>{customer}</strong> on this branch
+            </div>
           ) : (
-            branchJobs.map(job => {
-              const ss = JOB_STATUS_STYLE[job.status] || { label: job.status, bg: '#F3F4F6', color: '#374151' }
+            visibleJobs.map(job => {
+              const ss        = JOB_STATUS_STYLE[job.status] || { label: job.status, bg: '#F3F4F6', color: '#374151' }
               const shortAddr = job.address.split(',').slice(0, 2).join(',')
               const isActive  = job.id === value
               return (
@@ -775,6 +799,15 @@ function Part1Form({ onClose, onSave, bc, branch }) {
     form.supervisor_name.trim() &&
     safetyCount === SAFETY_FORMS.length
 
+  // When customer changes: clear jobsite if it no longer belongs to that customer
+  const handleCustomerChange = (val) => {
+    set('customer', val)
+    const currentJob = JOBS.find(j => j.id === form.jobsite_id)
+    if (currentJob && currentJob.client !== val.trim()) {
+      set('jobsite_id', null)
+    }
+  }
+
   // When a job is selected from the dropdown, auto-fill customer (GPS is device-captured)
   const handleJobSelect = (job) => {
     set('jobsite_id', job.id)
@@ -824,7 +857,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
                 </label>
                 <CustomerTypeahead
                   value={form.customer}
-                  onChange={val => set('customer', val)}
+                  onChange={handleCustomerChange}
                 />
               </div>
 
@@ -838,6 +871,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
                 <JobsiteSelect
                   value={form.jobsite_id}
                   branch={branch}
+                  customer={form.customer}
                   onChange={handleJobSelect}
                 />
                 {selectedJob && (

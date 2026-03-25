@@ -1408,3 +1408,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dfl-gps-feedback--ok  { color: #16A34A; background: #F0FDF4; }
 .dfl-gps-feedback--err { color: #DC2626; background: #FEF2F2; font-weight: 500; }
+
+/* ─── DFL: Jobsite locked state ────────────────────────────────── */
+.dfl-jobsite-trigger.locked { cursor: not-allowed; opacity: 0.65; background: var(--bg); }
+.dfl-jobsite-placeholder--hint { font-style: italic; color: var(--text-3) !important; }
