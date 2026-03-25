@@ -596,8 +596,8 @@ export default function Forms() {
               >
                 <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
                 <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontWeight:600, fontSize:'var(--fs-base)', marginBottom:'0.125rem' }}>{cfg.short}</div>
-                  <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-3)', textTransform:'uppercase' }}>{cfg.ref}</div>
+                  <div className="project-name">{cfg.short}</div>
+                  <div className="project-meta" style={{ fontFamily:'var(--mono)', textTransform:'uppercase' }}>{cfg.ref}</div>
                 </div>
                 <CaretRight size={11} style={{ color:'var(--text-3)', flexShrink:0 }} />
               </button>
