@@ -482,8 +482,8 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   width: 0.625rem; height: 0.625rem; border-radius: 50%;
   flex-shrink: 0; margin-top: 0.25rem;
 }
-.project-name { font-size: 0.875rem; font-weight: 600; color: var(--text-1); margin-bottom: 0.1875rem; }
-.project-meta { font-size: 0.75rem; color: var(--text-3); }
+.project-name { font-size: var(--fs-lg); font-weight: 600; color: var(--text-1); margin-bottom: 0.1875rem; }
+.project-meta { font-size: var(--fs-sm); color: var(--text-3); }
 
 /* Modal / bottom sheet */
 .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; }

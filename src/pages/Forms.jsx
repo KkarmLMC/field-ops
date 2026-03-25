@@ -522,8 +522,8 @@ function CompletionRow({ form }) {
   return (
     <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'0.875rem var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontWeight:600, fontSize:'var(--fs-lg)', marginBottom:'0.2rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{form.site_name||'Unnamed Site'}</div>
-        <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)' }}>{cfg.short} · {form.tech_name} · {form.date_completed}</div>
+        <div className="project-name">{form.site_name||'Unnamed Site'}</div>
+        <div className="project-meta">{cfg.short} · {form.tech_name} · {form.date_completed}</div>
       </div>
       <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'var(--sp-1)', flexShrink:0 }}>
         <span className="badge badge-complete">Complete</span>
