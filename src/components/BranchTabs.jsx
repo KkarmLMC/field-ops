@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { STATS, JOBS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
   const [hoveredId, setHoveredId] = useState(null)
+  const trackRef = useRef(null)
 
-  // Live counts from JOBS data
   const lmStats = {
     active:    JOBS.filter(j => j.branch === 'lm'         && j.status === 'active').length,
     scheduled: JOBS.filter(j => j.branch === 'lm'         && j.status === 'scheduled').length,
@@ -23,43 +23,38 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   }
 
   const tabs = [
-    {
-      id:      'lm',
-      label:   STATS.lm.label,
-      sectors: STATS.lm.sectors,
-      stats:   lmStats,
-      total:   lmCount ?? (lmStats.active + lmStats.scheduled + lmStats.completed),
-      ...BRANCH_COLORS['lm'],
-    },
-    {
-      id:      'bolt',
-      label:   STATS.bolt.label,
-      sectors: STATS.bolt.sectors,
-      stats:   boltStats,
-      total:   boltCount ?? (boltStats.active + boltStats.scheduled + boltStats.completed),
-      ...BRANCH_COLORS['bolt'],
-    },
-    {
-      id:      'bolt-dallas',
-      label:   STATS['bolt-dallas'].label,
-      sectors: STATS['bolt-dallas'].sectors,
-      stats:   dallasStats,
-      total:   boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed),
-      ...BRANCH_COLORS['bolt-dallas'],
-    },
+    { id: 'lm',          label: STATS.lm.label,             sectors: STATS.lm.sectors,             stats: lmStats,     total: lmCount        ?? (lmStats.active + lmStats.scheduled + lmStats.completed),       ...BRANCH_COLORS['lm'] },
+    { id: 'bolt',        label: STATS.bolt.label,           sectors: STATS.bolt.sectors,           stats: boltStats,   total: boltCount       ?? (boltStats.active + boltStats.scheduled + boltStats.completed),   ...BRANCH_COLORS['bolt'] },
+    { id: 'bolt-dallas', label: STATS['bolt-dallas'].label, sectors: STATS['bolt-dallas'].sectors, stats: dallasStats, total: boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed), ...BRANCH_COLORS['bolt-dallas'] },
   ]
+
+  // Update active branch while user swipes
+  const handleScroll = () => {
+    const track = trackRef.current
+    if (!track) return
+    const idx = Math.round(track.scrollLeft / track.offsetWidth)
+    const tab = tabs[idx]
+    if (tab && tab.id !== active) onChange(tab.id)
+  }
+
+  // Scroll to card when dot is tapped
+  const scrollToTab = (id) => {
+    const idx = tabs.findIndex(t => t.id === id)
+    const track = trackRef.current
+    if (track) track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' })
+    onChange(id)
+  }
 
   return (
     <div className="branch-tabs">
-      {/* Mobile: swipeable track */}
-      <div className="branch-tabs-mobile-track">
+      <div ref={trackRef} className="branch-tabs-mobile-track" onScroll={handleScroll}>
         {tabs.map(tab => {
-          const isActive  = active === tab.id
-          const isHovered = hoveredId === tab.id && !isActive
+          const isActive   = active === tab.id
+          const isHovered  = hoveredId === tab.id && !isActive
           const showActive = isActive || isHovered
-          const bg   = showActive ? tab.bgActive   : tab.bgInactive
-          const text = showActive ? tab.textActive : tab.textInactive
-          const sub  = showActive ? tab.subActive  : tab.subInactive
+          const bg    = showActive ? tab.bgActive   : tab.bgInactive
+          const text  = showActive ? tab.textActive : tab.textInactive
+          const sub   = showActive ? tab.subActive  : tab.subInactive
           const total = tab.total || 1
 
           return (
@@ -72,37 +67,21 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
               style={{ background: bg, transition: 'background 0.15s, transform 0.12s' }}
             >
               <div className="branch-card-top">
-                <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>
-                  {tab.label}
-                </div>
-                <div
-                  className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
-                  style={{
-                    background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive,
-                    color:      '#fff',
-                    transition: 'background 0.15s',
-                  }}
-                >
+                <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>{tab.label}</div>
+                <div className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
+                  style={{ background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive, color: '#fff', transition: 'background 0.15s' }}>
                   {tab.stats.active} active
                 </div>
               </div>
-              <div className="branch-card-sectors" style={{ color: sub, transition: 'color 0.15s' }}>
-                {tab.sectors}
-              </div>
+
+              <div className="branch-card-sectors" style={{ color: sub, transition: 'color 0.15s' }}>{tab.sectors}</div>
+
               <div className="branch-card-bar-wrap">
-                <div
-                  className="branch-card-bar-track"
-                  style={{ background: showActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}
-                >
-                  <div
-                    className="branch-card-bar-fill"
-                    style={{
-                      width: `${Math.round((tab.stats.active / total) * 100)}%`,
-                      background: showActive ? '#ffffff' : tab.bgActive,
-                    }}
-                  />
+                <div className="branch-card-bar-track" style={{ background: showActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}>
+                  <div className="branch-card-bar-fill" style={{ width: `${Math.round((tab.stats.active / total) * 100)}%`, background: showActive ? '#ffffff' : tab.bgActive }} />
                 </div>
               </div>
+
               <div className="branch-card-stats">
                 {[
                   { label: 'Active',    value: tab.stats.active },
@@ -120,27 +99,27 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
         })}
       </div>
 
-      {/* Dot indicators — mobile only */}
-      <div style={{
-        display: 'flex', justifyContent: 'center', gap: '0.375rem',
-        marginTop: '0.5rem', marginBottom: '0',
-      }}>
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => onChange(tab.id)}
-            style={{
-              width: active === tab.id ? '1.25rem' : '0.375rem',
-              height: '0.375rem',
-              borderRadius: '0.1875rem',
-              background: active === tab.id ? BRANCH_COLORS[tab.id].bgActive : '#D1D5DB',
-              border: 'none',
-              padding: 0,
-              transition: 'width 0.2s ease, background 0.2s ease',
-              cursor: 'pointer',
-            }}
-          />
-        ))}
+      {/* Dot indicators — update on swipe via active prop */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.375rem', marginTop: '0.625rem' }}>
+        {tabs.map(tab => {
+          const isActive = active === tab.id
+          return (
+            <button
+              key={tab.id}
+              onClick={() => scrollToTab(tab.id)}
+              style={{
+                width:      isActive ? '1.5rem' : '0.4375rem',
+                height:     '0.4375rem',
+                borderRadius: '0.25rem',
+                background: isActive ? BRANCH_COLORS[tab.id].bgActive : '#D1D5DB',
+                border:     'none',
+                padding:    0,
+                cursor:     'pointer',
+                transition: 'width 0.25s ease, background 0.25s ease',
+              }}
+            />
+          )
+        })}
       </div>
     </div>
   )
