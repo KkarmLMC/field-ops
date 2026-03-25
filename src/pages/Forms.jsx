@@ -581,8 +581,8 @@ export default function Forms() {
 
       {/* Completion forms tiles */}
       <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
-        <div style={{ padding:'var(--sp-2) var(--sp-4)', borderBottom:'none' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>
+        <div style={{ padding:'var(--sp-3) var(--sp-4)', background:'var(--navy)' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Completion Forms
           </span>
         </div>
