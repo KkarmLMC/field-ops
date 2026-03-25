@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
   CalendarBlank, HardHat, CheckCircle, Clipboard,
+  Receipt, PauseCircle,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS } from '../data/mockData.js'
@@ -32,10 +33,12 @@ const PRIORITY_DOT = {
 }
 
 const KANBAN_COLS = [
-  { id: 'scheduled',     label: 'Scheduled',     Icon: CalendarBlank, accent: '#94A3B8', statuses: ['scheduled']           },
-  { id: 'active',        label: 'Active Install', Icon: HardHat,       accent: '#EAB308', statuses: ['active']              },
-  { id: 'completed',     label: 'Completed',      Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed'] },
-  { id: 'ul-inspection', label: 'UL Inspection',  Icon: Clipboard,     accent: '#E53E3A', statuses: ['ul-inspection']       },
+  { id: 'awaiting-po',   label: 'Awaiting PO',         Icon: Receipt,       accent: '#A855F7', statuses: ['awaiting-po']          },
+  { id: 'scheduled',     label: 'Install Scheduled',   Icon: CalendarBlank, accent: '#94A3B8', statuses: ['scheduled']            },
+  { id: 'active',        label: 'Active Installation', Icon: HardHat,       accent: '#EAB308', statuses: ['active']               },
+  { id: 'completed',     label: 'Completed',           Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed']  },
+  { id: 'ul-inspection', label: 'UL Inspection',       Icon: Clipboard,     accent: '#E53E3A', statuses: ['ul-inspection']        },
+  { id: 'postponed',     label: 'Postponed',           Icon: PauseCircle,   accent: '#F97316', statuses: ['postponed']            },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
