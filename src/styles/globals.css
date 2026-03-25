@@ -1340,7 +1340,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   text-align: left; transition: border-color 0.15s; gap: 0.5rem;
 }
 .dfl-jobsite-trigger:focus, .dfl-jobsite-trigger.open { border-color: #000; outline: none; }
-.dfl-jobsite-trigger.has-value { border-color: #6D28D9; background: #FAFAFE; }
+.dfl-jobsite-trigger.has-value { border-color: var(--border); background: var(--surface); }
 .dfl-jobsite-placeholder { color: var(--text-3); }
 .dfl-jobsite-selected { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; overflow: hidden; }
 .dfl-jobsite-status-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; flex-shrink: 0; }
