@@ -1,52 +1,206 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText } from '@phosphor-icons/react'
+import {
+  MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
+  CalendarBlank, HardHat, CheckCircle, Clipboard,
+} from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS } from '../data/mockData.js'
 
-const INSTALL_TYPES = ['installation', 'site-survey', 'certification', 'annual-test']
-
-const STATUS_COLOR = {
-  active:    { bg: '#F3F4F6', color: '#000000' },
-  scheduled: { bg: '#F3F4F6', color: '#000000' },
-  completed: { bg: '#F3F4F6', color: '#000000' },
-  failed:    { bg: '#F3F4F6', color: '#000000' },
-}
-
+// ─── Config ────────────────────────────────────────────────────────────────────
 const TYPE_ICON = {
   installation:  Lightning,
   'site-survey': Ruler,
   certification: Seal,
   'annual-test': ClipboardText,
+  inspection:    MagnifyingGlass,
 }
 
-const STATUS_FILTERS = ['all', 'active', 'scheduled', 'completed', 'failed']
+const TYPE_LABEL = {
+  installation:  'Install',
+  'site-survey': 'Site Survey',
+  certification: 'Cert',
+  'annual-test': 'Annual Test',
+  inspection:    'Inspection',
+}
 
+const PRIORITY_DOT = {
+  high:   '#EF4444',
+  medium: '#F59E0B',
+  low:    '#D1D5DB',
+}
+
+const KANBAN_COLS = [
+  {
+    id: 'scheduled',
+    label: 'Scheduled',
+    Icon: CalendarBlank,
+    accent: '#334155',
+    headerBg: '#F8FAFC',
+    countBg: '#E2E8F0',
+    countColor: '#334155',
+    statuses: ['scheduled'],
+  },
+  {
+    id: 'active',
+    label: 'Active Install',
+    Icon: HardHat,
+    accent: '#1D4ED8',
+    headerBg: '#EFF6FF',
+    countBg: '#DBEAFE',
+    countColor: '#1D4ED8',
+    statuses: ['active'],
+  },
+  {
+    id: 'ul-inspection',
+    label: 'UL Inspection',
+    Icon: Clipboard,
+    accent: '#B45309',
+    headerBg: '#FFFBEB',
+    countBg: '#FDE68A',
+    countColor: '#92400E',
+    statuses: ['ul-inspection'],
+  },
+  {
+    id: 'completed',
+    label: 'Completed',
+    Icon: CheckCircle,
+    accent: '#16A34A',
+    headerBg: '#F0FDF4',
+    countBg: '#BBF7D0',
+    countColor: '#166534',
+    statuses: ['completed', 'failed'],
+  },
+]
+
+// ─── Helpers ───────────────────────────────────────────────────────────────────
 function getTech(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
 }
 
+function fmtDate(d) {
+  if (!d) return ''
+  const [, m, day] = d.split('-')
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  return `${months[parseInt(m, 10) - 1]} ${parseInt(day, 10)}`
+}
+
+// ─── Card ──────────────────────────────────────────────────────────────────────
+function KanbanCard({ job, onClick }) {
+  const Icon = TYPE_ICON[job.type] || Lightning
+  const isFailed = job.status === 'failed'
+
+  return (
+    <div className="kanban-card" onClick={onClick}>
+      {/* Top row: type chip + priority dot */}
+      <div className="kanban-card-top">
+        <span className="kanban-card-type-chip">
+          <Icon size={11} weight="bold" />
+          {TYPE_LABEL[job.type] || job.type}
+        </span>
+        <span
+          className="kanban-card-priority-dot"
+          style={{ background: PRIORITY_DOT[job.priority] || PRIORITY_DOT.low }}
+          title={`${job.priority} priority`}
+        />
+      </div>
+
+      {/* Client name */}
+      <div className="kanban-card-client">{job.client}</div>
+
+      {/* Structure short */}
+      {job.structure && (
+        <div className="kanban-card-structure">
+          {job.structure.split(' — ')[0]}
+        </div>
+      )}
+
+      {/* Meta row */}
+      <div className="kanban-card-meta-row">
+        <span className="kanban-card-tech">{getTech(job.assignedTo)}</span>
+        <span className="kanban-card-sep">·</span>
+        <span className="kanban-card-date">{fmtDate(job.scheduledDate)}</span>
+      </div>
+
+      {/* Progress bar — show if in progress */}
+      {job.progress > 0 && job.progress < 100 && (
+        <div className="kanban-card-prog-wrap">
+          <div className="kanban-card-prog-track">
+            <div className="kanban-card-prog-fill" style={{ width: `${job.progress}%` }} />
+          </div>
+          <span className="kanban-card-prog-pct">{job.progress}%</span>
+        </div>
+      )}
+
+      {/* Failed badge */}
+      {isFailed && (
+        <div className="kanban-card-failed-badge">Failed</div>
+      )}
+
+      {/* NFPA class badge */}
+      {job.nfpaClass && (
+        <div className="kanban-card-nfpa">NFPA Class {job.nfpaClass}</div>
+      )}
+    </div>
+  )
+}
+
+// ─── Column ────────────────────────────────────────────────────────────────────
+function KanbanColumn({ col, jobs, onCardClick }) {
+  const { label, Icon, accent, headerBg, countBg, countColor } = col
+
+  return (
+    <div className="kanban-col">
+      {/* Column header */}
+      <div className="kanban-col-head" style={{ background: headerBg, borderTopColor: accent }}>
+        <div className="kanban-col-head-left">
+          <Icon size={15} weight="bold" style={{ color: accent, flexShrink: 0 }} />
+          <span className="kanban-col-label" style={{ color: accent }}>{label}</span>
+        </div>
+        <span className="kanban-col-count" style={{ background: countBg, color: countColor }}>
+          {jobs.length}
+        </span>
+      </div>
+
+      {/* Cards */}
+      <div className="kanban-col-body">
+        {jobs.length === 0 ? (
+          <div className="kanban-col-empty">No items</div>
+        ) : (
+          jobs.map(job => (
+            <KanbanCard
+              key={job.id}
+              job={job}
+              onClick={() => onCardClick(job.id)}
+            />
+          ))
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─── Page ──────────────────────────────────────────────────────────────────────
 export default function Installs() {
   const navigate = useNavigate()
-  const [branch, setBranch]     = useState('lm')
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [search, setSearch]     = useState('')
+  const [branch, setBranch]         = useState('lm')
+  const [search, setSearch]         = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
 
-  const lmCount          = JOBS.filter(j => j.branch === 'lm'         && INSTALL_TYPES.includes(j.type)).length
-  const boltCount        = JOBS.filter(j => j.branch === 'bolt'        && INSTALL_TYPES.includes(j.type)).length
-  const boltDallasCount  = JOBS.filter(j => j.branch === 'bolt-dallas' && INSTALL_TYPES.includes(j.type)).length
+  const lmCount         = JOBS.filter(j => j.branch === 'lm').length
+  const boltCount       = JOBS.filter(j => j.branch === 'bolt').length
+  const boltDallasCount = JOBS.filter(j => j.branch === 'bolt-dallas').length
 
-  const jobs = JOBS.filter(j =>
+  // All jobs for this branch, optionally filtered by search
+  const branchJobs = JOBS.filter(j =>
     j.branch === branch &&
-    INSTALL_TYPES.includes(j.type) &&
-    (statusFilter === 'all' || j.status === statusFilter) &&
     (search === '' || j.client.toLowerCase().includes(search.toLowerCase()))
   )
 
   return (
     <div className="page-content fade-in">
 
+      {/* Branch selector */}
       <BranchTabs
         active={branch}
         onChange={setBranch}
@@ -55,84 +209,46 @@ export default function Installs() {
         boltDallasCount={boltDallasCount}
       />
 
-      {/* Filters + expandable search */}
-      <div className="list-toolbar">
-        <div className="list-filters">
-          {STATUS_FILTERS.map(s => (
-            <button
-              key={s}
-              className={`filter-chip ${statusFilter === s ? 'filter-chip-active' : ''}`}
-              onClick={() => setStatusFilter(s)}
-            >
-              {s.charAt(0).toUpperCase() + s.slice(1)}
-            </button>
-          ))}
-        </div>
+      {/* Search bar */}
+      <div className="kanban-toolbar">
         <div
           className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}
           onClick={() => { if (!searchOpen) setSearchOpen(true) }}
         >
           <span className="list-search-icon"><MagnifyingGlass size={15} /></span>
           <input
-            placeholder="MagnifyingGlass installs…"
+            placeholder="Search installations…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             onBlur={() => { if (!search) setSearchOpen(false) }}
             ref={el => { if (searchOpen && el) el.focus() }}
           />
           {search && (
-            <button className="search-clear-btn" onClick={e => { e.stopPropagation(); setSearch(''); setSearchOpen(false) }}>✕</button>
+            <button
+              className="search-clear-btn"
+              onClick={e => { e.stopPropagation(); setSearch(''); setSearchOpen(false) }}
+            >
+              ✕
+            </button>
           )}
         </div>
       </div>
 
-      {/* List */}
-      <div className="dash-card">
-        <div className="dash-card-head">
-          <span className="dash-card-title">Installs</span>
-          <span className="dash-card-meta">{jobs.length} results</span>
-        </div>
-        <div>
-          {jobs.length === 0 ? (
-            <div style={{ padding: '2rem 1rem', textAlign: 'center', color: 'var(--text-3)', fontSize: '0.8125rem' }}>
-              No installs match your filter
-            </div>
-          ) : (
-            jobs.map(job => {
-              const sc = STATUS_COLOR[job.status] || STATUS_COLOR.scheduled
-              return (
-                <div
-                  key={job.id}
-                  className="dash-job-row"
-                  onClick={() => navigate(`/installations/installs/${job.id}`)}
-                >
-                  <div className="dash-job-icon" style={{ background: sc.bg }}>
-                    {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
-                  </div>
-                  <div className="dash-job-info">
-                    <div className="dash-job-name">{job.client}</div>
-                    <div className="dash-job-meta">
-                      {getTech(job.assignedTo)}
-                      {job.progress > 0 && (
-                        <>
-                          <span className="dash-job-dot">·</span>
-                          <div className="dash-progress-bar">
-                            <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: '#000000' }} />
-                          </div>
-                          <span className="dash-progress-pct">{job.progress}%</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="dash-status-pill" style={{ background: sc.bg, color: sc.color }}>
-                    {job.status}
-                  </div>
-                </div>
-              )
-            })
-          )}
-        </div>
+      {/* Kanban board */}
+      <div className="kanban-board">
+        {KANBAN_COLS.map(col => {
+          const colJobs = branchJobs.filter(j => col.statuses.includes(j.status))
+          return (
+            <KanbanColumn
+              key={col.id}
+              col={col}
+              jobs={colJobs}
+              onCardClick={id => navigate(`/installations/installs/${id}`)}
+            />
+          )
+        })}
       </div>
+
     </div>
   )
 }
