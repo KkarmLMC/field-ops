@@ -542,15 +542,20 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Branch Cards ─────────────────────────────────────────────── */
 .branch-tabs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--gap-md);
   margin-bottom: var(--gap-lg);
 }
+
+/* Desktop: track is the 3-column grid, dots hidden */
+.branch-tabs-mobile-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-md);
+}
+.branch-tabs > div:last-child { display: none; }
+
+/* Mobile: single-card swipe carousel */
 @media (max-width: 599px) {
   .branch-tabs {
-    display: block;
-    margin-bottom: var(--gap-lg);
     /* Break out of page-content horizontal padding */
     margin-left: calc(-1 * var(--content-pad));
     margin-right: calc(-1 * var(--content-pad));
@@ -571,8 +576,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  /* Dot indicators also need to be inside the padding */
+  /* Show dots on mobile */
   .branch-tabs > div:last-child {
+    display: flex;
     padding: 0 var(--content-pad);
   }
 }

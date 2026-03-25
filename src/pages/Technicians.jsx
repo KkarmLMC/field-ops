@@ -62,7 +62,7 @@ export default function Technicians() {
                       <div style={{ fontSize: 'var(--fs-md)', fontWeight: 500 }}>{job.siteName}</div>
                       <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.id}</div>
                     </div>
-                    <span className={`badge badge-${job.status}`} }>{job.status}</span>
+                    <span className={`badge badge-${job.status}`}>{job.status}</span>
                   </div>
                 ))}
               </div>
