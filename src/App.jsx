@@ -15,7 +15,6 @@ import JobDetail     from './pages/JobDetail'
 import FormRunner    from './pages/FormRunner'
 import RiskAssessment from './pages/RiskAssessment'
 import JSA            from './pages/JSA'
-import CompletionForms from './pages/CompletionForms'
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -190,7 +189,6 @@ export default function App() {
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="/reports"                                             element={<Reports />} />
             <Route path="/forms"                                               element={<Forms />} />
-            <Route path="/forms/completion"                                    element={<CompletionForms />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
