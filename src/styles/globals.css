@@ -636,10 +636,10 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
 .sidebar-sub-item {
   padding-left: 2.5rem !important;
-  font-size: 0.75rem !important;
+  font-size: 0.8125rem !important;
   font-weight: 500 !important;
-  color: var(--text-2) !important;
-  height: 2rem !important;       /* slightly shorter than parent items */
+  color: var(--text-1) !important;
+  height: 2rem !important;
   min-height: 2rem !important;
 }
 .sidebar-sub-item:hover {
@@ -647,8 +647,8 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   color: var(--text-1) !important;
 }
 .sidebar-sub-item.sidebar-item-active {
-  background: var(--navy) !important;
-  color: white !important;
+  background: #000000 !important;
+  color: #ffffff !important;
   font-weight: 600 !important;
 }
 
