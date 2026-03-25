@@ -129,10 +129,38 @@ All colors are defined in `src/styles/globals.css` as CSS custom properties. **N
 --border:    #E5E7EB   /* Default border */
 --border-l:  #F3F4F6   /* Light border, dividers */
 --hover:     #F3F4F6   /* Hover state background */
---text-1:    #000000   /* Primary text */
---text-2:    #374151   /* Secondary text */
---text-3:    #9CA3AF   /* Muted/placeholder text */
+--text-1:    #000000   /* Primary text — default for all body copy */
+--text-2:    #374151   /* Secondary text — subtitles, descriptions, back buttons */
+--text-3:    #9CA3AF   /* Muted text — timestamps, IDs, labels, meta only */
 --text-4:    #D1D5DB   /* Disabled text */
+```
+
+### 4.1.1 Text Color Usage Rules
+
+**This is a light-themed app. All normal text must be black (`--text-1`) unless there is a specific reason to use a lighter value.**
+
+| Token | Value | Use — when to apply |
+|---|---|---|
+| `--text-1` | `#000000` | **Default for everything** — headings, body copy, card titles, row names, form values, button labels, nav items |
+| `--text-2` | `#374151` | Secondary content — descriptions under a title, back button text, subheadings, result explanations |
+| `--text-3` | `#9CA3AF` | Truly secondary metadata only — timestamps, job IDs, technician meta lines, form reference codes, field labels (uppercase mono), placeholder text, icon-only buttons |
+| `--text-4` | `#D1D5DB` | Disabled states only |
+| `#fff` | white | Text on colored/dark backgrounds (navy headers, red buttons, branch cards) |
+| accent colors | various | Status badges, stat values, result indicators only |
+
+**Quick rule:** If someone needs to read it to understand the UI — it should be `--text-1`. If it provides context but isn't the main point — `--text-2`. If it's a timestamp, ID, code, or label prefix — `--text-3`.
+
+```jsx
+// ✅ Correct
+<div style={{ fontWeight:600, color:'var(--text-1)' }}>Site Name</div>         // primary content
+<div style={{ color:'var(--text-2)' }}>Post-inspection findings</div>           // description
+<div style={{ fontFamily:'var(--mono)', color:'var(--text-3)' }}>JOB-001</div>  // meta ID
+<div style={{ fontFamily:'var(--mono)', color:'var(--text-3)' }}>NFPA 780</div> // label
+
+// ❌ Wrong
+<div style={{ color:'var(--text-3)' }}>LPS Required — system should be installed</div> // readable content
+<button style={{ color:'var(--text-3)' }}>← Back</button>                              // back button
+<div style={{ color:'var(--text-3)' }}>No records yet</div>                           // empty state message
 ```
 
 ### 4.2 Typography
@@ -686,6 +714,11 @@ VITE_SUPABASE_ANON_KEY=...
 
 ### ✅ Do
 
+- Use `var(--text-1)` (black) as the default for all body copy, card titles, row names, and readable content
+- Use `var(--text-2)` for secondary descriptions, back buttons, and subheadings
+- Use `var(--text-3)` only for timestamps, IDs, mono labels, field label prefixes, and icon-only buttons
+- Use white (`#fff`) for text on colored backgrounds (navy, red, branch cards)
+
 - Use `var(--fs-*)` tokens for all font sizes
 - Use `var(--sp-*)` tokens for padding and margin
 - Use `var(--r-*)` tokens for border radius
@@ -703,6 +736,7 @@ VITE_SUPABASE_ANON_KEY=...
 
 ### ❌ Don't
 
+- **Never** use `--text-3` for primary readable content — headings, descriptions, empty state messages, back buttons
 - **Never** hardcode hex colors in component files
 - **Never** use raw `px` values — use `rem` or CSS tokens
 - **Never** create new `.css` files for components — use `globals.css` or inline tokens

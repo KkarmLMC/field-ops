@@ -378,7 +378,7 @@ function CompletionFormView({ formType, onSave, onCancel }) {
     <div className="page-content fade-in">
       {/* Back header */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-3)', fontSize:'var(--fs-md)' }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
@@ -489,7 +489,7 @@ function SuccessView({ result, onBack }) {
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--sp-10) var(--sp-6)' }}>
       <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:'var(--sp-3)' }} />
       <div style={{ fontFamily:'var(--font)', fontSize:'var(--fs-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>Form Completed</div>
-      <div style={{ color:'var(--text-3)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-6)', textAlign:'center' }}>
+      <div style={{ color:'var(--text-2)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-6)', textAlign:'center' }}>
         {COMPLETION_TYPES[result.formType]?.label} for {result.siteName} has been saved.
       </div>
       <div style={{ display:'flex', gap:'var(--sp-3)' }}>

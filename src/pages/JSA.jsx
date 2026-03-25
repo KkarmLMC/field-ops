@@ -400,7 +400,7 @@ function NewJSAForm({ onSave, onCancel, branch }) {
   return (
     <div className="page-content fade-in">
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:16 }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:1, height:16, background:'var(--border)' }} />
@@ -572,9 +572,9 @@ export default function JSA() {
           </button>
         </div>
         {loading
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>Loading…</div>
+          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>Loading…</div>
           : branchJsas.length===0
-            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>No JSAs for this branch yet</div>
+            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>No JSAs for this branch yet</div>
             : branchJsas.map(j=><JSARow key={j.id} jsa={j} />)
         }
       </div>

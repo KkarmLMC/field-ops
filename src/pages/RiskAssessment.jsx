@@ -186,7 +186,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
     <div className="page-content fade-in">
       {/* Back header */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-3)', fontSize:'var(--fs-md)' }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />

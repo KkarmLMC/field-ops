@@ -528,7 +528,7 @@ function SuccessView({ result, onBack }) {
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'60px 24px' }}>
       <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:'var(--sp-3)' }} />
       <div style={{ fontFamily:'var(--head)', fontSize:22, fontWeight:700, marginBottom:6 }}>Form Completed</div>
-      <div style={{ color:'var(--text-dim)', fontSize:'var(--fs-md)', marginBottom:24, textAlign:'center' }}>
+      <div style={{ color:'var(--text-2)', fontSize:'var(--fs-md)', marginBottom:24, textAlign:'center' }}>
         {COMPLETION_TYPES[result.formType]?.label} for {result.siteName} has been saved and PDF generated.
       </div>
       <div style={{ display:'flex', gap:'var(--sp-3)' }}>
@@ -654,7 +654,7 @@ export default function CompletionForms() {
                 </div>
                 <div>
                   <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:2 }}>{cfg.short}</div>
-                  <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-dim)', lineHeight:1.4 }}>{cfg.desc}</div>
+                  <div style={{ fontSize:'var(--fs-sm)', color:'var(--text-2)', lineHeight:1.4 }}>{cfg.desc}</div>
                 </div>
                 <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
                   {cfg.ref}
@@ -687,9 +687,9 @@ export default function CompletionForms() {
           </span>
         </div>
         {loading
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>Loading…</div>
+          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>Loading…</div>
           : branchForms.length === 0
-            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-dim)', fontSize:'var(--fs-md)' }}>No completion forms for this branch yet</div>
+            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>No completion forms for this branch yet</div>
             : branchForms.map(f => <CompletionRow key={f.id} form={f} />)
         }
       </div>
