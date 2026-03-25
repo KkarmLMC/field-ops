@@ -3,18 +3,19 @@ import {
   SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen,
+  BookOpen, ChartBar,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { path: '/dashboard',      Icon: SquaresFour,    label: 'Field Overview' },
-  { path: '/installations',  Icon: HardHat,        label: 'Installations'  },
-  { path: '/inspections',    Icon: MagnifyingGlass, label: 'Inspections'   },
-  { path: '/daily-field-log', Icon: BookOpen,      label: 'Daily Field Log' },
-  { path: '/reports',       Icon: ClipboardText,   label: 'Reports' },
-  { path: '/forms',         Icon: FileText,        label: 'Forms' },
-  { path: '/technicians',   Icon: Users,           label: 'Technicians' },
+  { path: '/dashboard',        Icon: SquaresFour,    label: 'Field Overview'   },
+  { path: '/installations',    Icon: HardHat,        label: 'Installations'    },
+  { path: '/inspections',      Icon: MagnifyingGlass, label: 'Inspections'     },
+  { path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Field Log'  },
+  { path: '/risk-assessment',  Icon: ChartBar,       label: 'Risk Assessment'  },
+  { path: '/reports',          Icon: ClipboardText,  label: 'Reports'          },
+  { path: '/forms',            Icon: FileText,       label: 'Forms'            },
+  { path: '/technicians',      Icon: Users,          label: 'Technicians'      },
 ]
 
 const FOOTER_ITEMS = [
