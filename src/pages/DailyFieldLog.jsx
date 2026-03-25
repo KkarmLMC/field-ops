@@ -56,13 +56,13 @@ const JOB_STATUS_STYLE = {
 const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.customer))].sort()
 
 // Time onsite options: 1h–16h in 15-min increments
-// Use integer quarter-hours to avoid float precision drift
+// Always H:MM format (6:00, 6:15, 6:30, 6:45) so typing "6:" shows all four
 const TIME_ONSITE_OPTIONS = (() => {
   const opts = []
   for (let q = 4; q <= 64; q++) {   // 4 quarters = 1h, 64 = 16h
     const h = Math.floor(q / 4)
     const m = (q % 4) * 15
-    opts.push({ value: q / 4, label: m === 0 ? `${h}` : `${h}:${String(m).padStart(2, '0')}` })
+    opts.push({ value: q / 4, label: `${h}:${String(m).padStart(2, '0')}` })
   }
   return opts
 })()
@@ -409,6 +409,67 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
           }
         </div>
       ))}
+    </div>
+  )
+}
+
+// ─── Time Onsite Typeahead ─────────────────────────────────────────────────────
+// Text input that filters TIME_ONSITE_OPTIONS by prefix match.
+// Typing "6" shows 6:00, 6:15, 6:30, 6:45 (and 16:xx). Typing "6:" narrows to all four 6-hour slots.
+function TimeOnsiteInput({ value, onChange }) {
+  const [query,  setQuery]  = useState(value ? TIME_ONSITE_OPTIONS.find(o => o.value === value)?.label ?? '' : '')
+  const [open,   setOpen]   = useState(false)
+  const ref          = useRef(null)
+  const inputWrapRef = useRef(null)
+  const [pos, updatePos] = useDropdownPos(inputWrapRef)
+
+  useEffect(() => {
+    const label = value ? (TIME_ONSITE_OPTIONS.find(o => o.value === value)?.label ?? '') : ''
+    setQuery(label)
+  }, [value])
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = TIME_ONSITE_OPTIONS.filter(o => o.label.startsWith(query.trim()))
+
+  const select = (opt) => { onChange(opt.value); setQuery(opt.label); setOpen(false) }
+  const openDropdown = () => { updatePos(); setOpen(true) }
+
+  return (
+    <div className="dfl-typeahead" ref={ref}>
+      <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
+        <input
+          className="dfl-input dfl-typeahead-input"
+          placeholder="e.g. 6:00 or 6:30"
+          value={query}
+          onChange={e => { setQuery(e.target.value); onChange(''); openDropdown() }}
+          onFocus={openDropdown}
+          autoComplete="off"
+        />
+        {query && (
+          <button className="dfl-typeahead-clear" type="button" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
+            <X size={11} />
+          </button>
+        )}
+      </div>
+      {open && filtered.length > 0 && (
+        <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
+          {filtered.slice(0, 8).map(opt => (
+            <li
+              key={opt.value}
+              className={`dfl-typeahead-item ${value === opt.value ? 'selected' : ''}`}
+              onMouseDown={() => select(opt)}
+            >
+              <span style={{ flex: 1, fontFamily: 'var(--mono)', fontSize: '0.875rem' }}>{opt.label}</span>
+              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
@@ -1243,16 +1304,10 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-section">
               <div className="dfl-field">
                 <label className="dfl-label">Total Time Onsite <span className="dfl-req">*</span></label>
-                <select
-                  className="dfl-input"
+                <TimeOnsiteInput
                   value={form.hours_worked}
-                  onChange={e => set('hours_worked', parseFloat(e.target.value))}
-                >
-                  <option value="">Select time onsite…</option>
-                  {TIME_ONSITE_OPTIONS.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
+                  onChange={val => set('hours_worked', val)}
+                />
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">Type of Work Completed <span className="dfl-req">*</span></label>
