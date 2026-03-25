@@ -564,9 +564,10 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--content-pad);
     -webkit-overflow-scrolling: touch;
-    gap: 0;
-    padding: 0 var(--content-pad) var(--sp-2);
+    gap: var(--gap-md);
+    padding: 4px var(--content-pad) var(--sp-2);
     scrollbar-width: none;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
