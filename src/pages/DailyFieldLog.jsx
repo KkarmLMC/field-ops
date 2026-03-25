@@ -382,12 +382,11 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
               showRemove={rows.length > 1 || !!name}
             />
           </div>
-          {/* + to add another — only on the last row */}
-          {idx === rows.length - 1 && (
-            <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another">
-              <Plus size={14} />
-            </button>
-          )}
+          {/* + on last row, invisible spacer on others — keeps all inputs the same width */}
+          {idx === rows.length - 1
+            ? <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another"><Plus size={14} /></button>
+            : <div style={{ width: '1.75rem', flexShrink: 0 }} />
+          }
         </div>
       ))}
     </div>
