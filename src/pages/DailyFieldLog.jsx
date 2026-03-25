@@ -1491,7 +1491,7 @@ function SignaturePad({ signed, onSign, onClear }) {
   const getPos = (e, canvas) => {
     const r = canvas.getBoundingClientRect()
     const src = e.touches ? e.touches[0] : e
-    return { x: src.siteNameX - r.left, y: src.siteNameY - r.top }
+    return { x: src.clientX - r.left, y: src.clientY - r.top }
   }
 
   const startDraw = (e) => {
