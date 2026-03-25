@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MagnifyingGlass } from '@phosphor-icons/react'
+import { MagnifyingGlass, ClipboardText } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS } from '../data/mockData.js'
 
@@ -14,8 +14,8 @@ const STATUS_COLOR = {
 }
 
 const TYPE_ICON = {
-  inspection:   '🔍',
-  'annual-test':'📋',
+  inspection:   MagnifyingGlass,
+  'annual-test': ClipboardText,
 }
 
 const STATUS_FILTERS = ['all', 'active', 'scheduled', 'completed', 'failed']
@@ -104,8 +104,8 @@ export default function Inspections() {
                   className="dash-job-row"
                   onClick={() => navigate(`/installations/installs/${job.id}`)}
                 >
-                  <div className="dash-job-icon" style={{ background: sc.bg, fontSize: 16 }}>
-                    {TYPE_ICON[job.type] || '🔍'}
+                  <div className="dash-job-icon" style={{ background: sc.bg }}>
+                    {(() => { const I = TYPE_ICON[job.type] || MagnifyingGlass; return <I size={16} /> })()}
                   </div>
                   <div className="dash-job-info">
                     <div className="dash-job-name">{job.client}</div>
