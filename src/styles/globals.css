@@ -1360,9 +1360,30 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* Multi-typeahead wrapper */
 .dfl-multi-wrap { position: relative; }
 
-/* Inline add button inside input wrap */
+/* Tag-input field: chips + text input in one box */
+.dfl-tag-input-field {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem;
+  padding: 0.4375rem 2.25rem 0.4375rem 2rem;
+  border: 1px solid var(--border); border-radius: 0.5rem;
+  background: var(--surface); cursor: text; min-height: 2.5rem;
+  position: relative; transition: border-color 0.15s;
+}
+.dfl-tag-input-field:focus-within { border-color: #000; }
+.dfl-tag-input-icon {
+  position: absolute; left: 0.625rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-3); pointer-events: none; flex-shrink: 0;
+}
+.dfl-tag-input-native {
+  border: none; outline: none; background: transparent;
+  font-size: 0.875rem; font-family: var(--font); color: var(--text-1);
+  flex: 1; min-width: 6rem; padding: 0; line-height: 1.4;
+}
+.dfl-tag-input-native::placeholder { color: var(--text-3); }
+
+/* Inline add button inside tag input */
 .dfl-typeahead-add-inline {
-  position: absolute; right: 0.5rem; background: none; border: none; cursor: pointer;
+  position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
   padding: 0.125rem; display: flex; align-items: center;
   color: var(--text-3); transition: color 0.1s;
 }

@@ -376,21 +376,18 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
 
   return (
     <div className="dfl-multi-wrap" ref={ref}>
-      {value.length > 0 && (
-        <div className="dfl-crew-tags" style={{ marginBottom: '0.375rem' }}>
-          {value.map(name => (
-            <span key={name} className="dfl-crew-tag">
-              {name}
-              <button type="button" onClick={() => remove(name)}><X size={9} /></button>
-            </span>
-          ))}
-        </div>
-      )}
-      <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
-        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+      {/* Tag input — chips live inside the field */}
+      <div className="dfl-tag-input-field" ref={inputWrapRef} onClick={() => inputWrapRef.current?.querySelector('input')?.focus()}>
+        <MagnifyingGlass size={13} className="dfl-tag-input-icon" />
+        {value.map(name => (
+          <span key={name} className="dfl-crew-tag">
+            {name}
+            <button type="button" onMouseDown={e => { e.preventDefault(); remove(name) }}><X size={9} /></button>
+          </span>
+        ))}
         <input
-          className="dfl-input dfl-typeahead-input"
-          placeholder={placeholder}
+          className="dfl-tag-input-native"
+          placeholder={value.length === 0 ? placeholder : 'Add more…'}
           value={query}
           onChange={e => { setQuery(e.target.value); openDropdown() }}
           onFocus={openDropdown}
