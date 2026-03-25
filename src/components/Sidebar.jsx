@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar, Rows, CaretDown,
+  BookOpen, ChartBar, Rows,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
@@ -89,55 +88,19 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
 
 // ── Nav group (parent with optional children) ─────────────────────────────────
 function NavGroup({ item, collapsed, goTo, currentPath }) {
-  const active   = groupIsActive(item, currentPath)
-  const parentActive = pathMatch(item.path, currentPath)
+  const active      = groupIsActive(item, currentPath)
   const hasChildren = item.children?.length > 0
-
-  // Auto-expand if this group or any child is active; otherwise collapsed by default
-  const [open, setOpen] = useState(() => active)
-
-  const handleParentClick = () => {
-    if (hasChildren && !collapsed) {
-      // If we're not on the parent path, navigate there and open
-      if (!pathMatch(item.path, currentPath)) {
-        goTo(item.path)
-      }
-      setOpen(o => !o)
-    } else {
-      goTo(item.path)
-    }
-  }
-
-  // Auto-expand when navigating into this group from outside
-  const wasActive = active
 
   return (
     <>
-      {/* Parent row */}
+      {/* Parent row — always navigates to its own path */}
       <button
         className={`sidebar-item ${active ? 'sidebar-item-active' : ''}`}
-        onClick={handleParentClick}
+        onClick={() => goTo(item.path)}
         title={collapsed ? item.label : undefined}
-        style={{ justifyContent: 'space-between' }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', flex: 1, minWidth: 0 }}>
-          <item.Icon size={17} style={{ flexShrink: 0 }} />
-          {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
-        </div>
-
-        {/* Caret — only when expanded and has children */}
-        {hasChildren && !collapsed && (
-          <CaretDown
-            size={12}
-            style={{
-              flexShrink: 0,
-              marginLeft: 4,
-              opacity: active ? 0.7 : 0.35,
-              transform: open ? 'rotate(0deg)' : 'rotate(-90deg)',
-              transition: 'transform 0.18s ease',
-            }}
-          />
-        )}
+        <item.Icon size={17} style={{ flexShrink: 0 }} />
+        {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
 
         {/* Collapsed mode: active dot */}
         {collapsed && active && (
@@ -148,8 +111,8 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         )}
       </button>
 
-      {/* Children — only when open and not collapsed */}
-      {hasChildren && open && !collapsed && (
+      {/* Children — always visible (never collapsed) */}
+      {hasChildren && !collapsed && (
         <SubNav
           children={item.children}
           collapsed={collapsed}
