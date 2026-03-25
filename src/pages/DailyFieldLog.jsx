@@ -102,7 +102,7 @@ function SafetyDot({ ok, label }) {
 }
 
 // ─── Customer Typeahead ─────────────────────────────────────────────────────────
-function CustomerTypeahead({ value, onChange }) {
+function CustomerTypeahead({ value, onChange, branch }) {
   const [open, setOpen]   = useState(false)
   const [query, setQuery] = useState(value || '')
   const ref               = useRef(null)
@@ -117,9 +117,12 @@ function CustomerTypeahead({ value, onChange }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  // Only show customers who have at least one job on the current branch
+  const branchCustomers = [...new Set(JOBS.filter(j => j.branch === branch).map(j => j.client))].sort()
+
   const filtered = query.length >= 1
-    ? ALL_CUSTOMERS.filter(c => c.toLowerCase().includes(query.toLowerCase()))
-    : ALL_CUSTOMERS
+    ? branchCustomers.filter(c => c.toLowerCase().includes(query.toLowerCase()))
+    : branchCustomers
 
   const select = (name) => {
     onChange(name)
@@ -236,7 +239,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
         <div className="dfl-jobsite-dropdown">
           {visibleJobs.length === 0 ? (
             <div className="dfl-jobsite-empty">
-              No active jobs found for <strong>{customer}</strong> on this branch
+              No jobs found for <strong>{customer}</strong> on this branch
             </div>
           ) : (
             visibleJobs.map(job => {
@@ -847,6 +850,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
                 <CustomerTypeahead
                   value={form.customer}
                   onChange={handleCustomerChange}
+                  branch={branch}
                 />
               </div>
 
