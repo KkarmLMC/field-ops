@@ -62,7 +62,6 @@ const EMPTY_P1 = {
   gps_location:      '',
   supervisor_name:   '',
   crew_on_site:      [],
-  crew_input:        '',
   jsa_uploaded:      false,
   manlift_checklist: false,
   fall_protection:   false,
@@ -258,6 +257,140 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
             })
           )}
         </div>
+      )}
+    </div>
+  )
+}
+
+// ─── Tech Typeahead (single-select) ───────────────────────────────────────────
+function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search technicians…' }) {
+  const [open, setOpen]   = useState(false)
+  const [query, setQuery] = useState(value || '')
+  const ref               = useRef(null)
+
+  useEffect(() => { setQuery(value || '') }, [value])
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = TECHNICIANS.filter(t =>
+    !exclude.includes(t.name) &&
+    t.name.toLowerCase().includes(query.toLowerCase())
+  )
+
+  const select = (tech) => { onChange(tech.name); setQuery(tech.name); setOpen(false) }
+
+  return (
+    <div className="dfl-typeahead" ref={ref}>
+      <div className="dfl-typeahead-input-wrap">
+        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+        <input
+          className="dfl-input dfl-typeahead-input"
+          placeholder={placeholder}
+          value={query}
+          onChange={e => { setQuery(e.target.value); onChange(e.target.value); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          autoComplete="off"
+        />
+        {query && (
+          <button className="dfl-typeahead-clear" type="button" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
+            <X size={11} />
+          </button>
+        )}
+      </div>
+      {open && filtered.length > 0 && (
+        <ul className="dfl-typeahead-list">
+          {filtered.slice(0, 8).map(tech => (
+            <li
+              key={tech.id}
+              className={`dfl-typeahead-item ${value === tech.name ? 'selected' : ''}`}
+              onMouseDown={() => select(tech)}
+            >
+              <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
+              <span style={{ flex: 1 }}>{tech.name}</span>
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
+              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+// ─── Tech Multi Typeahead (multi-select with chips) ────────────────────────────
+function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 'Search or type a name…' }) {
+  const [open, setOpen]   = useState(false)
+  const [query, setQuery] = useState('')
+  const ref               = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = TECHNICIANS.filter(t =>
+    !exclude.includes(t.name) &&
+    !value.includes(t.name) &&
+    t.name.toLowerCase().includes(query.toLowerCase())
+  )
+
+  const add = (name) => {
+    const trimmed = name.trim()
+    if (trimmed && !value.includes(trimmed)) onChange([...value, trimmed])
+    setQuery(''); setOpen(false)
+  }
+
+  const remove = (name) => onChange(value.filter(n => n !== name))
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && query.trim()) { e.preventDefault(); add(query) }
+    if (e.key === 'Backspace' && !query && value.length > 0) remove(value[value.length - 1])
+  }
+
+  return (
+    <div className="dfl-multi-wrap" ref={ref}>
+      {value.length > 0 && (
+        <div className="dfl-crew-tags" style={{ marginBottom: '0.375rem' }}>
+          {value.map(name => (
+            <span key={name} className="dfl-crew-tag">
+              {name}
+              <button type="button" onClick={() => remove(name)}><X size={9} /></button>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="dfl-typeahead-input-wrap">
+        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+        <input
+          className="dfl-input dfl-typeahead-input"
+          placeholder={placeholder}
+          value={query}
+          onChange={e => { setQuery(e.target.value); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={handleKeyDown}
+          autoComplete="off"
+        />
+        {query.trim() && (
+          <button className="dfl-typeahead-add-inline" type="button" onMouseDown={e => { e.preventDefault(); add(query) }}>
+            <Plus size={11} />
+          </button>
+        )}
+      </div>
+      {open && filtered.length > 0 && (
+        <ul className="dfl-typeahead-list">
+          {filtered.slice(0, 8).map(tech => (
+            <li key={tech.id} className="dfl-typeahead-item" onMouseDown={() => add(tech.name)}>
+              <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
+              <span style={{ flex: 1 }}>{tech.name}</span>
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )
@@ -767,16 +900,7 @@ function Part1Form({ onClose, onSave, bc, branch }) {
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
-  const addCrew = () => {
-    const name = form.crew_input.trim()
-    if (name && !form.crew_on_site.includes(name)) {
-      set('crew_on_site', [...form.crew_on_site, name])
-    }
-    set('crew_input', '')
-  }
-  const removeCrew = (name) => set('crew_on_site', form.crew_on_site.filter(n => n !== name))
-
-  const STEPS = [
+const STEPS = [
     { label: 'Job Info', icon: <FileText size={12} /> },
     { label: 'Crew',     icon: <User size={12} /> },
     { label: 'Safety',   icon: <HardHat size={12} /> },
@@ -895,74 +1019,36 @@ function Part1Form({ onClose, onSave, bc, branch }) {
           {/* Step 1: Crew */}
           {step === 1 && (
             <div className="dfl-form-section">
-              {/* Supervisor — single select */}
+              {/* Supervisor — single typeahead */}
               <div className="dfl-field">
                 <label className="dfl-label">
                   <User size={12} style={{ marginRight: '0.25rem' }} />
                   Supervisor Onsite <span className="dfl-req">*</span>
                 </label>
-                <div className="dfl-tech-list">
-                  {TECHNICIANS.map(tech => {
-                    const isSelected = form.supervisor_name === tech.name
-                    return (
-                      <button
-                        key={tech.id}
-                        type="button"
-                        className={`dfl-tech-row ${isSelected ? 'selected' : ''}`}
-                        onClick={() => {
-                          set('supervisor_name', isSelected ? '' : tech.name)
-                          // remove from crew if also selected there
-                          if (!isSelected) set('crew_on_site', form.crew_on_site.filter(n => n !== tech.name))
-                        }}
-                      >
-                        <span className="dfl-tech-avatar">{tech.name.split(' ').map(w => w[0]).join('')}</span>
-                        <span className="dfl-tech-info">
-                          <span className="dfl-tech-name">{tech.name}</span>
-                          <span className="dfl-tech-meta">{tech.license} · {tech.branch}</span>
-                        </span>
-                        {isSelected && <CheckCircle size={15} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto', flexShrink: 0 }} />}
-                      </button>
-                    )
-                  })}
-                </div>
+                <TechTypeahead
+                  value={form.supervisor_name}
+                  onChange={val => {
+                    set('supervisor_name', val)
+                    // keep crew clean if supervisor was also in crew
+                    set('crew_on_site', form.crew_on_site.filter(n => n !== val))
+                  }}
+                  exclude={form.crew_on_site}
+                  placeholder="Search supervisors…"
+                />
               </div>
 
-              {/* Installers on Site — multi select, supervisor excluded */}
+              {/* Installers Onsite — multi typeahead with chips */}
               <div className="dfl-field">
                 <label className="dfl-label">
                   <Users size={12} style={{ marginRight: '0.25rem' }} />
                   Installers Onsite
                 </label>
-                <div className="dfl-tech-list">
-                  {TECHNICIANS.filter(t => t.name !== form.supervisor_name).map(tech => {
-                    const isSelected = form.crew_on_site.includes(tech.name)
-                    return (
-                      <button
-                        key={tech.id}
-                        type="button"
-                        className={`dfl-tech-row ${isSelected ? 'selected' : ''}`}
-                        onClick={() => {
-                          set('crew_on_site', isSelected
-                            ? form.crew_on_site.filter(n => n !== tech.name)
-                            : [...form.crew_on_site, tech.name]
-                          )
-                        }}
-                      >
-                        <span className="dfl-tech-avatar">{tech.name.split(' ').map(w => w[0]).join('')}</span>
-                        <span className="dfl-tech-info">
-                          <span className="dfl-tech-name">{tech.name}</span>
-                          <span className="dfl-tech-meta">{tech.license} · {tech.branch}</span>
-                        </span>
-                        {isSelected && <CheckCircle size={15} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto', flexShrink: 0 }} />}
-                      </button>
-                    )
-                  })}
-                </div>
-                {form.crew_on_site.length > 0 && (
-                  <div className="dfl-crew-count">
-                    {form.crew_on_site.length} installer{form.crew_on_site.length !== 1 ? 's' : ''} selected
-                  </div>
-                )}
+                <TechMultiTypeahead
+                  value={form.crew_on_site}
+                  onChange={val => set('crew_on_site', val)}
+                  exclude={form.supervisor_name ? [form.supervisor_name] : []}
+                  placeholder="Search or type a name, press Enter to add…"
+                />
               </div>
             </div>
           )}

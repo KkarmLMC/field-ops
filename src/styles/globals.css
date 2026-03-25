@@ -1347,6 +1347,26 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .dfl-typeahead-item:hover { background: var(--hover); }
 .dfl-typeahead-item.selected { background: #F0FDF4; color: #15803D; }
+
+/* Small avatar used inside typeahead dropdowns */
+.dfl-tech-avatar-sm {
+  width: 1.5rem; height: 1.5rem; border-radius: 50%; flex-shrink: 0;
+  background: #E5E7EB; color: var(--text-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.03em;
+}
+
+/* Multi-typeahead wrapper */
+.dfl-multi-wrap { position: relative; }
+
+/* Inline add button inside input wrap */
+.dfl-typeahead-add-inline {
+  position: absolute; right: 0.5rem; background: none; border: none; cursor: pointer;
+  padding: 0.125rem; display: flex; align-items: center;
+  color: var(--text-3); transition: color 0.1s;
+}
+.dfl-typeahead-add-inline:hover { color: var(--text-1); }
+
 .dfl-typeahead-empty {
   padding: 0.75rem 0.875rem; font-size: 0.8125rem; color: var(--text-3);
   border: 1px dashed var(--border); border-radius: 0.5rem; margin-top: 0.25rem;
