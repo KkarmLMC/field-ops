@@ -1,12 +1,12 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {
   Clock, CheckCircle, FileText, Plus, MapPin,
   X, User, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
-  ArrowsClockwise, SealCheck, CaretLeft,
+  ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { MOCK_REPORTS, FORM_TEMPLATES } from '../data/mockData.js'
+import { MOCK_REPORTS, FORM_TEMPLATES, JOBS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -40,8 +40,23 @@ const STATUS_STYLE = {
   Reviewed:  { bg: '#F0FDF4', color: '#16A34A' },
 }
 
+// Status labels for jobsite dropdown
+const JOB_STATUS_STYLE = {
+  'active':       { label: 'Active',       bg: '#FEF9C3', color: '#92400E' },
+  'scheduled':    { label: 'Scheduled',    bg: '#EDE9FE', color: '#6D28D9' },
+  'ul-inspection':{ label: 'UL Inspection',bg: '#E0F2FE', color: '#0369A1' },
+  'postponed':    { label: 'Postponed',    bg: '#FFF7ED', color: '#C2410C' },
+  'completed':    { label: 'Completed',    bg: '#F0FDF4', color: '#15803D' },
+  'failed':       { label: 'Failed',       bg: '#FEF2F2', color: '#B91C1C' },
+  'awaiting-po':  { label: 'Awaiting PO',  bg: '#F5F3FF', color: '#7C3AED' },
+}
+
+// Derive unique customer names from all JOBS (alphabetical)
+const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.client))].sort()
+
 const EMPTY_P1 = {
-  customer_site:     '',
+  customer:          '',
+  jobsite_id:        null,
   report_date:       new Date().toISOString().slice(0, 10),
   gps_location:      '',
   supervisor_name:   '',
@@ -82,6 +97,152 @@ function SafetyDot({ ok, label }) {
         : <Warning size={9} weight="fill" />
       }
     </span>
+  )
+}
+
+// ─── Customer Typeahead ─────────────────────────────────────────────────────────
+function CustomerTypeahead({ value, onChange }) {
+  const [open, setOpen]   = useState(false)
+  const [query, setQuery] = useState(value || '')
+  const ref               = useRef(null)
+
+  // Sync query when value changes externally (e.g. auto-filled from job select)
+  useEffect(() => { setQuery(value || '') }, [value])
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = query.length >= 1
+    ? ALL_CUSTOMERS.filter(c => c.toLowerCase().includes(query.toLowerCase()))
+    : ALL_CUSTOMERS
+
+  const select = (name) => {
+    onChange(name)
+    setQuery(name)
+    setOpen(false)
+  }
+
+  return (
+    <div className="dfl-typeahead" ref={ref}>
+      <div className="dfl-typeahead-input-wrap">
+        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+        <input
+          className="dfl-input dfl-typeahead-input"
+          placeholder="Search customers…"
+          value={query}
+          onChange={e => { setQuery(e.target.value); onChange(e.target.value); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          autoComplete="off"
+        />
+        {query && (
+          <button className="dfl-typeahead-clear" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
+            <X size={11} />
+          </button>
+        )}
+      </div>
+      {open && filtered.length > 0 && (
+        <ul className="dfl-typeahead-list">
+          {filtered.slice(0, 8).map(name => (
+            <li
+              key={name}
+              className={`dfl-typeahead-item ${name === value ? 'selected' : ''}`}
+              onMouseDown={() => select(name)}
+            >
+              <Buildings size={12} style={{ flexShrink: 0, opacity: 0.5 }} />
+              {name}
+              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: '#16A34A' }} />}
+            </li>
+          ))}
+        </ul>
+      )}
+      {open && filtered.length === 0 && query.length > 0 && (
+        <div className="dfl-typeahead-empty">
+          No matching customers — you can type a new name
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── Jobsite Dropdown ──────────────────────────────────────────────────────────
+function JobsiteSelect({ value, branch, onChange }) {
+  const [open, setOpen] = useState(false)
+  const ref             = useRef(null)
+
+  // Filter jobs to current branch, sorted by: active first, then scheduled, then others
+  const ORDER = ['active', 'scheduled', 'ul-inspection', 'postponed', 'awaiting-po', 'completed', 'failed']
+  const branchJobs = JOBS
+    .filter(j => j.branch === branch)
+    .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
+
+  const selected = branchJobs.find(j => j.id === value)
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  return (
+    <div className="dfl-jobsite-wrap" ref={ref}>
+      <button
+        type="button"
+        className={`dfl-jobsite-trigger ${open ? 'open' : ''} ${selected ? 'has-value' : ''}`}
+        onClick={() => setOpen(o => !o)}
+      >
+        {selected ? (
+          <span className="dfl-jobsite-selected">
+            <span
+              className="dfl-jobsite-status-dot"
+              style={{ background: JOB_STATUS_STYLE[selected.status]?.color || '#6B7280' }}
+            />
+            <span className="dfl-jobsite-selected-name">{selected.client}</span>
+            <span className="dfl-jobsite-selected-id">{selected.id}</span>
+          </span>
+        ) : (
+          <span className="dfl-jobsite-placeholder">Select jobsite from Kanban…</span>
+        )}
+        <CaretDown size={13} className={`dfl-jobsite-caret ${open ? 'open' : ''}`} />
+      </button>
+
+      {open && (
+        <div className="dfl-jobsite-dropdown">
+          {branchJobs.length === 0 ? (
+            <div className="dfl-jobsite-empty">No jobs found for this branch</div>
+          ) : (
+            branchJobs.map(job => {
+              const ss = JOB_STATUS_STYLE[job.status] || { label: job.status, bg: '#F3F4F6', color: '#374151' }
+              const shortAddr = job.address.split(',').slice(0, 2).join(',')
+              const isActive  = job.id === value
+              return (
+                <div
+                  key={job.id}
+                  className={`dfl-jobsite-item ${isActive ? 'selected' : ''}`}
+                  onMouseDown={() => { onChange(job); setOpen(false) }}
+                >
+                  <div className="dfl-jobsite-item-top">
+                    <span className="dfl-jobsite-badge" style={{ background: ss.bg, color: ss.color }}>
+                      {ss.label}
+                    </span>
+                    <span className="dfl-jobsite-item-id">{job.id}</span>
+                    {isActive && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto' }} />}
+                  </div>
+                  <div className="dfl-jobsite-item-name">{job.client}</div>
+                  <div className="dfl-jobsite-item-addr">
+                    <MapPin size={10} />
+                    {shortAddr}
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -128,11 +289,14 @@ function EntryCard({ entry, bc, onCloseOut }) {
             {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
           </div>
           <div>
-            <div className="dfl-card-title">{entry.customer_site}</div>
+            <div className="dfl-card-title">{entry.customer || entry.customer_site}</div>
             <div className="dfl-card-sub">
               {fmtDate(entry.report_date)}
               <span className="dfl-dot">·</span>
               {entry.supervisor_name || entry.submitted_by}
+              {entry.jobsite_id && (
+                <><span className="dfl-dot">·</span><span className="dfl-card-job-id">{entry.jobsite_id}</span></>
+              )}
             </div>
           </div>
         </div>
@@ -500,7 +664,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
 }
 
 // ─── Part 1 Form — Morning Check-In ────────────────────────────────────────────
-function Part1Form({ onClose, onSave, bc }) {
+function Part1Form({ onClose, onSave, bc, branch }) {
   const [form, setForm]               = useState({ ...EMPTY_P1 })
   const [step, setStep]               = useState(0)
   const [safetyOpen, setSafetyOpen]   = useState(null) // key of safety form being filled
@@ -523,11 +687,20 @@ function Part1Form({ onClose, onSave, bc }) {
   ]
 
   const safetyCount = SAFETY_FORMS.filter(f => form[f.key]).length
+  const selectedJob = JOBS.find(j => j.id === form.jobsite_id)
 
   const canSave =
-    form.customer_site.trim() &&
+    form.customer.trim() &&
+    form.jobsite_id &&
     form.supervisor_name.trim() &&
     safetyCount === SAFETY_FORMS.length
+
+  // When a job is selected from the dropdown, auto-fill customer + GPS
+  const handleJobSelect = (job) => {
+    set('jobsite_id', job.id)
+    if (!form.customer.trim()) set('customer', job.client)
+    if (!form.gps_location.trim()) set('gps_location', job.address)
+  }
 
   return (
   <>
@@ -563,15 +736,40 @@ function Part1Form({ onClose, onSave, bc }) {
           {/* Step 0: Job Info */}
           {step === 0 && (
             <div className="dfl-form-section">
+
+              {/* Customer — typeahead autocomplete */}
               <div className="dfl-field">
-                <label className="dfl-label">Customer &amp; Site <span className="dfl-req">*</span></label>
-                <input
-                  className="dfl-input"
-                  placeholder="e.g. Ritz-Carlton — Rooftop Level"
-                  value={form.customer_site}
-                  onChange={e => set('customer_site', e.target.value)}
+                <label className="dfl-label">
+                  <Buildings size={12} style={{ marginRight: '0.25rem' }} />
+                  Customer <span className="dfl-req">*</span>
+                </label>
+                <CustomerTypeahead
+                  value={form.customer}
+                  onChange={val => set('customer', val)}
                 />
               </div>
+
+              {/* Jobsite — dropdown from Kanban */}
+              <div className="dfl-field">
+                <label className="dfl-label">
+                  <MapPin size={12} style={{ marginRight: '0.25rem' }} />
+                  Jobsite <span className="dfl-req">*</span>
+                  <span className="dfl-gps-auto" style={{ background: '#EDE9FE', color: '#6D28D9' }}>From Kanban</span>
+                </label>
+                <JobsiteSelect
+                  value={form.jobsite_id}
+                  branch={branch}
+                  onChange={handleJobSelect}
+                />
+                {selectedJob && (
+                  <div className="dfl-jobsite-context">
+                    <span className="dfl-jobsite-context-type">{selectedJob.type.replace(/-/g, ' ')}</span>
+                    <span className="dfl-dot">·</span>
+                    <span>{selectedJob.structure}</span>
+                  </div>
+                )}
+              </div>
+
               <div className="dfl-field">
                 <label className="dfl-label">Date <span className="dfl-req">*</span></label>
                 <input
@@ -581,19 +779,23 @@ function Part1Form({ onClose, onSave, bc }) {
                   onChange={e => set('report_date', e.target.value)}
                 />
               </div>
+
               <div className="dfl-field">
                 <label className="dfl-label">
                   <MapPin size={12} style={{ marginRight: '0.25rem' }} />
-                  Site GPS Location
-                  <span className="dfl-gps-auto">Auto-detected</span>
+                  Site Location
+                  <span className="dfl-gps-auto">
+                    {form.gps_location && selectedJob ? 'Auto-filled' : 'Auto-detected'}
+                  </span>
                 </label>
                 <input
                   className="dfl-input dfl-input-mono"
-                  placeholder="30.6423, -81.4467"
+                  placeholder="30.6423° N, 81.4467° W  or  Street address"
                   value={form.gps_location}
                   onChange={e => set('gps_location', e.target.value)}
                 />
               </div>
+
             </div>
           )}
 
@@ -703,7 +905,7 @@ function Part1Form({ onClose, onSave, bc }) {
               className="dfl-btn-primary"
               style={{ background: bc.bgActive }}
               onClick={() => setStep(s => s + 1)}
-              disabled={step === 0 && !form.customer_site.trim()}
+              disabled={step === 0 && !form.customer.trim()}
             >
               Next <ArrowRight size={13} />
             </button>
@@ -1045,11 +1247,15 @@ export default function DailyFieldLog() {
 
   // Part 1 save → creates a Draft entry
   const handlePart1Save = (form) => {
+    const job = JOBS.find(j => j.id === form.jobsite_id)
     const newEntry = {
       id:                `r-${Date.now()}`,
       branch,
       status:            'Draft',
-      customer_site:     form.customer_site,
+      customer:          form.customer,
+      jobsite_id:        form.jobsite_id,
+      // customer_site kept for backward compat with card display
+      customer_site:     job ? `${form.customer} — ${job.id}` : form.customer,
       report_date:       form.report_date,
       gps_location:      form.gps_location,
       supervisor_name:   form.supervisor_name,
@@ -1202,6 +1408,7 @@ export default function DailyFieldLog() {
           onClose={() => setFormMode(null)}
           onSave={handlePart1Save}
           bc={bc}
+          branch={branch}
         />
       )}
 
