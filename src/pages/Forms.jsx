@@ -581,10 +581,8 @@ export default function Forms() {
 
       {/* Completion forms tiles */}
       <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
-        <div style={{ padding:'var(--sp-3) var(--sp-4)', background:'var(--navy)' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
-            Completion Forms
-          </span>
+        <div className="card-header">
+          <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--sp-2)', padding:'var(--sp-2)' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
