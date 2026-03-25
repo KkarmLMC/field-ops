@@ -609,28 +609,22 @@ export default function Forms() {
         </div>
       </div>
 
-      {/* Legacy submissions stats */}
-      <div className="stat-grid">
-        <div className="stat-card">
-          <div className="stat-label">Total Forms</div>
-          <div className="stat-value blue">{submissions.length}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Needs Review</div>
-          <div className="stat-value red">{submissions.filter(s=>['Submitted','Under Review'].includes(s.status)).length}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">With Customer</div>
-          <div className="stat-value" style={{ color:'#7C3AED' }}>{submissions.filter(s=>s.status==='Pending Customer').length}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Complete</div>
-          <div className="stat-value green">{submissions.filter(s=>s.status==='Complete').length}</div>
-        </div>
-      </div>
-
-      {/* Completion submissions by branch */}
+      {/* Branch selector + branch-filtered stats */}
       <BranchTabs active={branch} onChange={setBranch} />
+
+      {/* 3 stats filtered by active branch — single row */}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)', marginBottom:'var(--gap-lg)' }}>
+        {[
+          { label:'Needs Review',  value: branchCompletions.filter(f=>f.status==='submitted').length,  color:'var(--red)'    },
+          { label:'With Customer', value: branchCompletions.filter(f=>f.status==='pending_customer').length, color:'#7C3AED' },
+          { label:'Complete',      value: branchCompletions.filter(f=>f.status==='complete').length,   color:'var(--green)'  },
+        ].map(({ label, value, color }) => (
+          <div key={label} className="stat-card">
+            <div className="stat-label">{label}</div>
+            <div className="stat-value" style={{ color, fontSize:'clamp(1.5rem,4vw,2rem)' }}>{value}</div>
+          </div>
+        ))}
+      </div>
       <div className="card" style={{ marginBottom:'var(--sp-3)' }}>
         <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
           <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
