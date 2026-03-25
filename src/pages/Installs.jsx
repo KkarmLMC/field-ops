@@ -36,7 +36,7 @@ const KANBAN_COLS = [
   { id: 'active',        label: 'Active Installations',    Icon: HardHat,       accent: '#FACC15', statuses: ['active']               },
   { id: 'completed',     label: 'Completed Installations', Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed']  },
   { id: 'ul-inspection', label: 'UL Inspection',          Icon: Clipboard,     accent: '#38BDF8', statuses: ['ul-inspection']        },
-  { id: 'postponed',     label: 'Postponed Installations',Icon: PauseCircle,   accent: '#F97316', statuses: ['postponed']            },
+  { id: 'postponed',     label: 'Postponed Installations',Icon: PauseCircle,   accent: '#FB923C', statuses: ['postponed']            },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
