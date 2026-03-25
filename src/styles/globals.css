@@ -10,8 +10,10 @@
   --navy:      #04245C;
   --bg:        #FFFFFF;
   --surface:   #FFFFFF;
-  --border:    #111827;
-  --border-l:  #E5E7EB;
+  --surface-raised: #F7F8FA;
+  --card-header-bg: #EEF2F9;
+  --border:    transparent;
+  --border-l:  #EFEFEF;
   --hover:     #F3F4F6;
   --text-1:    #000000;
   --text-2:    #374151;
@@ -25,9 +27,9 @@
   --orange-s:  #FFF7ED;
   --radius:    0.625rem;
   --radius-sm: 0.375rem;
-  --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-  --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+  --shadow:    none;
+  --shadow-md: none;
+  --shadow-lg: none;
   --font:      'Plus Jakarta Sans', sans-serif;
   --mono:      'DM Mono', monospace;
   --tab-h:     4rem;
@@ -41,8 +43,8 @@
   --text-muted:  var(--text-3);
   --bg-2:        var(--surface);
   --bg-3:        var(--bg);
-  --bg-4:        #E5E7EB;
-  --border-bright: #111827;
+  --bg-4:        #F0F1F3;
+  --border-bright: transparent;
   --green-dim:   var(--green-s);
   --blue-dim:    var(--blue-soft);
 
@@ -326,8 +328,8 @@ body {
 }
 
 /* Cards */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; overflow: hidden; margin-bottom: 0.875rem; }
-.card-header { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border-l); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card { background: var(--surface-raised); border: none; border-radius: var(--r-xl); overflow: hidden; margin-bottom: var(--sp-3); }
+.card-header { padding: 0.875rem 1rem; background: var(--card-header-bg); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .card-title { font-size: 0.8125rem; font-weight: 700; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
 .card-dot { width: 0.5rem; height: 0.5rem; border-radius: 0.125rem; flex-shrink: 0; }
 .card-body { padding: 0; }
@@ -346,7 +348,7 @@ body {
 /* Stat grid */
 .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.625rem; margin-bottom: 1rem; }
 @media (min-width: 768px) { .stat-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; } }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; }
+.stat-card { background: var(--surface-raised); border: none; border-radius: var(--r-xl); padding: 1rem; }
 .stat-label { font-size: 0.6875rem; font-weight: 500; color: var(--text-3); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .stat-value { font-size: 1.75rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
 .stat-value.orange { color: var(--orange); }
@@ -377,17 +379,18 @@ body {
 /* Generic input/select/textarea for new pages */
 input, select, textarea {
   padding: 0.625rem 0.75rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  border: none;
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: 0.875rem;
   color: var(--text-1);
   outline: none;
-  transition: border-color 0.15s;
+  transition: background 0.15s;
 }
 input:focus, select:focus, textarea:focus {
-  border-color: var(--blue);
+  background: var(--card-header-bg);
+  outline: none;
 }
 button { background: none; border: none; cursor: pointer; font-family: var(--font); color: var(--text-1); }
 
@@ -409,20 +412,20 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .form-label.required::after { content: ' *'; color: var(--red); }
 .form-input, .form-select, .form-textarea {
   padding: 0.75rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  border: none;
+  border-radius: var(--r-sm);
   font-family: var(--font);
-  font-size: 1rem; /* prevents iOS zoom */
+  font-size: 1rem;
   color: var(--text-1);
   outline: none;
   width: 100%;
-  transition: border-color 0.15s;
+  transition: background 0.15s;
   -webkit-appearance: none;
 }
 .form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--navy);
-  background: var(--surface);
+  background: var(--card-header-bg);
+  outline: none;
 }
 .form-textarea { resize: vertical; min-height: 5rem; }
 .form-hint { font-size: 0.6875rem; color: var(--text-3); }
@@ -439,7 +442,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .checklist-item:active { background: var(--bg); }
 .checklist-box {
   width: 1.375rem; height: 1.375rem; flex-shrink: 0; margin-top: 0.0625rem;
-  border: 2px solid var(--border); border-radius: 0.3125rem;
+  border: 2px solid var(--border-l); border-radius: 0.3125rem;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s; background: var(--surface);
 }
@@ -473,7 +476,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   cursor: pointer; transition: background 0.1s;
 }
 .project-item:last-child { border-bottom: none; }
-.project-item:hover { background: var(--bg); }
+.project-item:hover { background: var(--surface-raised); }
 .project-item:active { background: var(--border-l); }
 .project-stage-dot {
   width: 0.625rem; height: 0.625rem; border-radius: 50%;
@@ -485,7 +488,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* Modal / bottom sheet */
 .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; }
 .sheet {
-  background: var(--surface); border-radius: 1.25rem 1.25rem 0 0;
+  background: var(--surface); border-radius: 1.25rem 1.25rem 0 0; box-shadow: none;
   width: 100%; max-height: 92vh; overflow-y: auto;
   animation: sheetUp 0.25s cubic-bezier(0.32, 0.72, 0, 1);
   padding-bottom: env(safe-area-inset-bottom);
@@ -881,9 +884,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   flex-direction: column;
   gap: 0;
   border-radius: 0.625rem;
-  border: 1px solid var(--border);
+  border: none;
   overflow: hidden;
-  background: #FAFAFA;
+  background: var(--surface-raised);
 }
 
 /* Column header */
@@ -930,21 +933,18 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Kanban card ──────────────────────────────────────────────── */
 .kanban-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  border: none;
   border-radius: 0.5rem;
   padding: 0.75rem 0.875rem;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 0.3125rem;
-  box-shadow: var(--shadow);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: background 0.12s ease;
 }
 .kanban-card:hover {
-  transform: translateY(-0.0625rem);
-  box-shadow: var(--shadow-md);
-  border-color: #D1D5DB;
+  background: var(--card-header-bg);
 }
 .kanban-card:active { transform: translateY(0); }
 
@@ -1122,13 +1122,13 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Individual card */
 .dash-card {
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface-raised); border: none;
   border-radius: var(--r-lg); overflow: hidden;
   display: flex; flex-direction: column;
 }
 .dash-card-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem; background: var(--card-header-bg); border-bottom: none;
   flex-shrink: 0;
 }
 /* Fixed-height body keeps paired cards uniform — exactly 4 rows tall */

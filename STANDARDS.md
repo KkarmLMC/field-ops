@@ -124,25 +124,36 @@ All colors are defined in `src/styles/globals.css` as CSS custom properties. **N
 --orange:    #F97316   /* In progress, active */
 
 /* Neutrals */
---bg:        #FFFFFF   /* Page background */
---surface:   #FFFFFF   /* Card/panel surface */
---border:    #111827   /* Card/component outer borders — dark, visible on white */
---border-l:  #E5E7EB   /* Internal dividers only — row separators, card-header bottom */
---hover:     #F3F4F6   /* Hover state background */
---text-1:    #000000   /* Primary text — default for all body copy */
---text-2:    #374151   /* Secondary text — subtitles, descriptions, back buttons */
---text-3:    #9CA3AF   /* Muted text — timestamps, IDs, labels, meta only */
---text-4:    #D1D5DB   /* Disabled text */
+--bg:              #FFFFFF   /* Page background */
+--surface:         #FFFFFF   /* Component surface */
+--surface-raised:  #F7F8FA   /* Card background — barely off-white, lifts cards from page */
+--card-header-bg:  #EEF2F9   /* Card/row header tint — light navy, defines headers without borders */
+--border:          transparent /* Flat design — no borders */
+--border-l:        #EFEFEF   /* Internal row dividers only — subtle separation inside cards */
+--hover:           #F3F4F6   /* Hover state */
+--text-1:          #000000   /* Primary text — default for all body copy */
+--text-2:          #374151   /* Secondary text — subtitles, descriptions, back buttons */
+--text-3:          #9CA3AF   /* Muted text — timestamps, IDs, labels, meta only */
+--text-4:          #D1D5DB   /* Disabled text */
 ```
 
-### Border Usage Rules
+### Flat Design Rules
+
+This app uses a **flat, borderless, shadowless** design. Cards are defined by a subtle background tint — not borders or shadows.
 
 | Token | Value | Use |
 |---|---|---|
-| `--border` | `#111827` | Outer card borders, input borders, panel outlines — anything on a white/light background that needs to be clearly visible |
-| `--border-l` | `#E5E7EB` | Internal dividers only — row separators inside cards, card-header bottom border, sheet dividers |
+| `--surface-raised` | `#F7F8FA` | Card/panel background — barely off-white, lifts elements off the page |
+| `--card-header-bg` | `#EEF2F9` | Card headers and row headers — light navy tint replaces border lines |
+| `--border` | `transparent` | Never use for visual borders — kept only for structural spacing |
+| `--border-l` | `#EFEFEF` | Row dividers only — subtle internal separation between list items inside a card |
 
-**Rule:** Cards and components on a white background must use `--border` for their outline. Only use `--border-l` for dividers between items *inside* an already-bordered container.
+**Rules:**
+- No `border` on cards, inputs, or panels
+- No `box-shadow` anywhere
+- Cards sit on `--surface-raised` background
+- Card/section headers use `--card-header-bg` (light navy tint) instead of a border-bottom
+- Row dividers inside cards use `--border-l` only
 
 ### 4.1.1 Text Color Usage Rules
 

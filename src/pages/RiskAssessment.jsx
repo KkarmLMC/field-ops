@@ -241,8 +241,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <button onClick={handleGPS} disabled={locating} style={{
             display:'flex', alignItems:'center', gap:'var(--sp-2)',
             padding:'0.5rem 0.75rem', borderRadius:'var(--r-sm)',
-            background:'var(--bg)', border:'1px solid var(--border)',
-            fontSize:'var(--fs-sm)', color:'var(--blue)', whiteSpace:'nowrap',
+            background:'var(--bg)', fontSize:'var(--fs-sm)', color:'var(--blue)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)',
           }}>
             {locating ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size={13} />}
@@ -344,8 +343,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             </button>
             <button onClick={()=>setResult(null)} style={{
               padding:'0.625rem 0.875rem', borderRadius:'var(--r-sm)',
-              background:'var(--surface)', border:'1px solid var(--border)',
-              fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
+              background:'var(--surface-raised)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
             }}>
               Recalculate
             </button>
@@ -445,7 +443,7 @@ export default function RiskAssessment() {
       {/* List */}
       <div style={{ ...S.card, marginBottom:'var(--sp-3)' }}>
         <div style={{
-          padding:'0.625rem 0.875rem', borderBottom:'1px solid var(--border)',
+          padding:'0.625rem 0.875rem', borderBottom:'none',
           display:'flex', alignItems:'center', justifyContent:'space-between',
         }}>
           <span style={S.label}>Site Assessments</span>
@@ -468,7 +466,7 @@ export default function RiskAssessment() {
       </div>
 
       {/* Note */}
-      <p style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)', lineHeight:1.6, padding:'0.625rem 0.875rem', background:'var(--surface)', border:'1px solid var(--border)', borderRadius:'var(--r-md)', margin:0 }}>
+      <p style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)', lineHeight:1.6, padding:'0.625rem 0.875rem', background:'var(--surface-raised)', borderRadius:'var(--r-md)', margin:0 }}>
         <span style={{ fontFamily:'var(--mono)', color:'var(--text-2)' }}>NFPA 780 Annex L · </span>
         Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
       </p>

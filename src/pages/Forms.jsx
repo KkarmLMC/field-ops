@@ -130,10 +130,10 @@ function SigPad({ value, onChange }) {
       <canvas ref={canvasRef} width={480} height={80}
         onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
         onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:'5rem', borderRadius:'var(--r-sm)', display:'block', border:'1px solid var(--border)', background:'var(--bg)', cursor:'crosshair', touchAction:'none' }}
+        style={{ width:'100%', height:'5rem', borderRadius:'var(--r-sm)', display:'block', background:'var(--bg)', cursor:'crosshair', touchAction:'none' }}
       />
       {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-3)', fontSize:'var(--fs-sm)', pointerEvents:'none', fontFamily:'var(--mono)' }}>Sign here</div>}
-      {value  && <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'var(--hover)', border:'1px solid var(--border)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'var(--text-2)', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}><Trash size={10}/> Clear</button>}
+      {value  && <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'var(--hover)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'var(--text-2)', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}><Trash size={10}/> Clear</button>}
     </div>
   )
 }
@@ -321,9 +321,9 @@ function FieldLabel({ label, required }) {
 
 function Section({ title, children, open, onToggle }) {
   return (
-    <div style={{ background:'var(--surface)', border:'1px solid var(--border)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={onToggle} style={{ width:'100%', padding:'var(--sp-2) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:open?'1px solid var(--border)':'none' }}>
-        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
+        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>{title}</span>
         <CaretDown size={12} style={{ color:'var(--text-3)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && <div style={{ padding:'var(--sp-4)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
@@ -384,7 +384,7 @@ function CompletionFormView({ formType, onSave, onCancel }) {
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
         <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
           <Icon size={14} style={{ color: cfg.color }} />
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{cfg.ref}</span>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>{cfg.ref}</span>
         </div>
       </div>
 
@@ -506,8 +506,7 @@ function SuccessView({ result, onBack }) {
         )}
         <button onClick={onBack} style={{
           padding:'var(--sp-2) var(--sp-5)', borderRadius:'var(--r-md)',
-          background:'var(--surface)', border:'1px solid var(--border)',
-          fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
+          background:'var(--surface-raised)', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)',
         }}>
           Back to Forms
         </button>
@@ -581,9 +580,9 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface)', border:'1px solid var(--border)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
-        <div style={{ padding:'var(--sp-2) var(--sp-4)', borderBottom:'1px solid var(--border)' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+      <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
+        <div style={{ padding:'var(--sp-2) var(--sp-4)', borderBottom:'none' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--card-header-bg)' }}>
             Completion Forms
           </span>
         </div>
@@ -594,7 +593,7 @@ export default function Forms() {
               <button key={type} onClick={()=>handleStart(type)} style={{
                 display:'flex', alignItems:'center', gap:'var(--sp-3)',
                 padding:'var(--sp-3)', background:'var(--bg)',
-                border:'1px solid var(--border)', borderRadius:'var(--r-lg)',
+                borderRadius:'var(--r-lg)',
                 textAlign:'left', transition:'background var(--ease-fast)',
               }}
                 onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
