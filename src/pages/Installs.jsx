@@ -131,7 +131,7 @@ function KanbanColumn({ col, jobs, bc, onCardClick }) {
         </div>
         <span
           className="kanban-col-count"
-          style={{ background: 'rgba(255,255,255,0.20)', color: bc.textActive }}
+          style={{ background: bc.bgAccent, color: bc.textActive }}
         >
           {jobs.length}
         </span>
