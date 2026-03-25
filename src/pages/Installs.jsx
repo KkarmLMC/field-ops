@@ -32,10 +32,10 @@ const PRIORITY_DOT = {
 }
 
 const KANBAN_COLS = [
-  { id: 'scheduled',     label: 'Scheduled',     Icon: CalendarBlank, statuses: ['scheduled']           },
-  { id: 'active',        label: 'Active Install', Icon: HardHat,       statuses: ['active']              },
-  { id: 'ul-inspection', label: 'UL Inspection',  Icon: Clipboard,     statuses: ['ul-inspection']       },
-  { id: 'completed',     label: 'Completed',      Icon: CheckCircle,   statuses: ['completed', 'failed'] },
+  { id: 'scheduled',     label: 'Scheduled',     Icon: CalendarBlank, accent: '#94A3B8', statuses: ['scheduled']           },
+  { id: 'active',        label: 'Active Install', Icon: HardHat,       accent: '#3B82F6', statuses: ['active']              },
+  { id: 'ul-inspection', label: 'UL Inspection',  Icon: Clipboard,     accent: '#F59E0B', statuses: ['ul-inspection']       },
+  { id: 'completed',     label: 'Completed',      Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed'] },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
@@ -112,17 +112,17 @@ function KanbanCard({ job, onClick }) {
 
 // ─── Column ────────────────────────────────────────────────────────────────────
 function KanbanColumn({ col, jobs, bc, onCardClick }) {
-  const { label, Icon } = col
+  const { label, Icon, accent } = col
 
   return (
     <div className="kanban-col">
-      {/* Column header — uses active branch color, same as dashboard card heads */}
+      {/* Column header — branch bg color, per-stage accent stripe on top */}
       <div
         className="kanban-col-head"
         style={{
           background: bc.bgActive,
-          borderTopColor: 'rgba(255,255,255,0.25)',
-          transition: 'background 0.2s ease, border-color 0.2s ease',
+          borderTopColor: accent,
+          transition: 'background 0.2s ease',
         }}
       >
         <div className="kanban-col-head-left">
