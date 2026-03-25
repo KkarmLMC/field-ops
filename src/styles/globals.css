@@ -551,6 +551,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   .branch-tabs {
     display: block;
     margin-bottom: var(--gap-lg);
+    /* Break out of page-content horizontal padding */
+    margin-left: calc(-1 * var(--content-pad));
+    margin-right: calc(-1 * var(--content-pad));
   }
   .branch-tabs-mobile-track {
     display: flex;
@@ -558,15 +561,19 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0;
-    padding-bottom: var(--sp-2);
+    padding: 0 var(--content-pad) var(--sp-2);
     scrollbar-width: none;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
   .branch-tabs-mobile-track .branch-card {
-    flex: 0 0 100%;
-    width: 100%;
+    flex: 0 0 calc(100vw - (var(--content-pad) * 2));
+    width: calc(100vw - (var(--content-pad) * 2));
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  /* Dot indicators also need to be inside the padding */
+  .branch-tabs > div:last-child {
+    padding: 0 var(--content-pad);
   }
 }
 .branch-card {
