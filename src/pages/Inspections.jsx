@@ -26,7 +26,7 @@ function getTech(id) {
 
 export default function Inspections() {
   const navigate = useNavigate()
-  const [branch, setBranch]           = useState('bolt')
+  const [branch, setBranch]           = useState('lm')
   const [statusFilter, setStatusFilter] = useState('all')
   const [search, setSearch]           = useState('')
   const [searchOpen, setSearchOpen]   = useState(false)

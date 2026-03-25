@@ -28,7 +28,7 @@ function getTech(id) {
 
 export default function Installs() {
   const navigate = useNavigate()
-  const [branch, setBranch]     = useState('bolt')
+  const [branch, setBranch]     = useState('lm')
   const [statusFilter, setStatusFilter] = useState('all')
   const [search, setSearch]     = useState('')
   const [searchOpen, setSearchOpen] = useState(false)

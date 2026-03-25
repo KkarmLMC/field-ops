@@ -14,7 +14,7 @@ function getTech(name) {
 }
 
 export default function DailyFieldLog() {
-  const [branch, setBranch] = useState('bolt')
+  const [branch, setBranch] = useState('lm')
 
   const lmCount         = MOCK_REPORTS.filter(r => r.branch === 'lm').length
   const boltCount       = MOCK_REPORTS.filter(r => r.branch === 'bolt').length

@@ -18,7 +18,7 @@ function getTech(id) {
 
 export default function Installations() {
   const navigate = useNavigate()
-  const [branch, setBranch] = useState('bolt')
+  const [branch, setBranch] = useState('lm')
 
   const projects  = MOCK_PROJECTS.filter(p => p.branch === branch)
   const activeInstalls = JOBS.filter(j =>
