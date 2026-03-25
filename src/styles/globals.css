@@ -750,6 +750,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .dfl-gps-auto { margin-left: auto; font-size: 0.625rem; font-weight: 600; color: #16A34A; background: #F0FDF4; border-radius: 0.25rem; padding: 0.125rem 0.375rem; }
 .dfl-input { width: 100%; padding: 0.625rem 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; font-size: 0.875rem; font-family: var(--font); color: var(--text-1); background: var(--surface); outline: none; box-sizing: border-box; transition: border-color 0.15s; }
 .dfl-input:focus { border-color: #000; }
+select.dfl-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; cursor: pointer; }
 .dfl-input-mono { font-family: var(--mono); }
 .dfl-textarea { min-height: 5rem; resize: vertical; line-height: 1.5; }
 

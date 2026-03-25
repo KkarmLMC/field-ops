@@ -55,6 +55,26 @@ const JOB_STATUS_STYLE = {
 // Derive unique customer names from all JOBS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.customer))].sort()
 
+// Time onsite options: 1h–16h in 15-min increments
+// Use integer quarter-hours to avoid float precision drift
+const TIME_ONSITE_OPTIONS = (() => {
+  const opts = []
+  for (let q = 4; q <= 64; q++) {   // 4 quarters = 1h, 64 = 16h
+    const h = Math.floor(q / 4)
+    const m = (q % 4) * 15
+    opts.push({ value: q / 4, label: m === 0 ? `${h}` : `${h}:${String(m).padStart(2, '0')}` })
+  }
+  return opts
+})()
+
+// Format a stored numeric hours value for display (e.g. 6.25 → "6h 15m")
+function fmtHours(val) {
+  if (!val && val !== 0) return ''
+  const h = Math.floor(val)
+  const m = Math.round((val - h) * 60)
+  return m === 0 ? `${h}h` : `${h}h ${m}m`
+}
+
 const EMPTY_P1 = {
   customer:          '',
   jobsite_id:        null,
@@ -528,7 +548,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
         </div>
         <div className="dfl-card-head-right">
           {!isDraft && entry.hours_worked && (
-            <div className="dfl-card-hours">{entry.hours_worked}h</div>
+            <div className="dfl-card-hours">{fmtHours(entry.hours_worked)}</div>
           )}
           <span className="dfl-status-pill" style={{ background: ss.bg, color: ss.color }}>
             {entry.status}
@@ -1222,17 +1242,17 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
           {step === 0 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
-                <label className="dfl-label">Hours Worked Today <span className="dfl-req">*</span></label>
-                <input
+                <label className="dfl-label">Total Time Onsite <span className="dfl-req">*</span></label>
+                <select
                   className="dfl-input"
-                  type="number"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  placeholder="e.g. 8"
                   value={form.hours_worked}
-                  onChange={e => set('hours_worked', e.target.value)}
-                />
+                  onChange={e => set('hours_worked', parseFloat(e.target.value))}
+                >
+                  <option value="">Select time onsite…</option>
+                  {TIME_ONSITE_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">Type of Work Completed <span className="dfl-req">*</span></label>
@@ -1327,7 +1347,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               {!canSubmit && (
                 <div className="dfl-safety-warning">
                   <Warning size={13} weight="fill" />
-                  {!form.hours_worked ? 'Hours worked required · ' : ''}
+                  {!form.hours_worked ? 'Total time onsite required · ' : ''}
                   {form.work_types.length === 0 ? 'Select at least one work type · ' : ''}
                   {!form.signed ? 'Supervisor signature required' : ''}
                 </div>
