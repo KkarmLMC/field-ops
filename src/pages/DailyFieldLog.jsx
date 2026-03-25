@@ -448,7 +448,8 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
     <div className="dfl-typeahead" ref={ref}>
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <input
-          className="dfl-input dfl-typeahead-input"
+          className="dfl-input"
+          style={{ paddingRight: '2rem' }}
           placeholder={placeholder}
           value={query}
           onChange={e => { setQuery(e.target.value); onChange(''); openDropdown() }}
@@ -463,7 +464,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
       </div>
       {open && filtered.length > 0 && (
         <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
-          {filtered.slice(0, 8).map(opt => (
+          {filtered.slice(0, 4).map(opt => (
             <li
               key={opt.value}
               className={`dfl-typeahead-item ${value === opt.value ? 'selected' : ''}`}
