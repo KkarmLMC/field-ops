@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, Zap, ChevronRight, Calendar, Clock, ArrowRight } from 'lucide-react'
+import { AlertTriangle, Zap, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
 
@@ -8,16 +8,6 @@ function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
 }
 
-function getGreeting() {
-  const h = new Date().getHours()
-  if (h < 12) return 'Good morning'
-  if (h < 17) return 'Good afternoon'
-  return 'Good evening'
-}
-
-function formatDate(d) {
-  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-}
 
 const TYPE_ICON = {
   installation: '⚡',
@@ -31,8 +21,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [branch, setBranch] = useState('lm')
 
-  const today    = new Date()
-  const todayStr = today.toISOString().slice(0, 10)
+  const todayStr = new Date().toISOString().slice(0, 10)
 
   const branchJobs   = JOBS.filter(j => j.branch === branch)
   const todayJobs    = branchJobs.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled')).slice(0, 4)
@@ -46,31 +35,6 @@ export default function Dashboard() {
 
   return (
     <div className="page-content fade-in">
-
-      {/* Welcome banner */}
-      <div className="dash-banner">
-        <div className="dash-banner-left">
-          <div className="dash-banner-greeting">{getGreeting()}</div>
-          <div className="dash-banner-title">Bolt Lightning Protection</div>
-          <div className="dash-banner-date">
-            <Calendar size={12} />
-            {formatDate(today)}
-          </div>
-        </div>
-        <div className="dash-stats-row">
-          {[
-            { value: todayJobs.length,    label: 'Today',    color: 'white' },
-            { value: activeJobs.length,   label: 'Active',   color: 'white' },
-            { value: failedJobs.length,   label: 'Failed',   color: 'white' },
-            { value: techsInField,        label: 'In Field', color: 'white' },
-          ].map((s, i) => (
-            <div key={i} className="dash-stat">
-              <div className="dash-stat-value" style={{ color: s.color }}>{s.value}</div>
-              <div className="dash-stat-label">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* Branch selector */}
       <BranchTabs active={branch} onChange={setBranch} />
