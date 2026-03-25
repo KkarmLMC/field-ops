@@ -339,56 +339,49 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   )
 }
 
-// ─── Tech Multi List (stacked individual typeaheads + Add row) ────────────────
+// ─── Tech Multi List (stacked rows, manual + to add) ─────────────────────────
 function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 'Search installers…' }) {
-  // Each entry is an independent TechTypeahead row
-  const rows = value.length > 0 ? value : ['']
+  // Internal rows: starts with one empty slot; tracks filled + any pending empty
+  const [rows, setRows] = useState(value.length > 0 ? value : [''])
 
-  const setRow = (idx, val) => {
+  const updateRow = (idx, name) => {
     const next = [...rows]
-    next[idx] = val
+    next[idx] = name
+    setRows(next)
     onChange(next.filter(Boolean))
   }
 
   const removeRow = (idx) => {
     const next = rows.filter((_, i) => i !== idx)
-    onChange(next.filter(Boolean))
+    const result = next.length > 0 ? next : ['']
+    setRows(result)
+    onChange(result.filter(Boolean))
   }
 
-  const addRow = () => {
-    // Only add if last row has a value
-    if (rows[rows.length - 1]) onChange([...rows.filter(Boolean), ''])
-  }
-
-  // Rows to render: always show at least 1 empty input; after selection show filled rows + empty slots if any
-  const displayRows = value.length > 0 ? [...value, ''] : ['']
+  const addRow = () => setRows(r => [...r, ''])
 
   return (
     <div className="dfl-multi-list">
-      {displayRows.map((name, idx) => (
-        <div key={idx} className="dfl-multi-list-row">
+      {rows.map((name, idx) => (
+        <div key={idx} className="dfl-crew-row">
           <div style={{ flex: 1 }}>
             <TechTypeahead
               value={name}
-              onChange={val => {
-                const next = [...displayRows]
-                next[idx] = val
-                onChange(next.filter(Boolean))
-              }}
-              exclude={[...exclude, ...displayRows.filter((n, i) => i !== idx && n)]}
-              placeholder={idx === 0 ? placeholder : 'Add another…'}
+              onChange={n => updateRow(idx, n)}
+              exclude={[...exclude, ...rows.filter((r, i) => i !== idx && r)]}
+              placeholder={idx === 0 ? placeholder : 'Search or type a name…'}
             />
           </div>
-          {name && (
-            <button
-              type="button"
-              className="dfl-multi-list-remove"
-              onClick={() => {
-                const next = displayRows.filter((_, i) => i !== idx)
-                onChange(next.filter(Boolean))
-              }}
-            >
+          {/* × to remove — always show if there are multiple rows, or if this row is filled */}
+          {(rows.length > 1 || name) && (
+            <button type="button" className="dfl-multi-list-remove" onClick={() => removeRow(idx)}>
               <X size={13} />
+            </button>
+          )}
+          {/* + to add another — only on the last row */}
+          {idx === rows.length - 1 && (
+            <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another">
+              <Plus size={14} />
             </button>
           )}
         </div>
@@ -1026,16 +1019,21 @@ const STEPS = [
                   <User size={12} style={{ marginRight: '0.25rem' }} />
                   Supervisor Onsite <span className="dfl-req">*</span>
                 </label>
-                <TechTypeahead
-                  value={form.supervisor_name}
-                  onChange={val => {
-                    set('supervisor_name', val)
-                    // keep crew clean if supervisor was also in crew
-                    set('crew_on_site', form.crew_on_site.filter(n => n !== val))
-                  }}
-                  exclude={form.crew_on_site}
-                  placeholder="Search supervisors…"
-                />
+                <div className="dfl-crew-row">
+                  <div style={{ flex: 1 }}>
+                    <TechTypeahead
+                      value={form.supervisor_name}
+                      onChange={val => {
+                        set('supervisor_name', val)
+                        set('crew_on_site', form.crew_on_site.filter(n => n !== val))
+                      }}
+                      exclude={form.crew_on_site}
+                      placeholder="Search supervisors…"
+                    />
+                  </div>
+                  {/* spacer matches the button column width in crew rows */}
+                  <div style={{ width: '1.75rem', flexShrink: 0 }} />
+                </div>
               </div>
 
               {/* Installers Onsite — multi typeahead with chips */}
