@@ -587,12 +587,12 @@ export default function Forms() {
             return (
               <button key={type} onClick={()=>handleStart(type)} style={{
                 display:'flex', alignItems:'center', gap:'var(--sp-3)',
-                padding:'var(--sp-3)', background:'var(--bg)',
+                padding:'var(--sp-3)', background:'var(--surface-raised)',
                 borderRadius:'var(--r-lg)',
                 textAlign:'left', transition:'background var(--ease-fast)',
               }}
                 onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
-                onMouseLeave={e=>e.currentTarget.style.background='var(--bg)'}
+                onMouseLeave={e=>e.currentTarget.style.background='var(--surface-raised)'}
               >
                 <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
                 <div style={{ flex:1, minWidth:0 }}>
