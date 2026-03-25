@@ -38,7 +38,7 @@ export default function Forms() {
     <div className="page-content fade-in">
 
       {/* ── Completion Forms card ─────────────────────────────────────── */}
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:12 }}>
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:12, marginBottom:12, overflow:'hidden' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
           <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Completion Forms
@@ -47,16 +47,20 @@ export default function Forms() {
             View all <CaretRight size={10} />
           </button>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:1, background:'var(--border)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, padding:8 }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
               <button key={type} onClick={()=>navigate(`/forms/completion?type=${type}`)}
-                style={{ display:'flex', alignItems:'center', gap:10, padding:'12px 14px', background:'var(--bg-2)', textAlign:'left', transition:'background 0.12s' }}
-                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-3)'}
-                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-2)'}
+                style={{
+                  display:'flex', alignItems:'center', gap:10, padding:'12px',
+                  background:'var(--bg-3)', border:'1px solid var(--border)',
+                  borderRadius:10, textAlign:'left', transition:'background 0.12s',
+                }}
+                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-4)'}
+                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-3)'}
               >
-                <div style={{ width:30, height:30, borderRadius:4, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <div style={{ width:30, height:30, borderRadius:8, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                   <Icon size={14} style={{ color:cfg.color }} />
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>

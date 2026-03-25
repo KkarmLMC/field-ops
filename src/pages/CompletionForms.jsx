@@ -620,25 +620,26 @@ export default function CompletionForms() {
     <div className="page-content fade-in">
 
       {/* Form type tiles */}
-      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:12 }}>
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:12, marginBottom:12, overflow:'hidden' }}>
         <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
           <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
             Completion Forms
           </span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:1, background:'var(--border)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, padding:8 }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
               <button key={type} onClick={()=>handleStart(type)} style={{
-                display:'flex', flexDirection:'column', gap:8, padding:'16px 14px',
-                background:'var(--bg-2)', textAlign:'left', transition:'background 0.12s',
+                display:'flex', flexDirection:'column', gap:8, padding:'14px 12px',
+                background:'var(--bg-3)', border:'1px solid var(--border)',
+                borderRadius:10, textAlign:'left', transition:'background 0.12s',
               }}
-                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-3)'}
-                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-2)'}
+                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-4)'}
+                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-3)'}
               >
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <div style={{ width:32, height:32, borderRadius:4, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <div style={{ width:32, height:32, borderRadius:8, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
                     <Icon size={16} style={{ color: cfg.color }} />
                   </div>
                   <CaretRight size={12} style={{ color:'var(--text-muted)' }} />
