@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { TECHNICIANS, JOBS } from '../data/mockData.js';
+import { TECHNICIANS, PROJECTS } from '../data/mockData.js';
 
 export default function Technicians() {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ export default function Technicians() {
       </div>
 
       {TECHNICIANS.map(tech => {
-        const techJobs = JOBS.filter(j => j.assignedTo === tech.id);
+        const techJobs = PROJECTS.filter(p => p.lead_tech_id === tech.id);
         return (
           <div key={tech.id} className="card">
             <div style={{ padding: '14px', borderBottom: techJobs.length > 0 ? '1px solid var(--border-l)' : 'none' }}>
@@ -57,13 +57,13 @@ export default function Technicians() {
                     key={job.id}
                     className="project-item"
                     style={{ padding: '8px 0', gap: '0.5rem' }}
-                    onClick={() => navigate(`/installations/installs/${job.id}`)}
+                    onClick={() => navigate(`/installations/${job.id}`)}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 'var(--fs-md)', fontWeight: 500 }}>{job.siteName}</div>
-                      <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.id}</div>
+                      <div style={{ fontSize: 'var(--fs-md)', fontWeight: 500 }}>{job.name}</div>
+                      <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.job_number}</div>
                     </div>
-                    <span className={`badge badge-${job.status}`}>{job.status}</span>
+                    <span className={`badge badge-${job.stage === 'in-progress' ? 'active' : job.stage === 'complete' ? 'completed' : job.stage}`}>{job.stage}</span>
                   </div>
                 ))}
               </div>

@@ -5,7 +5,7 @@ import {
   CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { JOBS, TECHNICIANS } from '../data/mockData.js'
+import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -32,11 +32,12 @@ const PRIORITY_DOT = {
 }
 
 const KANBAN_COLS = [
-  { id: 'scheduled',     label: 'Upcoming Installations',  Icon: CalendarBlank, accent: '#A855F7', statuses: ['scheduled']            },
-  { id: 'active',        label: 'Active Installations',    Icon: HardHat,       accent: '#FACC15', statuses: ['active']               },
-  { id: 'completed',     label: 'Completed Installations', Icon: CheckCircle,   accent: '#22C55E', statuses: ['completed', 'failed']  },
-  { id: 'ul-inspection', label: 'UL Inspection',          Icon: Clipboard,     accent: '#38BDF8', statuses: ['ul-inspection']        },
-  { id: 'postponed',     label: 'Postponed Installations',Icon: PauseCircle,   accent: '#FB923C', statuses: ['postponed']            },
+  { id: 'awarded',        label: 'Awarded',                Icon: CalendarBlank, accent: '#A855F7', stages: ['awarded']                        },
+  { id: 'scheduled',      label: 'Upcoming',               Icon: CalendarBlank, accent: '#818CF8', stages: ['scheduled']                      },
+  { id: 'in-progress',    label: 'Active',                 Icon: HardHat,       accent: '#FACC15', stages: ['in-progress']                    },
+  { id: 'pending-review', label: 'Pending Review',         Icon: Clipboard,     accent: '#38BDF8', stages: ['pending-review']                 },
+  { id: 'complete',       label: 'Completed',              Icon: CheckCircle,   accent: '#22C55E', stages: ['complete']                       },
+  { id: 'postponed',      label: 'Postponed',              Icon: PauseCircle,   accent: '#FB923C', stages: ['postponed', 'failed']            },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
@@ -54,7 +55,7 @@ function fmtDate(d) {
 // ─── Card ──────────────────────────────────────────────────────────────────────
 function KanbanCard({ job, onClick }) {
   const Icon = TYPE_ICON[job.type] || Lightning
-  const isFailed = job.status === 'failed'
+  const isFailed = job.stage === 'failed'
 
   return (
     <div className="kanban-card" onClick={onClick}>
@@ -72,7 +73,7 @@ function KanbanCard({ job, onClick }) {
       </div>
 
       {/* Site name */}
-      <div className="kanban-card-client">{job.siteName}</div>
+      <div className="kanban-card-client">{job.name}</div>
 
       {/* Structure short */}
       {job.structure && (
@@ -83,9 +84,9 @@ function KanbanCard({ job, onClick }) {
 
       {/* Meta row */}
       <div className="kanban-card-meta-row">
-        <span className="kanban-card-tech">{getTech(job.assignedTo)}</span>
+        <span className="kanban-card-tech">{getTech(job.lead_tech_id)}</span>
         <span className="kanban-card-sep">·</span>
-        <span className="kanban-card-date">{fmtDate(job.scheduledDate)}</span>
+        <span className="kanban-card-date">{fmtDate(job.scheduled_date)}</span>
       </div>
 
       {/* Progress bar — show if in progress */}
@@ -104,8 +105,8 @@ function KanbanCard({ job, onClick }) {
       )}
 
       {/* NFPA class badge */}
-      {job.nfpaClass && (
-        <div className="kanban-card-nfpa">NFPA Class {job.nfpaClass}</div>
+      {job.nfpa_class && (
+        <div className="kanban-card-nfpa">NFPA Class {job.nfpa_class}</div>
       )}
     </div>
   )
@@ -165,14 +166,14 @@ export default function Installs() {
 
   const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
 
-  const lmCount         = JOBS.filter(j => j.branch === 'lm').length
-  const boltCount       = JOBS.filter(j => j.branch === 'bolt').length
-  const boltDallasCount = JOBS.filter(j => j.branch === 'bolt-dallas').length
+  const lmCount         = PROJECTS.filter(p => p.branch === 'lm').length
+  const boltCount       = PROJECTS.filter(p => p.branch === 'bolt').length
+  const boltDallasCount = PROJECTS.filter(p => p.branch === 'bolt-dallas').length
 
-  // All jobs for this branch, optionally filtered by search
-  const branchJobs = JOBS.filter(j =>
-    j.branch === branch &&
-    (search === '' || j.siteName.toLowerCase().includes(search.toLowerCase()))
+  // All projects for this branch, optionally filtered by search
+  const branchJobs = PROJECTS.filter(p =>
+    p.branch === branch &&
+    (search === '' || p.name.toLowerCase().includes(search.toLowerCase()))
   )
 
   return (
@@ -215,14 +216,14 @@ export default function Installs() {
       {/* Kanban board */}
       <div className="kanban-board">
         {KANBAN_COLS.map(col => {
-          const colJobs = branchJobs.filter(j => col.statuses.includes(j.status))
+          const colJobs = branchJobs.filter(p => col.stages.includes(p.stage))
           return (
             <KanbanColumn
               key={col.id}
               col={col}
               jobs={colJobs}
               bc={bc}
-              onCardClick={id => navigate(`/installations/installs/${id}`)}
+              onCardClick={id => navigate(`/installations/${id}`)}
             />
           )
         })}

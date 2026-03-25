@@ -7,7 +7,7 @@ import {
   Crosshair, SpinnerGap,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { FORM_TEMPLATES, JOBS, TECHNICIANS } from '../data/mockData.js'
+import { FORM_TEMPLATES, PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { db } from '../lib/supabase.js'
 import { generateAndUploadDFLPdf } from '../lib/generateDFLPdf.js'
@@ -43,19 +43,19 @@ const STATUS_STYLE = {
   Reviewed:  { bg: '#F0FDF4', color: '#16A34A' },
 }
 
-// Status labels for jobsite dropdown
+// Stage labels for jobsite dropdown
 const JOB_STATUS_STYLE = {
-  'active':       { label: 'Active',       bg: '#FEF9C3', color: '#92400E' },
-  'scheduled':    { label: 'Scheduled',    bg: '#EDE9FE', color: '#6D28D9' },
-  'ul-inspection':{ label: 'UL Inspection',bg: '#E0F2FE', color: '#0369A1' },
-  'postponed':    { label: 'Postponed',    bg: '#FFF7ED', color: '#C2410C' },
-  'completed':    { label: 'Completed',    bg: '#F0FDF4', color: '#15803D' },
-  'failed':       { label: 'Failed',       bg: '#FEF2F2', color: '#B91C1C' },
-  'awaiting-po':  { label: 'Awaiting PO',  bg: '#F5F3FF', color: '#7C3AED' },
+  'in-progress':    { label: 'Active',         bg: '#FEF9C3', color: '#92400E' },
+  'scheduled':      { label: 'Scheduled',      bg: '#EDE9FE', color: '#6D28D9' },
+  'pending-review': { label: 'Pending Review', bg: '#E0F2FE', color: '#0369A1' },
+  'postponed':      { label: 'Postponed',      bg: '#FFF7ED', color: '#C2410C' },
+  'complete':       { label: 'Completed',      bg: '#F0FDF4', color: '#15803D' },
+  'failed':         { label: 'Failed',         bg: '#FEF2F2', color: '#B91C1C' },
+  'awarded':        { label: 'Awarded',        bg: '#F5F3FF', color: '#7C3AED' },
 }
 
-// Derive unique customer names from all JOBS (alphabetical)
-const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.customer))].sort()
+// Derive unique customer names from all PROJECTS (alphabetical)
+const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()
 
 // Helper: build H:MM option list between two quarter-hour counts (inclusive)
 function buildTimeOptions(fromQ, toQ) {
@@ -160,7 +160,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
   }, [])
 
   // All unique customers across all branches
-  const allCustomers = [...new Set(JOBS.map(j => j.customer))].sort()
+  const allCustomers = [...new Set(PROJECTS.map(p => p.customer))].sort()
 
   const filtered = query.length >= 1
     ? allCustomers.filter(c => c.toLowerCase().includes(query.toLowerCase()))
@@ -221,15 +221,15 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
   const [open, setOpen] = useState(false)
   const ref             = useRef(null)
 
-  const ORDER          = ['active', 'scheduled', 'ul-inspection', 'postponed', 'awaiting-po', 'completed', 'failed']
+  const ORDER          = ['in-progress', 'scheduled', 'pending-review', 'postponed', 'awarded', 'complete', 'failed']
   const customerLocked = Boolean(customer && customer.trim())
 
-  // All jobs across all branches; filter by customer once one is selected
-  const visibleJobs = JOBS
-    .filter(j => !customerLocked || j.customer === customer.trim())
-    .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
+  // All projects across all branches; filter by customer once one is selected
+  const visibleJobs = PROJECTS
+    .filter(p => !customerLocked || p.customer === customer.trim())
+    .sort((a, b) => ORDER.indexOf(a.stage) - ORDER.indexOf(b.stage))
 
-  const selected = JOBS.find(j => j.id === value)
+  const selected = PROJECTS.find(p => p.id === value)
 
   useEffect(() => {
     const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
@@ -255,10 +255,10 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
           <span className="dfl-jobsite-selected">
             <span
               className="dfl-jobsite-status-dot"
-              style={{ background: JOB_STATUS_STYLE[selected.status]?.color || '#6B7280' }}
+              style={{ background: JOB_STATUS_STYLE[selected.stage]?.color || '#6B7280' }}
             />
-            <span className="dfl-jobsite-selected-name">{selected.siteName}</span>
-            <span className="dfl-jobsite-selected-id">{selected.id}</span>
+            <span className="dfl-jobsite-selected-name">{selected.name}</span>
+            <span className="dfl-jobsite-selected-id">{selected.job_number}</span>
           </span>
         ) : customerLocked ? (
           <span className="dfl-jobsite-placeholder">
@@ -295,7 +295,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
                   <MapPin size={13} style={{ flexShrink: 0, color: '#6B7280' }} />
-                  <span style={{ flex: 1 }}>{job.siteName}</span>
+                  <span style={{ flex: 1 }}>{job.name}</span>
                   {isActive && <CheckCircle size={13} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
                 </div>
               )
@@ -1016,7 +1016,7 @@ const STEPS = [
   ]
 
   const safetyCount = SAFETY_FORMS.filter(f => form[f.key]).length
-  const selectedJob = JOBS.find(j => j.id === form.jobsite_id)
+  const selectedJob = PROJECTS.find(p => p.id === form.jobsite_id)
 
   const canSave =
     form.customer.trim() &&
@@ -1027,7 +1027,7 @@ const STEPS = [
   // When customer changes: clear jobsite if it no longer belongs to that customer
   const handleCustomerChange = (val) => {
     set('customer', val)
-    const currentJob = JOBS.find(j => j.id === form.jobsite_id)
+    const currentJob = PROJECTS.find(p => p.id === form.jobsite_id)
     if (currentJob && currentJob.customer !== val.trim()) {
       set('jobsite_id', null)
     }
@@ -1590,13 +1590,13 @@ export default function DailyFieldLog() {
 
   // Part 1 save → inserts a Draft row into Supabase
   const handlePart1Save = async (form) => {
-    const job = JOBS.find(j => j.id === form.jobsite_id)
+    const job = PROJECTS.find(p => p.id === form.jobsite_id)
     const payload = {
       branch,
       status:            'Draft',
       customer:          form.customer,
       jobsite_id:        form.jobsite_id,
-      customer_site:     job ? `${form.customer} — ${job.id}` : form.customer,
+      customer_site:     job ? `${form.customer} — ${job.job_number}` : form.customer,
       report_date:       form.report_date,
       gps_location:      form.gps_location,
       supervisor_name:   form.supervisor_name,

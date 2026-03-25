@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MagnifyingGlass, ClipboardText } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { JOBS, TECHNICIANS } from '../data/mockData.js'
+import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 
 const INSPECT_TYPES = ['inspection', 'annual-test']
 
 const STATUS_COLOR = {
-  active:    { bg: '#F3F4F6', color: '#000000' },
-  scheduled: { bg: '#F3F4F6', color: '#000000' },
-  completed: { bg: '#F3F4F6', color: '#000000' },
-  failed:    { bg: '#F3F4F6', color: '#000000' },
+  'in-progress': { bg: '#FFF7ED', color: '#C2410C' },
+  scheduled:     { bg: '#F3F4F6', color: '#000000' },
+  complete:      { bg: '#F0FDF4', color: '#15803D' },
+  failed:        { bg: '#FEF2F2', color: '#B91C1C' },
 }
 
 const TYPE_ICON = {
@@ -18,7 +18,8 @@ const TYPE_ICON = {
   'annual-test': ClipboardText,
 }
 
-const STATUS_FILTERS = ['all', 'active', 'scheduled', 'completed', 'failed']
+const STATUS_FILTERS = ['all', 'in-progress', 'scheduled', 'complete', 'failed']
+const STAGE_LABEL = { 'in-progress': 'Active', 'scheduled': 'Scheduled', 'complete': 'Complete', 'failed': 'Failed' }
 
 function getTech(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
@@ -31,15 +32,15 @@ export default function Inspections() {
   const [search, setSearch]           = useState('')
   const [searchOpen, setSearchOpen]   = useState(false)
 
-  const lmCount         = JOBS.filter(j => j.branch === 'lm'         && INSPECT_TYPES.includes(j.type)).length
-  const boltCount       = JOBS.filter(j => j.branch === 'bolt'        && INSPECT_TYPES.includes(j.type)).length
-  const boltDallasCount = JOBS.filter(j => j.branch === 'bolt-dallas' && INSPECT_TYPES.includes(j.type)).length
+  const lmCount         = PROJECTS.filter(p => p.branch === 'lm'         && INSPECT_TYPES.includes(p.type)).length
+  const boltCount       = PROJECTS.filter(p => p.branch === 'bolt'        && INSPECT_TYPES.includes(p.type)).length
+  const boltDallasCount = PROJECTS.filter(p => p.branch === 'bolt-dallas' && INSPECT_TYPES.includes(p.type)).length
 
-  const jobs = JOBS.filter(j =>
-    j.branch === branch &&
-    INSPECT_TYPES.includes(j.type) &&
-    (statusFilter === 'all' || j.status === statusFilter) &&
-    (search === '' || j.siteName.toLowerCase().includes(search.toLowerCase()))
+  const jobs = PROJECTS.filter(p =>
+    p.branch === branch &&
+    INSPECT_TYPES.includes(p.type) &&
+    (statusFilter === 'all' || p.stage === statusFilter) &&
+    (search === '' || p.name.toLowerCase().includes(search.toLowerCase()))
   )
 
   return (
@@ -62,7 +63,7 @@ export default function Inspections() {
               className={`filter-chip ${statusFilter === s ? 'filter-chip-active' : ''}`}
               onClick={() => setStatusFilter(s)}
             >
-              {s.charAt(0).toUpperCase() + s.slice(1)}
+              {s === 'all' ? 'All' : (STAGE_LABEL[s] || s)}
             </button>
           ))}
         </div>
@@ -97,26 +98,26 @@ export default function Inspections() {
             </div>
           ) : (
             jobs.map(job => {
-              const sc = STATUS_COLOR[job.status] || STATUS_COLOR.scheduled
+              const sc = STATUS_COLOR[job.stage] || STATUS_COLOR.scheduled
               return (
                 <div
                   key={job.id}
                   className="dash-job-row"
-                  onClick={() => navigate(`/installations/installs/${job.id}`)}
+                  onClick={() => navigate(`/installations/${job.id}`)}
                 >
                   <div className="dash-job-icon" style={{ background: sc.bg }}>
                     {(() => { const I = TYPE_ICON[job.type] || MagnifyingGlass; return <I size={16} /> })()}
                   </div>
                   <div className="dash-job-info">
-                    <div className="dash-job-name">{job.siteName}</div>
+                    <div className="dash-job-name">{job.name}</div>
                     <div className="dash-job-meta">
-                      {getTech(job.assignedTo)}
+                      {getTech(job.lead_tech_id)}
                       <span className="dash-job-dot">·</span>
-                      {job.scheduledDate}
+                      {job.scheduled_date}
                     </div>
                   </div>
                   <div className="dash-status-pill" style={{ background: sc.bg, color: sc.color }}>
-                    {job.status}
+                    {STAGE_LABEL[job.stage] || job.stage}
                   </div>
                 </div>
               )

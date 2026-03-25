@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { STATS, JOBS } from '../data/mockData.js'
+import { STATS, PROJECTS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
@@ -7,19 +7,19 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
   const trackRef = useRef(null)
 
   const lmStats = {
-    active:    JOBS.filter(j => j.branch === 'lm'         && j.status === 'active').length,
-    scheduled: JOBS.filter(j => j.branch === 'lm'         && j.status === 'scheduled').length,
-    completed: JOBS.filter(j => j.branch === 'lm'         && j.status === 'completed').length,
+    active:    PROJECTS.filter(p => p.branch === 'lm'         && p.stage === 'in-progress').length,
+    scheduled: PROJECTS.filter(p => p.branch === 'lm'         && p.stage === 'scheduled').length,
+    completed: PROJECTS.filter(p => p.branch === 'lm'         && p.stage === 'complete').length,
   }
   const boltStats = {
-    active:    JOBS.filter(j => j.branch === 'bolt'        && j.status === 'active').length,
-    scheduled: JOBS.filter(j => j.branch === 'bolt'        && j.status === 'scheduled').length,
-    completed: JOBS.filter(j => j.branch === 'bolt'        && j.status === 'completed').length,
+    active:    PROJECTS.filter(p => p.branch === 'bolt'        && p.stage === 'in-progress').length,
+    scheduled: PROJECTS.filter(p => p.branch === 'bolt'        && p.stage === 'scheduled').length,
+    completed: PROJECTS.filter(p => p.branch === 'bolt'        && p.stage === 'complete').length,
   }
   const dallasStats = {
-    active:    JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'active').length,
-    scheduled: JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'scheduled').length,
-    completed: JOBS.filter(j => j.branch === 'bolt-dallas' && j.status === 'completed').length,
+    active:    PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'in-progress').length,
+    scheduled: PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'scheduled').length,
+    completed: PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'complete').length,
   }
 
   const tabs = [

@@ -6,7 +6,7 @@ import {
 import { jsPDF } from 'jspdf'
 import { db } from '../lib/supabase.js'
 import { MOCK_SUBMISSIONS } from '../data/mockData.js'
-import { JOBS, TECHNICIANS } from '../data/mockData.js'
+import { TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
 import { BRANCH_COLORS } from '../config/branches.js'
 

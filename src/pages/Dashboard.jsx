@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Ruler, Seal, ClipboardText, HardHat, Buildings, CheckCircle } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
+import { PROJECTS, TECHNICIANS, STATS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 function getTechName(id) {
@@ -23,14 +23,14 @@ export default function Dashboard() {
 
   const todayStr = new Date().toISOString().slice(0, 10)
 
-  const branchJobs   = JOBS.filter(j => j.branch === branch)
-  const todayJobs    = branchJobs.filter(j => j.scheduledDate === todayStr && (j.status === 'active' || j.status === 'scheduled')).slice(0, 4)
-  const activeJobs   = branchJobs.filter(j => j.status === 'active').slice(0, 4)
-  const failedJobs   = branchJobs.filter(j => j.status === 'failed').slice(0, 4)
-  const upcomingJobs = branchJobs.filter(j => j.status === 'scheduled' && j.scheduledDate > todayStr).slice(0, 4)
+  const branchJobs   = PROJECTS.filter(p => p.branch === branch)
+  const todayJobs    = branchJobs.filter(p => p.scheduled_date === todayStr && (p.stage === 'in-progress' || p.stage === 'scheduled')).slice(0, 4)
+  const activeJobs   = branchJobs.filter(p => p.stage === 'in-progress').slice(0, 4)
+  const failedJobs   = branchJobs.filter(p => p.stage === 'failed').slice(0, 4)
+  const upcomingJobs = branchJobs.filter(p => p.stage === 'scheduled' && p.scheduled_date > todayStr).slice(0, 4)
 
-  const techsInField = JOBS.filter(j => j.branch === branch && j.status === 'active')
-    .map(j => j.assignedTo)
+  const techsInField = PROJECTS.filter(p => p.branch === branch && p.stage === 'in-progress')
+    .map(p => p.lead_tech_id)
     .filter((id, i, arr) => arr.indexOf(id) === i).length
 
   const bc = BRANCH_COLORS[branch]
@@ -160,14 +160,14 @@ function EmptyState({ message }) {
 
 function JobRow({ job, navigate }) {
   return (
-    <div className="dash-job-row" onClick={() => navigate(`/installations/installs/${job.id}`)}>
+    <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
       <div className="dash-job-icon" style={{ background: '#F3F4F6' }}>
         {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
-        <div className="dash-job-name">{job.siteName}</div>
+        <div className="dash-job-name">{job.name}</div>
         <div className="dash-job-meta">
-          {getTechName(job.assignedTo)}
+          {getTechName(job.lead_tech_id)}
           {job.progress > 0 && (
             <>
               <span className="dash-job-dot">·</span>
@@ -180,7 +180,7 @@ function JobRow({ job, navigate }) {
         </div>
       </div>
       <div className="dash-status-pill" style={{ background: '#F3F4F6', color: '#000000' }}>
-        {job.status}
+        {job.stage}
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ import {
 } from '@phosphor-icons/react'
 import { jsPDF } from 'jspdf'
 import { db } from '../lib/supabase.js'
-import { JOBS, TECHNICIANS } from '../data/mockData.js'
+import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
 import { BRANCH_COLORS } from '../config/branches.js'
 
@@ -207,7 +207,7 @@ async function generateCompletionPdf(formType, formData, jobData) {
   doc.setDrawColor(...BORDER); doc.line(0,y+32,W,y+32)
   const cw4=W/4
   ;[
-    {label:'SITE',       val: formData.site_name||jobData?.siteName||'—'},
+    {label:'SITE',       val: formData.site_name||jobData?.name||'—'},
     {label:'JOB #',      val: formData.job_number||jobData?.id||'—'},
     {label:'DATE',       val: formData.date_completed||'—'},
     {label:'TECHNICIAN', val: formData.tech_name||'—'},
@@ -224,7 +224,7 @@ async function generateCompletionPdf(formType, formData, jobData) {
 
   // Job Info
   sectionHead('Job Information')
-  fieldRow('Site Name',    formData.site_name||jobData?.siteName||'—')
+  fieldRow('Site Name',    formData.site_name||jobData?.name||'—')
   fieldRow('Address',      formData.site_address||jobData?.address||'—', true)
   fieldRow('Job Number',   formData.job_number||jobData?.id||'—')
   fieldRow('Technician',   formData.tech_name||'—', true)
@@ -352,13 +352,13 @@ function FieldLabel({ label, required }) {
 // ─── Completion Form ───────────────────────────────────────────────────────────
 function CompletionFormView({ formType, jobId, onSave, onCancel }) {
   const cfg  = COMPLETION_TYPES[formType]
-  const job  = jobId ? JOBS.find(j=>j.id===jobId) : null
-  const tech = job ? TECHNICIANS.find(t=>t.id===job.assignedTo) : null
+  const job  = jobId ? PROJECTS.find(p=>p.id===jobId) : null
+  const tech = job ? TECHNICIANS.find(t=>t.id===job.lead_tech_id) : null
 
   const [values, setValues] = useState({
-    site_name:      job?.siteName || '',
+    site_name:      job?.name     || '',
     site_address:   job?.address  || '',
-    job_number:     job?.id       || '',
+    job_number:     job?.job_number || '',
     tech_name:      tech?.name    || '',
     date_completed: new Date().toISOString().slice(0,10),
     branch:         job?.branch   || 'lm',

@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { MapPin, Buildings, CalendarBlank, Shield, FileText, User, CheckCircle, Circle, CaretRight } from '@phosphor-icons/react';
-import { JOBS, TECHNICIANS, FORM_TEMPLATES } from '../data/mockData.js';
+import { PROJECTS, TECHNICIANS, FORM_TEMPLATES } from '../data/mockData.js';
 
 function getTech(id) {
   return TECHNICIANS.find(t => t.id === id);
@@ -11,7 +11,7 @@ const ALL_FORMS = ['site-survey', 'installation', 'inspection'];
 export default function JobDetail() {
   const { jobId } = useParams()
   const navigate = useNavigate()
-  const job = JOBS.find(j => j.id === jobId)
+  const job = PROJECTS.find(p => p.id === jobId)
 
   if (!job) {
     return (
@@ -28,7 +28,8 @@ export default function JobDetail() {
     );
   }
 
-  const tech = getTech(job.assignedTo);
+  const tech = getTech(job.lead_tech_id);
+  const STAGE_LABEL = { 'in-progress': 'Active', 'scheduled': 'Scheduled', 'complete': 'Complete', 'pending-review': 'Pending Review', 'awarded': 'Awarded', 'postponed': 'Postponed', 'failed': 'Failed' }
 
   return (
     <div className="page-content fade-in">
@@ -36,12 +37,12 @@ export default function JobDetail() {
       {/* Job header card */}
       <div className="card">
         <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span>{job.siteName}</span>
-          <span className={`badge badge-${job.status}`} style={{ color: 'white', background: 'rgba(255,255,255,0.2)' }}>{job.status}</span>
+          <span>{job.name}</span>
+          <span className={`badge badge-${job.stage === 'in-progress' ? 'active' : job.stage === 'complete' ? 'completed' : job.stage}`} style={{ color: 'white', background: 'rgba(255,255,255,0.2)' }}>{STAGE_LABEL[job.stage] || job.stage}</span>
         </div>
         <div style={{ padding: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)' }}>{job.id}</span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '0.75rem', color: 'var(--text-3)' }}>{job.job_number}</span>
             <span className={`badge badge-${job.priority === 'high' ? 'failed' : 'pending'}`}>{job.priority} priority</span>
           </div>
 
@@ -55,7 +56,7 @@ export default function JobDetail() {
               <div style={{
                 height: '100%',
                 width: `${job.progress}%`,
-                background: job.status === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--orange)',
+                background: job.stage === 'failed' ? 'var(--red)' : job.progress === 100 ? 'var(--green)' : 'var(--orange)',
                 borderRadius: '0.1875rem',
               }} />
             </div>
@@ -66,13 +67,13 @@ export default function JobDetail() {
       {/* Job info */}
       <div className="card">
         <div className="card-header">
-          <span className="card-title">Job Details</span>
+          <span className="card-title">Project Details</span>
         </div>
         <div style={{ padding: '0.75rem 0.875rem', display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-          <InfoRow icon={MapPin} label="Address" value={job.address} />
+          <InfoRow icon={MapPin} label="Address" value={`${job.address}, ${job.city}, ${job.state}`} />
           <InfoRow icon={Buildings} label="Structure" value={job.structure} />
-          <InfoRow icon={CalendarBlank} label="Scheduled" value={job.scheduledDate} />
-          <InfoRow icon={Shield} label="NFPA Class" value={`Class ${job.nfpaClass}`} />
+          <InfoRow icon={CalendarBlank} label="Scheduled" value={job.scheduled_date} />
+          <InfoRow icon={Shield} label="NFPA Class" value={`Class ${job.nfpa_class}`} />
           <InfoRow icon={FileText} label="Type" value={job.type} />
         </div>
       </div>
@@ -113,7 +114,7 @@ export default function JobDetail() {
           <span className="card-title"><span className="card-dot" style={{ background: 'var(--red)' }} />NFPA Forms</span>
         </div>
         {ALL_FORMS.map(formId => {
-          const completed = job.forms.includes(formId);
+          const completed = (job.forms || []).includes(formId);
           const template = FORM_TEMPLATES[formId];
           return (
             <div

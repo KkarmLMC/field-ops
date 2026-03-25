@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CheckCircle } from '@phosphor-icons/react';
-import { JOBS, FORM_TEMPLATES } from '../data/mockData.js';
+import { PROJECTS, FORM_TEMPLATES } from '../data/mockData.js';
 
 export default function FormRunner() {
   const { jobId, formId } = useParams()
   const navigate = useNavigate()
-  const job = JOBS.find(j => j.id === jobId)
+  const job = PROJECTS.find(p => p.id === jobId)
   const template = FORM_TEMPLATES[formId]
   const [values, setValues] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -42,7 +42,7 @@ export default function FormRunner() {
           <CheckCircle size={48} style={{ color: 'var(--green)' }} />
           <div className="empty-title" style={{ fontSize: "var(--fs-xl)" }}>Form Submitted</div>
           <div className="empty-desc" style={{ maxWidth: 300 }}>
-            {template.label} for {job.siteName} has been saved locally.
+            {template.label} for {job.name} has been saved locally.
           </div>
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
             <button className="btn btn-primary" onClick={() => navigate(`/jobs/${job.id}`)}>
@@ -64,7 +64,7 @@ export default function FormRunner() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)' }}>{template.nfpaRef}</span>
           <span style={{ color: 'var(--border)' }}>|</span>
-          <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{job.siteName}</span>
+          <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{job.name}</span>
         </div>
       </div>
 
