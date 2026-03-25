@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, Zap, ChevronRight, Clock, ArrowRight } from 'lucide-react'
+import { Warning, Lightning, CaretRight, Clock, ArrowRight } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS, STATS } from '../data/mockData.js'
 
@@ -91,7 +91,7 @@ export default function Dashboard() {
               Active Jobs
             </span>
             <button className="dash-card-link" onClick={() => navigate('/installations/installs')}>
-              View all <ChevronRight size={11} />
+              View all <CaretRight size={11} />
             </button>
           </div>
           <div className="dash-card-body">
@@ -106,7 +106,7 @@ export default function Dashboard() {
         <div className="dash-card">
           <div className="dash-card-head">
             <span className="dash-card-title">
-              <AlertTriangle size={14} />
+              <Warning size={14} />
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
@@ -125,7 +125,7 @@ export default function Dashboard() {
         <div className="dash-card">
           <div className="dash-card-head">
             <span className="dash-card-title">
-              <Zap size={14} />
+              <Lightning size={14} />
               Upcoming
             </span>
           </div>

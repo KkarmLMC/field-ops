@@ -1,9 +1,9 @@
-import { LayoutDashboard, Briefcase, FileText, Users, Zap, Menu, X, Radio } from 'lucide-react';
+import { SquaresFour, Briefcase, FileText, Users, Lightning, List, X, Radio } from '@phosphor-icons/react';
 import { useState } from 'react';
 import './Layout.css';
 
 const NAV = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'dashboard', label: 'Dashboard', icon: SquaresFour },
   { id: 'jobs', label: 'Jobs', icon: Briefcase },
   { id: 'reports', label: 'Reports', icon: FileText },
   { id: 'technicians', label: 'Technicians', icon: Users },
@@ -18,7 +18,7 @@ export default function Layout({ children, page, navigate }) {
       <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <Zap size={18} className="logo-icon" />
+            <Lightning size={18} className="logo-icon" />
             <span className="logo-text">BOLT</span>
             <span className="logo-sub">FIELD OPS</span>
           </div>
@@ -54,7 +54,7 @@ export default function Layout({ children, page, navigate }) {
 
       {/* Mobile toggle */}
       <button className="mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
-        {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        {mobileOpen ? <X size={20} /> : <List size={20} />}
       </button>
 
       {/* Main content */}

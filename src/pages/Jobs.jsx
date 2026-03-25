@@ -46,12 +46,12 @@ export default function Jobs() {
         </div>
       </div>
 
-      {/* Search */}
+      {/* MagnifyingGlass */}
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', marginBottom: 12 }}>
         <span style={{ color: 'var(--text-3)' }}>🔍</span>
         <input
           style={{ border: 'none', outline: 'none', background: 'none', fontFamily: 'var(--font)', fontSize: 14, color: 'var(--text-1)', width: '100%', boxShadow: 'none' }}
-          placeholder="Search jobs..."
+          placeholder="MagnifyingGlass jobs..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />

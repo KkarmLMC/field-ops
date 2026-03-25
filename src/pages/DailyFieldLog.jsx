@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Clock, CheckCircle, FileText, Plus } from 'lucide-react'
+import { Clock, CheckCircle, FileText, Plus } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { MOCK_REPORTS, TECHNICIANS } from '../data/mockData.js'
 

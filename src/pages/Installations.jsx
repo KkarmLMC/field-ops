@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Wrench, Search, ChevronRight, CheckCircle, AlertTriangle, Clock } from 'lucide-react'
+import { Wrench, MagnifyingGlass, CaretRight, CheckCircle, Warning, Clock } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, MOCK_PROJECTS, TECHNICIANS } from '../data/mockData.js'
 
@@ -53,16 +53,16 @@ export default function Installations() {
             <div className="dash-tile-label">Installs</div>
             <div className="dash-tile-sub">{activeInstalls.length} active</div>
           </div>
-          <ChevronRight size={14} className="dash-tile-arrow" />
+          <CaretRight size={14} className="dash-tile-arrow" />
         </button>
         <button className="dash-tile" onClick={() => navigate('/inspections')}
           style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}>
-          <div className="dash-tile-icon"><Search size={18} /></div>
+          <div className="dash-tile-icon"><MagnifyingGlass size={18} /></div>
           <div className="dash-tile-text">
             <div className="dash-tile-label">Inspections</div>
             <div className="dash-tile-sub">{activeInspections.length} active</div>
           </div>
-          <ChevronRight size={14} className="dash-tile-arrow" />
+          <CaretRight size={14} className="dash-tile-arrow" />
         </button>
       </div>
 
@@ -87,7 +87,7 @@ export default function Installations() {
                 <div key={p.id} className="dash-job-row" onClick={() => navigate(`/installations/${p.id}`)}>
                   <div className="dash-job-icon" style={{ background: sc.bg }}>
                     {p.stage === 'Complete' ? <CheckCircle size={15} style={{ color: sc.color }} /> :
-                     p.stage === 'Pending Review' ? <AlertTriangle size={15} style={{ color: sc.color }} /> :
+                     p.stage === 'Pending Review' ? <Warning size={15} style={{ color: sc.color }} /> :
                      <Wrench size={15} style={{ color: sc.color }} />}
                   </div>
                   <div className="dash-job-info">

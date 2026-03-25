@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Building, Calendar, Shield, FileText, User, CheckCircle, Circle, ChevronRight } from 'lucide-react';
+import { MapPin, Buildings, CalendarBlank, Shield, FileText, User, CheckCircle, Circle, CaretRight } from '@phosphor-icons/react';
 import { JOBS, TECHNICIANS, FORM_TEMPLATES } from '../data/mockData.js';
 
 function getTech(id) {
@@ -69,8 +69,8 @@ export default function JobDetail() {
         </div>
         <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <InfoRow icon={MapPin} label="Address" value={job.address} />
-          <InfoRow icon={Building} label="Structure" value={job.structure} />
-          <InfoRow icon={Calendar} label="Scheduled" value={job.scheduledDate} />
+          <InfoRow icon={Buildings} label="Structure" value={job.structure} />
+          <InfoRow icon={CalendarBlank} label="Scheduled" value={job.scheduledDate} />
           <InfoRow icon={Shield} label="NFPA Class" value={`Class ${job.nfpaClass}`} />
           <InfoRow icon={FileText} label="Type" value={job.type} />
         </div>
@@ -131,7 +131,7 @@ export default function JobDetail() {
               </div>
               {completed
                 ? <span className="badge badge-complete">Done</span>
-                : <ChevronRight size={14} style={{ color: 'var(--red)' }} />
+                : <CaretRight size={14} style={{ color: 'var(--red)' }} />
               }
             </div>
           );

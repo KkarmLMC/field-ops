@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, ArrowLeft } from 'lucide-react'
+import { List, ArrowLeft } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
 import Dashboard     from './pages/Dashboard'
@@ -55,7 +55,7 @@ function MobileHeader({ onMenuOpen }) {
         </button>
       ) : (
         <button className="mobile-header-btn" onClick={onMenuOpen}>
-          <Menu size={18} />
+          <List size={18} />
         </button>
       )}
       <div className="mobile-header-title">

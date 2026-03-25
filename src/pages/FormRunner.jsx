@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle } from '@phosphor-icons/react';
 import { JOBS, FORM_TEMPLATES } from '../data/mockData.js';
 
 export default function FormRunner() {

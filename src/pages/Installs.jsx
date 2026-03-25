@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { MagnifyingGlass } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS } from '../data/mockData.js'
 
@@ -72,9 +72,9 @@ export default function Installs() {
           className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}
           onClick={() => { if (!searchOpen) setSearchOpen(true) }}
         >
-          <span className="list-search-icon"><Search size={15} /></span>
+          <span className="list-search-icon"><MagnifyingGlass size={15} /></span>
           <input
-            placeholder="Search installs…"
+            placeholder="MagnifyingGlass installs…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             onBlur={() => { if (!search) setSearchOpen(false) }}

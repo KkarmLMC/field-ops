@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
-  LayoutDashboard, HardHat, Wrench, Search,
-  ClipboardList, FileText, Users, Settings,
-  HelpCircle, ChevronRight, PanelLeftClose, PanelLeftOpen,
+  SquaresFour, HardHat, Wrench, MagnifyingGlass,
+  ClipboardText, FileText, Users, Gear,
+  Question, CaretRight, ArrowLineLeft, ArrowLineRight,
   BookOpen,
-} from 'lucide-react'
+} from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { path: '/dashboard',     Icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/dashboard',     Icon: SquaresFour, label: 'Dashboard' },
   {
     // Expandable group
     groupId: 'installations',
@@ -20,16 +20,16 @@ const NAV_ITEMS = [
       { path: '/installations/installs', Icon: Wrench,  label: 'Installs' },
     ],
   },
-  { path: '/inspections',   Icon: Search,          label: 'Inspections' },
+  { path: '/inspections',   Icon: MagnifyingGlass,          label: 'Inspections' },
   { path: '/daily-field-log', Icon: BookOpen,      label: 'Daily Field Log' },
-  { path: '/reports',       Icon: ClipboardList,   label: 'Reports' },
+  { path: '/reports',       Icon: ClipboardText,   label: 'Reports' },
   { path: '/forms',         Icon: FileText,        label: 'Forms' },
   { path: '/technicians',   Icon: Users,           label: 'Technicians' },
 ]
 
 const FOOTER_ITEMS = [
-  { Icon: Settings,   label: 'Settings' },
-  { Icon: HelpCircle, label: 'Help'     },
+  { Icon: Gear,   label: 'Gear' },
+  { Icon: Question, label: 'Help'     },
 ]
 
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
@@ -89,7 +89,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
                     {!collapsed && (
                       <>
                         <span className="sidebar-item-label">{item.label}</span>
-                        <ChevronRight
+                        <CaretRight
                           size={13}
                           style={{
                             marginLeft: 'auto',
@@ -155,8 +155,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed
-              ? <PanelLeftOpen  size={17} style={{ flexShrink: 0 }} />
-              : <PanelLeftClose size={17} style={{ flexShrink: 0 }} />
+              ? <ArrowLineRight  size={17} style={{ flexShrink: 0 }} />
+              : <ArrowLineLeft size={17} style={{ flexShrink: 0 }} />
             }
             {!collapsed && <span className="sidebar-item-label">Collapse</span>}
           </button>
