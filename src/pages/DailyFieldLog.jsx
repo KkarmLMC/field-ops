@@ -278,7 +278,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
 }
 
 // ─── Tech Typeahead (single-select) ───────────────────────────────────────────
-function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search technicians…' }) {
+function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search technicians…', onRemove, showRemove }) {
   const [open, setOpen]   = useState(false)
   const [query, setQuery] = useState(value || '')
   const ref               = useRef(null)
@@ -301,6 +301,14 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   const select = (tech) => { onChange(tech.name); setQuery(tech.name); setOpen(false) }
   const openDropdown = () => { updatePos(); setOpen(true) }
 
+  const handleClear = () => {
+    if (onRemove) {
+      onRemove()
+    } else {
+      setQuery(''); onChange(''); setOpen(false)
+    }
+  }
+
   return (
     <div className="dfl-typeahead" ref={ref}>
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
@@ -313,8 +321,8 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
           onFocus={openDropdown}
           autoComplete="off"
         />
-        {query && (
-          <button className="dfl-typeahead-clear" type="button" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
+        {(query || showRemove) && (
+          <button className="dfl-typeahead-clear" type="button" onClick={handleClear}>
             <X size={11} />
           </button>
         )}
@@ -370,14 +378,10 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
               onChange={n => updateRow(idx, n)}
               exclude={[...exclude, ...rows.filter((r, i) => i !== idx && r)]}
               placeholder={idx === 0 ? placeholder : 'Search or type a name…'}
+              onRemove={() => removeRow(idx)}
+              showRemove={rows.length > 1 || !!name}
             />
           </div>
-          {/* × to remove — always show if there are multiple rows, or if this row is filled */}
-          {(rows.length > 1 || name) && (
-            <button type="button" className="dfl-multi-list-remove" onClick={() => removeRow(idx)}>
-              <X size={13} />
-            </button>
-          )}
           {/* + to add another — only on the last row */}
           {idx === rows.length - 1 && (
             <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another">
