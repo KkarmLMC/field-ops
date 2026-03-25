@@ -83,15 +83,18 @@ function fmtHours(val) {
 }
 
 const EMPTY_P1 = {
-  customer:          '',
-  jobsite_id:        null,
-  report_date:       new Date().toISOString().slice(0, 10),
-  gps_location:      '',
-  supervisor_name:   '',
-  crew_on_site:      [],
-  jsa_uploaded:      false,
-  manlift_checklist: false,
-  fall_protection:   false,
+  customer:             '',
+  jobsite_id:           null,
+  report_date:          new Date().toISOString().slice(0, 10),
+  gps_location:         '',
+  supervisor_name:      '',
+  crew_on_site:         [],
+  jsa_uploaded:         false,
+  manlift_checklist:    false,
+  fall_protection:      false,
+  jsa_data:             null,
+  manlift_data:         null,
+  fall_protection_data: null,
 }
 
 const EMPTY_P2 = {
@@ -1258,8 +1261,14 @@ const STEPS = [
           date:           form.report_date,
           customerSite:   form.customer_site,
         }}
-        onComplete={(key) => {
+        onComplete={(key, values) => {
           set(key, true)
+          const DATA_KEY_MAP = {
+            jsa_uploaded:      'jsa_data',
+            manlift_checklist: 'manlift_data',
+            fall_protection:   'fall_protection_data',
+          }
+          if (DATA_KEY_MAP[key]) set(DATA_KEY_MAP[key], values)
           setSafetyOpen(null)
         }}
         onBack={() => setSafetyOpen(null)}
@@ -1593,9 +1602,12 @@ export default function DailyFieldLog() {
       supervisor_name:   form.supervisor_name,
       submitted_by:      form.supervisor_name,
       crew_on_site:      form.crew_on_site,
-      jsa_uploaded:      form.jsa_uploaded,
-      manlift_checklist: form.manlift_checklist,
-      fall_protection:   form.fall_protection,
+      jsa_uploaded:         form.jsa_uploaded,
+      manlift_checklist:    form.manlift_checklist,
+      fall_protection:      form.fall_protection,
+      jsa_data:             form.jsa_data             || null,
+      manlift_data:         form.manlift_data         || null,
+      fall_protection_data: form.fall_protection_data || null,
     }
     const { data, error } = await db
       .from('daily_field_logs')

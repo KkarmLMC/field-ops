@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
 import { db } from './supabase'
+import { FORM_TEMPLATES } from '../data/mockData'
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function fmtDate(d) {
@@ -25,7 +26,7 @@ export async function generateAndUploadDFLPdf(report) {
 
   // ── Palette ──────────────────────────────────────────────────────────────────
   const NAVY     = [26,  35,  95 ]
-  const NAVY2    = [42,  55, 120 ]   // slightly lighter for accents
+  const NAVY2    = [42,  55, 120 ]
   const NAVY_LT  = [235, 240, 255]
   const WHITE    = [255, 255, 255]
   const BG       = [248, 249, 252]
@@ -37,10 +38,11 @@ export async function generateAndUploadDFLPdf(report) {
   const GREEN_BD = [134, 239, 172]
   const RED      = [220, 38,  38 ]
   const RED_BG   = [254, 242, 242]
+  const ORANGE   = [194, 65,  12 ]
 
   let y = 0
 
-  // ── Draw a manual checkmark (jsPDF safe, no Unicode needed) ──────────────────
+  // ── Draw a manual checkmark ───────────────────────────────────────────────────
   function drawCheck(cx, cy, size, color) {
     doc.setDrawColor(...color)
     doc.setLineWidth(1.5)
@@ -56,7 +58,7 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setLineWidth(0.5)
   }
 
-  // ── Page overflow → new page with repeated footer ────────────────────────────
+  // ── Page overflow → new page ─────────────────────────────────────────────────
   function checkPage(needed = 32) {
     if (y + needed > H - 48) {
       drawPageFooter()
@@ -84,16 +86,12 @@ export async function generateAndUploadDFLPdf(report) {
   // ── Section heading ───────────────────────────────────────────────────────────
   function sectionHead(title) {
     checkPage(28)
-    // left accent bar
     doc.setFillColor(...NAVY)
     doc.rect(ML, y, 3, 20, 'F')
-    // title text
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(7.5)
     doc.setTextColor(...NAVY)
-    const letters = title.toUpperCase().split('').join(String.fromCharCode(0x200B))
     doc.text(title.toUpperCase(), ML + 10, y + 13)
-    // rule
     doc.setDrawColor(...NAVY_LT)
     doc.setLineWidth(1)
     doc.line(ML + 10 + doc.getTextWidth(title.toUpperCase()) + 6, y + 9, ML + CW, y + 9)
@@ -127,7 +125,6 @@ export async function generateAndUploadDFLPdf(report) {
     const rowH  = 24
     checkPage(rowH)
     if (shade) { doc.setFillColor(...BG); doc.rect(ML, y, CW, rowH, 'F') }
-    // left
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(7.5)
     doc.setTextColor(...LABEL)
@@ -136,10 +133,8 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setFontSize(9)
     doc.setTextColor(...TEXT)
     doc.text(String(left.value ?? '—'), ML + 120, y + 15)
-    // divider
     doc.setDrawColor(...BORDER)
     doc.line(ML + half, y + 5, ML + half, y + rowH - 5)
-    // right
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(7.5)
     doc.setTextColor(...LABEL)
@@ -159,7 +154,6 @@ export async function generateAndUploadDFLPdf(report) {
     checkPage(rowH)
     const cbX = ML + 8
     const cbY = y + (rowH - 13) / 2
-    // checkbox background
     if (done) {
       doc.setFillColor(...GREEN_BG)
       doc.setDrawColor(...GREEN)
@@ -173,7 +167,6 @@ export async function generateAndUploadDFLPdf(report) {
     } else {
       drawCross(cbX + 3, cbY + 3, 7, [180, 188, 204])
     }
-    // label + desc
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(8.5)
     doc.setTextColor(...TEXT)
@@ -182,7 +175,6 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setFontSize(7.5)
     doc.setTextColor(...LABEL)
     doc.text(desc, ML + 30, y + 24)
-    // status pill (right side)
     const pillW = 72
     const pillX = ML + CW - pillW - 4
     const pillY = y + (rowH - 16) / 2
@@ -233,27 +225,21 @@ export async function generateAndUploadDFLPdf(report) {
   // ═══════════════════════════════════════════════════════════════════════════════
   // HEADER
   // ═══════════════════════════════════════════════════════════════════════════════
-  // Main bar
   doc.setFillColor(...NAVY)
   doc.rect(0, 0, W, 88, 'F')
-  // Right accent block
   doc.setFillColor(...NAVY2)
   doc.rect(W - 180, 0, 180, 88, 'F')
-  // Bottom accent stripe
   doc.setFillColor(59, 130, 246)
   doc.rect(0, 88, W, 3, 'F')
 
-  // "LMC" wordmark
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(26)
   doc.setTextColor(...WHITE)
   doc.text('LMC', ML, 40)
 
-  // Vertical divider after LMC
   doc.setDrawColor(80, 100, 160)
   doc.line(ML + 48, 14, ML + 48, 74)
 
-  // Company & doc title
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(12)
   doc.setTextColor(...WHITE)
@@ -264,17 +250,14 @@ export async function generateAndUploadDFLPdf(report) {
   doc.text('Daily Field Log  ·  Lightning Master Controls', ML + 58, 50)
   doc.text('End-of-Day Close-Out Report', ML + 58, 64)
 
-  // Right area: status badge
   doc.setFillColor(...GREEN)
   doc.roundedRect(W - 164, 14, 82, 22, 4, 4, 'F')
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(7.5)
   doc.setTextColor(...WHITE)
-  // Draw a manual check in the badge
   drawCheck(W - 164 + 8, 14 + 6, 10, WHITE)
   doc.text('SUBMITTED', W - 164 + 50, 28, { align: 'center' })
 
-  // Right: date + report info
   const now = new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' })
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
@@ -310,7 +293,6 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(8.5)
     doc.setTextColor(...NAVY)
-    // truncate if needed
     let v = val
     while (doc.getTextWidth(v) > cw4 - 14 && v.length > 4) v = v.slice(0, -2) + '…'
     doc.text(v, cx + cw4 / 2, y + 28, { align: 'center' })
@@ -353,7 +335,6 @@ export async function generateAndUploadDFLPdf(report) {
   // SECTION 4 — WORK SUMMARY
   // ═══════════════════════════════════════════════════════════════════════════════
   sectionHead('Work Summary')
-  // Time onsite — slightly emphasized
   checkPage(24)
   doc.setFillColor(...NAVY_LT)
   doc.rect(ML, y, CW, 24, 'F')
@@ -401,25 +382,21 @@ export async function generateAndUploadDFLPdf(report) {
   doc.roundedRect(ML, y, CW, boxH, 4, 4, 'FD')
 
   if (report.signed) {
-    // Green seal circle
     doc.setFillColor(...GREEN)
     doc.circle(ML + 30, y + boxH / 2, 18, 'F')
     drawCheck(ML + 30 - 9, y + boxH / 2 - 7, 18, WHITE)
 
-    // Name
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(11)
     doc.setTextColor(...TEXT)
     doc.text(supervisor, ML + 56, y + 24)
 
-    // Sub-labels
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(8)
     doc.setTextColor(...LABEL)
     doc.text('Supervisor  ·  Digitally certified via LMC Field Operations', ML + 56, y + 38)
     doc.text(`Submitted: ${submittedAt}`, ML + 56, y + 52)
 
-    // Right: "DIGITALLY SIGNED" box
     const sealW = 108
     const sealX = ML + CW - sealW - 10
     doc.setFillColor(...GREEN_BG)
@@ -430,10 +407,8 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setTextColor(...GREEN)
     doc.text('DIGITALLY SIGNED', sealX + sealW / 2, y + 28, { align: 'center' })
     doc.text('& SUBMITTED', sealX + sealW / 2, y + 42, { align: 'center' })
-    // small check in the seal
     drawCheck(sealX + sealW / 2 - 6, y + 48, 12, GREEN)
   } else {
-    // Signature line
     doc.setDrawColor(170, 180, 200)
     doc.line(ML + 16, y + 44, ML + 260, y + 44)
     doc.setFont('helvetica', 'normal')
@@ -441,22 +416,277 @@ export async function generateAndUploadDFLPdf(report) {
     doc.setTextColor(...LABEL)
     doc.text(supervisor, ML + 16, y + 22)
     doc.text('Supervisor Signature', ML + 16, y + 56)
-    // "Pending" badge
     doc.setFillColor(255, 247, 237)
     doc.setDrawColor(253, 186, 116)
     doc.roundedRect(ML + CW - 100, y + 24, 88, 22, 3, 3, 'FD')
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(7.5)
-    doc.setTextColor(194, 65, 12)
+    doc.setTextColor(...ORANGE)
     doc.text('PENDING SIGNATURE', ML + CW - 56, y + 38, { align: 'center' })
   }
 
   y += boxH + 12
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // FOOTER
+  // FOOTER (page 1)
   // ═══════════════════════════════════════════════════════════════════════════════
   drawPageFooter()
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // SAFETY FORM PAGES
+  // ═══════════════════════════════════════════════════════════════════════════════
+  const SAFETY_FORM_DEFS = [
+    { dataKey: 'jsa_data',             templateId: 'jsa',              label: 'Job Safety Analysis',          ref: 'LMC-Form-000-008' },
+    { dataKey: 'manlift_data',         templateId: 'manlift-checklist', label: 'Manlift Pre-Shift Inspection', ref: 'OSHA 1926.453' },
+    { dataKey: 'fall_protection_data', templateId: 'fall-protection',  label: 'Fall Protection Inspection',   ref: 'OSHA 1926.502' },
+  ]
+
+  for (const formDef of SAFETY_FORM_DEFS) {
+    const formData = report[formDef.dataKey]
+    if (!formData) continue
+
+    const template = FORM_TEMPLATES[formDef.templateId]
+    if (!template) continue
+
+    // ── New page for this safety form ─────────────────────────────────────────
+    doc.addPage()
+    y = 0
+
+    // ── Compact safety form header ────────────────────────────────────────────
+    doc.setFillColor(...NAVY)
+    doc.rect(0, 0, W, 58, 'F')
+    doc.setFillColor(...NAVY2)
+    doc.rect(W - 180, 0, 180, 58, 'F')
+    doc.setFillColor(59, 130, 246)
+    doc.rect(0, 58, W, 3, 'F')
+
+    // LMC wordmark (compact)
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(18)
+    doc.setTextColor(...WHITE)
+    doc.text('LMC', ML, 32)
+
+    doc.setDrawColor(80, 100, 160)
+    doc.line(ML + 34, 10, ML + 34, 50)
+
+    // Form title
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(11)
+    doc.setTextColor(...WHITE)
+    doc.text(formDef.label, ML + 44, 25)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(170, 185, 220)
+    doc.text(`Ref: ${formDef.ref}  ·  Attached to Daily Field Log`, ML + 44, 40)
+
+    // Right: report date + ATTACHMENT badge
+    const pillW2 = 90
+    doc.setFillColor(42, 55, 140)
+    doc.setDrawColor(80, 100, 160)
+    doc.roundedRect(W - ML - pillW2, 14, pillW2, 20, 3, 3, 'FD')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(7)
+    doc.setTextColor(170, 185, 220)
+    doc.text('ATTACHMENT', W - ML - pillW2 / 2, 26.5, { align: 'center' })
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7.5)
+    doc.setTextColor(170, 185, 220)
+    doc.text(fmtDate(report.report_date), W - ML, 47, { align: 'right' })
+
+    y = 61
+
+    // ── Thin summary strip ────────────────────────────────────────────────────
+    const sfStripH = 28
+    doc.setFillColor(...NAVY_LT)
+    doc.rect(0, y, W, sfStripH, 'F')
+    doc.setDrawColor(...BORDER)
+    doc.line(0, y + sfStripH, W, y + sfStripH)
+
+    const sfCols = [
+      { label: 'SUPERVISOR', val: report.supervisor_name || report.submitted_by || '—' },
+      { label: 'JOBSITE',    val: report.customer_site || report.customer || '—'        },
+      { label: 'DATE',       val: fmtDate(report.report_date)                           },
+      { label: 'REPORT #',   val: (report.id || 'pending').toString().substring(0, 8).toUpperCase() },
+    ]
+    sfCols.forEach(({ label, val }, i) => {
+      const cx = i * cw4
+      if (i > 0) { doc.setDrawColor(...BORDER); doc.line(cx, y + 3, cx, y + sfStripH - 3) }
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(6)
+      doc.setTextColor(...LABEL)
+      doc.text(label, cx + cw4 / 2, y + 10, { align: 'center' })
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(8)
+      doc.setTextColor(...NAVY)
+      let v = val
+      while (doc.getTextWidth(v) > cw4 - 10 && v.length > 4) v = v.slice(0, -2) + '…'
+      doc.text(v, cx + cw4 / 2, y + 22, { align: 'center' })
+    })
+    y += sfStripH + 10
+
+    // ── Render each section ───────────────────────────────────────────────────
+    for (const section of template.sections) {
+      // Skip sections where ALL fields are activity-row or personnel-sig
+      const renderableFields = section.fields.filter(
+        f => !['activity-row', 'personnel-sig'].includes(f.type)
+      )
+      if (renderableFields.length === 0) continue
+
+      sectionHead(section.title)
+
+      renderableFields.forEach((field, fi) => {
+        const rawVal = formData[field.id]
+        const shade = fi % 2 === 1
+
+        if (field.type === 'pass-fail') {
+          sfPassFailRow(field.label, rawVal, shade)
+        } else if (field.type === 'ok-notok-na') {
+          sfOkNotOkRow(field.label, rawVal, shade)
+        } else if (field.type === 'checkbox-group') {
+          sfCheckboxGroupRow(field.label, rawVal || [], field.options || [], shade)
+        } else if (field.type === 'textarea') {
+          fieldRow(field.label, rawVal || '—', shade)
+        } else {
+          // text, date, number, select, boolean
+          let display = rawVal ?? '—'
+          if (field.type === 'date' && rawVal) display = fmtDate(rawVal)
+          if (field.type === 'boolean') display = rawVal ? 'Yes' : rawVal === false ? 'No' : '—'
+          fieldRow(field.label, display, shade)
+        }
+      })
+      y += 6
+    }
+
+    drawPageFooter()
+  }
+
+  // ── Pass / Fail row (for fall-protection form) ────────────────────────────────
+  function sfPassFailRow(label, val, shade) {
+    const rowH = 22
+    checkPage(rowH)
+    if (shade) { doc.setFillColor(...BG); doc.rect(ML, y, CW, rowH, 'F') }
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...TEXT)
+    doc.text(label, ML + 8, y + 14)
+
+    // Badge
+    const isPass = val === 'pass' || val === true || val === 'Pass'
+    const isFail = val === 'fail' || val === false || val === 'Fail'
+    const pillW  = 52
+    const pillX  = ML + CW - pillW - 6
+    const pillY  = y + (rowH - 14) / 2
+
+    if (isPass) {
+      doc.setFillColor(...GREEN_BG); doc.setDrawColor(...GREEN_BD)
+    } else if (isFail) {
+      doc.setFillColor(...RED_BG); doc.setDrawColor(254, 202, 202)
+    } else {
+      doc.setFillColor(...BG); doc.setDrawColor(...BORDER)
+    }
+    doc.roundedRect(pillX, pillY, pillW, 14, 2, 2, 'FD')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(6.5)
+    doc.setTextColor(...(isPass ? GREEN : isFail ? RED : LABEL))
+    const pillLabel = isPass ? 'PASS' : isFail ? 'FAIL' : '—'
+    doc.text(pillLabel, pillX + pillW / 2, pillY + 9.5, { align: 'center' })
+
+    doc.setDrawColor(...BORDER)
+    doc.line(ML, y + rowH, ML + CW, y + rowH)
+    y += rowH
+  }
+
+  // ── OK / Not OK / N/A row (for manlift checklist) ────────────────────────────
+  function sfOkNotOkRow(label, val, shade) {
+    const rowH = 22
+    checkPage(rowH)
+    if (shade) { doc.setFillColor(...BG); doc.rect(ML, y, CW, rowH, 'F') }
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...TEXT)
+    doc.text(label, ML + 8, y + 14)
+
+    const isOk   = val === 'ok'
+    const isNot  = val === 'not-ok'
+    const isNA   = val === 'na'
+
+    const pillW = 52
+    const pillX = ML + CW - pillW - 6
+    const pillY = y + (rowH - 14) / 2
+
+    if (isOk) {
+      doc.setFillColor(...GREEN_BG); doc.setDrawColor(...GREEN_BD)
+    } else if (isNot) {
+      doc.setFillColor(...RED_BG); doc.setDrawColor(254, 202, 202)
+    } else if (isNA) {
+      doc.setFillColor(243, 244, 246); doc.setDrawColor(209, 213, 219)
+    } else {
+      doc.setFillColor(...BG); doc.setDrawColor(...BORDER)
+    }
+    doc.roundedRect(pillX, pillY, pillW, 14, 2, 2, 'FD')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(6.5)
+    doc.setTextColor(...(isOk ? GREEN : isNot ? RED : LABEL))
+    const pillLabel = isOk ? 'OK' : isNot ? 'NOT OK' : isNA ? 'N/A' : '—'
+    doc.text(pillLabel, pillX + pillW / 2, pillY + 9.5, { align: 'center' })
+
+    doc.setDrawColor(...BORDER)
+    doc.line(ML, y + rowH, ML + CW, y + rowH)
+    y += rowH
+  }
+
+  // ── Checkbox group row (for JSA permits/PPE/equipment) ───────────────────────
+  function sfCheckboxGroupRow(label, selected, options, shade) {
+    if (!options || options.length === 0) return
+    // Calculate height: label row + pill rows
+    const PILL_H   = 18
+    const PILL_GAP = 4
+    let   px       = ML + 8
+    let   rows     = 1
+    // Set font to match pill rendering before measuring
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7)
+    const pillMeta = options.map(opt => {
+      const tw = doc.getTextWidth(opt) + 14
+      if (px + tw > ML + CW - 4) { rows++; px = ML + 8 }
+      px += tw + PILL_GAP
+      return tw
+    })
+    const rowH = 18 + rows * (PILL_H + PILL_GAP) + 8
+    checkPage(rowH)
+    if (shade) { doc.setFillColor(...BG); doc.rect(ML, y, CW, rowH, 'F') }
+
+    // Label
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(7.5)
+    doc.setTextColor(...LABEL)
+    doc.text(label.toUpperCase(), ML + 8, y + 12)
+
+    // Pills
+    let ppx = ML + 8
+    let ppy = y + 18
+    options.forEach((opt, i) => {
+      const tw = pillMeta[i]
+      if (ppx + tw > ML + CW - 4) { ppx = ML + 8; ppy += PILL_H + PILL_GAP }
+      const isChecked = Array.isArray(selected) && selected.includes(opt)
+      if (isChecked) {
+        doc.setFillColor(...GREEN_BG); doc.setDrawColor(...GREEN_BD)
+      } else {
+        doc.setFillColor(246, 248, 252); doc.setDrawColor(209, 213, 219)
+      }
+      doc.roundedRect(ppx, ppy, tw, PILL_H - 2, 2, 2, 'FD')
+      doc.setFont('helvetica', isChecked ? 'bold' : 'normal')
+      doc.setFontSize(7)
+      doc.setTextColor(...(isChecked ? GREEN : LABEL))
+      doc.text(opt, ppx + tw / 2, ppy + 11, { align: 'center' })
+      ppx += tw + PILL_GAP
+    })
+
+    doc.setDrawColor(...BORDER)
+    doc.line(ML, y + rowH, ML + CW, y + rowH)
+    y += rowH
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // UPLOAD TO SUPABASE STORAGE
