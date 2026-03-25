@@ -339,78 +339,60 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   )
 }
 
-// ─── Tech Multi Typeahead (multi-select with chips) ────────────────────────────
-function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 'Search or type a name…' }) {
-  const [open, setOpen]   = useState(false)
-  const [query, setQuery] = useState('')
-  const ref               = useRef(null)
-  const inputWrapRef      = useRef(null)
-  const [pos, updatePos]  = useDropdownPos(inputWrapRef)
+// ─── Tech Multi List (stacked individual typeaheads + Add row) ────────────────
+function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 'Search installers…' }) {
+  // Each entry is an independent TechTypeahead row
+  const rows = value.length > 0 ? value : ['']
 
-  useEffect(() => {
-    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const filtered = TECHNICIANS.filter(t =>
-    !exclude.includes(t.name) &&
-    !value.includes(t.name) &&
-    t.name.toLowerCase().includes(query.toLowerCase())
-  )
-
-  const add = (name) => {
-    const trimmed = name.trim()
-    if (trimmed && !value.includes(trimmed)) onChange([...value, trimmed])
-    setQuery(''); setOpen(false)
+  const setRow = (idx, val) => {
+    const next = [...rows]
+    next[idx] = val
+    onChange(next.filter(Boolean))
   }
 
-  const remove = (name) => onChange(value.filter(n => n !== name))
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && query.trim()) { e.preventDefault(); add(query) }
-    if (e.key === 'Backspace' && !query && value.length > 0) remove(value[value.length - 1])
+  const removeRow = (idx) => {
+    const next = rows.filter((_, i) => i !== idx)
+    onChange(next.filter(Boolean))
   }
 
-  const openDropdown = () => { updatePos(); setOpen(true) }
+  const addRow = () => {
+    // Only add if last row has a value
+    if (rows[rows.length - 1]) onChange([...rows.filter(Boolean), ''])
+  }
+
+  // Rows to render: always show at least 1 empty input; after selection show filled rows + empty slots if any
+  const displayRows = value.length > 0 ? [...value, ''] : ['']
 
   return (
-    <div className="dfl-multi-wrap" ref={ref}>
-      {/* Tag input — chips live inside the field */}
-      <div className="dfl-tag-input-field" ref={inputWrapRef} onClick={() => inputWrapRef.current?.querySelector('input')?.focus()}>
-        <MagnifyingGlass size={13} className="dfl-tag-input-icon" />
-        {value.map(name => (
-          <span key={name} className="dfl-crew-tag">
-            {name}
-            <button type="button" onMouseDown={e => { e.preventDefault(); remove(name) }}><X size={9} /></button>
-          </span>
-        ))}
-        <input
-          className="dfl-tag-input-native"
-          placeholder={value.length === 0 ? placeholder : 'Add more…'}
-          value={query}
-          onChange={e => { setQuery(e.target.value); openDropdown() }}
-          onFocus={openDropdown}
-          onKeyDown={handleKeyDown}
-          autoComplete="off"
-        />
-        {query.trim() && (
-          <button className="dfl-typeahead-add-inline" type="button" onMouseDown={e => { e.preventDefault(); add(query) }}>
-            <Plus size={11} />
-          </button>
-        )}
-      </div>
-      {open && filtered.length > 0 && (
-        <ul className="dfl-typeahead-list" style={{ top: pos.top, left: pos.left, width: pos.width }}>
-          {filtered.slice(0, 8).map(tech => (
-            <li key={tech.id} className="dfl-typeahead-item" onMouseDown={() => add(tech.name)}>
-              <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
-              <span style={{ flex: 1 }}>{tech.name}</span>
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="dfl-multi-list">
+      {displayRows.map((name, idx) => (
+        <div key={idx} className="dfl-multi-list-row">
+          <div style={{ flex: 1 }}>
+            <TechTypeahead
+              value={name}
+              onChange={val => {
+                const next = [...displayRows]
+                next[idx] = val
+                onChange(next.filter(Boolean))
+              }}
+              exclude={[...exclude, ...displayRows.filter((n, i) => i !== idx && n)]}
+              placeholder={idx === 0 ? placeholder : 'Add another…'}
+            />
+          </div>
+          {name && (
+            <button
+              type="button"
+              className="dfl-multi-list-remove"
+              onClick={() => {
+                const next = displayRows.filter((_, i) => i !== idx)
+                onChange(next.filter(Boolean))
+              }}
+            >
+              <X size={13} />
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   )
 }
