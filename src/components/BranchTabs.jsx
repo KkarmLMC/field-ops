@@ -105,8 +105,8 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
         })}
       </div>
 
-      {/* Dot indicators — update on swipe via active prop */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.375rem', marginTop: '0.625rem' }}>
+      {/* Dot indicators — mobile only (hidden on desktop via CSS) */}
+      <div className="branch-dots">
         {tabs.map(tab => {
           const isActive = active === tab.id
           return (
