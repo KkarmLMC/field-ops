@@ -6,6 +6,7 @@ import {
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { JOBS, TECHNICIANS } from '../data/mockData.js'
+import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 const TYPE_ICON = {
@@ -31,46 +32,10 @@ const PRIORITY_DOT = {
 }
 
 const KANBAN_COLS = [
-  {
-    id: 'scheduled',
-    label: 'Scheduled',
-    Icon: CalendarBlank,
-    accent: '#334155',
-    headerBg: '#F8FAFC',
-    countBg: '#E2E8F0',
-    countColor: '#334155',
-    statuses: ['scheduled'],
-  },
-  {
-    id: 'active',
-    label: 'Active Install',
-    Icon: HardHat,
-    accent: '#1D4ED8',
-    headerBg: '#EFF6FF',
-    countBg: '#DBEAFE',
-    countColor: '#1D4ED8',
-    statuses: ['active'],
-  },
-  {
-    id: 'ul-inspection',
-    label: 'UL Inspection',
-    Icon: Clipboard,
-    accent: '#B45309',
-    headerBg: '#FFFBEB',
-    countBg: '#FDE68A',
-    countColor: '#92400E',
-    statuses: ['ul-inspection'],
-  },
-  {
-    id: 'completed',
-    label: 'Completed',
-    Icon: CheckCircle,
-    accent: '#16A34A',
-    headerBg: '#F0FDF4',
-    countBg: '#BBF7D0',
-    countColor: '#166534',
-    statuses: ['completed', 'failed'],
-  },
+  { id: 'scheduled',     label: 'Scheduled',     Icon: CalendarBlank, statuses: ['scheduled']           },
+  { id: 'active',        label: 'Active Install', Icon: HardHat,       statuses: ['active']              },
+  { id: 'ul-inspection', label: 'UL Inspection',  Icon: Clipboard,     statuses: ['ul-inspection']       },
+  { id: 'completed',     label: 'Completed',      Icon: CheckCircle,   statuses: ['completed', 'failed'] },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
@@ -146,18 +111,28 @@ function KanbanCard({ job, onClick }) {
 }
 
 // ─── Column ────────────────────────────────────────────────────────────────────
-function KanbanColumn({ col, jobs, onCardClick }) {
-  const { label, Icon, accent, headerBg, countBg, countColor } = col
+function KanbanColumn({ col, jobs, bc, onCardClick }) {
+  const { label, Icon } = col
 
   return (
     <div className="kanban-col">
-      {/* Column header */}
-      <div className="kanban-col-head" style={{ background: headerBg, borderTopColor: accent }}>
+      {/* Column header — uses active branch color, same as dashboard card heads */}
+      <div
+        className="kanban-col-head"
+        style={{
+          background: bc.bgActive,
+          borderTopColor: bc.bgActive,
+          transition: 'background 0.2s ease, border-color 0.2s ease',
+        }}
+      >
         <div className="kanban-col-head-left">
-          <Icon size={15} weight="bold" style={{ color: accent, flexShrink: 0 }} />
-          <span className="kanban-col-label" style={{ color: accent }}>{label}</span>
+          <Icon size={15} weight="bold" style={{ color: bc.textActive, flexShrink: 0 }} />
+          <span className="kanban-col-label" style={{ color: bc.textActive }}>{label}</span>
         </div>
-        <span className="kanban-col-count" style={{ background: countBg, color: countColor }}>
+        <span
+          className="kanban-col-count"
+          style={{ background: 'rgba(255,255,255,0.20)', color: bc.textActive }}
+        >
           {jobs.length}
         </span>
       </div>
@@ -186,6 +161,8 @@ export default function Installs() {
   const [branch, setBranch]         = useState('lm')
   const [search, setSearch]         = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
+
+  const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
 
   const lmCount         = JOBS.filter(j => j.branch === 'lm').length
   const boltCount       = JOBS.filter(j => j.branch === 'bolt').length
@@ -243,6 +220,7 @@ export default function Installs() {
               key={col.id}
               col={col}
               jobs={colJobs}
+              bc={bc}
               onCardClick={id => navigate(`/installations/installs/${id}`)}
             />
           )
