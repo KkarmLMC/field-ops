@@ -753,11 +753,32 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .dfl-input-mono { font-family: var(--mono); }
 .dfl-textarea { min-height: 5rem; resize: vertical; line-height: 1.5; }
 
+/* ─── Tech picker (Crew step) ───────────────────────────────────── */
+.dfl-tech-list { display: flex; flex-direction: column; gap: 0.25rem; }
+.dfl-tech-row {
+  display: flex; align-items: center; gap: 0.625rem;
+  padding: 0.5625rem 0.75rem; border-radius: 0.5rem;
+  border: 1.5px solid var(--border); background: var(--surface);
+  cursor: pointer; text-align: left; width: 100%; font-family: var(--font);
+  transition: background 0.1s, border-color 0.1s;
+}
+.dfl-tech-row:hover { background: var(--hover); }
+.dfl-tech-row.selected { background: #F0FDF4; border-color: #86EFAC; }
+.dfl-tech-avatar {
+  width: 2rem; height: 2rem; border-radius: 50%; flex-shrink: 0;
+  background: #E5E7EB; color: var(--text-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.03em;
+}
+.dfl-tech-row.selected .dfl-tech-avatar { background: #BBF7D0; color: #15803D; }
+.dfl-tech-info { display: flex; flex-direction: column; gap: 0.0625rem; flex: 1; min-width: 0; }
+.dfl-tech-name { font-size: 0.875rem; font-weight: 600; color: var(--text-1); }
+.dfl-tech-meta { font-size: 0.6875rem; color: var(--text-3); font-family: var(--mono); }
+
 .dfl-crew-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; min-height: 0.25rem; }
 .dfl-crew-tag { display: inline-flex; align-items: center; gap: 0.3125rem; font-size: 0.75rem; font-weight: 600; color: var(--text-1); background: var(--border-l); border-radius: 1rem; padding: 0.1875rem 0.5rem 0.1875rem 0.625rem; }
 .dfl-crew-tag button { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; color: var(--text-3); transition: color 0.1s; }
 .dfl-crew-tag button:hover { color: var(--text-1); }
-.dfl-crew-input-row { display: flex; gap: 0.5rem; }
 .dfl-add-btn { padding: 0.625rem 0.875rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); font-size: 0.8125rem; font-weight: 600; font-family: var(--font); cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.12s, border-color 0.12s; }
 .dfl-add-btn:hover { background: var(--hover); border-color: var(--text-3); }
 

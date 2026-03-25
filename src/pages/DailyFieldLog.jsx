@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import {
   Clock, CheckCircle, FileText, Plus, MapPin,
-  X, User, Truck, Pencil, Warning, ClipboardText,
+  X, User, Users, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
   ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
   Crosshair, SpinnerGap,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { MOCK_REPORTS, FORM_TEMPLATES, JOBS } from '../data/mockData.js'
+import { MOCK_REPORTS, FORM_TEMPLATES, JOBS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -895,38 +895,72 @@ function Part1Form({ onClose, onSave, bc, branch }) {
           {/* Step 1: Crew */}
           {step === 1 && (
             <div className="dfl-form-section">
+              {/* Supervisor — single select */}
               <div className="dfl-field">
-                <label className="dfl-label">Supervisor / Lead Tech <span className="dfl-req">*</span></label>
-                <input
-                  className="dfl-input"
-                  placeholder="Supervisor name"
-                  value={form.supervisor_name}
-                  onChange={e => set('supervisor_name', e.target.value)}
-                />
-              </div>
-              <div className="dfl-field">
-                <label className="dfl-label">Installers on Site</label>
-                <div className="dfl-crew-tags">
-                  {form.crew_on_site.map(n => (
-                    <span key={n} className="dfl-crew-tag">
-                      {n}
-                      <button onClick={() => removeCrew(n)}><X size={10} /></button>
-                    </span>
-                  ))}
+                <label className="dfl-label">
+                  <User size={12} style={{ marginRight: '0.25rem' }} />
+                  Supervisor Onsite <span className="dfl-req">*</span>
+                </label>
+                <div className="dfl-tech-list">
+                  {TECHNICIANS.map(tech => {
+                    const isSelected = form.supervisor_name === tech.name
+                    return (
+                      <button
+                        key={tech.id}
+                        type="button"
+                        className={`dfl-tech-row ${isSelected ? 'selected' : ''}`}
+                        onClick={() => {
+                          set('supervisor_name', isSelected ? '' : tech.name)
+                          // remove from crew if also selected there
+                          if (!isSelected) set('crew_on_site', form.crew_on_site.filter(n => n !== tech.name))
+                        }}
+                      >
+                        <span className="dfl-tech-avatar">{tech.name.split(' ').map(w => w[0]).join('')}</span>
+                        <span className="dfl-tech-info">
+                          <span className="dfl-tech-name">{tech.name}</span>
+                          <span className="dfl-tech-meta">{tech.license} · {tech.branch}</span>
+                        </span>
+                        {isSelected && <CheckCircle size={15} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto', flexShrink: 0 }} />}
+                      </button>
+                    )
+                  })}
                 </div>
-                <div className="dfl-crew-input-row">
-                  <input
-                    className="dfl-input"
-                    placeholder="Type name and press Add"
-                    value={form.crew_input}
-                    onChange={e => set('crew_input', e.target.value)}
-                    onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addCrew() } }}
-                  />
-                  <button className="dfl-add-btn" onClick={addCrew}>Add</button>
+              </div>
+
+              {/* Installers on Site — multi select, supervisor excluded */}
+              <div className="dfl-field">
+                <label className="dfl-label">
+                  <Users size={12} style={{ marginRight: '0.25rem' }} />
+                  Installers Onsite
+                </label>
+                <div className="dfl-tech-list">
+                  {TECHNICIANS.filter(t => t.name !== form.supervisor_name).map(tech => {
+                    const isSelected = form.crew_on_site.includes(tech.name)
+                    return (
+                      <button
+                        key={tech.id}
+                        type="button"
+                        className={`dfl-tech-row ${isSelected ? 'selected' : ''}`}
+                        onClick={() => {
+                          set('crew_on_site', isSelected
+                            ? form.crew_on_site.filter(n => n !== tech.name)
+                            : [...form.crew_on_site, tech.name]
+                          )
+                        }}
+                      >
+                        <span className="dfl-tech-avatar">{tech.name.split(' ').map(w => w[0]).join('')}</span>
+                        <span className="dfl-tech-info">
+                          <span className="dfl-tech-name">{tech.name}</span>
+                          <span className="dfl-tech-meta">{tech.license} · {tech.branch}</span>
+                        </span>
+                        {isSelected && <CheckCircle size={15} weight="fill" style={{ color: '#16A34A', marginLeft: 'auto', flexShrink: 0 }} />}
+                      </button>
+                    )
+                  })}
                 </div>
                 {form.crew_on_site.length > 0 && (
                   <div className="dfl-crew-count">
-                    {form.crew_on_site.length} installer{form.crew_on_site.length !== 1 ? 's' : ''} added
+                    {form.crew_on_site.length} installer{form.crew_on_site.length !== 1 ? 's' : ''} selected
                   </div>
                 )}
               </div>
