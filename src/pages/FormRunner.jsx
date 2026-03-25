@@ -146,6 +146,20 @@ function FieldRenderer({ field, value, onChange }) {
         </div>
       );
 
+    case 'date':
+      return (
+        <div>
+          {labelEl}
+          <input
+            type="date"
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            required={field.required}
+            className="form-input"
+          />
+        </div>
+      );
+
     case 'boolean':
       return (
         <div>
@@ -188,6 +202,169 @@ function FieldRenderer({ field, value, onChange }) {
           />
         </div>
       );
+
+    // ── Pass / Fail / Comments ─────────────────────────────────────────────
+    case 'pass-fail': {
+      const pf = value && typeof value === 'object' ? value : { result: null, comments: '' }
+      const setResult = (r) => onChange({ ...pf, result: pf.result === r ? null : r })
+      const setComments = (c) => onChange({ ...pf, comments: c })
+      return (
+        <div className="fr-pf-row">
+          <span className="fr-pf-label">
+            {field.label}
+            {field.required && <span style={{ color: 'var(--red)', marginLeft: 2 }}>*</span>}
+          </span>
+          <div className="fr-pf-buttons">
+            <button
+              type="button"
+              className={`fr-pf-btn fr-pf-pass ${pf.result === 'pass' ? 'active' : ''}`}
+              onClick={() => setResult('pass')}
+            >
+              Pass
+            </button>
+            <button
+              type="button"
+              className={`fr-pf-btn fr-pf-fail ${pf.result === 'fail' ? 'active' : ''}`}
+              onClick={() => setResult('fail')}
+            >
+              Fail
+            </button>
+          </div>
+          <input
+            className="fr-pf-comments"
+            placeholder="Comments"
+            value={pf.comments}
+            onChange={e => setComments(e.target.value)}
+          />
+        </div>
+      )
+    }
+
+    // ── OK / Not OK / N/A / Explanation ───────────────────────────────────
+    case 'ok-notok-na': {
+      const okv = value && typeof value === 'object' ? value : { result: null, explanation: '' }
+      const setResult = (r) => onChange({ ...okv, result: okv.result === r ? null : r })
+      const setExpl = (e) => onChange({ ...okv, explanation: e })
+      return (
+        <div className="fr-ok-row">
+          <span className="fr-ok-label">
+            {field.label}
+            {field.required && <span style={{ color: 'var(--red)', marginLeft: 2 }}>*</span>}
+          </span>
+          <div className="fr-ok-buttons">
+            {[['ok','OK'],['notok','Not OK'],['na','N/A']].map(([k, lbl]) => (
+              <button
+                key={k}
+                type="button"
+                className={`fr-ok-btn fr-ok-${k} ${okv.result === k ? 'active' : ''}`}
+                onClick={() => setResult(k)}
+              >
+                {lbl}
+              </button>
+            ))}
+          </div>
+          <input
+            className="fr-ok-explanation"
+            placeholder="Explanation"
+            value={okv.explanation}
+            onChange={e => setExpl(e.target.value)}
+          />
+        </div>
+      )
+    }
+
+    // ── Checkbox group ─────────────────────────────────────────────────────
+    case 'checkbox-group': {
+      const selected = Array.isArray(value) ? value : []
+      const toggle = (opt) => onChange(
+        selected.includes(opt) ? selected.filter(x => x !== opt) : [...selected, opt]
+      )
+      return (
+        <div>
+          {labelEl}
+          <div className="fr-cg-grid">
+            {(field.options || []).map(opt => (
+              <label key={opt} className={`fr-cg-item ${selected.includes(opt) ? 'checked' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={selected.includes(opt)}
+                  onChange={() => toggle(opt)}
+                  style={{ display: 'none' }}
+                />
+                <span className="fr-cg-box">
+                  {selected.includes(opt) && <span>✓</span>}
+                </span>
+                <span className="fr-cg-text">{opt}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    // ── Activity / Hazards / Risk Controls / Responsibility row ───────────
+    case 'activity-row': {
+      const row = value && typeof value === 'object' ? value : { activity: '', hazards: '', controls: '', responsibility: '' }
+      const setField = (k, v) => onChange({ ...row, [k]: v })
+      const hasAny = row.activity || row.hazards || row.controls || row.responsibility
+      return (
+        <div className="fr-act-row">
+          <input className="fr-act-cell" placeholder="Activity / Task" value={row.activity}     onChange={e => setField('activity',      e.target.value)} />
+          <input className="fr-act-cell" placeholder="Hazards"         value={row.hazards}      onChange={e => setField('hazards',        e.target.value)} />
+          <input className="fr-act-cell" placeholder="Risk Controls"   value={row.controls}     onChange={e => setField('controls',       e.target.value)} />
+          <input className="fr-act-cell" placeholder="Responsibility"  value={row.responsibility} onChange={e => setField('responsibility', e.target.value)} />
+        </div>
+      )
+    }
+
+    // ── Personnel + Signature ──────────────────────────────────────────────
+    case 'personnel-sig': {
+      const p = value && typeof value === 'object' ? value : { name: '', function: '', signed: false }
+      const setP = (k, v) => onChange({ ...p, [k]: v })
+      if (!p.name && !p.function && !p.signed) {
+        return (
+          <div className="fr-person-empty">
+            <input
+              className="fr-person-name"
+              placeholder="Name"
+              value={p.name}
+              onChange={e => setP('name', e.target.value)}
+            />
+            <input
+              className="fr-person-fn"
+              placeholder="Function / Role"
+              value={p.function}
+              onChange={e => setP('function', e.target.value)}
+            />
+          </div>
+        )
+      }
+      return (
+        <div className={`fr-person-row ${p.signed ? 'signed' : ''}`}>
+          <div className="fr-person-fields">
+            <input
+              className="fr-person-name"
+              placeholder="Name"
+              value={p.name}
+              onChange={e => setP('name', e.target.value)}
+            />
+            <input
+              className="fr-person-fn"
+              placeholder="Function / Role"
+              value={p.function}
+              onChange={e => setP('function', e.target.value)}
+            />
+          </div>
+          <button
+            type="button"
+            className={`fr-person-sign ${p.signed ? 'signed' : ''}`}
+            onClick={() => setP('signed', !p.signed)}
+          >
+            {p.signed ? '✓ Signed' : 'Sign'}
+          </button>
+        </div>
+      )
+    }
 
     default:
       return null;

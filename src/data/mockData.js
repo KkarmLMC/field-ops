@@ -321,7 +321,235 @@ export const FORM_TEMPLATES = {
         ]
       }
     ]
-  }
+  },
+
+  // ─── Safety Forms (linked from Daily Field Log) ───────────────────────────
+  'fall-protection': {
+    id: 'fall-protection',
+    label: 'Fall Protection Inspection',
+    nfpaRef: 'OSHA 1926.502',
+    sections: [
+      {
+        id: 'header',
+        title: 'Inspection Details',
+        fields: [
+          { id: 'inspector_name', label: 'Inspector Name', type: 'text', required: true },
+          { id: 'inspection_date', label: 'Inspection Date', type: 'date', required: true },
+        ],
+      },
+      {
+        id: 'stitching',
+        title: 'Stitching — Check for cuts, tears or pulled stitching',
+        fields: [
+          { id: 'stitch_shoulder', label: 'Shoulder Straps', type: 'pass-fail', required: true },
+          { id: 'stitch_chest',    label: 'Chest Straps',    type: 'pass-fail', required: true },
+          { id: 'stitch_leg',      label: 'Leg Straps',      type: 'pass-fail', required: true },
+          { id: 'stitch_back',     label: 'Back Straps',     type: 'pass-fail', required: true },
+        ],
+      },
+      {
+        id: 'hardware',
+        title: 'Hardware',
+        fields: [
+          { id: 'hw_slide_drings', label: 'Slide D-rings',             type: 'pass-fail', required: true },
+          { id: 'hw_back_drings',  label: 'Back D-rings',              type: 'pass-fail', required: true },
+          { id: 'hw_front_dring',  label: 'Front D-ring (if applicable)', type: 'pass-fail' },
+          { id: 'hw_buckles',      label: 'Buckles',                   type: 'pass-fail', required: true },
+          { id: 'hw_grommets',     label: 'Grommets',                  type: 'pass-fail', required: true },
+        ],
+      },
+      {
+        id: 'labels',
+        title: 'Labels & Tags — Verify legibility and attachment',
+        fields: [
+          { id: 'labels_tags', label: 'Tags & Labels', type: 'pass-fail', required: true },
+        ],
+      },
+      {
+        id: 'webbing',
+        title: 'Webbing — Check for cuts, frayed edges, burns, chemical deterioration, holes, discoloration or soiling',
+        fields: [
+          { id: 'web_shoulder', label: 'Shoulder Straps', type: 'pass-fail', required: true },
+          { id: 'web_chest',    label: 'Chest Straps',    type: 'pass-fail', required: true },
+          { id: 'web_leg',      label: 'Leg Straps',      type: 'pass-fail', required: true },
+          { id: 'web_back',     label: 'Back Straps',     type: 'pass-fail', required: true },
+        ],
+      },
+      {
+        id: 'ropes',
+        title: 'Ropes — Check for cuts, frayed edges, burns, chemical deterioration, holes, discoloration, soiling',
+        fields: [
+          { id: 'rope_retractable', label: 'Retractable Lanyards', type: 'pass-fail', required: true },
+        ],
+      },
+      {
+        id: 'comments',
+        title: 'Additional Comments',
+        fields: [
+          { id: 'additional_comments', label: 'Comments', type: 'textarea' },
+        ],
+      },
+    ],
+  },
+
+  'manlift-checklist': {
+    id: 'manlift-checklist',
+    label: 'Manlift Pre-Shift Inspection',
+    nfpaRef: 'OSHA 1926.453',
+    sections: [
+      {
+        id: 'header',
+        title: 'Inspection Details',
+        fields: [
+          { id: 'inspection_date', label: 'Inspection Date', type: 'date', required: true },
+        ],
+      },
+      {
+        id: 'general',
+        title: 'Pre-Shift Inspection — General',
+        fields: [
+          { id: 'basic_inspection',    label: 'Basic Inspection (from ground)',                      type: 'ok-notok-na', required: true },
+          { id: 'manufacturers_manual',label: "Manufacturer's Manual (in Place)",                    type: 'ok-notok-na', required: true },
+          { id: 'platform_railing',    label: 'Platform/railing (bent, worn, damaged, locking door)', type: 'ok-notok-na', required: true },
+          { id: 'tires',               label: 'Tires (worn, air, separating, missing bolts)',          type: 'ok-notok-na', required: true },
+          { id: 'fire_extinguisher',   label: 'Fire Extinguisher (fully charged, sealed)',            type: 'ok-notok-na', required: true },
+          { id: 'horn',                label: 'Horn (operational, loud enough)',                      type: 'ok-notok-na', required: true },
+          { id: 'restraining_device',  label: 'Restraining device (good repair, secure)',             type: 'ok-notok-na', required: true },
+          { id: 'hydraulic_fluid_g',   label: 'Hydraulic fluid (platform down)',                      type: 'ok-notok-na', required: true },
+          { id: 'hoses_g',             label: 'Hoses (good repair)',                                  type: 'ok-notok-na', required: true },
+        ],
+      },
+      {
+        id: 'internal_combustion',
+        title: 'Internal Combustion Equipment',
+        fields: [
+          { id: 'propane_tank',      label: 'Propane tank (date, leak, secure)',         type: 'ok-notok-na' },
+          { id: 'gas_cap',           label: 'Gas cap (secure)',                          type: 'ok-notok-na' },
+          { id: 'engine_oil',        label: 'Engine oil (check with engine off)',         type: 'ok-notok-na' },
+          { id: 'radiator',          label: 'Radiator (do not check if hot)',             type: 'ok-notok-na' },
+          { id: 'hydraulic_fluid_ic',label: 'Hydraulic fluid (platform down)',            type: 'ok-notok-na' },
+          { id: 'hoses_belts',       label: 'Hoses and belts (condition, tight, loose)',  type: 'ok-notok-na' },
+          { id: 'battery_ic',        label: 'Battery (tight connections, cell levels)',   type: 'ok-notok-na' },
+        ],
+      },
+      {
+        id: 'battery_powered',
+        title: 'Battery Powered Equipment',
+        fields: [
+          { id: 'cables_connections', label: 'Cables and connections (tight)',  type: 'ok-notok-na' },
+          { id: 'cell_levels',        label: 'Cell levels (above plates)',      type: 'ok-notok-na' },
+          { id: 'plugging_control',   label: 'Plugging control (smooth operation)', type: 'ok-notok-na' },
+        ],
+      },
+      {
+        id: 'basic_manlift',
+        title: 'Basic Inspection on Manlift',
+        fields: [
+          { id: 'brake_pin',           label: 'Brake pin & linkage',                  type: 'ok-notok-na', required: true },
+          { id: 'brakes',              label: 'Brakes (firm, stops smoothly)',         type: 'ok-notok-na', required: true },
+          { id: 'steering',            label: 'Steering (smooth operations)',          type: 'ok-notok-na', required: true },
+          { id: 'leaks',               label: 'Leaks (under manlift)',                 type: 'ok-notok-na', required: true },
+          { id: 'hydraulic_controls',  label: 'Hydraulic controls (smooth operation)', type: 'ok-notok-na', required: true },
+          { id: 'hydraulic_functions', label: 'Hydraulic functions (up & down)',        type: 'ok-notok-na', required: true },
+          { id: 'directional_controls',label: 'Directional controls (smooth operations)', type: 'ok-notok-na', required: true },
+        ],
+      },
+    ],
+  },
+
+  'jsa': {
+    id: 'jsa',
+    label: 'Job Safety Analysis',
+    nfpaRef: 'LMC-Form-000-008',
+    sections: [
+      {
+        id: 'job_info',
+        title: 'Job Information',
+        fields: [
+          { id: 'jsa_date',          label: 'Date',             type: 'date', required: true },
+          { id: 'company_name',      label: 'Company Name',     type: 'text', required: true },
+          { id: 'site_name',         label: 'Site Name',        type: 'text', required: true },
+          { id: 'general_activity',  label: 'General Activity', type: 'text', required: true },
+        ],
+      },
+      {
+        id: 'permits',
+        title: 'Permit Required Activity',
+        fields: [
+          { id: 'permit_required', label: 'Check all that apply', type: 'checkbox-group', options: [
+            'Confined Space',
+            'Working over Water or at Height',
+            'Ground Disturbance (One Call)',
+            'Working on Pressurized Equipment',
+            'Working in Contaminated Atmosphere',
+            'Working in Unguarded / Unprotected Areas',
+            'Lifts',
+            'Hot Work',
+            'Working on or near Energized Electrical Equipment',
+            'Wild Life',
+            'Other',
+          ]},
+        ],
+      },
+      {
+        id: 'ppe',
+        title: 'Personal Protective Equipment — Site Supervisor will verify ALL LMC Personnel',
+        fields: [
+          { id: 'ppe_required', label: 'Required PPE', type: 'checkbox-group', required: true, options: [
+            'Hard Hat',
+            'Safety Steel Toe Boots',
+            'Safety Glasses',
+            'Chemical Goggles',
+            'High Visibility Safety Vest',
+            'Appropriate Gloves',
+            'Fire Protective Clothing (FR)',
+            'Safety Harness with Lanyard',
+            'Hearing Protection',
+            'Respirator (Supplied Air)',
+          ]},
+        ],
+      },
+      {
+        id: 'safety_equipment',
+        title: 'Safety Equipment and Tools',
+        fields: [
+          { id: 'safety_tools', label: 'Required equipment on site', type: 'checkbox-group', options: [
+            'Oxygen Monitor',
+            'Combustible Gas Detector',
+            'Toxic Gas Detector',
+            'Fire Extinguisher',
+            'Insulated Tools',
+            'Hand-Held Radio',
+            'Pneumatic Power Tools',
+            'Other',
+          ]},
+        ],
+      },
+      {
+        id: 'activities',
+        title: 'Activities, Hazards & Risk Control Measures',
+        fields: [
+          { id: 'activity_1', label: 'Row 1', type: 'activity-row' },
+          { id: 'activity_2', label: 'Row 2', type: 'activity-row' },
+          { id: 'activity_3', label: 'Row 3', type: 'activity-row' },
+          { id: 'activity_4', label: 'Row 4', type: 'activity-row' },
+          { id: 'activity_5', label: 'Row 5', type: 'activity-row' },
+        ],
+      },
+      {
+        id: 'personnel',
+        title: 'LightningMaster Personnel Performing the Work',
+        fields: [
+          { id: 'person_1', label: 'Person 1', type: 'personnel-sig', required: true },
+          { id: 'person_2', label: 'Person 2', type: 'personnel-sig' },
+          { id: 'person_3', label: 'Person 3', type: 'personnel-sig' },
+          { id: 'person_4', label: 'Person 4', type: 'personnel-sig' },
+          { id: 'person_5', label: 'Person 5', type: 'personnel-sig' },
+          { id: 'person_6', label: 'Person 6', type: 'personnel-sig' },
+        ],
+      },
+    ],
+  },
 };
 
 export const STATS = {

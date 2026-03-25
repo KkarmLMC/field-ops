@@ -3,10 +3,10 @@ import {
   Clock, CheckCircle, FileText, Plus, MapPin,
   X, User, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
-  ArrowsClockwise, SealCheck,
+  ArrowsClockwise, SealCheck, CaretLeft,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
-import { MOCK_REPORTS } from '../data/mockData.js'
+import { MOCK_REPORTS, FORM_TEMPLATES } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -269,10 +269,241 @@ function EntryCard({ entry, bc, onCloseOut }) {
   )
 }
 
+// ─── Inline field renderer for safety forms ────────────────────────────────────
+function SafetyFieldRenderer({ field, value, onChange }) {
+  switch (field.type) {
+    case 'text':
+    case 'number':
+    case 'date':
+      return (
+        <div className="dfl-field">
+          <label className="dfl-label">
+            {field.label}
+            {field.required && <span className="dfl-req">*</span>}
+          </label>
+          <input
+            type={field.type === 'number' ? 'number' : field.type === 'date' ? 'date' : 'text'}
+            className="dfl-input"
+            value={value ?? ''}
+            onChange={e => onChange(e.target.value)}
+          />
+        </div>
+      )
+
+    case 'textarea':
+      return (
+        <div className="dfl-field">
+          <label className="dfl-label">{field.label}</label>
+          <textarea
+            className="dfl-input dfl-textarea"
+            value={value ?? ''}
+            onChange={e => onChange(e.target.value)}
+          />
+        </div>
+      )
+
+    case 'pass-fail': {
+      const pf = value && typeof value === 'object' ? value : { result: null, comments: '' }
+      return (
+        <div className="fr-pf-row">
+          <span className="fr-pf-label">
+            {field.label}
+            {field.required && <span style={{ color: '#EF4444', marginLeft: 2 }}>*</span>}
+          </span>
+          <div className="fr-pf-buttons">
+            <button type="button" className={`fr-pf-btn fr-pf-pass ${pf.result === 'pass' ? 'active' : ''}`} onClick={() => onChange({ ...pf, result: pf.result === 'pass' ? null : 'pass' })}>Pass</button>
+            <button type="button" className={`fr-pf-btn fr-pf-fail ${pf.result === 'fail' ? 'active' : ''}`} onClick={() => onChange({ ...pf, result: pf.result === 'fail' ? null : 'fail' })}>Fail</button>
+          </div>
+          <input className="fr-pf-comments" placeholder="Comments" value={pf.comments} onChange={e => onChange({ ...pf, comments: e.target.value })} />
+        </div>
+      )
+    }
+
+    case 'ok-notok-na': {
+      const okv = value && typeof value === 'object' ? value : { result: null, explanation: '' }
+      return (
+        <div className="fr-ok-row">
+          <span className="fr-ok-label">
+            {field.label}
+            {field.required && <span style={{ color: '#EF4444', marginLeft: 2 }}>*</span>}
+          </span>
+          <div className="fr-ok-buttons">
+            {[['ok','OK'],['notok','Not OK'],['na','N/A']].map(([k, lbl]) => (
+              <button key={k} type="button" className={`fr-ok-btn fr-ok-${k} ${okv.result === k ? 'active' : ''}`} onClick={() => onChange({ ...okv, result: okv.result === k ? null : k })}>{lbl}</button>
+            ))}
+          </div>
+          <input className="fr-ok-explanation" placeholder="Explanation" value={okv.explanation} onChange={e => onChange({ ...okv, explanation: e.target.value })} />
+        </div>
+      )
+    }
+
+    case 'checkbox-group': {
+      const selected = Array.isArray(value) ? value : []
+      const toggle = (opt) => onChange(selected.includes(opt) ? selected.filter(x => x !== opt) : [...selected, opt])
+      return (
+        <div className="dfl-field">
+          <label className="dfl-label">
+            {field.label}
+            {field.required && <span className="dfl-req">*</span>}
+          </label>
+          <div className="fr-cg-grid">
+            {(field.options || []).map(opt => (
+              <label key={opt} className={`fr-cg-item ${selected.includes(opt) ? 'checked' : ''}`} onClick={() => toggle(opt)}>
+                <span className="fr-cg-box">{selected.includes(opt) && <span>✓</span>}</span>
+                <span className="fr-cg-text">{opt}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    case 'activity-row': {
+      const row = value && typeof value === 'object' ? value : { activity: '', hazards: '', controls: '', responsibility: '' }
+      const setF = (k, v) => onChange({ ...row, [k]: v })
+      return (
+        <div className="fr-act-row">
+          <input className="fr-act-cell" placeholder="Activity / Task" value={row.activity}      onChange={e => setF('activity',      e.target.value)} />
+          <input className="fr-act-cell" placeholder="Hazards"         value={row.hazards}       onChange={e => setF('hazards',        e.target.value)} />
+          <input className="fr-act-cell" placeholder="Risk Controls"   value={row.controls}      onChange={e => setF('controls',       e.target.value)} />
+          <input className="fr-act-cell" placeholder="Responsibility"  value={row.responsibility} onChange={e => setF('responsibility', e.target.value)} />
+        </div>
+      )
+    }
+
+    case 'personnel-sig': {
+      const p = value && typeof value === 'object' ? value : { name: '', function: '', signed: false }
+      const setP = (k, v) => onChange({ ...p, [k]: v })
+      return (
+        <div className={`fr-person-row ${p.signed ? 'signed' : ''}`}>
+          <div className="fr-person-fields">
+            <input className="fr-person-name" placeholder="Name"             value={p.name}     onChange={e => setP('name',     e.target.value)} />
+            <input className="fr-person-fn"   placeholder="Function / Role"  value={p.function} onChange={e => setP('function', e.target.value)} />
+          </div>
+          <button type="button" className={`fr-person-sign ${p.signed ? 'signed' : ''}`} onClick={() => setP('signed', !p.signed)}>
+            {p.signed ? '✓ Signed' : 'Sign'}
+          </button>
+        </div>
+      )
+    }
+
+    default:
+      return null
+  }
+}
+
+// ─── Safety Form Modal — renders a form template inline ────────────────────────
+function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
+  const FORM_KEY_MAP = {
+    jsa_uploaded:      'jsa',
+    manlift_checklist: 'manlift-checklist',
+    fall_protection:   'fall-protection',
+  }
+  const template = FORM_TEMPLATES[FORM_KEY_MAP[formKey]]
+  const [values, setValues]       = useState({})
+  const [sectionIdx, setSectionIdx] = useState(0)
+
+  if (!template) return null
+
+  const setValue = (fieldId, val) => setValues(v => ({ ...v, [fieldId]: val }))
+
+  const sections = template.sections
+  const currentSection = sections[sectionIdx]
+  const isLast = sectionIdx === sections.length - 1
+
+  // Pre-fill inspector name / date / company from prefill context
+  const getDisplayValue = (fieldId) => {
+    if (values[fieldId] !== undefined) return values[fieldId]
+    if (fieldId === 'inspector_name' && prefill?.supervisorName) return prefill.supervisorName
+    if ((fieldId === 'inspection_date' || fieldId === 'jsa_date') && prefill?.date) return prefill.date
+    if (fieldId === 'company_name') return 'Lightning Master'
+    if (fieldId === 'site_name' && prefill?.customerSite) return prefill.customerSite
+    return ''
+  }
+
+  return (
+    <div className="dfl-form-overlay" onClick={onBack} style={{ zIndex: 250 }}>
+      <div className="dfl-form-panel" onClick={e => e.stopPropagation()} style={{ maxWidth: '36rem' }}>
+
+        {/* Header */}
+        <div className="dfl-form-header" style={{ background: '#1F2937' }}>
+          <div>
+            <div className="dfl-form-part-label">{template.nfpaRef}</div>
+            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{template.label}</div>
+          </div>
+          <button className="dfl-form-close" onClick={onBack}><X size={16} /></button>
+        </div>
+
+        {/* Section tabs — compact */}
+        <div className="dfl-form-steps" style={{ fontSize: '0.625rem' }}>
+          {sections.map((s, i) => (
+            <button
+              key={i}
+              className={`dfl-form-step ${sectionIdx === i ? 'active' : ''} ${i < sectionIdx ? 'done' : ''}`}
+              onClick={() => setSectionIdx(i)}
+              style={{ fontSize: '0.625rem', padding: '0.5rem 0.625rem' }}
+            >
+              {i < sectionIdx ? <CheckCircle size={10} weight="fill" /> : null}
+              <span>{s.title.split(' — ')[0].split(' — ')[0].substring(0, 14)}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Section body */}
+        <div className="dfl-form-body">
+          <div className="dfl-form-section">
+            {currentSection.title.includes('—') || currentSection.title.includes('Check') ? (
+              <p className="dfl-section-note">{currentSection.title}</p>
+            ) : null}
+            {currentSection.fields.map(field => (
+              <SafetyFieldRenderer
+                key={field.id}
+                field={field}
+                value={values[field.id] !== undefined ? values[field.id] : getDisplayValue(field.id)}
+                onChange={val => setValue(field.id, val)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="dfl-form-footer">
+          <button
+            className="dfl-btn-secondary"
+            onClick={() => sectionIdx > 0 ? setSectionIdx(s => s - 1) : onBack()}
+          >
+            {sectionIdx === 0 ? 'Back to Safety' : 'Back'}
+          </button>
+          {!isLast ? (
+            <button
+              className="dfl-btn-primary"
+              style={{ background: '#1F2937' }}
+              onClick={() => setSectionIdx(s => s + 1)}
+            >
+              Next <ArrowRight size={13} />
+            </button>
+          ) : (
+            <button
+              className="dfl-btn-primary"
+              style={{ background: '#16A34A' }}
+              onClick={() => onComplete(formKey, values)}
+            >
+              <CheckCircle size={14} weight="fill" />
+              Complete Form
+            </button>
+          )}
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
 // ─── Part 1 Form — Morning Check-In ────────────────────────────────────────────
 function Part1Form({ onClose, onSave, bc }) {
-  const [form, setForm] = useState({ ...EMPTY_P1 })
-  const [step, setStep] = useState(0)
+  const [form, setForm]               = useState({ ...EMPTY_P1 })
+  const [step, setStep]               = useState(0)
+  const [safetyOpen, setSafetyOpen]   = useState(null) // key of safety form being filled
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
@@ -299,6 +530,7 @@ function Part1Form({ onClose, onSave, bc }) {
     safetyCount === SAFETY_FORMS.length
 
   return (
+  <>
     <div className="dfl-form-overlay" onClick={onClose}>
       <div className="dfl-form-panel" onClick={e => e.stopPropagation()}>
 
@@ -432,7 +664,7 @@ function Part1Form({ onClose, onSave, bc }) {
                   </div>
                   <button
                     className={`dfl-safety-form-btn ${form[key] ? 'completed' : ''}`}
-                    onClick={() => set(key, !form[key])}
+                    onClick={() => setSafetyOpen(key)}
                   >
                     {form[key]
                       ? <><ArrowsClockwise size={12} /> Redo</>
@@ -490,6 +722,25 @@ function Part1Form({ onClose, onSave, bc }) {
 
       </div>
     </div>
+
+    {/* Safety form modal — rendered on top of Part 1 */}
+    {safetyOpen && (
+      <SafetyFormModal
+        formKey={safetyOpen}
+        prefill={{
+          supervisorName: form.supervisor_name,
+          date:           form.report_date,
+          customerSite:   form.customer_site,
+        }}
+        onComplete={(key) => {
+          set(key, true)
+          setSafetyOpen(null)
+        }}
+        onBack={() => setSafetyOpen(null)}
+        bc={bc}
+      />
+    )}
+  </>
   )
 }
 
