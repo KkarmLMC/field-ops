@@ -1,40 +1,175 @@
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar,
+  BookOpen, ChartBar, Rows, CaretDown,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
+// Top-level items may have `children` for a collapsible sub-nav group.
+// A child whose path sits outside the parent prefix (e.g. /reports under
+// /installations) still participates in expand/collapse and active detection.
 const NAV_ITEMS = [
-  { path: '/dashboard',        Icon: SquaresFour,    label: 'Field Overview'   },
-  { path: '/installations',    Icon: HardHat,        label: 'Installations'    },
-  { path: '/inspections',      Icon: MagnifyingGlass, label: 'Inspections'     },
-  { path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Field Log'  },
-  { path: '/jsa',              Icon: HardHat,        label: 'JSA'              },
-  { path: '/risk-assessment',  Icon: ChartBar,       label: 'Risk Assessment'  },
-  { path: '/reports',          Icon: ClipboardText,  label: 'Reports'          },
-  { path: '/forms',            Icon: FileText,       label: 'Forms'            },
-  { path: '/technicians',      Icon: Users,          label: 'Technicians'      },
+  {
+    path: '/dashboard',
+    Icon: SquaresFour,
+    label: 'Field Overview',
+  },
+  {
+    path: '/installations',
+    Icon: HardHat,
+    label: 'Installations',
+    children: [
+      { path: '/installations/kanban', Icon: Rows,          label: 'Kanban Board' },
+      { path: '/reports',              Icon: ClipboardText,  label: 'Reports'      },
+    ],
+  },
+  { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
+  { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
+  { path: '/jsa',             Icon: HardHat,         label: 'JSA'             },
+  { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
+  { path: '/forms',           Icon: FileText,        label: 'Forms'           },
+  { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
 ]
 
 const FOOTER_ITEMS = [
-  { Icon: Gear,   label: 'Gear' },
+  { Icon: Gear,     label: 'Settings' },
   { Icon: Question, label: 'Help'     },
 ]
 
+// ── Helpers ────────────────────────────────────────────────────────────────────
+function pathMatch(itemPath, currentPath) {
+  return currentPath === itemPath || currentPath.startsWith(itemPath + '/')
+}
+
+function groupIsActive(item, currentPath) {
+  if (pathMatch(item.path, currentPath)) return true
+  return item.children?.some(c => pathMatch(c.path, currentPath)) ?? false
+}
+
+// ── Sub-nav children ──────────────────────────────────────────────────────────
+function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
+  return (
+    <div style={{
+      overflow: 'hidden',
+      marginTop: 2,
+    }}>
+      {/* Connecting line on the left */}
+      <div style={{ position: 'relative', paddingLeft: 4 }}>
+        <div style={{
+          position: 'absolute',
+          left: '1.375rem',
+          top: 4,
+          bottom: 4,
+          width: 1,
+          background: 'var(--border)',
+          borderRadius: 1,
+        }} />
+        {children.map(child => {
+          const active = pathMatch(child.path, currentPath)
+          return (
+            <button
+              key={child.path}
+              className={`sidebar-item sidebar-sub-item ${active ? 'sidebar-item-active' : ''}`}
+              onClick={() => goTo(child.path)}
+              title={collapsed ? child.label : undefined}
+              style={{ marginBottom: 1 }}
+            >
+              <child.Icon size={14} style={{ flexShrink: 0 }} />
+              {!collapsed && <span className="sidebar-item-label">{child.label}</span>}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// ── Nav group (parent with optional children) ─────────────────────────────────
+function NavGroup({ item, collapsed, goTo, currentPath }) {
+  const active   = groupIsActive(item, currentPath)
+  const parentActive = pathMatch(item.path, currentPath)
+  const hasChildren = item.children?.length > 0
+
+  // Auto-expand if this group or any child is active; otherwise collapsed by default
+  const [open, setOpen] = useState(() => active)
+
+  const handleParentClick = () => {
+    if (hasChildren && !collapsed) {
+      // If we're not on the parent path, navigate there and open
+      if (!pathMatch(item.path, currentPath)) {
+        goTo(item.path)
+      }
+      setOpen(o => !o)
+    } else {
+      goTo(item.path)
+    }
+  }
+
+  // Auto-expand when navigating into this group from outside
+  const wasActive = active
+
+  return (
+    <>
+      {/* Parent row */}
+      <button
+        className={`sidebar-item ${active ? 'sidebar-item-active' : ''}`}
+        onClick={handleParentClick}
+        title={collapsed ? item.label : undefined}
+        style={{ justifyContent: 'space-between' }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', flex: 1, minWidth: 0 }}>
+          <item.Icon size={17} style={{ flexShrink: 0 }} />
+          {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
+        </div>
+
+        {/* Caret — only when expanded and has children */}
+        {hasChildren && !collapsed && (
+          <CaretDown
+            size={12}
+            style={{
+              flexShrink: 0,
+              marginLeft: 4,
+              opacity: active ? 0.7 : 0.35,
+              transform: open ? 'rotate(0deg)' : 'rotate(-90deg)',
+              transition: 'transform 0.18s ease',
+            }}
+          />
+        )}
+
+        {/* Collapsed mode: active dot */}
+        {collapsed && active && (
+          <div style={{
+            position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)',
+          }} />
+        )}
+      </button>
+
+      {/* Children — only when open and not collapsed */}
+      {hasChildren && open && !collapsed && (
+        <SubNav
+          children={item.children}
+          collapsed={collapsed}
+          goTo={goTo}
+          currentPath={currentPath}
+        />
+      )}
+    </>
+  )
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────────────────
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
-  const navigate  = useNavigate()
-  const location  = useLocation()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const goTo = (path) => {
     navigate(path)
     onClose?.()
   }
-
-  const isActive = (path) =>
-    location.pathname === path || location.pathname.startsWith(path + '/')
 
   return (
     <>
@@ -45,8 +180,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
         {/* Logo */}
         <div className="sidebar-brand-row">
           {collapsed
-            ? <img src="/lm-icon.svg"              alt="Lightning Master" className="sidebar-logo-icon-img" />
-            : <img src="/lightning-master-logo.svg" alt="Lightning Master" className="sidebar-logo-img" />
+            ? <img src="/lm-icon.svg"               alt="Lightning Master" className="sidebar-logo-icon-img" />
+            : <img src="/lightning-master-logo.svg"  alt="Lightning Master" className="sidebar-logo-img" />
           }
         </div>
 
@@ -54,26 +189,15 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
         <nav className="sidebar-nav">
           {!collapsed && <div className="sidebar-section-label">MENU</div>}
 
-          {NAV_ITEMS.map((item) => {
-            const active = isActive(item.path)
-            return (
-              <button
-                key={item.path}
-                className={`sidebar-item ${active ? 'sidebar-item-active' : ''}`}
-                onClick={() => goTo(item.path)}
-                title={collapsed ? item.label : undefined}
-              >
-                <item.Icon size={17} style={{ flexShrink: 0 }} />
-                {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
-                {collapsed && active && (
-                  <div style={{
-                    position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-                    width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)',
-                  }} />
-                )}
-              </button>
-            )
-          })}
+          {NAV_ITEMS.map(item => (
+            <NavGroup
+              key={item.path}
+              item={item}
+              collapsed={collapsed}
+              goTo={goTo}
+              currentPath={location.pathname}
+            />
+          ))}
         </nav>
 
         {/* Footer */}
@@ -91,8 +215,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed
-              ? <ArrowLineRight  size={17} style={{ flexShrink: 0 }} />
-              : <ArrowLineLeft size={17} style={{ flexShrink: 0 }} />
+              ? <ArrowLineRight size={17} style={{ flexShrink: 0 }} />
+              : <ArrowLineLeft  size={17} style={{ flexShrink: 0 }} />
             }
             {!collapsed && <span className="sidebar-item-label">Collapse</span>}
           </button>

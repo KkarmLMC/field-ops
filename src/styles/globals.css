@@ -635,13 +635,21 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
 .sidebar-sub-item {
-  padding-left: 2.125rem !important;
+  padding-left: 2.5rem !important;
   font-size: 0.75rem !important;
+  font-weight: 500 !important;
   color: var(--text-2) !important;
+  height: 2rem !important;       /* slightly shorter than parent items */
+  min-height: 2rem !important;
+}
+.sidebar-sub-item:hover {
+  background: var(--hover) !important;
+  color: var(--text-1) !important;
 }
 .sidebar-sub-item.sidebar-item-active {
-  background: #000000 !important;
+  background: var(--navy) !important;
   color: white !important;
+  font-weight: 600 !important;
 }
 
 /* ─── List page toolbar ────────────────────────────────────────── */
