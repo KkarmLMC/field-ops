@@ -55,17 +55,22 @@ const JOB_STATUS_STYLE = {
 // Derive unique customer names from all JOBS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(JOBS.map(j => j.customer))].sort()
 
-// Time onsite options: 1h–16h in 15-min increments
-// Always H:MM format (6:00, 6:15, 6:30, 6:45) so typing "6:" shows all four
-const TIME_ONSITE_OPTIONS = (() => {
+// Helper: build H:MM option list between two quarter-hour counts (inclusive)
+function buildTimeOptions(fromQ, toQ) {
   const opts = []
-  for (let q = 4; q <= 64; q++) {   // 4 quarters = 1h, 64 = 16h
+  for (let q = fromQ; q <= toQ; q++) {
     const h = Math.floor(q / 4)
     const m = (q % 4) * 15
     opts.push({ value: q / 4, label: `${h}:${String(m).padStart(2, '0')}` })
   }
   return opts
-})()
+}
+
+// Total Time Onsite: 1:00 – 16:00
+const TIME_ONSITE_OPTIONS = buildTimeOptions(4, 64)
+
+// Total Drive Time: 0:15 – 16:00
+const DRIVE_TIME_OPTIONS = buildTimeOptions(1, 64)
 
 // Format a stored numeric hours value for display (e.g. 6.25 → "6h 15m")
 function fmtHours(val) {
@@ -413,18 +418,18 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
   )
 }
 
-// ─── Time Onsite Typeahead ─────────────────────────────────────────────────────
-// Text input that filters TIME_ONSITE_OPTIONS by prefix match.
-// Typing "6" shows 6:00, 6:15, 6:30, 6:45 (and 16:xx). Typing "6:" narrows to all four 6-hour slots.
-function TimeOnsiteInput({ value, onChange }) {
-  const [query,  setQuery]  = useState(value ? TIME_ONSITE_OPTIONS.find(o => o.value === value)?.label ?? '' : '')
+// ─── Time Typeahead (shared) ────────────────────────────────────────────────────
+// Reusable H:MM typeahead — filters provided options by prefix match.
+// Typing "6" shows 6:00, 6:15, 6:30, 6:45. Typing "6:" narrows to those four.
+function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, placeholder = 'e.g. 6:00 or 6:30' }) {
+  const [query,  setQuery]  = useState(value ? options.find(o => o.value === value)?.label ?? '' : '')
   const [open,   setOpen]   = useState(false)
   const ref          = useRef(null)
   const inputWrapRef = useRef(null)
   const [pos, updatePos] = useDropdownPos(inputWrapRef)
 
   useEffect(() => {
-    const label = value ? (TIME_ONSITE_OPTIONS.find(o => o.value === value)?.label ?? '') : ''
+    const label = value ? (options.find(o => o.value === value)?.label ?? '') : ''
     setQuery(label)
   }, [value])
 
@@ -434,7 +439,7 @@ function TimeOnsiteInput({ value, onChange }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const filtered = TIME_ONSITE_OPTIONS.filter(o => o.label.startsWith(query.trim()))
+  const filtered = options.filter(o => o.label.startsWith(query.trim()))
 
   const select = (opt) => { onChange(opt.value); setQuery(opt.label); setOpen(false) }
   const openDropdown = () => { updatePos(); setOpen(true) }
@@ -444,7 +449,7 @@ function TimeOnsiteInput({ value, onChange }) {
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <input
           className="dfl-input dfl-typeahead-input"
-          placeholder="e.g. 6:00 or 6:30"
+          placeholder={placeholder}
           value={query}
           onChange={e => { setQuery(e.target.value); onChange(''); openDropdown() }}
           onFocus={openDropdown}
@@ -693,7 +698,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
               <span className="dfl-detail-label"><Truck size={11} /> Travel</span>
               <span className="dfl-detail-value">
                 {entry.miles_driven ? `${entry.miles_driven} mi` : '—'}
-                {entry.drive_time ? ` · ${entry.drive_time}` : ''}
+                {entry.drive_time ? ` · ${fmtHours(entry.drive_time)}` : ''}
               </span>
             </div>
 
@@ -1352,11 +1357,11 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">Total Drive Time</label>
-                <input
-                  className="dfl-input"
-                  placeholder="e.g. 1h 15min"
+                <TimeOnsiteInput
                   value={form.drive_time}
-                  onChange={e => set('drive_time', e.target.value)}
+                  onChange={val => set('drive_time', val)}
+                  options={DRIVE_TIME_OPTIONS}
+                  placeholder="e.g. 1:00 or 1:30"
                 />
               </div>
               <div className="dfl-field">
