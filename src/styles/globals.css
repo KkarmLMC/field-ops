@@ -635,7 +635,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
 .sidebar-sub-item {
-  padding-left: 2.5rem !important;
+  margin-left: 1.25rem !important;
+  width: calc(100% - 1.25rem) !important;
+  padding-left: 1.25rem !important;
   font-size: 0.8125rem !important;
   font-weight: 500 !important;
   color: var(--text-1) !important;
