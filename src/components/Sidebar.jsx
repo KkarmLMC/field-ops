@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { path: '/installations',    Icon: HardHat,        label: 'Installations'    },
   { path: '/inspections',      Icon: MagnifyingGlass, label: 'Inspections'     },
   { path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Field Log'  },
+  { path: '/jsa',              Icon: HardHat,        label: 'JSA'              },
   { path: '/risk-assessment',  Icon: ChartBar,       label: 'Risk Assessment'  },
   { path: '/reports',          Icon: ClipboardText,  label: 'Reports'          },
   { path: '/forms',            Icon: FileText,       label: 'Forms'            },

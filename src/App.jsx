@@ -14,6 +14,7 @@ import Technicians   from './pages/Technicians'
 import JobDetail     from './pages/JobDetail'
 import FormRunner    from './pages/FormRunner'
 import RiskAssessment from './pages/RiskAssessment'
+import JSA            from './pages/JSA'
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -21,6 +22,7 @@ const PAGE_META = {
   '/installations':          { title: 'Installations',    parent: null },
   '/inspections':            { title: 'Inspections',      parent: null },
   '/daily-field-log':        { title: 'Daily Field Log',  parent: null },
+  '/jsa':                    { title: 'JSA',              parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
   '/reports':                { title: 'Reports',          parent: null },
   '/forms':                  { title: 'Forms',            parent: null },
@@ -109,7 +111,7 @@ function DesktopTopBar() {
 // ─── Page transition ───────────────────────────────────────────────────────────
 const TOP_TABS = [
   '/dashboard', '/installations', '/inspections',
-  '/daily-field-log', '/risk-assessment', '/reports', '/forms', '/technicians',
+  '/daily-field-log', '/jsa', '/risk-assessment', '/reports', '/forms', '/technicians',
 ]
 
 function getTabIndex(path) {
@@ -183,6 +185,7 @@ export default function App() {
 
             <Route path="/inspections"                                         element={<Inspections />} />
             <Route path="/daily-field-log"                                     element={<DailyFieldLog />} />
+            <Route path="/jsa"                                                 element={<JSA />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="/reports"                                             element={<Reports />} />
             <Route path="/forms"                                               element={<Forms />} />
