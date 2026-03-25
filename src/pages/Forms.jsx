@@ -587,7 +587,7 @@ export default function Forms() {
             Completion Forms
           </span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-2)', padding:'var(--sp-2)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--sp-2)', padding:'var(--sp-2)' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
