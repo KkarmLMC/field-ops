@@ -51,79 +51,97 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
 
   return (
     <div className="branch-tabs">
-      {tabs.map(tab => {
-        const isActive  = active === tab.id
-        const isHovered = hoveredId === tab.id && !isActive
-        // Active card: always show active palette. Inactive + hovered: preview active palette.
-        const showActive = isActive || isHovered
-        const bg   = showActive ? tab.bgActive   : tab.bgInactive
-        const text = showActive ? tab.textActive : tab.textInactive
-        const sub  = showActive ? tab.subActive  : tab.subInactive
-        const total = tab.total || 1
+      {/* Mobile: swipeable track */}
+      <div className="branch-tabs-mobile-track">
+        {tabs.map(tab => {
+          const isActive  = active === tab.id
+          const isHovered = hoveredId === tab.id && !isActive
+          const showActive = isActive || isHovered
+          const bg   = showActive ? tab.bgActive   : tab.bgInactive
+          const text = showActive ? tab.textActive : tab.textInactive
+          const sub  = showActive ? tab.subActive  : tab.subInactive
+          const total = tab.total || 1
 
-        return (
+          return (
+            <button
+              key={tab.id}
+              className={`branch-card${isActive ? ' branch-card--active' : ''}`}
+              onClick={() => onChange(tab.id)}
+              onMouseEnter={() => setHoveredId(tab.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              style={{ background: bg, transition: 'background 0.15s, transform 0.12s' }}
+            >
+              <div className="branch-card-top">
+                <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>
+                  {tab.label}
+                </div>
+                <div
+                  className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
+                  style={{
+                    background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive,
+                    color:      '#fff',
+                    transition: 'background 0.15s',
+                  }}
+                >
+                  {tab.stats.active} active
+                </div>
+              </div>
+              <div className="branch-card-sectors" style={{ color: sub, transition: 'color 0.15s' }}>
+                {tab.sectors}
+              </div>
+              <div className="branch-card-bar-wrap">
+                <div
+                  className="branch-card-bar-track"
+                  style={{ background: showActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}
+                >
+                  <div
+                    className="branch-card-bar-fill"
+                    style={{
+                      width: `${Math.round((tab.stats.active / total) * 100)}%`,
+                      background: showActive ? '#ffffff' : tab.bgActive,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="branch-card-stats">
+                {[
+                  { label: 'Active',    value: tab.stats.active },
+                  { label: 'Scheduled', value: tab.stats.scheduled },
+                  { label: 'Done',      value: tab.stats.completed },
+                ].map((s, i) => (
+                  <div key={i} className="branch-card-stat">
+                    <span className="branch-card-stat-value" style={{ color: text, transition: 'color 0.15s' }}>{s.value}</span>
+                    <span className="branch-card-stat-label" style={{ color: sub, transition: 'color 0.15s' }}>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Dot indicators — mobile only */}
+      <div style={{
+        display: 'flex', justifyContent: 'center', gap: '0.375rem',
+        marginTop: '0.5rem', marginBottom: '0',
+      }}>
+        {tabs.map(tab => (
           <button
             key={tab.id}
-            className={`branch-card${isActive ? ' branch-card--active' : ''}`}
             onClick={() => onChange(tab.id)}
-            onMouseEnter={() => setHoveredId(tab.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            style={{ background: bg, transition: 'background 0.15s, transform 0.12s' }}
-          >
-            {/* Top row: entity name + active pill */}
-            <div className="branch-card-top">
-              <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>
-                {tab.label}
-              </div>
-              <div
-                className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
-                style={{
-                  background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive,
-                  color:      '#fff',
-                  transition: 'background 0.15s',
-                }}
-              >
-                {tab.stats.active} active
-              </div>
-            </div>
-
-            {/* Sectors subtitle */}
-            <div className="branch-card-sectors" style={{ color: sub, transition: 'color 0.15s' }}>
-              {tab.sectors}
-            </div>
-
-            {/* Progress bar */}
-            <div className="branch-card-bar-wrap">
-              <div
-                className="branch-card-bar-track"
-                style={{ background: showActive ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.08)' }}
-              >
-                <div
-                  className="branch-card-bar-fill"
-                  style={{
-                    width: `${Math.round((tab.stats.active / total) * 100)}%`,
-                    background: showActive ? '#ffffff' : tab.bgActive,
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Stat row */}
-            <div className="branch-card-stats">
-              {[
-                { label: 'Active',    value: tab.stats.active },
-                { label: 'Scheduled', value: tab.stats.scheduled },
-                { label: 'Done',      value: tab.stats.completed },
-              ].map((s, i) => (
-                <div key={i} className="branch-card-stat">
-                  <span className="branch-card-stat-value" style={{ color: text, transition: 'color 0.15s' }}>{s.value}</span>
-                  <span className="branch-card-stat-label" style={{ color: sub, transition: 'color 0.15s' }}>{s.label}</span>
-                </div>
-              ))}
-            </div>
-          </button>
-        )
-      })}
+            style={{
+              width: active === tab.id ? '1.25rem' : '0.375rem',
+              height: '0.375rem',
+              borderRadius: '0.1875rem',
+              background: active === tab.id ? BRANCH_COLORS[tab.id].bgActive : '#D1D5DB',
+              border: 'none',
+              padding: 0,
+              transition: 'width 0.2s ease, background 0.2s ease',
+              cursor: 'pointer',
+            }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
