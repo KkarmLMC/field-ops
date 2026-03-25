@@ -620,37 +620,34 @@ export default function CompletionForms() {
     <div className="page-content fade-in">
 
       {/* Form type tiles */}
-      <div style={{ marginBottom:14 }}>
-        <div style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:10 }}>
-          Completion Forms
+      <div style={{ background:'var(--bg-2)', border:'1px solid var(--border)', borderRadius:6, marginBottom:12 }}>
+        <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
+          <span style={{ fontFamily:'var(--mono)', fontSize:10, color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
+            Completion Forms
+          </span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:1, background:'var(--border)' }}>
           {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
             const Icon = cfg.icon
             return (
               <button key={type} onClick={()=>handleStart(type)} style={{
-                display:'flex', flexDirection:'column', gap:10, padding:'16px',
-                background:'#EEF3FF',
-                border:'1.5px solid #D0DBFF',
-                borderRadius:16,
-                textAlign:'left',
-                transition:'transform 0.12s, box-shadow 0.12s',
-                boxShadow:'0 1px 4px rgba(30,60,180,0.06)',
+                display:'flex', flexDirection:'column', gap:8, padding:'16px 14px',
+                background:'var(--bg-2)', textAlign:'left', transition:'background 0.12s',
               }}
-                onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-1px)'; e.currentTarget.style.boxShadow='0 4px 12px rgba(30,60,180,0.12)' }}
-                onMouseLeave={e=>{ e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 1px 4px rgba(30,60,180,0.06)' }}
+                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-3)'}
+                onMouseLeave={e=>e.currentTarget.style.background='var(--bg-2)'}
               >
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <div style={{ width:34, height:34, borderRadius:10, background:'#fff', border:'1.5px solid #D0DBFF', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(30,60,180,0.08)' }}>
-                    <Icon size={16} style={{ color:'#1E3CB4' }} />
+                  <div style={{ width:32, height:32, borderRadius:4, background:cfg.colorDim, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <Icon size={16} style={{ color: cfg.color }} />
                   </div>
-                  <CaretRight size={12} style={{ color:'#7A9EE0' }} />
+                  <CaretRight size={12} style={{ color:'var(--text-muted)' }} />
                 </div>
                 <div>
-                  <div style={{ fontWeight:700, fontSize:13, color:'#0D1F6B', marginBottom:3 }}>{cfg.short}</div>
-                  <div style={{ fontSize:11, color:'#5A7AB8', lineHeight:1.45 }}>{cfg.desc}</div>
+                  <div style={{ fontWeight:600, fontSize:13, marginBottom:2 }}>{cfg.short}</div>
+                  <div style={{ fontSize:11, color:'var(--text-dim)', lineHeight:1.4 }}>{cfg.desc}</div>
                 </div>
-                <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'#8AAAE0', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+                <div style={{ fontFamily:'var(--mono)', fontSize:9, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
                   {cfg.ref}
                 </div>
               </button>
