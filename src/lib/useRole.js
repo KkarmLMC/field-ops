@@ -21,12 +21,9 @@ const VALID_ROLES = ['field', 'management']
 const DEFAULT_ROLE = 'field'
 
 export function getRole() {
-  try {
-    const stored = localStorage.getItem(ROLE_KEY)
-    return VALID_ROLES.includes(stored) ? stored : DEFAULT_ROLE
-  } catch {
-    return DEFAULT_ROLE
-  }
+  // TODO: replace with Supabase Auth session lookup when login is built
+  // Temporarily returning 'management' to show all nav items during development
+  return 'management'
 }
 
 export function setRole(role) {
