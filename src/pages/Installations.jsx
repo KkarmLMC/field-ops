@@ -323,7 +323,7 @@ export default function Installations() {
           <button
             className="dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
-            onClick={() => navigate('/reports', { state: { from: '/installations' } })}
+            onClick={() => navigate('/installations/field-reports')}
           >
             <div className="dash-tile-icon"><FileText size={18} /></div>
             <div className="dash-tile-text">

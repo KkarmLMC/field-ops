@@ -23,7 +23,7 @@ const NAV_ITEMS = [
     children: [
       { path: '/installations/pipeline',   Icon: Rows,          label: 'Project Pipeline' },
       { path: '/installations/field-logs', Icon: BookOpen,      label: 'Field Logs'       },
-      { path: '/reports',                  Icon: ClipboardText, label: 'Field Reports'    },
+      { path: '/installations/field-reports', Icon: ClipboardText, label: 'Field Reports'  },
     ],
   },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },

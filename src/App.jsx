@@ -25,7 +25,7 @@ const PAGE_META = {
   '/daily-field-log':        { title: 'Daily Field Log',  parent: null },
   '/jsa':                    { title: 'JSA',              parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
-  '/reports':                { title: 'Reports',          parent: null },
+  '/reports':                { title: 'Field Reports',    parent: null },
   '/forms':                  { title: 'Forms',            parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
 }
@@ -35,6 +35,8 @@ function getPageMeta(pathname) {
     return { title: 'Project Pipeline', parent: '/installations' }
   if (pathname === '/installations/field-logs')
     return { title: 'Field Logs', parent: '/installations' }
+  if (pathname === '/installations/field-reports')
+    return { title: 'Field Reports', parent: '/installations' }
   if (/^\/installations\/[^/]+$/.test(pathname))
     return { title: 'Project Detail', parent: '/installations' }
   if (/^\/installations\/installs\/[^/]+\/form\/[^/]+$/.test(pathname)) {
@@ -76,14 +78,13 @@ function DesktopTopBar() {
   const location = useLocation()
   const navigate = useNavigate()
   const meta   = getPageMeta(location.pathname)
-  const parent = meta.parent || location.state?.from || null
 
   return (
     <div className="desktop-topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        {parent && (
+        {meta.parent && (
           <button
-            onClick={() => navigate(parent)}
+            onClick={() => navigate(meta.parent)}
             style={{
               display: 'flex', alignItems: 'center', gap: '0.3125rem',
               fontSize: '0.75rem', color: 'var(--text-3)', background: 'none', border: 'none',
@@ -111,7 +112,7 @@ function DesktopTopBar() {
 // ─── Page transition ───────────────────────────────────────────────────────────
 const TOP_TABS = [
   '/dashboard', '/installations', '/inspections',
-  '/daily-field-log', '/jsa', '/risk-assessment', '/reports', '/forms', '/technicians',
+  '/daily-field-log', '/jsa', '/risk-assessment', '/forms', '/technicians',
 ]
 
 function getTabIndex(path) {
@@ -192,7 +193,8 @@ export default function App() {
             <Route path="/daily-field-log"                                     element={<DailyFieldLog />} />
             <Route path="/jsa"                                                 element={<JSA />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
-            <Route path="/reports"                                             element={<Reports />} />
+            <Route path="/installations/field-reports"                        element={<Reports />} />
+            <Route path="/reports"                                             element={<Navigate to="/installations/field-reports" replace />} />
             <Route path="/forms"                                               element={<Forms />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
