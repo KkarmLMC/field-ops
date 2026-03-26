@@ -14,18 +14,23 @@ import {
 import { db } from '../lib/supabase.js'
 
 const FIELD_TYPES = [
-  { value: 'text',      label: 'Text' },
-  { value: 'number',    label: 'Number' },
-  { value: 'email',     label: 'Email' },
-  { value: 'date',      label: 'Date' },
-  { value: 'textarea',  label: 'Long Text' },
-  { value: 'select',    label: 'Dropdown' },
-  { value: 'boolean',   label: 'Yes / No' },
-  { value: 'radio',     label: 'Radio (single select)' },
-  { value: 'checklist', label: 'Checklist (multi-select)' },
-  { value: 'signature', label: 'Signature' },
-  { value: 'photo',     label: 'Photo Capture' },
-  { value: 'gps',       label: 'GPS Location' },
+  { value: 'text',          label: 'Text' },
+  { value: 'number',        label: 'Number' },
+  { value: 'email',         label: 'Email' },
+  { value: 'date',          label: 'Date' },
+  { value: 'textarea',      label: 'Long Text' },
+  { value: 'select',        label: 'Dropdown' },
+  { value: 'boolean',       label: 'Yes / No' },
+  { value: 'radio',         label: 'Radio (single select)' },
+  { value: 'checklist',     label: 'Checklist (multi-select)' },
+  { value: 'checkbox-group',label: 'Checkbox Group (JSA style)' },
+  { value: 'pass-fail',     label: 'Pass / Fail (Fall Protection)' },
+  { value: 'ok-notok-na',   label: 'OK / Not OK / N/A (Manlift)' },
+  { value: 'activity-row',  label: 'Activity Row (JSA table)' },
+  { value: 'personnel-sig', label: 'Personnel Sign-Off (JSA)' },
+  { value: 'signature',     label: 'Signature Pad' },
+  { value: 'photo',         label: 'Photo Capture' },
+  { value: 'gps',           label: 'GPS Location' },
 ]
 
 function slugify(str) {

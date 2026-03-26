@@ -141,7 +141,11 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   if (readOnly) {
     let display = value ?? '—'
     if (type==='boolean') display = value===true?'Yes':value===false?'No':'—'
-    if (type==='checklist'&&Array.isArray(value)) display = value.join(', ')||'—'
+    if (type==='checklist'||type==='checkbox-group') display = Array.isArray(value)?value.join(', ')||'—':'—'
+    if (type==='pass-fail')    display = value?.result ? value.result.toUpperCase() + (value.comments?` — ${value.comments}`:'') : '—'
+    if (type==='ok-notok-na')  display = value?.result ? value.result.toUpperCase() + (value.explanation?` — ${value.explanation}`:'') : '—'
+    if (type==='activity-row') display = value?.activity || '—'
+    if (type==='personnel-sig') display = value?.name ? `${value.name}${value.signed?' ✓':''}` : '—'
     if (type==='signature') return <SigPad value={value} readOnly />
     if (type==='photo')     return <PhotoField value={value} readOnly />
     if (type==='gps')       return <GpsField value={value} readOnly />
@@ -167,6 +171,111 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         {options.map(o=><option key={o} value={o}>{o}</option>)}
       </select>
     )
+
+  // ── pass-fail (Fall Protection style) ───────────────────────────────────────
+  if (type==='pass-fail') {
+    const pf = value && typeof value==='object' ? value : { result:null, comments:'' }
+    return (
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', flexWrap:'wrap' }}>
+        <div style={{ display:'flex', gap:'var(--sp-1)', flexShrink:0 }}>
+          {[['pass','Pass','var(--green)'],['fail','Fail','var(--red)']].map(([k,lbl,col]) => (
+            <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
+              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+                border:`1px solid ${pf.result===k?col:'var(--border-l)'}`,
+                background: pf.result===k?col:'var(--surface)',
+                color: pf.result===k?'#fff':'var(--text-2)', transition:'all var(--ease-fast)' }}>
+              {lbl}
+            </button>
+          ))}
+        </div>
+        <input value={pf.comments||''} onChange={e=>onChange({...pf,comments:e.target.value})}
+          placeholder="Comments" style={{ flex:1, minWidth:'8rem' }} />
+      </div>
+    )
+  }
+
+  // ── ok-notok-na (Manlift style) ──────────────────────────────────────────────
+  if (type==='ok-notok-na') {
+    const okv = value && typeof value==='object' ? value : { result:null, explanation:'' }
+    const cfg = [['ok','OK','var(--green)'],['notok','Not OK','var(--red)'],['na','N/A','var(--text-3)']]
+    return (
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', flexWrap:'wrap' }}>
+        <div style={{ display:'flex', gap:'var(--sp-1)', flexShrink:0 }}>
+          {cfg.map(([k,lbl,col]) => (
+            <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
+              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+                border:`1px solid ${okv.result===k?col:'var(--border-l)'}`,
+                background: okv.result===k?col:'var(--surface)',
+                color: okv.result===k?(k==='na'?'var(--text-1)':'#fff'):'var(--text-2)',
+                transition:'all var(--ease-fast)' }}>
+              {lbl}
+            </button>
+          ))}
+        </div>
+        {okv.result==='notok' && (
+          <input value={okv.explanation||''} onChange={e=>onChange({...okv,explanation:e.target.value})}
+            placeholder="Explanation required" style={{ flex:1, minWidth:'8rem', borderColor:'var(--red)' }} />
+        )}
+      </div>
+    )
+  }
+
+  // ── checkbox-group (JSA style) ───────────────────────────────────────────────
+  if (type==='checkbox-group') {
+    const selected = Array.isArray(value) ? value : []
+    const toggle = opt => onChange(selected.includes(opt) ? selected.filter(x=>x!==opt) : [...selected,opt])
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,14rem),1fr))', gap:'var(--sp-1)' }}>
+        {options.map(opt => {
+          const checked = selected.includes(opt)
+          return (
+            <button key={opt} type="button" onClick={()=>toggle(opt)}
+              style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)',
+                borderRadius:'var(--r-sm)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`,
+                background: checked?'rgba(4,36,92,0.07)':'var(--surface)', textAlign:'left', transition:'all var(--ease-fast)' }}>
+              <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
+                background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
+                flexShrink:0, fontSize:9, color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
+              <span style={{ fontSize:'var(--fs-sm)', color:checked?'var(--text-1)':'var(--text-2)' }}>{opt}</span>
+            </button>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // ── activity-row (JSA activities table) ─────────────────────────────────────
+  if (type==='activity-row') {
+    const row = value && typeof value==='object' ? value : { activity:'', hazards:'', controls:'', responsibility:'' }
+    const setF = (k,v) => onChange({...row,[k]:v})
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,10rem),1fr))', gap:'var(--sp-2)' }}>
+        <input value={row.activity||''}      onChange={e=>setF('activity',e.target.value)}      placeholder="Activity / Task"  style={{ width:'100%' }} />
+        <input value={row.hazards||''}       onChange={e=>setF('hazards',e.target.value)}        placeholder="Hazards"          style={{ width:'100%' }} />
+        <input value={row.controls||''}      onChange={e=>setF('controls',e.target.value)}       placeholder="Risk Controls"    style={{ width:'100%' }} />
+        <input value={row.responsibility||''} onChange={e=>setF('responsibility',e.target.value)} placeholder="Responsibility"   style={{ width:'100%' }} />
+      </div>
+    )
+  }
+
+  // ── personnel-sig (JSA sign-off rows) ───────────────────────────────────────
+  if (type==='personnel-sig') {
+    const p = value && typeof value==='object' ? value : { name:'', function:'', signed:false }
+    const setP = (k,v) => onChange({...p,[k]:v})
+    return (
+      <div style={{ display:'flex', gap:'var(--sp-2)', alignItems:'center' }}>
+        <input value={p.name||''}     onChange={e=>setP('name',e.target.value)}     placeholder="Name"          style={{ flex:2 }} />
+        <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
+        <button type="button" onClick={()=>setP('signed',!p.signed)}
+          style={{ flexShrink:0, padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+            border:`1px solid ${p.signed?'var(--green)':'var(--border-l)'}`,
+            background: p.signed?'var(--green)':'var(--surface)',
+            color: p.signed?'#fff':'var(--text-2)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
+          {p.signed ? '✓ Signed' : 'Sign'}
+        </button>
+      </div>
+    )
+  }
 
   if (type==='boolean')
     return (

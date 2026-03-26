@@ -9,6 +9,7 @@ import {
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
+import FormEngine from '../components/FormEngine.jsx'
 import { FORM_TEMPLATES, PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { db } from '../lib/supabase.js'
@@ -896,34 +897,50 @@ function SafetyFieldRenderer({ field, value, onChange }) {
   }
 }
 
-// ─── Safety Form Modal — renders a form template inline ────────────────────────
+// ─── Safety Form Modal — fetches schema from Supabase, renders via FormEngine ──
 function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
   const FORM_KEY_MAP = {
     jsa_uploaded:      'jsa',
     manlift_checklist: 'manlift-checklist',
     fall_protection:   'fall-protection',
   }
-  const template = FORM_TEMPLATES[FORM_KEY_MAP[formKey]]
-  const [values, setValues]       = useState({})
-  const [sectionIdx, setSectionIdx] = useState(0)
+  const slug = FORM_KEY_MAP[formKey]
 
-  if (!template) return null
+  const [schema,   setSchema]   = useState(null)
+  const [loading,  setLoading]  = useState(true)
+  const [values,   setValues]   = useState({})
 
-  const setValue = (fieldId, val) => setValues(v => ({ ...v, [fieldId]: val }))
+  // Pre-fill from DFL context (supervisor name, date, site)
+  useEffect(() => {
+    const prefilled = {}
+    if (prefill?.supervisorName) prefilled.inspector_name = prefill.supervisorName
+    if (prefill?.date)           { prefilled.inspection_date = prefill.date; prefilled.jsa_date = prefill.date }
+    if (prefill?.customerSite)   prefilled.site_name = prefill.customerSite
+    prefilled.company_name = 'Lightning Master'
+    setValues(prefilled)
+  }, [prefill])
 
-  const sections = template.sections
-  const currentSection = sections[sectionIdx]
-  const isLast = sectionIdx === sections.length - 1
+  // Fetch schema from Supabase, fall back to FORM_TEMPLATES if unavailable
+  useEffect(() => {
+    db.from('form_definitions').select('*').eq('slug', slug).eq('active', true).single()
+      .then(({ data }) => {
+        if (data) {
+          setSchema(data)
+        } else {
+          // Fallback: convert mockData template to engine-compatible schema
+          const tmpl = FORM_TEMPLATES[slug]
+          if (tmpl) setSchema({ title: tmpl.label, ref: tmpl.nfpaRef, sections: tmpl.sections })
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        const tmpl = FORM_TEMPLATES[slug]
+        if (tmpl) setSchema({ title: tmpl.label, ref: tmpl.nfpaRef, sections: tmpl.sections })
+        setLoading(false)
+      })
+  }, [slug])
 
-  // Pre-fill inspector name / date / company from prefill context
-  const getDisplayValue = (fieldId) => {
-    if (values[fieldId] !== undefined) return values[fieldId]
-    if (fieldId === 'inspector_name' && prefill?.supervisorName) return prefill.supervisorName
-    if ((fieldId === 'inspection_date' || fieldId === 'jsa_date') && prefill?.date) return prefill.date
-    if (fieldId === 'company_name') return 'Lightning Master'
-    if (fieldId === 'site_name' && prefill?.customerSite) return prefill.customerSite
-    return ''
-  }
+  if (!schema && !loading) return null
 
   return (
     <div className="dfl-form-overlay" onClick={onBack} style={{ zIndex: 250 }}>
@@ -932,70 +949,40 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
         {/* Header */}
         <div className="dfl-form-header" style={{ background: '#1F2937' }}>
           <div>
-            <div className="dfl-form-part-label">{template.nfpaRef}</div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{template.label}</div>
+            <div className="dfl-form-part-label">{schema?.ref || ''}</div>
+            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{schema?.title || ''}</div>
           </div>
           <button className="dfl-form-close" onClick={onBack}><X size={16} /></button>
         </div>
 
-        {/* Section tabs — compact */}
-        <div className="dfl-form-steps" style={{ fontSize: '0.625rem' }}>
-          {sections.map((s, i) => (
-            <button
-              key={i}
-              className={`dfl-form-step ${sectionIdx === i ? 'active' : ''} ${i < sectionIdx ? 'done' : ''}`}
-              onClick={() => setSectionIdx(i)}
-              style={{ fontSize: '0.625rem', padding: '0.5rem 0.625rem' }}
-            >
-              {i < sectionIdx ? <CheckCircle size={10} weight="fill" /> : null}
-              <span>{s.title.split(' — ')[0].split(' — ')[0].substring(0, 14)}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Section body */}
-        <div className="dfl-form-body">
-          <div className="dfl-form-section">
-            {currentSection.title.includes('—') || currentSection.title.includes('Check') ? (
-              <p className="dfl-section-note">{currentSection.title}</p>
-            ) : null}
-            {currentSection.fields.map(field => (
-              <SafetyFieldRenderer
-                key={field.id}
-                field={field}
-                value={values[field.id] !== undefined ? values[field.id] : getDisplayValue(field.id)}
-                onChange={val => setValue(field.id, val)}
+        {/* Body */}
+        <div className="dfl-form-body" style={{ overflowY: 'auto', flex: 1 }}>
+          {loading ? (
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--sp-8)' }}>
+              <div className="spinner" />
+            </div>
+          ) : (
+            <div style={{ padding: 'var(--sp-4)' }}>
+              <FormEngine
+                schema={schema}
+                values={values}
+                onChange={(id, val) => setValues(v => ({ ...v, [id]: val }))}
               />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
         <div className="dfl-form-footer">
+          <button className="dfl-btn-secondary" onClick={onBack}>Back to Safety</button>
           <button
-            className="dfl-btn-secondary"
-            onClick={() => sectionIdx > 0 ? setSectionIdx(s => s - 1) : onBack()}
+            className="dfl-btn-primary"
+            style={{ background: '#16A34A' }}
+            onClick={() => onComplete(formKey, values)}
           >
-            {sectionIdx === 0 ? 'Back to Safety' : 'Back'}
+            <CheckCircle size={14} weight="fill" />
+            Complete Form
           </button>
-          {!isLast ? (
-            <button
-              className="dfl-btn-primary"
-              style={{ background: '#1F2937' }}
-              onClick={() => setSectionIdx(s => s + 1)}
-            >
-              Next <ArrowRight size={13} />
-            </button>
-          ) : (
-            <button
-              className="dfl-btn-primary"
-              style={{ background: '#16A34A' }}
-              onClick={() => onComplete(formKey, values)}
-            >
-              <CheckCircle size={14} weight="fill" />
-              Complete Form
-            </button>
-          )}
         </div>
 
       </div>
