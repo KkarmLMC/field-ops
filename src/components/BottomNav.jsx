@@ -14,8 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  Lightning, MagnifyingGlass, Users,
-  PencilSimple, ClipboardText, Rows, HardHat,
+  MagnifyingGlass, Users, HardHat,
 } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 
@@ -52,20 +51,28 @@ const FIELD_ITEMS = [
 ]
 
 const MGMT_ITEMS = [
-  { id: 'overview',     path: '/dashboard',                     Icon: SquaresFour,    label: 'Overview',     exactMatch: true  },
-  { id: 'installs',     path: '/installations',                 Icon: HardHat,        label: 'Installations',exactMatch: true  },
-  { id: 'pipeline',     path: '/installations/pipeline',        Icon: Rows,           label: 'Pipeline'     },
-  { id: 'fieldlogs',    path: '/installations/field-logs',      Icon: BookOpen,       label: 'Field Logs'   },
-  { id: 'reports',      path: '/installations/field-reports',   Icon: ClipboardText,  label: 'Reports'      },
-  { id: 'inspections',  path: '/inspections',                   Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'fieldlog',     path: '/daily-field-log',               Icon: BookOpen,       label: 'Daily Log'    },
-  { id: 'forms',        path: '/forms',                         Icon: FileText,       label: 'Forms',        exactMatch: true  },
-  { id: 'technicians',  path: '/technicians',                   Icon: Users,          label: 'Technicians'  },
+  { id: 'overview',    path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
+  { id: 'installs',    path: '/installations',    Icon: HardHat,        label: 'Installations',exactMatch: true },
+  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Log'    },
+  { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Forms',        exactMatch: true },
+  { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Technicians'  },
 ]
 
 // ─── Active path detection ────────────────────────────────────────────────────
+// exactMatch items only highlight on their own path, EXCEPT parent items
+// that have known children — those stay highlighted on child routes too.
+const PARENT_PREFIXES = ['/installations', '/forms']
+
 function isActive(item, pathname) {
-  if (item.exactMatch) return pathname === item.path
+  if (item.exactMatch) {
+    // Exact match OR highlighted on known child routes
+    if (pathname === item.path) return true
+    if (PARENT_PREFIXES.includes(item.path)) {
+      return pathname.startsWith(item.path + '/')
+    }
+    return false
+  }
   return pathname === item.path || pathname.startsWith(item.path + '/')
 }
 
