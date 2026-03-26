@@ -108,7 +108,7 @@ export default function Technicians() {
           <button
             className="btn btn-secondary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => navigate('/jsa')}
+            onClick={() => navigate('/forms/jsa')}
           >
             <HardHat size={14} weight="bold" />
             New JSA

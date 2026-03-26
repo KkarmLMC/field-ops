@@ -21,8 +21,6 @@ const PAGE_META = {
   '/installations':          { title: 'Installations',    parent: null },
   '/inspections':            { title: 'Inspections',      parent: null },
   '/daily-field-log':        { title: 'Daily Field Log',  parent: null },
-  '/jsa':                    { title: 'JSA',              parent: null },
-  '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
   '/reports':                { title: 'Field Reports',    parent: null },
   '/forms':                  { title: 'Report Forms',     parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
@@ -114,7 +112,7 @@ function DesktopTopBar() {
 // ─── Page transition ───────────────────────────────────────────────────────────
 const TOP_TABS = [
   '/dashboard', '/installations', '/inspections',
-  '/daily-field-log', '/jsa', '/risk-assessment', '/forms', '/technicians',
+  '/daily-field-log', '/forms', '/technicians',
 ]
 
 function getTabIndex(path) {

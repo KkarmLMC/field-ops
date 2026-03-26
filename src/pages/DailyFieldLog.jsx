@@ -21,22 +21,22 @@ const WORK_TYPES = ['Inspection', 'Installation', 'Remediation', 'Site Revisit',
 // Safety docs are digital forms linked from the form repository
 const SAFETY_FORMS = [
   {
-    key:    'jsa_uploaded',
-    label:  'JSA — Job Safety Analysis',
-    desc:   'Hazard identification, controls & emergency procedures',
-    formId: 'site-survey',
+    key:   'jsa_uploaded',
+    slug:  'jsa',
+    label: 'JSA — Job Safety Analysis',
+    desc:  'Hazard identification, controls & emergency procedures',
   },
   {
-    key:    'manlift_checklist',
-    label:  'Man Lift Pre-Use Checklist',
-    desc:   'Equipment inspection before operation — required per OSHA 1926.453',
-    formId: 'inspection',
+    key:   'manlift_checklist',
+    slug:  'manlift-checklist',
+    label: 'Man Lift Pre-Use Checklist',
+    desc:  'Equipment inspection before operation — required per OSHA 1926.453',
   },
   {
-    key:    'fall_protection',
-    label:  'Fall Protection Plan',
-    desc:   'PPE verification, anchor points & rescue procedures',
-    formId: 'inspection',
+    key:   'fall_protection',
+    slug:  'fall-protection',
+    label: 'Fall Protection Plan',
+    desc:  'PPE verification, anchor points & rescue procedures',
   },
 ]
 
@@ -899,12 +899,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
 
 // ─── Safety Form Modal — fetches schema from Supabase, renders via FormEngine ──
 function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
-  const FORM_KEY_MAP = {
-    jsa_uploaded:      'jsa',
-    manlift_checklist: 'manlift-checklist',
-    fall_protection:   'fall-protection',
-  }
-  const slug = FORM_KEY_MAP[formKey]
+  const slug = SAFETY_FORMS.find(f => f.key === formKey)?.slug || formKey
 
   const [schema,   setSchema]   = useState(null)
   const [loading,  setLoading]  = useState(true)

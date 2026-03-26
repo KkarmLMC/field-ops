@@ -515,7 +515,7 @@ export default function Installations() {
         <div className="dash-tiles">
           {[
             { Icon: ClipboardText, label: 'Daily Log',    sub: 'Log today\'s work',   path: '/daily-field-log' },
-            { Icon: BookOpen,      label: 'JSA',          sub: 'Safety analysis',      path: '/jsa'             },
+            { Icon: BookOpen,      label: 'JSA',          sub: 'Safety analysis',      path: '/forms/jsa'       },
             { Icon: FileText,      label: 'Report Form',  sub: 'Submit a report',      path: '/forms'           },
           ].map(a => (
             <button
