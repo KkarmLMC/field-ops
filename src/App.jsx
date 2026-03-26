@@ -19,6 +19,7 @@ const Forms         = lazy(() => import('./pages/Forms'))
 const FormPage      = lazy(() => import('./pages/FormPage'))
 const Technicians   = lazy(() => import('./pages/Technicians'))
 const FormBuilder   = lazy(() => import('./pages/FormBuilder'))
+const RiskAssessment = lazy(() => import('./pages/RiskAssessment'))
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -29,6 +30,7 @@ const PAGE_META = {
   '/reports':                { title: 'Field Reports',    parent: null },
   '/forms':                  { title: 'Report Forms',     parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
+  '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
 }
 
 function getPageMeta(pathname) {
@@ -198,6 +200,7 @@ export default function App() {
             <Route path="/forms/builder"                                      element={<FormBuilder />} />
             <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
+            <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
           </Suspense>

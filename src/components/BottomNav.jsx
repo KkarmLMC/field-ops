@@ -14,7 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  MagnifyingGlass, Users, HardHat,
+  MagnifyingGlass, Users, HardHat, ChartBar,
 } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 
@@ -43,11 +43,12 @@ function shouldHide(pathname) {
 // ─── Nav items per role ───────────────────────────────────────────────────────
 
 const FIELD_ITEMS = [
-  { id: 'overview',    path: '/dashboard',       Icon: SquaresFour,    label: 'Overview',    exactMatch: true  },
-  { id: 'fieldlog',    path: '/daily-field-log', Icon: BookOpen,       label: 'Field Log'    },
-  { id: 'forms',       path: '/forms',            Icon: FileText,       label: 'Forms',       exactMatch: true  },
-  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'jsa',         path: '/forms/jsa',        Icon: HardHat,        label: 'JSA'          },
+  { id: 'overview',      path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
+  { id: 'fieldlog',      path: '/daily-field-log',  Icon: BookOpen,       label: 'Field Log'    },
+  { id: 'forms',         path: '/forms',             Icon: FileText,       label: 'Forms',        exactMatch: true },
+  { id: 'inspections',   path: '/inspections',       Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'risk',          path: '/risk-assessment',   Icon: ChartBar,       label: 'Risk'         },
+  { id: 'jsa',           path: '/forms/jsa',         Icon: HardHat,        label: 'JSA'          },
 ]
 
 const MGMT_ITEMS = [
@@ -56,6 +57,7 @@ const MGMT_ITEMS = [
   { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
   { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Log'    },
   { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Forms',        exactMatch: true },
+  { id: 'risk',        path: '/risk-assessment',   Icon: ChartBar,       label: 'Risk'         },
   { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Technicians'  },
 ]
 

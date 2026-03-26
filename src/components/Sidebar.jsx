@@ -27,6 +27,7 @@ const NAV_ITEMS = [
     ],
   },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
+  { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/forms',           Icon: FileText,        label: 'Report Forms',
     children: [
