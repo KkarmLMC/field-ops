@@ -10,7 +10,7 @@ import {
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import FormEngine from '../components/FormEngine.jsx'
-import { FORM_TEMPLATES, PROJECTS, TECHNICIANS } from '../data/mockData.js'
+import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { db } from '../lib/supabase.js'
 import { generateAndUploadDFLPdf } from '../lib/generateDFLPdf.js'
@@ -920,24 +920,14 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
     setValues(prefilled)
   }, [prefill])
 
-  // Fetch schema from Supabase, fall back to FORM_TEMPLATES if unavailable
+  // Fetch schema from Supabase
   useEffect(() => {
     db.from('form_definitions').select('*').eq('slug', slug).eq('active', true).single()
       .then(({ data }) => {
-        if (data) {
-          setSchema(data)
-        } else {
-          // Fallback: convert mockData template to engine-compatible schema
-          const tmpl = FORM_TEMPLATES[slug]
-          if (tmpl) setSchema({ title: tmpl.label, ref: tmpl.nfpaRef, sections: tmpl.sections })
-        }
+        if (data) setSchema(data)
         setLoading(false)
       })
-      .catch(() => {
-        const tmpl = FORM_TEMPLATES[slug]
-        if (tmpl) setSchema({ title: tmpl.label, ref: tmpl.nfpaRef, sections: tmpl.sections })
-        setLoading(false)
-      })
+      .catch(() => setLoading(false))
   }, [slug])
 
   if (!schema && !loading) return null

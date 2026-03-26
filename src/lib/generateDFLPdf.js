@@ -1,6 +1,5 @@
 import { jsPDF } from 'jspdf'
 import { db } from './supabase'
-import { FORM_TEMPLATES } from '../data/mockData'
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function fmtDate(d) {
@@ -436,17 +435,25 @@ export async function generateAndUploadDFLPdf(report) {
   // SAFETY FORM PAGES
   // ═══════════════════════════════════════════════════════════════════════════════
   const SAFETY_FORM_DEFS = [
-    { dataKey: 'jsa_data',             templateId: 'jsa',              label: 'Job Safety Analysis',          ref: 'LMC-Form-000-008' },
-    { dataKey: 'manlift_data',         templateId: 'manlift-checklist', label: 'Manlift Pre-Shift Inspection', ref: 'OSHA 1926.453' },
-    { dataKey: 'fall_protection_data', templateId: 'fall-protection',  label: 'Fall Protection Inspection',   ref: 'OSHA 1926.502' },
+    { dataKey: 'jsa_data',             slug: 'jsa',              label: 'Job Safety Analysis',          ref: 'LMC-Form-000-008' },
+    { dataKey: 'manlift_data',         slug: 'manlift-checklist', label: 'Manlift Pre-Shift Inspection', ref: 'OSHA 1926.453' },
+    { dataKey: 'fall_protection_data', slug: 'fall-protection',  label: 'Fall Protection Inspection',   ref: 'OSHA 1926.502' },
   ]
+
+  // Fetch safety form schemas from Supabase
+  const slugs = SAFETY_FORM_DEFS.map(f => f.slug)
+  const { data: schemaRows } = await db.from('form_definitions')
+    .select('slug, sections')
+    .in('slug', slugs)
+  const schemaMap = Object.fromEntries((schemaRows || []).map(r => [r.slug, r]))
 
   for (const formDef of SAFETY_FORM_DEFS) {
     const formData = report[formDef.dataKey]
     if (!formData) continue
 
-    const template = FORM_TEMPLATES[formDef.templateId]
-    if (!template) continue
+    const schema = schemaMap[formDef.slug]
+    if (!schema) continue
+    const template = schema
 
     // ── New page for this safety form ─────────────────────────────────────────
     doc.addPage()

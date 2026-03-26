@@ -12,13 +12,8 @@ import DailyFieldLog from './pages/DailyFieldLog'
 import Reports       from './pages/Reports'
 import Forms         from './pages/Forms'
 import FormPage      from './pages/FormPage'
-import { COMPLETION_TYPES } from './pages/Forms'
 import Technicians   from './pages/Technicians'
-import JobDetail     from './pages/JobDetail'
-import FormRunner    from './pages/FormRunner'
 import FormBuilder   from './pages/FormBuilder'
-import RiskAssessment from './pages/RiskAssessment'
-import JSA            from './pages/JSA'
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -49,8 +44,7 @@ function getPageMeta(pathname) {
   }
   if (/^\/forms\/[^/]+$/.test(pathname)) {
     const formType = pathname.split('/')[2]
-    const cfg = COMPLETION_TYPES[formType]
-    return { title: cfg?.label || 'Report Form', parent: '/forms' }
+    return { title: 'Report Form', parent: '/forms' }
   }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
@@ -189,7 +183,6 @@ export default function App() {
             {/* Legacy redirects */}
             <Route path="/installations/installs"                              element={<Navigate to="/installations/pipeline" replace />} />
             <Route path="/installations/installs/:jobId"                       element={<Navigate to="/installations" replace />} />
-            <Route path="/installations/installs/:jobId/form/:formId"          element={<FormRunner />} />
 
             {/* Legacy redirects */}
             <Route path="/projects"                                            element={<Navigate to="/installations" replace />} />
@@ -199,8 +192,6 @@ export default function App() {
 
             <Route path="/inspections"                                         element={<Inspections />} />
             <Route path="/daily-field-log"                                     element={<DailyFieldLog />} />
-            <Route path="/jsa"                                                 element={<JSA />} />
-            <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="/installations/field-reports"                        element={<Reports />} />
             <Route path="/reports"                                             element={<Navigate to="/installations/field-reports" replace />} />
             <Route path="/forms"                                               element={<Forms />} />

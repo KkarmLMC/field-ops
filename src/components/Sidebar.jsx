@@ -28,8 +28,6 @@ const NAV_ITEMS = [
   },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
-  { path: '/jsa',             Icon: HardHat,         label: 'JSA'             },
-  { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
   { path: '/forms',           Icon: FileText,        label: 'Report Forms',
     children: [
       { path: '/forms/builder', Icon: PencilSimple,   label: 'Form Builder' },
