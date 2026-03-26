@@ -38,35 +38,108 @@ function slugify(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
-// ─── Field Editor row — draggable ─────────────────────────────────────────────
-function FieldRow({ field, index, total, onChange, onDelete, onDragStart, onDragOver, onDrop, isDragOver }) {
+// ─── Touch/mouse drag-to-reorder hook ────────────────────────────────────────
+// Works on both mobile (touch) and desktop (mouse).
+// Only the handle triggers drag — rest of the row is scrollable.
+function useDragReorder(items, onReorder) {
+  const [dragIdx,   setDragIdx]   = useState(null)
+  const [overIdx,   setOverIdx]   = useState(null)
+  const startY     = useRef(0)
+  const rowRefs    = useRef([])
+
+  const getRowAtY = (y) => {
+    for (let i = 0; i < rowRefs.current.length; i++) {
+      const el = rowRefs.current[i]
+      if (!el) continue
+      const rect = el.getBoundingClientRect()
+      if (y >= rect.top && y <= rect.bottom) return i
+    }
+    return null
+  }
+
+  const handleTouchStart = (e, idx) => {
+    e.preventDefault()             // stop page scroll while dragging
+    startY.current = e.touches[0].clientY
+    setDragIdx(idx)
+    setOverIdx(idx)
+  }
+
+  const handleTouchMove = (e) => {
+    e.preventDefault()
+    const y = e.touches[0].clientY
+    const over = getRowAtY(y)
+    if (over !== null) setOverIdx(over)
+  }
+
+  const handleTouchEnd = () => {
+    if (dragIdx !== null && overIdx !== null && dragIdx !== overIdx) {
+      const next = [...items]
+      const [moved] = next.splice(dragIdx, 1)
+      next.splice(overIdx, 0, moved)
+      onReorder(next)
+    }
+    setDragIdx(null)
+    setOverIdx(null)
+  }
+
+  // Mouse fallback for desktop
+  const handleMouseDown = (e, idx) => {
+    e.preventDefault()
+    setDragIdx(idx)
+    setOverIdx(idx)
+    const onMove = (me) => {
+      const over = getRowAtY(me.clientY)
+      if (over !== null) setOverIdx(over)
+    }
+    const onUp = () => {
+      setDragIdx(prev => {
+        setOverIdx(curr => {
+          if (prev !== null && curr !== null && prev !== curr) {
+            const next = [...items]
+            const [moved] = next.splice(prev, 1)
+            next.splice(curr, 0, moved)
+            onReorder(next)
+          }
+          return null
+        })
+        return null
+      })
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }
+
+  return { dragIdx, overIdx, rowRefs, handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown }
+}
+
+// ─── Field Editor row ─────────────────────────────────────────────────────────
+function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHandleProps }) {
   const [expanded, setExpanded] = useState(false)
-  const needsOptions = ['select','radio','checklist','checkbox-group','radio'].includes(field.type)
+  const needsOptions = ['select','radio','checklist','checkbox-group'].includes(field.type)
 
   return (
     <div
-      draggable
-      onDragStart={e => onDragStart(e, index)}
-      onDragOver={e => { e.preventDefault(); onDragOver(index) }}
-      onDrop={e => { e.preventDefault(); onDrop(index) }}
       style={{
-        background: isDragOver ? 'var(--card-header-bg)' : 'var(--surface)',
-        border: `1px solid ${isDragOver ? 'var(--navy)' : 'var(--border-l)'}`,
+        background: isOver ? 'var(--card-header-bg)' : 'var(--surface)',
+        border: `1px solid ${isOver ? 'var(--navy)' : 'var(--border-l)'}`,
         borderRadius: 'var(--r-md)',
         marginBottom: 'var(--sp-2)',
         overflow: 'hidden',
-        transition: 'border-color var(--ease-fast), background var(--ease-fast)',
-        cursor: 'default',
+        opacity: isDragging ? 0.4 : 1,
+        transition: 'border-color var(--ease-fast), background var(--ease-fast), opacity var(--ease-fast)',
       }}
     >
       {/* Collapsed header */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
-        {/* Drag handle */}
+        {/* Drag handle — touch/mouse events only here */}
         <div
-          style={{ color:'var(--text-4)', cursor:'grab', padding:'var(--sp-1)', flexShrink:0, display:'flex', alignItems:'center' }}
-          title="Drag to reorder"
+          {...dragHandleProps}
+          style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--sp-1)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none' }}
+          title="Hold and drag to reorder"
         >
-          <DotsSixVertical size={16} weight="bold" />
+          <DotsSixVertical size={18} weight="bold" />
         </div>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
@@ -132,8 +205,6 @@ function FieldRow({ field, index, total, onChange, onDelete, onDragStart, onDrag
 
 // ─── Section Editor ───────────────────────────────────────────────────────────
 function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete, onMoveSection }) {
-  const [dragOverIdx, setDragOverIdx] = useState(null)
-  const dragSrcIdx = useRef(null)
 
   const addField = () => {
     const newField = { id:`field_${Date.now()}`, label:'', type:'text', required:false }
@@ -149,32 +220,11 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
     onChange(sectionIdx, { ...section, fields:section.fields.filter((_,i)=>i!==fieldIdx) })
   }
 
-  const handleDragStart = (e, idx) => {
-    dragSrcIdx.current = idx
-    e.dataTransfer.effectAllowed = 'move'
-  }
-
-  const handleDragOver = (idx) => {
-    setDragOverIdx(idx)
-  }
-
-  const handleDrop = (targetIdx) => {
-    const src = dragSrcIdx.current
-    if (src === null || src === targetIdx) { setDragOverIdx(null); return }
-    const fields = [...section.fields]
-    const [moved] = fields.splice(src, 1)
-    fields.splice(targetIdx, 0, moved)
-    onChange(sectionIdx, { ...section, fields })
-    dragSrcIdx.current = null
-    setDragOverIdx(null)
-  }
+  const { dragIdx, overIdx, rowRefs, handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown } =
+    useDragReorder(section.fields, (reordered) => onChange(sectionIdx, { ...section, fields: reordered }))
 
   return (
-    <div
-      style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}
-      onDragLeave={() => setDragOverIdx(null)}
-      onDrop={() => setDragOverIdx(null)}
-    >
+    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}>
       {/* Section header */}
       <div style={{ background:'var(--navy)', padding:'var(--sp-3) var(--sp-4)', display:'flex', alignItems:'center', gap:'var(--sp-3)' }}>
         <div style={{ flex:1 }}>
@@ -192,21 +242,28 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
         </div>
       </div>
 
-      {/* Fields */}
-      <div style={{ padding:'var(--sp-3)' }}>
+      {/* Fields — touch + mouse draggable */}
+      <div
+        style={{ padding:'var(--sp-3)' }}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      >
         {section.fields.map((field, fi) => (
-          <FieldRow
-            key={field.id+fi}
-            field={field}
-            index={fi}
-            total={section.fields.length}
-            onChange={updateField}
-            onDelete={deleteField}
-            onDragStart={handleDragStart}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            isDragOver={dragOverIdx === fi}
-          />
+          <div key={field.id+fi} ref={el => rowRefs.current[fi] = el}>
+            <FieldRow
+              field={field}
+              index={fi}
+              onChange={updateField}
+              onDelete={deleteField}
+              isDragging={dragIdx === fi}
+              isOver={overIdx === fi && dragIdx !== null && dragIdx !== fi}
+              dragHandleProps={{
+                onTouchStart: (e) => handleTouchStart(e, fi),
+                onMouseDown:  (e) => handleMouseDown(e, fi),
+              }}
+            />
+          </div>
         ))}
         <button type="button" onClick={addField}
           style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', marginTop:section.fields.length?'var(--sp-2)':0 }}>
