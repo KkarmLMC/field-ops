@@ -6,7 +6,7 @@
  * No code deploy required — forms update live across the app.
  */
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Plus, Trash, ArrowUp, ArrowDown, FloppyDisk,
   PencilSimple, Eye, CaretRight, CheckCircle, SpinnerGap, X,
@@ -238,13 +238,25 @@ function FormEditor({ form, onSave, onCancel }) {
 // ─── Main Form Builder page ───────────────────────────────────────────────────
 export default function FormBuilder() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [forms,    setForms]    = useState([])
   const [loading,  setLoading]  = useState(true)
   const [editing,  setEditing]  = useState(null)
 
   useEffect(() => {
     db.from('form_definitions').select('*').eq('active', true).order('sort_order', { ascending:true })
-      .then(({ data }) => { if(data) setForms(data); setLoading(false) })
+      .then(({ data }) => {
+        if (data) {
+          setForms(data)
+          // Auto-open editor if ?slug= param is present (coming from Preview button)
+          const slug = searchParams.get('slug')
+          if (slug) {
+            const target = data.find(f => f.slug === slug)
+            if (target) setEditing(target)
+          }
+        }
+        setLoading(false)
+      })
       .catch(() => setLoading(false))
   }, [])
 

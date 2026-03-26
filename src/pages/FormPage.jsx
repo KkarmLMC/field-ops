@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { CheckCircle, SpinnerGap, Eye } from '@phosphor-icons/react'
+import { CheckCircle, SpinnerGap, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import FormEngine, { validateSchema } from '../components/FormEngine.jsx'
 
@@ -117,12 +117,18 @@ export default function FormPage() {
   // ── Form ──────────────────────────────────────────────────────────────────
   return (
     <div className="page-content fade-in">
-      {/* Ref tag */}
-      {schema.ref && (
-        <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', marginBottom:'var(--sp-4)', textTransform:'uppercase', letterSpacing:'0.08em' }}>
-          {schema.ref}
-        </div>
-      )}
+      {/* Action bar — ref tag + Edit Form button */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-4)' }}>
+        {schema.ref
+          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{schema.ref}</div>
+          : <div />
+        }
+        <button
+          onClick={() => navigate(`/forms/builder?slug=${formType}`)}
+          style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px solid var(--border-l)', fontSize:'var(--fs-xs)', color:'var(--text-2)', background:'var(--surface-raised)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          ✎ Edit Form
+        </button>
+      </div>
 
       {/* Engine renders all sections */}
       <FormEngine
