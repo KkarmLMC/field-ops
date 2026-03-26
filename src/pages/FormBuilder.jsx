@@ -240,15 +240,15 @@ function FormEditor({ form, onSave, onCancel }) {
 export default function FormBuilder() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { isManager } = useRole()
+  const { isManagement } = useRole()
   const [forms,    setForms]    = useState([])
   const [loading,  setLoading]  = useState(true)
   const [editing,  setEditing]  = useState(null)
 
   // Redirect non-managers away
   useEffect(() => {
-    if (!isManager) navigate('/forms', { replace: true })
-  }, [isManager])
+    if (!isManagement) navigate('/forms', { replace: true })
+  }, [isManagement])
 
   useEffect(() => {
     db.from('form_definitions').select('*').eq('active', true).order('sort_order', { ascending:true })

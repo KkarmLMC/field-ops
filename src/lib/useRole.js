@@ -1,26 +1,24 @@
 /**
- * useRole — lightweight role system for Field Ops
- *
- * Current implementation: role stored in localStorage.
- * When Supabase Auth is added, replace the getRole() function
- * with a Supabase session lookup — every component using this
- * hook will update automatically with zero other changes.
+ * useRole — role system for Field Ops
  *
  * Roles:
- *   'technician'  — field staff, default role
- *   'manager'     — can edit forms, access builder, manage settings
- *   'admin'       — full access (same as manager for now)
+ *   'field'      — field technicians, default role
+ *   'management' — managers, can edit forms, access builder, manage settings
+ *
+ * Current implementation: role stored in localStorage.
+ * When Supabase Auth is added, replace getRole() with a session
+ * lookup — every gated component updates automatically.
  *
  * Usage:
- *   const { role, isManager, isTech } = useRole()
- *   { isManager && <button>Edit Form</button> }
+ *   const { role, isManagement, isField } = useRole()
+ *   { isManagement && <button>Edit Form</button> }
  */
 
 import { useState, useEffect } from 'react'
 
-const ROLE_KEY = 'fieldops_role'
-const VALID_ROLES = ['technician', 'manager', 'admin']
-const DEFAULT_ROLE = 'technician'
+const ROLE_KEY    = 'fieldops_role'
+const VALID_ROLES = ['field', 'management']
+const DEFAULT_ROLE = 'field'
 
 export function getRole() {
   try {
@@ -40,7 +38,6 @@ export function setRole(role) {
 export default function useRole() {
   const [role, setRoleState] = useState(getRole)
 
-  // Sync across tabs if role changes elsewhere
   useEffect(() => {
     const handler = (e) => {
       if (e.key === ROLE_KEY) setRoleState(getRole())
@@ -51,8 +48,7 @@ export default function useRole() {
 
   return {
     role,
-    isManager: role === 'manager' || role === 'admin',
-    isAdmin:   role === 'admin',
-    isTech:    role === 'technician',
+    isManagement: role === 'management',
+    isField:      role === 'field',
   }
 }

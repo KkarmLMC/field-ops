@@ -9,7 +9,7 @@ export default function FormPage() {
   const { formType } = useParams()
   const navigate     = useNavigate()
 
-  const { role, isManager } = useRole()
+  const { role, isManagement } = useRole()
   const [loading,    setLoading]    = useState(true)
   const [values,     setValues]     = useState({ date_completed: new Date().toISOString().slice(0,10) })
   const [errors,     setErrors]     = useState({})
@@ -124,7 +124,7 @@ export default function FormPage() {
           ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{schema.ref}</div>
           : <div />
         }
-        {isManager
+        {isManagement
           ? <button
               onClick={() => navigate(`/forms/builder?slug=${formType}`)}
               style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px solid var(--border-l)', fontSize:'var(--fs-xs)', color:'var(--text-2)', background:'var(--surface-raised)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>

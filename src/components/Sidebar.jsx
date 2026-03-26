@@ -135,7 +135,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
   const navigate   = useNavigate()
   const location   = useLocation()
-  const { role, isManager } = useRole()
+  const { role, isManagement } = useRole()
   const [, forceUpdate] = useState(0)
 
   const goTo = (path) => {
@@ -148,14 +148,14 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
     if (item.path === '/forms' && item.children) {
       return {
         ...item,
-        children: item.children.filter(c => c.path !== '/forms/builder' || isManager),
+        children: item.children.filter(c => c.path !== '/forms/builder' || isManagement),
       }
     }
     return item
   })
 
   const cycleRole = () => {
-    const next = role === 'technician' ? 'manager' : 'technician'
+    const next = role === 'field' ? 'management' : 'field'
     setRole(next)
     forceUpdate(n => n + 1)
   }
@@ -209,8 +209,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
             <UserCircle size={17} style={{ flexShrink: 0 }} />
             {!collapsed && (
               <span className="sidebar-item-label" style={{ display:'flex', alignItems:'center', gap:'0.375rem' }}>
-                <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', padding:'0.1rem 0.375rem', borderRadius:'var(--r-full)', background: isManager ? 'rgba(4,36,92,0.12)' : 'rgba(0,0,0,0.06)', color: isManager ? 'var(--navy)' : 'var(--text-3)' }}>
-                  {isManager ? 'Manager' : 'Technician'}
+                <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', padding:'0.1rem 0.375rem', borderRadius:'var(--r-full)', background: isManagement ? 'rgba(4,36,92,0.12)' : 'rgba(0,0,0,0.06)', color: isManagement ? 'var(--navy)' : 'var(--text-3)' }}>
+                  {isManagement ? 'Management' : 'Field'}
                 </span>
               </span>
             )}
