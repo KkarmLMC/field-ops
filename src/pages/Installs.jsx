@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SectionDivider from '../components/SectionDivider'
 import {
-  MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
+  Lightning, Ruler, Seal, ClipboardText,
   CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
@@ -161,20 +161,14 @@ function KanbanColumn({ col, jobs, bc, onCardClick }) {
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function Installs() {
   const navigate = useNavigate()
-  const [branch, setBranch]         = useState('lm')
-  const [search, setSearch]         = useState('')
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [branch, setBranch] = useState('lm')
 
   const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
 
-  const lmCount         = PROJECTS.filter(p => p.branch === 'lm').length
-  const boltCount       = PROJECTS.filter(p => p.branch === 'bolt').length
+  const lmCount   = PROJECTS.filter(p => p.branch === 'lm').length
+  const boltCount = PROJECTS.filter(p => p.branch === 'bolt').length
 
-  // All projects for this branch, optionally filtered by search
-  const branchJobs = PROJECTS.filter(p =>
-    p.branch === branch &&
-    (search === '' || p.name.toLowerCase().includes(search.toLowerCase()))
-  )
+  const branchJobs = PROJECTS.filter(p => p.branch === branch)
 
   return (
     <div className="page-content fade-in">
@@ -190,31 +184,6 @@ export default function Installs() {
         lmCount={lmCount}
         boltCount={boltCount}
       />
-
-      {/* Search bar */}
-      <div className="kanban-toolbar">
-        <div
-          className={`list-search-wrap${searchOpen ? ' list-search-wrap--open' : ''}`}
-          onClick={() => { if (!searchOpen) setSearchOpen(true) }}
-        >
-          <span className="list-search-icon"><MagnifyingGlass size={15} /></span>
-          <input
-            placeholder="Search installations…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            onBlur={() => { if (!search) setSearchOpen(false) }}
-            ref={el => { if (searchOpen && el) el.focus() }}
-          />
-          {search && (
-            <button
-              className="search-clear-btn"
-              onClick={e => { e.stopPropagation(); setSearch(''); setSearchOpen(false) }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
 
       {/* Kanban board */}
       <div className="kanban-board">
