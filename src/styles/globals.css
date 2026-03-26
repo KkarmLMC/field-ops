@@ -2892,10 +2892,9 @@ textarea { resize: vertical; }
 /* ── Tab button ──────────────────────────────────────────────────────────────── */
 
 .bottom-nav__tab {
-  /* Slightly less than equal division so the last visible tab peeks,
-     hinting the bar is scrollable. 5 tabs × ~18.5% = ~92.5% total — last item bleeds. */
-  flex: 0 0 18.5%;
-  min-width: 4.25rem;
+  /* 21% width = ~4.75 tabs visible — last item clearly half-cut, unmistakably hinting scroll */
+  flex: 0 0 21%;
+  min-width: 4.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
