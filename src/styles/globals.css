@@ -1546,3 +1546,15 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 /* ─── DFL: Jobsite locked state ────────────────────────────────── */
 .dfl-jobsite-trigger.locked { cursor: not-allowed; opacity: 0.65; background: var(--bg); }
 .dfl-jobsite-placeholder--hint { font-style: italic; color: var(--text-3) !important; }
+
+/* ─── Report Forms: responsive category grid ───────────────────── */
+.form-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-md);
+}
+@media (max-width: 640px) {
+  .form-catalog-grid {
+    grid-template-columns: 1fr;
+  }
+}

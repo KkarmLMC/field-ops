@@ -929,8 +929,8 @@ export default function Forms() {
 
         <BranchTabs active={branch} onChange={setBranch} />
 
-        {/* 3-column category grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)' }}>
+        {/* 3-column category grid → 1-column on mobile */}
+        <div className="form-catalog-grid">
           <CategoryCard title="Completion Reports" forms={catalog.completion} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
           <CategoryCard title="Inspection Reports" forms={catalog.inspection} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
           <CategoryCard title="Site Surveys"       forms={catalog.survey}     branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
