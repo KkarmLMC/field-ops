@@ -51,7 +51,7 @@ const FIELD_TABS = [
     id:    'home',
     path:  '/dashboard',
     Icon:  SquaresFour,
-    label: 'Home',
+    label: 'Overview',
   },
   {
     id:    'log',
@@ -83,7 +83,7 @@ const MGMT_TABS = [
     id:    'home',
     path:  '/dashboard',
     Icon:  SquaresFour,
-    label: 'Home',
+    label: 'Overview',
   },
   {
     id:    'installs',
