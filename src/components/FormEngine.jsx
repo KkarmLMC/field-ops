@@ -153,7 +153,7 @@ function SignatureModal({ onSave, onClose }) {
 }
 
 // ─── Signature Pad ────────────────────────────────────────────────────────────
-function SigPad({ value, onChange, readOnly }) {
+export function SigPad({ value, onChange, readOnly }) {
   const [modalOpen, setModalOpen] = useState(false)
 
   // value shape: { sig: base64, signedAt: ISO } or null

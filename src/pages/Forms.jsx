@@ -12,6 +12,8 @@ import { TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { useRef } from 'react'
+import { SigPad } from '../components/FormEngine.jsx'
 
 export const COMPLETION_TYPES = {
   'installation': {
@@ -396,45 +398,6 @@ Object.assign(COMPLETION_TYPES, {
   'midstream-misc':       { label: 'Other Miscellaneous Areas',           short: 'Misc Areas',     icon: MagnifyingGlass, color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Other miscellaneous areas inspection', ref: 'NFPA 780', fields: [ { id: 'area_desc', label: 'Area Description', type: 'text', required: true }, { id: 'condition', label: 'Condition', type: 'select', options: ['Good', 'Fair - Monitor', 'Poor - Repair Required'] }, { id: 'notes', label: 'Notes', type: 'textarea' } ] },
   'midstream-summary':    { label: 'Recommendations Summary',             short: 'Recommendations',icon: ClipboardText,   color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Summary of findings and recommendations', ref: 'NFPA 780', fields: [ { id: 'overall_result', label: 'Overall Assessment', type: 'select', options: ['Satisfactory', 'Satisfactory with Conditions', 'Unsatisfactory'], required: true }, { id: 'priority_repairs', label: 'Priority Repairs Required', type: 'boolean' }, { id: 'recommendations', label: 'Recommendations', type: 'textarea', required: true }, { id: 'next_inspection', label: 'Next Inspection Due', type: 'date' } ] },
 })
-
-// ─── Signature pad ─────────────────────────────────────────────────────────────
-import { useRef } from 'react'
-
-function SigPad({ value, onChange }) {
-  const canvasRef = useRef(null)
-  const drawing   = useRef(false)
-
-  useEffect(() => {
-    if (value && canvasRef.current) {
-      const img = new Image()
-      img.onload = () => canvasRef.current?.getContext('2d')?.drawImage(img, 0, 0)
-      img.src = value
-    }
-  }, [])
-
-  const getPos = (e, canvas) => {
-    const rect = canvas.getBoundingClientRect()
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height
-    if (e.touches) return { x: (e.touches[0].clientX - rect.left)*sx, y: (e.touches[0].clientY - rect.top)*sy }
-    return { x: (e.clientX - rect.left)*sx, y: (e.clientY - rect.top)*sy }
-  }
-  const start = (e) => { e.preventDefault(); drawing.current = true; const p = getPos(e, canvasRef.current); const ctx = canvasRef.current.getContext('2d'); ctx.beginPath(); ctx.moveTo(p.x, p.y) }
-  const move  = (e) => { e.preventDefault(); if (!drawing.current) return; const p = getPos(e, canvasRef.current); const ctx = canvasRef.current.getContext('2d'); ctx.lineWidth=2; ctx.lineCap='round'; ctx.strokeStyle='#374151'; ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x, p.y) }
-  const end   = (e) => { e.preventDefault(); if (!drawing.current) return; drawing.current=false; onChange(canvasRef.current.toDataURL('image/png')) }
-  const clear = () => { canvasRef.current.getContext('2d').clearRect(0,0,480,80); onChange(null) }
-
-  return (
-    <div style={{ position:'relative', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', overflow:'hidden' }}>
-      <canvas ref={canvasRef} width={480} height={100}
-        onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
-        onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:'6rem', display:'block', background:'#FAFAFA', cursor:'crosshair', touchAction:'none' }}
-      />
-      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-3)', fontSize:'var(--fs-sm)', pointerEvents:'none', fontFamily:'var(--font)' }}>Sign here</div>}
-      {value  && <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'rgba(0,0,0,0.45)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'#fff', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}><Trash size={10}/> Clear</button>}
-    </div>
-  )
-}
 
 // ─── PDF generator ─────────────────────────────────────────────────────────────
 async function generateCompletionPdf(formType, formData) {

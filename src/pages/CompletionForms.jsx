@@ -10,6 +10,7 @@ import { db } from '../lib/supabase.js'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { SigPad } from '../components/FormEngine.jsx'
 
 // ─── Form type config ──────────────────────────────────────────────────────────
 export const COMPLETION_TYPES = {
@@ -83,45 +84,6 @@ export const COMPLETION_TYPES = {
       { id: 'cert_issued',     label: 'Test Certificate Issued',      type: 'boolean' },
     ],
   },
-}
-
-// ─── Signature Pad ─────────────────────────────────────────────────────────────
-
-function SigPad({ value, onChange }) {
-  const canvasRef = useRef(null)
-  const drawing   = useRef(false)
-
-  useEffect(() => {
-    if (value && canvasRef.current) {
-      const img = new Image()
-      img.onload = () => canvasRef.current?.getContext('2d')?.drawImage(img, 0, 0)
-      img.src = value
-    }
-  }, [])
-
-  const getPos = (e, canvas) => {
-    const rect = canvas.getBoundingClientRect()
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height
-    if (e.touches) return { x: (e.touches[0].clientX - rect.left) * sx, y: (e.touches[0].clientY - rect.top) * sy }
-    return { x: (e.clientX - rect.left) * sx, y: (e.clientY - rect.top) * sy }
-  }
-
-  const start = (e) => { e.preventDefault(); drawing.current = true; const p = getPos(e, canvasRef.current); const ctx = canvasRef.current.getContext('2d'); ctx.beginPath(); ctx.moveTo(p.x, p.y) }
-  const move  = (e) => { e.preventDefault(); if (!drawing.current) return; const p = getPos(e, canvasRef.current); const ctx = canvasRef.current.getContext('2d'); ctx.lineWidth=2; ctx.lineCap='round'; ctx.strokeStyle='#c8d4e0'; ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x, p.y) }
-  const end   = (e) => { e.preventDefault(); if (!drawing.current) return; drawing.current = false; onChange(canvasRef.current.toDataURL('image/png')) }
-  const clear = () => { canvasRef.current.getContext('2d').clearRect(0, 0, 480, 80); onChange(null) }
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <canvas ref={canvasRef} width={480} height={80}
-        onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
-        onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:80, borderRadius:'var(--r-sm)', display:'block', border:'1px solid var(--border)', background:'var(--bg-3)', cursor:'crosshair', touchAction:'none' }}
-      />
-      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-muted)', fontSize:'var(--fs-base)', pointerEvents:'none', fontFamily:'var(--mono)' }}>Sign here</div>}
-      {value && <button type="button" onClick={clear} style={{ position:'absolute', top:4, right:4, background:'var(--bg-4)', border:'1px solid var(--border)', borderRadius:3, padding:'2px 6px', fontSize:'var(--fs-xs)', color:'var(--text-dim)', display:'flex', alignItems:'center', gap:3 }}><Trash size={10} /> Clear</button>}
-    </div>
-  )
 }
 
 // ─── PDF Generator ─────────────────────────────────────────────────────────────
