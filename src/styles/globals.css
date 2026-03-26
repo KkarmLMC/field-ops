@@ -2892,8 +2892,9 @@ textarea { resize: vertical; }
 /* ── Tab button ──────────────────────────────────────────────────────────────── */
 
 .bottom-nav__tab {
-  /* 21% width = ~4.75 tabs visible — last item clearly half-cut, unmistakably hinting scroll */
-  flex: 0 0 21%;
+  /* 4 full tabs + half of 5th visible = unmistakable scroll hint.
+     4.5 tabs × 22.2% ≈ 100%, so the 5th tab is cut cleanly in half. */
+  flex: 0 0 22%;
   min-width: 4.5rem;
   display: flex;
   flex-direction: column;

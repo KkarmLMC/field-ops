@@ -125,8 +125,6 @@ export default function BottomNav() {
       </div>
 
       {/* Edge fades — hint that the bar is scrollable */}
-      <div className="bottom-nav__fade bottom-nav__fade--left"  />
-      <div className="bottom-nav__fade bottom-nav__fade--right" />
     </nav>
   )
 }
