@@ -4,7 +4,7 @@ import {
   X, User, Users, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
   ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
-  Crosshair, SpinnerGap,
+  Crosshair, SpinnerGap, BookOpen,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { FORM_TEMPLATES, PROJECTS, TECHNICIANS } from '../data/mockData.js'
@@ -1551,6 +1551,21 @@ function SignaturePad({ signed, onSign, onClear }) {
 }
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
+// ─── Section divider ──────────────────────────────────────────────────────────
+function SectionDivider({ label, accent = 'var(--text-3)' }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '2px 0' }}>
+      <span style={{
+        fontSize: 10, fontWeight: 700, letterSpacing: '0.1em',
+        textTransform: 'uppercase', color: accent, flexShrink: 0,
+      }}>
+        {label}
+      </span>
+      <div style={{ flex: 1, height: 1, background: 'var(--border-l)' }} />
+    </div>
+  )
+}
+
 export default function DailyFieldLog() {
   const [branch, setBranch]           = useState('lm')
   const [formMode, setFormMode]       = useState(null) // null | 'part1' | 'part2'
@@ -1667,6 +1682,9 @@ export default function DailyFieldLog() {
   return (
     <div className="page-content fade-in">
 
+      {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
+      <SectionDivider label="Management Overview" accent="var(--navy)" />
+
       <BranchTabs
         active={branch}
         onChange={setBranch}
@@ -1678,10 +1696,10 @@ export default function DailyFieldLog() {
       {/* Summary strip */}
       <div className="dfl-summary-strip">
         {[
-          { label: 'Total Entries',     value: reports.length,         icon: <FileText size={15} weight="bold" /> },
-          { label: 'Hours Logged',      value: `${totalHours}h`,       icon: <Clock size={15} weight="bold" />    },
-          { label: 'Reviewed',          value: reviewedCount,           icon: <CheckCircle size={15} weight="bold" /> },
-          { label: 'Drafts In Progress', value: draftCount,             icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
+          { label: 'Total Entries',      value: reports.length,   icon: <FileText size={15} weight="bold" /> },
+          { label: 'Hours Logged',       value: `${totalHours}h`, icon: <Clock size={15} weight="bold" /> },
+          { label: 'Reviewed',           value: reviewedCount,    icon: <CheckCircle size={15} weight="bold" /> },
+          { label: 'Drafts In Progress', value: draftCount,       icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
         ].map(s => (
           <div
             key={s.label}
@@ -1728,10 +1746,7 @@ export default function DailyFieldLog() {
             <Clock size={14} />
             Field Log Entries
           </span>
-          <button className="dfl-new-entry-btn" onClick={() => setFormMode('part1')}>
-            <Plus size={13} weight="bold" />
-            New Entry
-          </button>
+          <span className="dash-card-meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
         </div>
 
         <div>
@@ -1739,13 +1754,6 @@ export default function DailyFieldLog() {
             <div className="dfl-empty-state">
               <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
               <div>No log entries for this branch</div>
-              <button
-                className="dfl-empty-cta"
-                style={{ color: bc.bgActive }}
-                onClick={() => setFormMode('part1')}
-              >
-                Create first entry
-              </button>
             </div>
           ) : (
             <div className="dfl-entries-list">
@@ -1760,6 +1768,31 @@ export default function DailyFieldLog() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
+      <SectionDivider label="Field" accent="var(--orange)" />
+
+      {/* Field quick actions */}
+      <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+        <button
+          className="btn btn-primary"
+          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+          onClick={() => setFormMode('part1')}
+        >
+          <Plus size={14} weight="bold" />
+          New Daily Log
+        </button>
+        {draftCount > 0 && (
+          <button
+            className="btn btn-secondary"
+            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            onClick={() => openCloseOut(reports.find(r => r.status === 'Draft')?.id)}
+          >
+            <ArrowsClockwise size={14} weight="bold" />
+            Close Out Day ({draftCount})
+          </button>
+        )}
       </div>
 
       {/* Part 1 Form */}
