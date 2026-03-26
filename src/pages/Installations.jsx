@@ -51,7 +51,7 @@ function SectionDivider({ label, accent = 'var(--text-3)', title }) {
       {title && (
         <>
           <span style={{ ...textStyle, color: 'var(--text-1)' }}>{title}</span>
-          <span style={{ color: 'var(--border-l)', fontSize: 10, flexShrink: 0 }}>·</span>
+          <span style={{ color: 'var(--text-3)', fontSize: 10, flexShrink: 0 }}>—</span>
         </>
       )}
       <span style={{ ...textStyle, color: accent }}>{label}</span>
