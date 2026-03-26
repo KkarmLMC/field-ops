@@ -92,7 +92,7 @@ function MgmtRow({ p, navigate }) {
       <div className="dash-job-info" style={{ gap: 3 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <div className="dash-job-name">{p.name}</div>
-          {needsReview && (
+          {needsReview && p.stage !== 'pending-review' && (
             <span style={{
               fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
               background: '#2563EB', color: '#fff', padding: '2px 5px', borderRadius: 3,
