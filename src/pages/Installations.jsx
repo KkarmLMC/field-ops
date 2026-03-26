@@ -191,14 +191,14 @@ function FieldRow({ p, navigate }) {
       {/* Right: action */}
       <div style={{ display: 'flex', flexDirection: 'row', gap: 6, flexShrink: 0, alignItems: 'center' }}>
         <button
-          className="btn btn-primary"
+          className="btn btn-navy"
           style={{ fontSize: 13, padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
           <ClipboardText size={14} /> DFL
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-navy"
           style={{ fontSize: 13, padding: '8px 14px', whiteSpace: 'nowrap' }}
           onClick={e => { e.stopPropagation(); navigate(`/installations/${p.id}`) }}
         >
@@ -426,7 +426,7 @@ export default function Installations() {
         {/* Field quick actions */}
         <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
           <button
-            className="btn btn-primary"
+            className="btn btn-navy"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => navigate('/daily-field-log')}
           >
