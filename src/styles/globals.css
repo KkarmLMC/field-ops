@@ -563,18 +563,22 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   }
   .branch-tabs-mobile-track {
     display: flex;
-    overflow-x: auto;
+    overflow-x: scroll;
     scroll-snap-type: x mandatory;
-    scroll-padding-left: var(--content-pad);
-    -webkit-overflow-scrolling: touch;
-    gap: var(--gap-md);
-    padding: 4px var(--content-pad) var(--sp-2);
+    /* No gap — each card is exactly 100vw so snap distance is always 100vw */
+    gap: 0;
+    padding: 4px 0 var(--sp-2);
     scrollbar-width: none;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
   .branch-tabs-mobile-track .branch-card {
-    flex: 0 0 calc(100vw - (var(--content-pad) * 2));
-    width: calc(100vw - (var(--content-pad) * 2));
+    /* Full viewport width so snap always lands perfectly */
+    flex: 0 0 100vw;
+    width: 100vw;
+    box-sizing: border-box;
+    /* Visual inset via padding instead of gap/margin */
+    padding-left: var(--content-pad);
+    padding-right: var(--content-pad);
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
