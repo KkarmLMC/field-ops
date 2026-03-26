@@ -8,14 +8,6 @@ import {
 import BranchTabs from '../components/BranchTabs'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
-import PageSubNav from '../components/PageSubNav'
-const INSTALL_SUB_NAV = [
-  { path: '/installations',               label: 'All Projects' },
-  { path: '/installations/pipeline',      label: 'Pipeline'     },
-  { path: '/installations/field-logs',    label: 'Field Logs'   },
-  { path: '/installations/field-reports', label: 'Reports'      },
-]
-
 // ─── Config ────────────────────────────────────────────────────────────────────
 const TYPE_ICON = {
   installation:  Lightning,
@@ -178,8 +170,6 @@ export default function Installs() {
   const branchJobs = PROJECTS.filter(p => p.branch === branch)
 
   return (
-    <>
-      <PageSubNav items={INSTALL_SUB_NAV} />
     <div className="page-content fade-in">
       <div className="page-stack">
 
@@ -212,6 +202,5 @@ export default function Installs() {
 
       </div>
     </div>
-    </>
   )
 }

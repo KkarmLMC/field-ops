@@ -1,19 +1,46 @@
 /**
- * PageSubNav — horizontal sub-navigation tabs shown at the top of a page
- * when that page has child routes.
- *
- * Mobile only — on desktop the sidebar sub-nav handles this.
- * Appears below the mobile header, above page content.
- *
- * Props:
- *   items  — [{ path, label }]
+ * PageSubNav — fixed sub-navigation bar sitting just above the bottom nav.
+ * Rendered once in App.jsx, reads the current route and shows the right items.
+ * Mobile-only (hidden ≥768px).
  */
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-export default function PageSubNav({ items }) {
+// ─── Sub-nav configs keyed by parent route prefix ─────────────────────────────
+const SUB_NAV_MAP = {
+  '/installations': [
+    { path: '/installations',               label: 'All Projects' },
+    { path: '/installations/pipeline',      label: 'Pipeline'     },
+    { path: '/installations/field-logs',    label: 'Field Logs'   },
+    { path: '/installations/field-reports', label: 'Reports'      },
+  ],
+  '/forms': [
+    { path: '/forms',         label: 'Report Forms' },
+    { path: '/forms/builder', label: 'Form Builder' },
+  ],
+}
+
+// ─── Routes where sub-nav should not appear ───────────────────────────────────
+const SUPPRESS = [
+  '/forms/builder', // Form builder manages its own full-screen UI
+]
+
+function getSubNav(pathname) {
+  if (SUPPRESS.includes(pathname)) return null
+  for (const [prefix, items] of Object.entries(SUB_NAV_MAP)) {
+    if (pathname === prefix || pathname.startsWith(prefix + '/')) {
+      return items
+    }
+  }
+  return null
+}
+
+export default function PageSubNav() {
   const navigate = useNavigate()
   const location = useLocation()
+
+  const items = getSubNav(location.pathname)
+  if (!items) return null
 
   return (
     <div className="page-sub-nav">

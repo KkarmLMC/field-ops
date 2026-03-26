@@ -4,6 +4,7 @@ import { ArrowLeft } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
 import BottomNav     from './components/BottomNav'
+import PageSubNav    from './components/PageSubNav'
 import { lazy, Suspense } from 'react'
 
 // ─── Lazy-loaded page chunks — each route downloads only when first visited ───
@@ -203,6 +204,7 @@ export default function App() {
         </PageTransition>
       </div>
       <BottomNav />
+      <PageSubNav />
     </div>
   )
 }

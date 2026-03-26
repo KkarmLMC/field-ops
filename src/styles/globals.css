@@ -2987,7 +2987,8 @@ textarea { resize: vertical; }
 
 /* =============================================================================
    PAGE SUB-NAV  (.page-sub-nav)
-   Horizontal tab strip shown at the top of pages with child routes.
+   Fixed bar sitting just above the bottom nav bar.
+   Appears on pages that have child routes (Installations, Forms).
    Mobile-only — desktop uses the sidebar sub-nav.
    ============================================================================= */
 
@@ -2998,17 +2999,29 @@ textarea { resize: vertical; }
 @media (max-width: 767px) {
   .page-sub-nav {
     display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    /* Sit directly on top of the bottom nav */
+    bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+    z-index: 149;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     background: var(--surface);
-    border-bottom: 1px solid var(--border-l);
+    border-top: 1px solid var(--border-l);
     padding: 0 var(--sp-4);
-    flex-shrink: 0;
     gap: var(--sp-1);
+    /* Subtle shadow to separate from bottom nav */
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
   }
 
   .page-sub-nav::-webkit-scrollbar { display: none; }
+
+  /* When sub-nav is visible, push page content up so it doesn't hide behind both bars */
+  .has-sub-nav .page-content {
+    padding-bottom: calc(var(--bottom-nav-h) + 2.75rem + env(safe-area-inset-bottom) + var(--sp-4));
+  }
 }
 
 /* ── Tab item ────────────────────────────────────────────────────────────────── */

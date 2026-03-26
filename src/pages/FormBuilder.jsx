@@ -13,12 +13,6 @@ import {
   DotsSixVertical,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import PageSubNav from '../components/PageSubNav'
-const FORMS_SUB_NAV = [
-  { path: '/forms',         label: 'Report Forms' },
-  { path: '/forms/builder', label: 'Form Builder' },
-]
-
 const FIELD_TYPES = [
   { value: 'text',          label: 'Text' },
   { value: 'number',        label: 'Number' },
@@ -303,8 +297,6 @@ function TypePickerSheet({ onPick, onClose }) {
     </>
   )
 }
-
-// ─── Section Editor ───────────────────────────────────────────────────────────
 function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete, onMoveSection }) {
   const [showTypePicker, setShowTypePicker] = useState(false)
 
@@ -484,9 +476,7 @@ export default function FormBuilder() {
   if (editing) return <FormEditor form={editing} onSave={handleSave} onCancel={()=>setEditing(null)} />
 
   return (
-    <>
-      <PageSubNav items={FORMS_SUB_NAV} />
-      <div className="page-content fade-in">
+    <div className="page-content fade-in">
       <div className="card">
         <div className="card-header">
           <span className="card-title"><span className="card-dot" style={{ background:'var(--navy)' }}/>Form Builder</span>
@@ -519,6 +509,5 @@ export default function FormBuilder() {
         ))}
       </div>
     </div>
-    </>
   )
 }
