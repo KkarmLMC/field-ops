@@ -38,14 +38,16 @@ function slugify(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
-// ─── Touch/mouse drag-to-reorder hook ────────────────────────────────────────
-// Works on both mobile (touch) and desktop (mouse).
-// Only the handle triggers drag — rest of the row is scrollable.
+// ─── Drag-to-reorder with floating ghost ────────────────────────────────────
+// Ghost element follows finger/cursor. Drop zone shows dashed insert line.
+// Works on both touch (mobile) and mouse (desktop).
 function useDragReorder(items, onReorder) {
-  const [dragIdx,   setDragIdx]   = useState(null)
-  const [overIdx,   setOverIdx]   = useState(null)
-  const startY     = useRef(0)
-  const rowRefs    = useRef([])
+  const [dragIdx,    setDragIdx]    = useState(null)
+  const [overIdx,    setOverIdx]    = useState(null)
+  const [ghostPos,   setGhostPos]   = useState({ x: 0, y: 0 })
+  const [ghostLabel, setGhostLabel] = useState('')
+  const rowRefs  = useRef([])
+  const dragRef  = useRef(null)   // tracks dragIdx without stale closure
 
   const getRowAtY = (y) => {
     for (let i = 0; i < rowRefs.current.length; i++) {
@@ -57,53 +59,56 @@ function useDragReorder(items, onReorder) {
     return null
   }
 
-  const handleTouchStart = (e, idx) => {
-    e.preventDefault()             // stop page scroll while dragging
-    startY.current = e.touches[0].clientY
+  const startDrag = (idx, x, y) => {
+    dragRef.current = idx
     setDragIdx(idx)
     setOverIdx(idx)
+    setGhostPos({ x, y })
+    setGhostLabel(items[idx]?.label || items[idx]?.type || 'Field')
   }
 
-  const handleTouchMove = (e) => {
-    e.preventDefault()
-    const y = e.touches[0].clientY
+  const moveDrag = (x, y) => {
+    setGhostPos({ x, y })
     const over = getRowAtY(y)
     if (over !== null) setOverIdx(over)
   }
 
-  const handleTouchEnd = () => {
-    if (dragIdx !== null && overIdx !== null && dragIdx !== overIdx) {
-      const next = [...items]
-      const [moved] = next.splice(dragIdx, 1)
-      next.splice(overIdx, 0, moved)
-      onReorder(next)
-    }
+  const endDrag = () => {
+    const src = dragRef.current
+    setOverIdx(curr => {
+      if (src !== null && curr !== null && src !== curr) {
+        const next = [...items]
+        const [moved] = next.splice(src, 1)
+        next.splice(curr, 0, moved)
+        onReorder(next)
+      }
+      return null
+    })
+    dragRef.current = null
     setDragIdx(null)
-    setOverIdx(null)
+    setGhostLabel('')
   }
 
-  // Mouse fallback for desktop
+  // Touch handlers
+  const handleTouchStart = (e, idx) => {
+    e.preventDefault()
+    const t = e.touches[0]
+    startDrag(idx, t.clientX, t.clientY)
+  }
+  const handleTouchMove = (e) => {
+    e.preventDefault()
+    const t = e.touches[0]
+    moveDrag(t.clientX, t.clientY)
+  }
+  const handleTouchEnd = () => endDrag()
+
+  // Mouse handlers
   const handleMouseDown = (e, idx) => {
     e.preventDefault()
-    setDragIdx(idx)
-    setOverIdx(idx)
-    const onMove = (me) => {
-      const over = getRowAtY(me.clientY)
-      if (over !== null) setOverIdx(over)
-    }
-    const onUp = () => {
-      setDragIdx(prev => {
-        setOverIdx(curr => {
-          if (prev !== null && curr !== null && prev !== curr) {
-            const next = [...items]
-            const [moved] = next.splice(prev, 1)
-            next.splice(curr, 0, moved)
-            onReorder(next)
-          }
-          return null
-        })
-        return null
-      })
+    startDrag(idx, e.clientX, e.clientY)
+    const onMove = (me) => moveDrag(me.clientX, me.clientY)
+    const onUp   = () => {
+      endDrag()
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
     }
@@ -111,7 +116,44 @@ function useDragReorder(items, onReorder) {
     window.addEventListener('mouseup', onUp)
   }
 
-  return { dragIdx, overIdx, rowRefs, handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown }
+  return {
+    dragIdx, overIdx, ghostPos, ghostLabel,
+    rowRefs,
+    handleTouchStart, handleTouchMove, handleTouchEnd,
+    handleMouseDown,
+  }
+}
+
+// ─── Drag Ghost — floats under finger/cursor ──────────────────────────────────
+function DragGhost({ label, pos, visible }) {
+  if (!visible) return null
+  return (
+    <div style={{
+      position: 'fixed',
+      left: pos.x,
+      top: pos.y,
+      transform: 'translate(-50%, -50%) rotate(2deg)',
+      pointerEvents: 'none',
+      zIndex: 9999,
+      background: 'var(--navy)',
+      color: '#fff',
+      padding: 'var(--sp-2) var(--sp-4)',
+      borderRadius: 'var(--r-md)',
+      fontSize: 'var(--fs-sm)',
+      fontWeight: 600,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--sp-2)',
+      maxWidth: '16rem',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    }}>
+      <DotsSixVertical size={14} weight="bold" style={{ flexShrink: 0, opacity: 0.7 }} />
+      {label}
+    </div>
+  )
 }
 
 // ─── Field Editor row ─────────────────────────────────────────────────────────
@@ -120,85 +162,95 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
   const needsOptions = ['select','radio','checklist','checkbox-group'].includes(field.type)
 
   return (
-    <div
-      style={{
-        background: isOver ? 'var(--card-header-bg)' : 'var(--surface)',
-        border: `1px solid ${isOver ? 'var(--navy)' : 'var(--border-l)'}`,
-        borderRadius: 'var(--r-md)',
-        marginBottom: 'var(--sp-2)',
-        overflow: 'hidden',
-        opacity: isDragging ? 0.4 : 1,
-        transition: 'border-color var(--ease-fast), background var(--ease-fast), opacity var(--ease-fast)',
-      }}
-    >
-      {/* Collapsed header */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
-        {/* Drag handle — touch/mouse events only here */}
-        <div
-          {...dragHandleProps}
-          style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--sp-1)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none' }}
-          title="Hold and drag to reorder"
-        >
-          <DotsSixVertical size={18} weight="bold" />
-        </div>
-        <div style={{ flex:1, minWidth:0 }}>
-          <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
-            {field.label || <span style={{ color:'var(--text-3)', fontStyle:'italic' }}>Unlabelled field</span>}
-          </div>
-          <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)' }}>
-            {field.type}{field.required?' · required':''}{field.id?' · '+field.id:''}
-          </div>
-        </div>
-        <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--sp-1)' }}>
-          <PencilSimple size={14}/>
-        </button>
-        <button type="button" onClick={()=>onDelete(index)} style={{ color:'var(--red)', padding:'var(--sp-1)' }}>
-          <Trash size={14}/>
-        </button>
-      </div>
-
-      {/* Expanded editor */}
-      {expanded && (
-        <div style={{ padding:'var(--sp-3)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
-            <div>
-              <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Label *</label>
-              <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label" style={{ width:'100%' }}/>
-            </div>
-            <div>
-              <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Field ID</label>
-              <input value={field.id||''} onChange={e=>onChange(index,{...field, id:e.target.value})} placeholder="auto_generated" style={{ width:'100%', fontFamily:'var(--mono)' }}/>
-            </div>
-            <div>
-              <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Type</label>
-              <select value={field.type||'text'} onChange={e=>onChange(index,{...field, type:e.target.value})} style={{ width:'100%' }}>
-                {FIELD_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
-              </select>
-            </div>
-            <div style={{ display:'flex', flexDirection:'column', justifyContent:'flex-end' }}>
-              <label style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', cursor:'pointer' }}>
-                <input type="checkbox" checked={!!field.required} onChange={e=>onChange(index,{...field,required:e.target.checked})} />
-                <span style={{ fontSize:'var(--fs-sm)', color:'var(--text-2)' }}>Required</span>
-              </label>
-            </div>
-          </div>
-          <div>
-            <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Hint / Help text</label>
-            <input value={field.hint||''} onChange={e=>onChange(index,{...field,hint:e.target.value})} placeholder="Optional helper text shown below the label" style={{ width:'100%' }}/>
-          </div>
-          {needsOptions && (
-            <div>
-              <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Options (one per line)</label>
-              <textarea
-                value={(field.options||[]).join('\n')}
-                onChange={e=>onChange(index,{...field, options: e.target.value.split('\n').filter(Boolean)})}
-                rows={4} style={{ width:'100%', fontFamily:'var(--mono)', fontSize:'var(--fs-sm)', resize:'vertical' }}
-                placeholder="Option A&#10;Option B&#10;Option C"
-              />
-            </div>
-          )}
-        </div>
+    <div style={{ position: 'relative' }}>
+      {/* Drop indicator line above this row */}
+      {isOver && (
+        <div style={{
+          position: 'absolute', top: -2, left: 0, right: 0, height: 3,
+          background: 'var(--navy)', borderRadius: 2, zIndex: 10,
+          boxShadow: '0 0 6px rgba(4,36,92,0.4)',
+        }} />
       )}
+      <div
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--border-l)',
+          borderRadius: 'var(--r-md)',
+          marginBottom: 'var(--sp-2)',
+          overflow: 'hidden',
+          opacity: isDragging ? 0.35 : 1,
+          transition: 'opacity 0.15s',
+        }}
+      >
+        {/* Collapsed header */}
+        <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
+          {/* Drag handle */}
+          <div
+            {...dragHandleProps}
+            style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--sp-2)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none', WebkitUserSelect:'none' }}
+            title="Hold and drag to reorder"
+          >
+            <DotsSixVertical size={18} weight="bold" />
+          </div>
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+              {field.label || <span style={{ color:'var(--text-3)', fontStyle:'italic' }}>Unlabelled field</span>}
+            </div>
+            <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)' }}>
+              {field.type}{field.required?' · required':''}{field.id?' · '+field.id:''}
+            </div>
+          </div>
+          <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--sp-1)' }}>
+            <PencilSimple size={14}/>
+          </button>
+          <button type="button" onClick={()=>onDelete(index)} style={{ color:'var(--red)', padding:'var(--sp-1)' }}>
+            <Trash size={14}/>
+          </button>
+        </div>
+
+        {/* Expanded editor */}
+        {expanded && (
+          <div style={{ padding:'var(--sp-3)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
+              <div>
+                <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Label *</label>
+                <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label" style={{ width:'100%' }}/>
+              </div>
+              <div>
+                <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Field ID</label>
+                <input value={field.id||''} onChange={e=>onChange(index,{...field, id:e.target.value})} placeholder="auto_generated" style={{ width:'100%', fontFamily:'var(--mono)' }}/>
+              </div>
+              <div>
+                <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Type</label>
+                <select value={field.type||'text'} onChange={e=>onChange(index,{...field, type:e.target.value})} style={{ width:'100%' }}>
+                  {FIELD_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+              </div>
+              <div style={{ display:'flex', flexDirection:'column', justifyContent:'flex-end' }}>
+                <label style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', cursor:'pointer' }}>
+                  <input type="checkbox" checked={!!field.required} onChange={e=>onChange(index,{...field,required:e.target.checked})} />
+                  <span style={{ fontSize:'var(--fs-sm)', color:'var(--text-2)' }}>Required</span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Hint / Help text</label>
+              <input value={field.hint||''} onChange={e=>onChange(index,{...field,hint:e.target.value})} placeholder="Optional helper text shown below the label" style={{ width:'100%' }}/>
+            </div>
+            {needsOptions && (
+              <div>
+                <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Options (one per line)</label>
+                <textarea
+                  value={(field.options||[]).join('\n')}
+                  onChange={e=>onChange(index,{...field, options: e.target.value.split('\n').filter(Boolean)})}
+                  rows={4} style={{ width:'100%', fontFamily:'var(--mono)', fontSize:'var(--fs-sm)', resize:'vertical' }}
+                  placeholder="Option A&#10;Option B&#10;Option C"
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -270,6 +322,9 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
           <Plus size={13}/> Add Field
         </button>
       </div>
+
+      {/* Floating ghost follows finger/cursor */}
+      <DragGhost label={ghostLabel} pos={ghostPos} visible={dragIdx !== null} />
     </div>
   )
 }
