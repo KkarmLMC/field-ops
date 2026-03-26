@@ -221,10 +221,51 @@ function EmptyState({ message }) {
   )
 }
 
+// ─── Field pipeline mini-row ──────────────────────────────────────────────────
+function FieldMiniRow({ p, navigate, stageKey }) {
+  const cfg = STAGE_CFG[stageKey] || {}
+  const Icon = TYPE_ICON[p.type] || Wrench
+
+  return (
+    <div
+      style={{
+        padding: '10px 14px', borderBottom: '1px solid var(--border-l)',
+        display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer',
+      }}
+      onClick={() => navigate(`/installations/${p.id}`)}
+    >
+      <div style={{
+        width: 30, height: 30, borderRadius: 7, flexShrink: 0,
+        background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <Icon size={14} style={{ color: cfg.color }} />
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontWeight: 600, fontSize: 'var(--fs-sm)', color: 'var(--text-1)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {p.name}
+        </div>
+        <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 1 }}>
+          {getTech(p.lead_tech_id)}{p.scheduled_date ? ` · ${fmtDate(p.scheduled_date)}` : ''}
+        </div>
+        {stageKey === 'in-progress' && p.progress > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
+            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 80 }}>
+              <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
+            </div>
+            <span style={{ fontSize: 9, fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
+          </div>
+        )}
+      </div>
+      <ArrowRight size={12} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+    </div>
+  )
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function Installations() {
   const navigate = useNavigate()
   const [branch, setBranch]         = useState('lm')
+  const [fieldBranch, setFieldBranch] = useState('lm')
   const [stageFilter, setStageFilter] = useState('all')
   const [search, setSearch]         = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
@@ -246,10 +287,17 @@ export default function Installations() {
     return true
   })
 
-  const activeProjects = branchProjects.filter(p => p.stage === 'in-progress')
+  // Field Overview — pipeline cards
+  const fieldProjects = PROJECTS.filter(p => p.branch === fieldBranch && !p.archived)
+  const upcomingProjects     = fieldProjects.filter(p => p.stage === 'scheduled')
+  const activeProjects       = fieldProjects.filter(p => p.stage === 'in-progress')
+  const pendingReviewProjects = fieldProjects.filter(p => p.stage === 'pending-review')
 
   const bc = BRANCH_COLORS[branch]
   const headStyle = { background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s, color 0.2s' }
+
+  const fieldBc = BRANCH_COLORS[fieldBranch]
+  const fieldHeadStyle = { background: fieldBc.bgActive, color: fieldBc.textActive, transition: 'background 0.2s, color 0.2s' }
 
   const lmCount         = PROJECTS.filter(p => p.branch === 'lm').length
   const boltCount       = PROJECTS.filter(p => p.branch === 'bolt').length
@@ -407,20 +455,63 @@ export default function Installations() {
         {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
         <SectionDivider title="Installations" label="Field Overview" accent="var(--navy)" />
 
-        {/* Active on site */}
-        <div className="dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
-              <span className="live-dot" />
-              Active On Site
-            </span>
-            <span className="dash-card-meta">{activeProjects.length} project{activeProjects.length !== 1 ? 's' : ''}</span>
+        {/* Field branch selector */}
+        <BranchTabs
+          active={fieldBranch}
+          onChange={setFieldBranch}
+          lmCount={lmCount}
+          boltCount={boltCount}
+        />
+
+        {/* Pipeline 3-card grid */}
+        <div className="field-pipeline-grid">
+          {/* Upcoming */}
+          <div className="dash-card" style={{ margin: 0 }}>
+            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="dash-card-title" style={{ fontSize: 12, gap: 5 }}>
+                <Clock size={12} />
+                Upcoming
+              </span>
+              <span className="dash-card-meta">{upcomingProjects.length}</span>
+            </div>
+            {upcomingProjects.length === 0 ? (
+              <EmptyState message="None" />
+            ) : upcomingProjects.map(p => (
+              <FieldMiniRow key={p.id} p={p} navigate={navigate} stageKey="scheduled" />
+            ))}
           </div>
-          {activeProjects.length === 0 ? (
-            <EmptyState message="No active installs for this branch" />
-          ) : activeProjects.map(p => (
-            <FieldRow key={p.id} p={p} navigate={navigate} />
-          ))}
+
+          {/* Active */}
+          <div className="dash-card" style={{ margin: 0 }}>
+            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="dash-card-title" style={{ fontSize: 12, gap: 5 }}>
+                <span className="live-dot" />
+                Active
+              </span>
+              <span className="dash-card-meta">{activeProjects.length}</span>
+            </div>
+            {activeProjects.length === 0 ? (
+              <EmptyState message="None" />
+            ) : activeProjects.map(p => (
+              <FieldMiniRow key={p.id} p={p} navigate={navigate} stageKey="in-progress" />
+            ))}
+          </div>
+
+          {/* Pending Review */}
+          <div className="dash-card" style={{ margin: 0 }}>
+            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="dash-card-title" style={{ fontSize: 12, gap: 5 }}>
+                <Warning size={12} />
+                In Review
+              </span>
+              <span className="dash-card-meta">{pendingReviewProjects.length}</span>
+            </div>
+            {pendingReviewProjects.length === 0 ? (
+              <EmptyState message="None" />
+            ) : pendingReviewProjects.map(p => (
+              <FieldMiniRow key={p.id} p={p} navigate={navigate} stageKey="pending-review" />
+            ))}
+          </div>
         </div>
 
         {/* Field quick actions */}

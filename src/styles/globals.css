@@ -1191,6 +1191,18 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   letter-spacing: 0.07em; opacity: 0.5; margin-top: 0.1875rem;
 }
 
+/* Field pipeline 3-card grid — stacks to 1 col on narrow mobile */
+.field-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 599px) {
+  .field-pipeline-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Quick-nav tiles */
 .dash-tiles {
   display: grid;
