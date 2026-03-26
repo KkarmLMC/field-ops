@@ -1752,28 +1752,6 @@ export default function DailyFieldLog() {
         </>
       )}
 
-      {/* Field quick actions — shown on both routes */}
-      <div style={{ display: 'flex', gap: 'var(--gap-sm)', maxWidth: '480px' }}>
-        <button
-          className="btn btn-primary"
-          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-          onClick={() => setFormMode('part1')}
-        >
-          <Plus size={14} weight="bold" />
-          New Daily Log
-        </button>
-        {draftCount > 0 && (
-          <button
-            className="btn btn-secondary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => openCloseOut(reports.find(r => r.status === 'Draft')?.id)}
-          >
-            <ArrowsClockwise size={14} weight="bold" />
-            Close Out Day ({draftCount})
-          </button>
-        )}
-      </div>
-
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
         <div className="dash-card">

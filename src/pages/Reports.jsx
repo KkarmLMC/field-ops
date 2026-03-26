@@ -267,25 +267,6 @@ export default function Reports() {
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
-        <button
-          className="btn btn-primary"
-          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-          onClick={() => navigate('/forms')}
-        >
-          <Plus size={14} weight="bold" />
-          New Completion Form
-        </button>
-        <button
-          className="btn btn-secondary"
-          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-          onClick={() => navigate('/jsa')}
-        >
-          <Plus size={14} weight="bold" />
-          New JSA
-        </button>
-      </div>
-
       </div>
     </div>
   )
