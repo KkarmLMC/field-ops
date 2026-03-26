@@ -634,6 +634,46 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 /* Branch card responsive — handled by auto-fit grid + clamp() above */
 
+/* ─── Page stack — standard vertical column layout for page content ─ */
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ─── Section divider ─────────────────────────────────────────────── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 2px;
+}
+.section-divider-title {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  flex-shrink: 0;
+}
+.section-divider-sep {
+  font-size: var(--fs-2xs);
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+.section-divider-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.section-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-l);
+}
+
 /* ─── Sidebar sub-nav (child items) ───────────────────────────── */
 .sidebar-sub-item {
   margin-left: 1.25rem !important;

@@ -8,6 +8,7 @@ import { db } from '../lib/supabase.js'
 import { MOCK_SUBMISSIONS } from '../data/mockData.js'
 import { TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
+import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Completion form type config ───────────────────────────────────────────────
@@ -573,42 +574,25 @@ export default function Forms() {
   // ── List view ──────────────────────────────────────────────────────────────
   const branchCompletions = completions.filter(f=>f.branch===branch)
 
+  const lmCount         = completions.filter(f => f.branch === 'lm').length
+  const boltCount       = completions.filter(f => f.branch === 'bolt').length
+  const boltDallasCount = completions.filter(f => f.branch === 'bolt-dallas').length
+
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
+      <div className="page-stack">
 
-      {/* Completion forms tiles */}
-      <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', overflow:'hidden' }}>
-        <div className="card-header">
-          <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Completion Forms</span>
-        </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md) 0 0' }}>
-          {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
-            const Icon = cfg.icon
-            return (
-              <button key={type} onClick={()=>handleStart(type)} style={{
-                display:'flex', alignItems:'center', gap:'var(--sp-3)',
-                padding:'var(--sp-3)', background:'var(--surface-raised)',
-                borderRadius:'var(--r-lg)',
-                textAlign:'left', transition:'background var(--ease-fast)',
-              }}
-                onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
-                onMouseLeave={e=>e.currentTarget.style.background='var(--surface-raised)'}
-              >
-                <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
-                <div style={{ flex:1, minWidth:0 }}>
-                  <div className="project-name">{cfg.short}</div>
-                  <div className="project-meta" style={{ fontFamily:'var(--mono)', textTransform:'uppercase' }}>{cfg.ref}</div>
-                </div>
-                <CaretRight size={11} style={{ color:'var(--text-3)', flexShrink:0 }} />
-              </button>
-            )
-          })}
-        </div>
-      </div>
+        {/* ══ MANAGEMENT OVERVIEW ════════════════════════════════════════════ */}
+        <SectionDivider title="Completion Forms" label="Management Overview" accent="var(--navy)" />
 
-      {/* Branch selector + branch-filtered stats */}
-      <BranchTabs active={branch} onChange={setBranch} />
+        {/* Branch selector + branch-filtered stats */}
+        <BranchTabs
+          active={branch}
+          onChange={setBranch}
+          lmCount={lmCount}
+          boltCount={boltCount}
+          boltDallasCount={boltDallasCount}
+        />
 
       {/* 3 stats filtered by active branch — single row, branch-colored */}
       {(() => {
@@ -678,7 +662,41 @@ export default function Forms() {
             ))
         }
       </div>
-      </div>{/* end flex column */}
+
+        {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
+        <SectionDivider label="Field" accent="var(--orange)" />
+
+        {/* Completion form type tiles */}
+        <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', overflow:'hidden' }}>
+          <div className="card-header">
+            <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Start a Form</span>
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md) 0 0' }}>
+            {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
+              const Icon = cfg.icon
+              return (
+                <button key={type} onClick={()=>handleStart(type)} style={{
+                  display:'flex', alignItems:'center', gap:'var(--sp-3)',
+                  padding:'var(--sp-3)', background:'var(--surface-raised)',
+                  borderRadius:'var(--r-lg)',
+                  textAlign:'left', transition:'background var(--ease-fast)',
+                }}
+                  onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
+                  onMouseLeave={e=>e.currentTarget.style.background='var(--surface-raised)'}
+                >
+                  <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div className="project-name">{cfg.short}</div>
+                    <div className="project-meta" style={{ fontFamily:'var(--mono)', textTransform:'uppercase' }}>{cfg.ref}</div>
+                  </div>
+                  <CaretRight size={11} style={{ color:'var(--text-3)', flexShrink:0 }} />
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+      </div>{/* end page-stack */}
     </div>
   )
 }

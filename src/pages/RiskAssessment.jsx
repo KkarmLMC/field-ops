@@ -4,6 +4,9 @@ import {
   Warning, ArrowLeft, Crosshair, SpinnerGap, ChartBar,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import BranchTabs from '../components/BranchTabs'
+import SectionDivider from '../components/SectionDivider'
+import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
@@ -387,6 +390,7 @@ function AssessmentRow({ a }) {
 // ─── Main page ─────────────────────────────────────────────────────────────────
 export default function RiskAssessment() {
   const [view,        setView]        = useState('list')
+  const [branch,      setBranch]      = useState('lm')
   const [assessments, setAssessments] = useState([])
   const [loading,     setLoading]     = useState(true)
 
@@ -420,58 +424,98 @@ export default function RiskAssessment() {
 
   if (view === 'new') return <NewAssessmentForm onSave={handleSave} onCancel={()=>setView('list')} />
 
-  const required = assessments.filter(a => a.result === 'required').length
-  const optional  = assessments.filter(a => a.result === 'not-required').length
+  const bc             = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
+  const branchAssess   = assessments.filter(a => a.branch === branch)
+  const required       = branchAssess.filter(a => a.result === 'required').length
+  const optional       = branchAssess.filter(a => a.result === 'not-required').length
+
+  const lmCount         = assessments.filter(a => a.branch === 'lm').length
+  const boltCount       = assessments.filter(a => a.branch === 'bolt').length
+  const boltDallasCount = assessments.filter(a => a.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
+      <div className="page-stack">
 
-      {/* Stats */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-sm)' }}>
-        {[
-          { label:'Total',       val: assessments.length, color:'var(--text-1)' },
-          { label:'LPS Required',val: required,           color:'var(--red)'    },
-          { label:'LPS Optional',val: optional,           color:'var(--green)'  },
-        ].map(({ label, val, color }) => (
-          <div key={label} className="stat-card" style={{ padding:'0.625rem 0.75rem' }}>
-            <div className="stat-label">{label}</div>
-            <div className="stat-value" style={{ color, fontSize:'clamp(1.25rem,3vw,1.75rem)' }}>{val}</div>
+        {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════ */}
+        <SectionDivider title="Risk Assessment" label="Management Overview" accent="var(--navy)" />
+
+        <BranchTabs
+          active={branch}
+          onChange={setBranch}
+          lmCount={lmCount}
+          boltCount={boltCount}
+          boltDallasCount={boltDallasCount}
+        />
+
+        {/* Summary stat tiles */}
+        <div className="dfl-summary-strip">
+          {[
+            { label: 'Total',        value: branchAssess.length, icon: <ChartBar size={15} weight="bold" /> },
+            { label: 'LPS Required', value: required,            icon: <Warning size={15} weight="bold" />,    alert: required > 0 },
+            { label: 'LPS Optional', value: optional,            icon: <CheckCircle size={15} weight="bold" /> },
+          ].map(s => (
+            <div
+              key={s.label}
+              className="dfl-summary-card"
+              style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+            >
+              <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+                {s.icon}
+              </div>
+              <div>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+                  {s.value}
+                </div>
+                <div className="dfl-summary-label">{s.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Assessments list */}
+        <div className="dash-card">
+          <div
+            className="dash-card-head"
+            style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
+          >
+            <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+              <ChartBar size={14} />
+              Site Assessments
+            </span>
+            <span className="dash-card-meta">{branchAssess.length} record{branchAssess.length !== 1 ? 's' : ''}</span>
           </div>
-        ))}
-      </div>
+          {loading
+            ? <div className="dfl-empty-state">Loading…</div>
+            : branchAssess.length === 0
+              ? <div className="dfl-empty-state">
+                  <ChartBar size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <div>No assessments for this branch yet</div>
+                </div>
+              : branchAssess.map(a => <AssessmentRow key={a.id} a={a} />)
+          }
+        </div>
 
-      {/* List */}
-      <div style={{ ...S.card }}>
-        <div style={{
-          padding:'0.625rem 0.875rem', borderBottom:'none',
-          display:'flex', alignItems:'center', justifyContent:'space-between',
-        }}>
-          <span style={S.label}>Site Assessments</span>
-          <button onClick={()=>setView('new')} style={{
-            display:'flex', alignItems:'center', gap:'var(--sp-1)',
-            padding:'0.3125rem 0.625rem', borderRadius:'var(--r-sm)',
-            background:'var(--red)', color:'#fff',
-            fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600,
-            letterSpacing:'0.06em', textTransform:'uppercase',
-          }}>
-            <Plus size={11} /> New Assessment
+        <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', lineHeight: 1.6, padding: '0.625rem 0.875rem', background: 'var(--surface)', borderRadius: 'var(--r-md)', margin: 0 }}>
+          <span style={{ fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>NFPA 780 Annex L · </span>
+          Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
+        </p>
+
+        {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
+        <SectionDivider label="Field" accent="var(--orange)" />
+
+        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+          <button
+            className="btn btn-primary"
+            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            onClick={() => setView('new')}
+          >
+            <Plus size={14} weight="bold" />
+            New Assessment
           </button>
         </div>
-        {loading
-          ? <div className="loading"><div className="spinner" /></div>
-          : assessments.length === 0
-            ? <div className="empty"><div className="empty-title">No assessments yet</div><div className="empty-desc">Tap New Assessment to begin.</div></div>
-            : assessments.map(a => <AssessmentRow key={a.id} a={a} />)
-        }
-      </div>
 
-      {/* Note */}
-      <p style={{ fontSize:'var(--fs-sm)', color:'var(--text-3)', lineHeight:1.6, padding:'0.625rem 0.875rem', background:'var(--surface)', borderRadius:'var(--r-md)', margin:0 }}>
-        <span style={{ fontFamily:'var(--mono)', color:'var(--text-2)' }}>NFPA 780 Annex L · </span>
-        Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
-      </p>
-      </div>{/* end flex column */}
+      </div>
     </div>
   )
 }

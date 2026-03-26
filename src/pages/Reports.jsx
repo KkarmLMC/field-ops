@@ -5,6 +5,7 @@ import {
   HardHat, FileText, Plus, Eye, Lightning, Ruler, Warning,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
+import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Form type config ──────────────────────────────────────────────────────────
@@ -43,26 +44,6 @@ function fmtDate(d) {
   const [y, m, day] = d.split('-')
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   return `${months[parseInt(m,10)-1]} ${parseInt(day,10)}, ${y}`
-}
-
-// ─── Section divider ──────────────────────────────────────────────────────────
-function SectionDivider({ label, accent = 'var(--text-3)', title }) {
-  const textStyle = {
-    fontSize: 10, fontWeight: 700, letterSpacing: '0.1em',
-    textTransform: 'uppercase', flexShrink: 0,
-  }
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 2px' }}>
-      {title && (
-        <>
-          <span style={{ ...textStyle, color: 'var(--text-1)' }}>{title}</span>
-          <span style={{ color: 'var(--text-3)', fontSize: 10, flexShrink: 0 }}>—</span>
-        </>
-      )}
-      <span style={{ ...textStyle, color: accent }}>{label}</span>
-      <div style={{ flex: 1, height: 1, background: 'var(--border-l)' }} />
-    </div>
-  )
 }
 
 // ─── Type pill ────────────────────────────────────────────────────────────────
@@ -187,7 +168,7 @@ export default function Reports() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="page-stack">
 
       {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
       <SectionDivider title="Field Reports" label="Management Overview" accent="var(--navy)" />

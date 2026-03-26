@@ -2,12 +2,13 @@ import { useState, useRef, useEffect } from 'react'
 import {
   Plus, CheckCircle, X, CaretDown,
   ClipboardText, ArrowLeft, Eye,
-  Trash, SpinnerGap,
+  Trash, SpinnerGap, HardHat, FileText,
 } from '@phosphor-icons/react'
 import { jsPDF } from 'jspdf'
 import { db } from '../lib/supabase.js'
 import { FORM_TEMPLATES } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
+import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 
 const TEMPLATE = FORM_TEMPLATES['jsa']
@@ -544,44 +545,95 @@ export default function JSA() {
 
   if (view === 'new') return <NewJSAForm onSave={handleSave} onCancel={()=>setView('list')} branch={branch} />
 
-  const bc         = BRANCH_COLORS[branch]
+  const bc         = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
   const branchJsas = jsas.filter(j=>j.branch===branch)
+
+  const lmCount         = jsas.filter(j => j.branch === 'lm').length
+  const boltCount       = jsas.filter(j => j.branch === 'bolt').length
+  const boltDallasCount = jsas.filter(j => j.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
-      <BranchTabs active={branch} onChange={setBranch} />
+      <div className="page-stack">
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--sp-2)', marginBottom:'var(--sp-3)' }}>
-        {[
-          { label:'Total JSAs', val:branchJsas.length,                               color:'var(--text)'  },
-          { label:'Signed',     val:branchJsas.filter(j=>j.status==='signed').length, color:'var(--green)' },
-          { label:'Draft',      val:branchJsas.filter(j=>j.status==='draft').length,  color:'var(--accent)'},
-        ].map(({label,val,color}) => (
-          <div key={label} style={{ background:'var(--surface)', borderRadius:'var(--r-md)', padding:'10px 12px' }}>
-            <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', color:'var(--text-dim)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-1)' }}>{label}</div>
-            <div style={{ fontFamily:'var(--head)', fontSize:24, fontWeight:700, color }}>{val}</div>
+        {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════ */}
+        <SectionDivider title="JSA" label="Management Overview" accent="var(--navy)" />
+
+        <BranchTabs
+          active={branch}
+          onChange={setBranch}
+          lmCount={lmCount}
+          boltCount={boltCount}
+          boltDallasCount={boltDallasCount}
+        />
+
+        {/* Summary stat tiles */}
+        <div className="dfl-summary-strip">
+          {[
+            { label: 'Total JSAs', value: branchJsas.length,                                icon: <ClipboardText size={15} weight="bold" /> },
+            { label: 'Signed',     value: branchJsas.filter(j=>j.status==='signed').length,  icon: <CheckCircle size={15} weight="bold" /> },
+            { label: 'Draft',      value: branchJsas.filter(j=>j.status==='draft').length,   icon: <FileText size={15} weight="bold" />, alert: branchJsas.filter(j=>j.status==='draft').length > 0 },
+          ].map(s => (
+            <div
+              key={s.label}
+              className="dfl-summary-card"
+              style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+            >
+              <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+                {s.icon}
+              </div>
+              <div>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+                  {s.value}
+                </div>
+                <div className="dfl-summary-label">{s.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* JSA list */}
+        <div className="dash-card">
+          <div
+            className="dash-card-head"
+            style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
+          >
+            <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+              <ClipboardText size={14} />
+              Job Safety Analyses
+            </span>
+            <span className="dash-card-meta">{branchJsas.length} record{branchJsas.length !== 1 ? 's' : ''}</span>
           </div>
-        ))}
-      </div>
+          {loading
+            ? <div className="dfl-empty-state">Loading…</div>
+            : branchJsas.length === 0
+              ? <div className="dfl-empty-state">
+                  <ClipboardText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <div>No JSAs for this branch yet</div>
+                </div>
+              : branchJsas.map(j => <JSARow key={j.id} jsa={j} />)
+          }
+        </div>
 
-      <div style={{ background:'var(--surface)', borderRadius:'var(--r-md)' }}>
-        <div style={{ padding:'10px 14px', borderBottom:'none', display:'flex', alignItems:'center', justifyContent:'space-between', background:bc.bgActive, transition:'background 0.2s' }}>
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:bc.textActive, textTransform:'uppercase', letterSpacing:'0.08em' }}>Job Safety Analyses</span>
-          <button onClick={()=>setView('new')} style={{ display:'flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:'var(--r-sm)', background:'var(--accent)', color:'#000', fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600, letterSpacing:'0.06em', textTransform:'uppercase' }}>
-            <Plus size={11} /> New JSA
+        <div style={{ padding: '10px 14px', background: 'var(--surface)', borderRadius: 'var(--r-md)', fontSize: 'var(--fs-sm)', color: 'var(--text-3)', lineHeight: 1.6 }}>
+          <span style={{ fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>LMC-Form-000-008 · </span>
+          Job Safety Analysis — required before any field work begins. Submitted PDFs are stored in Supabase and accessible via View PDF.
+        </div>
+
+        {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
+        <SectionDivider label="Field" accent="var(--orange)" />
+
+        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+          <button
+            className="btn btn-primary"
+            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            onClick={() => setView('new')}
+          >
+            <Plus size={14} weight="bold" />
+            New JSA
           </button>
         </div>
-        {loading
-          ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>Loading…</div>
-          : branchJsas.length===0
-            ? <div style={{ padding:'40px 16px', textAlign:'center', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>No JSAs for this branch yet</div>
-            : branchJsas.map(j=><JSARow key={j.id} jsa={j} />)
-        }
-      </div>
 
-      <div style={{ marginTop:10, padding:'10px 14px', background:'var(--surface)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--text-muted)', lineHeight:1.6 }}>
-        <span style={{ fontFamily:'var(--mono)', color:'var(--text-dim)' }}>LMC-Form-000-008 · </span>
-        Job Safety Analysis — required before any field work begins. Submitted PDFs are stored in Supabase and accessible via View PDF.
       </div>
     </div>
   )
