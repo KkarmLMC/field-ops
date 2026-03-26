@@ -2916,7 +2916,7 @@ textarea { resize: vertical; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-3);
+  color: var(--text-1);
   transition: color var(--ease-fast), transform var(--ease-fast);
 }
 
@@ -2929,8 +2929,8 @@ textarea { resize: vertical; }
 
 .bottom-nav__label {
   font-size: var(--fs-2xs);
-  font-weight: 500;
-  color: var(--text-3);
+  font-weight: 600;
+  color: var(--text-2);
   font-family: var(--font);
   letter-spacing: 0.01em;
   transition: color var(--ease-fast), font-weight var(--ease-fast);
