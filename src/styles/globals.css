@@ -554,44 +554,29 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .branch-dots { display: none; }
 
-/* Mobile: single-card swipe carousel */
+/* Mobile: JS-driven transform carousel (no CSS scroll-snap) */
 @media (max-width: 599px) {
-  /* Lock page-content from becoming a horizontal scroll container.
-     overflow-y:auto implicitly sets overflow-x to auto by CSS spec, which lets
-     the negative-margin bleed from branch-tabs make page-content scrollable
-     horizontally. On content-light pages the browser then steals horizontal
-     swipe gestures away from the branch-tabs track. overflow-x:hidden fixes this. */
-  .page-content {
-    overflow-x: hidden;
-  }
   .branch-tabs {
-    /* Break out of page-content horizontal padding */
+    /* Break out of page-content horizontal padding to fill full viewport */
     margin-left: calc(-1 * var(--content-pad));
     margin-right: calc(-1 * var(--content-pad));
+    /* Clip the wide track — JS positions it with translateX */
+    overflow: hidden;
   }
   .branch-tabs-mobile-track {
+    /* Width and transform set by JS (n×100% wide, shifted per activeIdx) */
     display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    /* No gap — each card is exactly 100vw so snap distance is always 100vw */
-    gap: 0;
     padding: 4px 0 var(--sp-2);
-    scrollbar-width: none;
-    /* Explicitly handle horizontal touch so the browser routes swipes here,
-       not to any ancestor scroll container */
-    touch-action: pan-x pinch-zoom;
+    will-change: transform;
   }
-  .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
-  /* Snap slide: transparent 100vw wrapper — owns the snap/sizing */
   .branch-tabs-mobile-track .branch-card-slide {
-    flex: 0 0 100vw;
-    width: 100vw;
+    /* Width set by JS (100%/n of track = one viewport width).
+       Padding provides the visual inset matching the rest of the page. */
+    flex-shrink: 0;
     box-sizing: border-box;
     padding: 0 var(--content-pad);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
-  /* Visual card fills the slide, keeps its own bg/radius/padding */
+  /* Card fills its slide */
   .branch-tabs-mobile-track .branch-card {
     width: 100%;
   }
