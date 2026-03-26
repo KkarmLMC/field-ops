@@ -1672,7 +1672,7 @@ export default function DailyFieldLog() {
 
   return (
     <div className="page-content fade-in">
-      <div className="page-stack">
+      <div className="page-stack" style={!isManagement ? { maxWidth: '640px', margin: '0 auto' } : undefined}>
 
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
       {isManagement && (
