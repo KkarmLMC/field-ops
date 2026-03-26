@@ -1474,7 +1474,7 @@ textarea { resize: vertical; }
 }
 
 .dash-tile:hover { opacity: 0.8; }
-.dash-tile-icon  { font-size: 1.25rem; flex-shrink: 0; }
+.dash-tile-icon  { font-size: 1.25rem; flex-shrink: 0; color: #000000; }
 .dash-tile-text  { flex: 1; min-width: 0; }
 .dash-tile-label { font-size: var(--fs-sm); font-weight: 600; color: var(--tile-color, var(--text-1)); }
 .dash-tile-sub   { font-size: var(--fs-xs); color: var(--text-3); margin-top: 0.0625rem; }
