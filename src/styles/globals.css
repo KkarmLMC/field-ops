@@ -407,6 +407,8 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 .btn-full { width: 100%; justify-content: center; }
 .btn-navy { background: var(--navy); color: white; }
 .btn-navy:active { background: #031a45; }
+.btn-black { background: #111111; color: white; }
+.btn-black:active { background: #000000; transform: scale(0.98); }
 
 /* Form elements */
 .form-group { display: flex; flex-direction: column; gap: 0.3125rem; margin-bottom: 0.875rem; }
