@@ -2892,9 +2892,10 @@ textarea { resize: vertical; }
 /* ── Tab button ──────────────────────────────────────────────────────────────── */
 
 .bottom-nav__tab {
-  /* Fixed width — 5 tabs visible at once on most phones, scroll to see more */
-  flex: 0 0 20%;
-  min-width: 4.5rem;
+  /* Slightly less than equal division so the last visible tab peeks,
+     hinting the bar is scrollable. 5 tabs × ~18.5% = ~92.5% total — last item bleeds. */
+  flex: 0 0 18.5%;
+  min-width: 4.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
