@@ -603,7 +603,7 @@ function Section({ title, children, open, onToggle }) {
   return (
     <div style={{ background:'var(--surface)', borderRadius:'var(--r-lg)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={onToggle} style={{ width:'100%', padding:'var(--sp-2) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
-        <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'rgba(255,255,255,0.85)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{title}</span>
+        <span style={{ fontFamily:'var(--font)', fontSize:'var(--fs-sm)', fontWeight:600, color:'rgba(255,255,255,0.9)' }}>{title}</span>
         <CaretDown size={12} style={{ color:'rgba(255,255,255,0.6)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && <div style={{ padding:'var(--sp-4)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
