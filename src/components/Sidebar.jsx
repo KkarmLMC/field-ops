@@ -30,7 +30,7 @@ const NAV_ITEMS = [
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/jsa',             Icon: HardHat,         label: 'JSA'             },
   { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
-  { path: '/forms',           Icon: FileText,        label: 'Forms'           },
+  { path: '/forms',           Icon: FileText,        label: 'Report Forms'    },
   { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
 ]
 

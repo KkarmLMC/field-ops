@@ -26,7 +26,7 @@ const PAGE_META = {
   '/jsa':                    { title: 'JSA',              parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
   '/reports':                { title: 'Field Reports',    parent: null },
-  '/forms':                  { title: 'Forms',            parent: null },
+  '/forms':                  { title: 'Report Forms',     parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
 }
 

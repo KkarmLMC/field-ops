@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react'
 import {
-  CaretRight, CheckCircle, Eye, Plus, SpinnerGap,
-  CaretDown, Trash, X, ArrowLeft,
+  CaretRight, CaretDown, CheckCircle, Eye,
+  Trash, X, ArrowLeft,
+  Lightning, MagnifyingGlass, Ruler, ClipboardText,
+  Buildings, Factory, Drop,
 } from '@phosphor-icons/react'
 import { jsPDF } from 'jspdf'
 import { db } from '../lib/supabase.js'
-import { MOCK_SUBMISSIONS } from '../data/mockData.js'
 import { TECHNICIANS } from '../data/mockData.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
-
-// ─── Completion form type config ───────────────────────────────────────────────
-import {
-  Lightning, MagnifyingGlass, Ruler, ClipboardText,
-} from '@phosphor-icons/react'
 
 export const COMPLETION_TYPES = {
   'installation': {
@@ -99,6 +95,167 @@ const STATUS_BADGE = {
   'Complete':         'badge-complete',
   'Rejected':         'badge-review',
 }
+
+
+// ─── Extended form types for new forms ────────────────────────────────────────
+Object.assign(COMPLETION_TYPES, {
+  'midstream-install': {
+    label: 'Midstream Install Completion', short: 'Midstream Install',
+    icon: Factory, color: '#0EA5E9', colorDim: '#E0F2FE',
+    desc: 'Used after new installation of midstream facilities', ref: 'NFPA 780 / API RP 545',
+    fields: [
+      { id: 'facility_name',    label: 'Facility Name',           type: 'text',    required: true },
+      { id: 'facility_type',    label: 'Facility Type',           type: 'select',  options: ['Compressor Station', 'Metering Station', 'Gas Processing', 'Treatment Plant', 'Other'], required: true },
+      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
+      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
+      { id: 'ground_rods',      label: 'Ground Rods Installed',   type: 'number',  required: true },
+      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
+      { id: 'resistance_ohms',  label: 'Ground Resistance (ohms)',type: 'number' },
+      { id: 'ul_label',         label: 'UL Master Label Applied', type: 'boolean' },
+    ],
+  },
+  'swd-production': {
+    label: 'SWD Production Install Complete', short: 'SWD Production',
+    icon: Drop, color: '#6366F1', colorDim: '#EEF2FF',
+    desc: 'SWD and Production sites completion form after new installation', ref: 'NFPA 780',
+    fields: [
+      { id: 'site_type',        label: 'Site Type',               type: 'select',  options: ['SWD', 'Production', 'Tank Battery', 'Other'], required: true },
+      { id: 'tank_count',       label: 'Number of Tanks',         type: 'number',  required: true },
+      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
+      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
+      { id: 'ground_rods',      label: 'Ground Rods',             type: 'number',  required: true },
+      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
+      { id: 'resistance_ohms',  label: 'Ground Resistance (ohms)',type: 'number' },
+    ],
+  },
+  'golden-triangle': {
+    label: 'Golden Triangle Polymers', short: 'GT Polymers',
+    icon: Buildings, color: '#D97706', colorDim: '#FEF3C7',
+    desc: 'Structure Completion Report — Golden Triangle Polymers', ref: 'NFPA 780',
+    fields: [
+      { id: 'structure_name',   label: 'Structure Name',          type: 'text',    required: true },
+      { id: 'structure_type',   label: 'Structure Type',          type: 'select',  options: ['Processing', 'Storage', 'Office', 'Utility', 'Other'], required: true },
+      { id: 'lps_class',        label: 'LPS Class',               type: 'select',  options: ['Class I', 'Class II'], required: true },
+      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
+      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
+      { id: 'ground_rods',      label: 'Ground Rods',             type: 'number',  required: true },
+      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
+      { id: 'ul_label',         label: 'UL Master Label Applied', type: 'boolean' },
+    ],
+  },
+  'northstar': {
+    label: 'Northstar', short: 'Northstar',
+    icon: Buildings, color: '#059669', colorDim: '#D1FAE5',
+    desc: 'Structure Completion Report — Northstar', ref: 'NFPA 780',
+    fields: [
+      { id: 'structure_name',   label: 'Structure Name',          type: 'text',    required: true },
+      { id: 'structure_type',   label: 'Structure Type',          type: 'select',  options: ['Processing', 'Storage', 'Office', 'Utility', 'Other'], required: true },
+      { id: 'lps_class',        label: 'LPS Class',               type: 'select',  options: ['Class I', 'Class II'], required: true },
+      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
+      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
+      { id: 'ground_rods',      label: 'Ground Rods',             type: 'number',  required: true },
+      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
+      { id: 'ul_label',         label: 'UL Master Label Applied', type: 'boolean' },
+    ],
+  },
+  'swd-inspection': {
+    label: 'SWD LP Inspection Report', short: 'SWD Inspection',
+    icon: Drop, color: '#6366F1', colorDim: '#EEF2FF',
+    desc: 'Preventative maintenance for upstream tank batteries and midstream facilities', ref: 'NFPA 780 / API RP 545',
+    fields: [
+      { id: 'site_type',        label: 'Site Type',               type: 'select',  options: ['Upstream Tank Battery', 'Midstream Processing', 'Downstream Storage', 'Refinement', 'Other'], required: true },
+      { id: 'overall_result',   label: 'Overall Result',          type: 'select',  options: ['Pass', 'Pass with Conditions', 'Fail'], required: true },
+      { id: 'conductor_condition', label: 'Conductor Condition',  type: 'select',  options: ['Good', 'Fair - Monitor', 'Poor - Replace'], required: true },
+      { id: 'ground_resistance',label: 'Ground Resistance (ohms)',type: 'number' },
+      { id: 'corrosion_found',  label: 'Corrosion / Damage Found',type: 'boolean' },
+      { id: 'repairs_required', label: 'Repairs Required',        type: 'boolean' },
+      { id: 'deficiencies',     label: 'Deficiencies Found',      type: 'textarea' },
+    ],
+  },
+  'bolt-completion': {
+    label: 'Bolt Completion Report', short: 'Bolt Completion',
+    icon: Lightning, color: '#C0101B', colorDim: '#FEF0F1',
+    desc: 'Bolt completion report for LPS installation', ref: 'NFPA 780 / UL 96A',
+    fields: [
+      { id: 'lps_class',        label: 'LPS Class',               type: 'select',  options: ['Class I', 'Class II'], required: true },
+      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
+      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
+      { id: 'ground_rods',      label: 'Ground Rods Installed',   type: 'number',  required: true },
+      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
+      { id: 'ul_label',         label: 'UL Master Label Applied', type: 'boolean' },
+      { id: 'resistance_ohms',  label: 'Ground Resistance (ohms)',type: 'number' },
+    ],
+  },
+  'bolt-inspection': {
+    label: 'Bolt Inspection Report', short: 'Bolt Inspection',
+    icon: MagnifyingGlass, color: '#C0101B', colorDim: '#FEF0F1',
+    desc: 'Bolt inspection report for LPS systems', ref: 'LPI-175 / LPI-177',
+    fields: [
+      { id: 'inspection_type',  label: 'Inspection Type',         type: 'select',  options: ['Annual', 'Bi-Annual', 'Post-Strike', 'Pre-Certification'], required: true },
+      { id: 'overall_result',   label: 'Overall Result',          type: 'select',  options: ['Pass', 'Pass with Conditions', 'Fail'], required: true },
+      { id: 'deficiencies',     label: 'Deficiencies Found',      type: 'textarea' },
+      { id: 'corrective_req',   label: 'Corrective Action Required', type: 'boolean' },
+      { id: 'next_inspection',  label: 'Next Inspection Due',     type: 'date' },
+    ],
+  },
+  // Midstream Facilities sub-section forms
+  'midstream-general':    { label: 'General Site Information',            short: 'Site Info',      icon: MagnifyingGlass, color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'General site information and overview', ref: 'NFPA 780', fields: [ { id: 'operator', label: 'Operator/Owner', type: 'text', required: true }, { id: 'facility_type', label: 'Facility Type', type: 'select', options: ['Compressor Station', 'Metering Station', 'Gas Processing', 'Treatment Plant'], required: true }, { id: 'lps_exists', label: 'Existing LPS Present', type: 'boolean' }, { id: 'last_inspection', label: 'Last Inspection Date', type: 'date' }, { id: 'overall_condition', label: 'Overall Condition', type: 'select', options: ['Good', 'Fair', 'Poor'] }, { id: 'notes', label: 'Notes', type: 'textarea' } ] },
+  'midstream-buildings':  { label: 'Buildings and Offices',               short: 'Buildings',      icon: Buildings,       color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Inspect lightning protection on buildings and office structures', ref: 'NFPA 780', fields: [ { id: 'structure_count', label: 'Number of Structures', type: 'number', required: true }, { id: 'air_terminals_ok', label: 'Air Terminals Satisfactory', type: 'boolean', required: true }, { id: 'conductors_ok', label: 'Conductors Satisfactory', type: 'boolean', required: true }, { id: 'bonding_ok', label: 'Bonding Satisfactory', type: 'boolean' }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-cable':      { label: 'Elevated Cable Trays and Pipe Racks', short: 'Cable Trays',    icon: Factory,         color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Elevated cable trays and pipe rack inspection', ref: 'NFPA 780', fields: [ { id: 'bonding_continuity', label: 'Bonding Continuity', type: 'boolean', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'corrosion', label: 'Corrosion Present', type: 'boolean' }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-fans':       { label: 'Air Cooled Heat Exchanger Fans',      short: 'ACHE Fans',      icon: Factory,         color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Air cooled heat exchanger fan inspection', ref: 'NFPA 780', fields: [ { id: 'fan_count', label: 'Number of Units', type: 'number', required: true }, { id: 'bonding_ok', label: 'Bonding Satisfactory', type: 'boolean', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-tanks':      { label: 'Storage Tanks',                       short: 'Storage Tanks',  icon: Drop,            color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Storage tank lightning protection inspection', ref: 'API RP 545 / NFPA 780', fields: [ { id: 'tank_count', label: 'Number of Tanks', type: 'number', required: true }, { id: 'tank_type', label: 'Tank Type', type: 'select', options: ['Floating Roof', 'Fixed Roof', 'Cone Roof', 'Dome Roof'] }, { id: 'shunts_ok', label: 'Shunts/Bonds Satisfactory', type: 'boolean', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'resistance_ohms', label: 'Ground Resistance (ohms)', type: 'number' }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-generators': { label: 'Power Generators',                    short: 'Generators',     icon: Lightning,       color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Power generator grounding and bonding inspection', ref: 'NFPA 780 / NEC', fields: [ { id: 'generator_count', label: 'Number of Units', type: 'number', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'bonding_ok', label: 'Bonding Satisfactory', type: 'boolean', required: true }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-vessels':    { label: 'Scrubber / Separator Vessels',        short: 'Vessels',        icon: Factory,         color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Scrubber and separator vessel inspection', ref: 'NFPA 780 / API RP 545', fields: [ { id: 'vessel_count', label: 'Number of Vessels', type: 'number', required: true }, { id: 'bonding_ok', label: 'Bonding Satisfactory', type: 'boolean', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-poles':      { label: 'Light Poles and Communication Towers', short: 'Poles/Towers',  icon: Lightning,       color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Light pole and communication tower inspection', ref: 'NFPA 780', fields: [ { id: 'structure_count', label: 'Number of Structures', type: 'number', required: true }, { id: 'grounding_ok', label: 'Grounding Satisfactory', type: 'boolean', required: true }, { id: 'conductor_ok', label: 'Down Conductors Satisfactory', type: 'boolean', required: true }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-fence':      { label: 'Perimeter Chain Link Fence',          short: 'Fence',          icon: Factory,         color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Perimeter fence bonding and grounding inspection', ref: 'NFPA 780', fields: [ { id: 'fence_bonded', label: 'Fence Properly Bonded', type: 'boolean', required: true }, { id: 'gates_bonded', label: 'Gates Bonded', type: 'boolean', required: true }, { id: 'deficiencies', label: 'Deficiencies', type: 'textarea' } ] },
+  'midstream-misc':       { label: 'Other Miscellaneous Areas',           short: 'Misc Areas',     icon: MagnifyingGlass, color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Other miscellaneous areas inspection', ref: 'NFPA 780', fields: [ { id: 'area_desc', label: 'Area Description', type: 'text', required: true }, { id: 'condition', label: 'Condition', type: 'select', options: ['Good', 'Fair - Monitor', 'Poor - Repair Required'] }, { id: 'notes', label: 'Notes', type: 'textarea' } ] },
+  'midstream-summary':    { label: 'Recommendations Summary',             short: 'Recommendations',icon: ClipboardText,   color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Summary of findings and recommendations', ref: 'NFPA 780', fields: [ { id: 'overall_result', label: 'Overall Assessment', type: 'select', options: ['Satisfactory', 'Satisfactory with Conditions', 'Unsatisfactory'], required: true }, { id: 'priority_repairs', label: 'Priority Repairs Required', type: 'boolean' }, { id: 'recommendations', label: 'Recommendations', type: 'textarea', required: true }, { id: 'next_inspection', label: 'Next Inspection Due', type: 'date' } ] },
+})
+
+// ─── Form catalog by branch ────────────────────────────────────────────────────
+const FORM_CATALOG = {
+  lm: {
+    completion: [
+      { id: 'midstream-install', label: 'Midstream Install Completion', desc: 'New installation of midstream facilities',            icon: Factory   },
+      { id: 'swd-production',    label: 'SWD Production Install',       desc: 'SWD and Production sites after new installation',    icon: Drop      },
+      { id: 'golden-triangle',   label: 'Golden Triangle Polymers',     desc: 'Structure Completion Report',                        icon: Buildings },
+      { id: 'northstar',         label: 'Northstar',                    desc: 'Structure Completion Report',                        icon: Buildings },
+    ],
+    inspection: [
+      { id: 'midstream-facilities', label: 'Midstream Facilities Inspection', desc: 'Compressor Stations, Metering, Gas Processing', icon: MagnifyingGlass, hasSubs: true },
+      { id: 'swd-inspection',       label: 'SWD LP Inspection Report',        desc: 'Upstream tank batteries & midstream facilities', icon: Drop            },
+    ],
+    survey: [
+      { id: 'site-survey', label: 'Site Survey Quote Form', desc: 'Assets to protect, materials and site information', icon: Ruler },
+    ],
+  },
+  bolt: {
+    completion: [
+      { id: 'bolt-completion', label: 'Bolt Completion Report', desc: 'Bolt completion report for LPS installation', icon: Lightning },
+    ],
+    inspection: [
+      { id: 'bolt-inspection', label: 'Bolt Inspection Report', desc: 'Bolt inspection and compliance report',        icon: MagnifyingGlass },
+    ],
+    survey: [
+      { id: 'site-survey', label: 'Site Survey Quote Form', desc: 'Assets to protect, materials and site information', icon: Ruler },
+    ],
+  },
+}
+
+// ─── Midstream Facilities sub-sections ────────────────────────────────────────
+const MIDSTREAM_SUBS = [
+  { id: 'midstream-general',    label: 'General Site Information',             required: true  },
+  { id: 'midstream-buildings',  label: 'Buildings and Offices'                                 },
+  { id: 'midstream-cable',      label: 'Elevated Cable Trays and Pipe Racks'                   },
+  { id: 'midstream-fans',       label: 'Air Cooled Heat Exchanger Fans'                        },
+  { id: 'midstream-tanks',      label: 'Storage Tanks'                                         },
+  { id: 'midstream-generators', label: 'Power Generators'                                      },
+  { id: 'midstream-vessels',    label: 'Scrubber / Separator Vessels'                          },
+  { id: 'midstream-poles',      label: 'Light Poles and Communication Towers'                  },
+  { id: 'midstream-fence',      label: 'Perimeter Chain Link Fence'                            },
+  { id: 'midstream-misc',       label: 'Other Miscellaneous Areas'                             },
+  { id: 'midstream-summary',    label: 'Recommendations Summary'                               },
+]
 
 // ─── Signature pad ─────────────────────────────────────────────────────────────
 import { useRef } from 'react'
@@ -538,163 +695,108 @@ function CompletionRow({ form }) {
   )
 }
 
-// ─── Main Forms page ───────────────────────────────────────────────────────────
+// ─── Category card ─────────────────────────────────────────────────────────────
+function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
+  const bc = BRANCH_COLORS[branch]
+  return (
+    <div className="card" style={{ display:'flex', flexDirection:'column' }}>
+      <div className="card-header" style={{ background: bc.bgActive }}>
+        <span className="card-title">
+          <span className="card-dot" style={{ background:'rgba(255,255,255,0.5)' }} />
+          {title}
+        </span>
+      </div>
+      <div style={{ flex:1 }}>
+        {forms.map(form => {
+          const Icon     = form.icon
+          const isExpand = expandedId === form.id
+          return (
+            <div key={form.id}>
+              <button
+                onClick={() => form.hasSubs ? onToggle(isExpand ? null : form.id) : onStart(form.id)}
+                style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
+                  display:'flex', alignItems:'center', gap:'var(--sp-3)',
+                  padding:'0.75rem var(--sp-4)', borderBottom:'1px solid var(--border-l)',
+                  transition:'background var(--ease-fast)',
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'none'}
+              >
+                <Icon size={16} style={{ color: bc.bgActive, flexShrink:0 }} />
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div className="project-name">{form.label}</div>
+                  <div className="project-meta">{form.desc}</div>
+                </div>
+                {form.hasSubs
+                  ? <CaretDown size={12} style={{ color:'var(--text-3)', flexShrink:0, transition:'transform 0.15s', transform: isExpand ? 'rotate(180deg)' : 'none' }} />
+                  : <CaretRight size={12} style={{ color:'var(--text-3)', flexShrink:0 }} />
+                }
+              </button>
+              {form.hasSubs && isExpand && (
+                <div style={{ background:'var(--surface-raised)' }}>
+                  {MIDSTREAM_SUBS.map(sub => (
+                    <button
+                      key={sub.id}
+                      onClick={() => onStart(sub.id)}
+                      style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
+                        display:'flex', alignItems:'center', gap:'var(--sp-2)',
+                        padding:'0.5rem var(--sp-4) 0.5rem 2.75rem',
+                        borderBottom:'1px solid var(--border-l)',
+                        transition:'background var(--ease-fast)',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                    >
+                      <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-3)', flexShrink:0 }} />
+                      <span style={{ flex:1, fontSize:'var(--fs-sm)', fontWeight:500, color:'var(--text-1)' }}>{sub.label}</span>
+                      {sub.required && <span style={{ fontSize:'var(--fs-2xs)', color:'var(--red)', fontFamily:'var(--mono)', fontWeight:600 }}>REQ</span>}
+                      <CaretRight size={10} style={{ color:'var(--text-4)', flexShrink:0 }} />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// ─── Main Report Forms page ───────────────────────────────────────────────────
 export default function Forms() {
-  const [view,        setView]        = useState('list')   // 'list' | 'form' | 'success'
-  const [activeType,  setActiveType]  = useState(null)
-  const [result,      setResult]      = useState(null)
-  const [submissions, setSubmissions] = useState([])
-  const [completions, setCompletions] = useState([])
-  const [branch,      setBranch]      = useState('lm')
-  const [loading,     setLoading]     = useState(true)
+  const [view,       setView]       = useState('list')
+  const [activeType, setActiveType] = useState(null)
+  const [result,     setResult]     = useState(null)
+  const [branch,     setBranch]     = useState('lm')
+  const [expandedId, setExpandedId] = useState(null)
 
-  useEffect(() => {
-    // Load legacy form submissions
-    db.from('form_submissions').select('*, projects(name)').order('created_at',{ascending:false})
-      .then(({data}) => { setSubmissions(data?.length>0 ? data : MOCK_SUBMISSIONS); setLoading(false) })
-      .catch(() => { setSubmissions(MOCK_SUBMISSIONS); setLoading(false) })
+  const handleStart = (type) => { setActiveType(type); setView('form') }
+  const handleSave  = (res)  => { setResult(res); setView('success') }
+  const handleBack  = ()     => { setView('list'); setResult(null); setActiveType(null) }
 
-    // Load completion forms
-    db.from('completion_forms').select('*').order('created_at',{ascending:false})
-      .then(({data}) => { if (data) setCompletions(data) })
-  }, [])
-
-  const handleStart  = (type) => { setActiveType(type); setView('form') }
-  const handleSave   = (res)  => { setResult(res); setView('success');
-    // Refresh completions
-    db.from('completion_forms').select('*').order('created_at',{ascending:false})
-      .then(({data}) => { if (data) setCompletions(data) })
-  }
-  const handleBack   = ()     => { setView('list'); setResult(null); setActiveType(null) }
-
-  // Sub-views
   if (view === 'form')    return <CompletionFormView formType={activeType} onSave={handleSave} onCancel={handleBack} />
   if (view === 'success') return <SuccessView result={result} onBack={handleBack} />
 
-  // ── List view ──────────────────────────────────────────────────────────────
-  const branchCompletions = completions.filter(f=>f.branch===branch)
-
-  const lmCount         = completions.filter(f => f.branch === 'lm').length
-  const boltCount       = completions.filter(f => f.branch === 'bolt').length
+  const catalog = FORM_CATALOG[branch]
 
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
 
-        {/* ══ MANAGEMENT OVERVIEW ════════════════════════════════════════════ */}
-        <SectionDivider title="Forms" label="Management Overview" accent="var(--navy)" />
+        {/* ══ FIELD OVERVIEW ════════════════════════════════════════════════════ */}
+        <SectionDivider title="Report Forms" label="Field Overview" accent="var(--navy)" />
 
-        {/* Branch selector + branch-filtered stats */}
-        <BranchTabs
-          active={branch}
-          onChange={setBranch}
-          lmCount={lmCount}
-          boltCount={boltCount}
-        />
+        <BranchTabs active={branch} onChange={setBranch} />
 
-      {/* 3 stats filtered by active branch — single row, branch-colored */}
-      {(() => {
-        const bc = BRANCH_COLORS[branch]
-        const stats = [
-          { label: 'Needs Review',  value: branchCompletions.filter(f => f.status === 'submitted').length },
-          { label: 'With Customer', value: branchCompletions.filter(f => f.status === 'pending_customer').length },
-          { label: 'Complete',      value: branchCompletions.filter(f => f.status === 'complete').length },
-        ]
-        return (
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)' }}>
-            {stats.map(({ label, value }) => (
-              <div key={label} style={{
-                background: bc.bgInactive,
-                borderRadius: 'var(--r-xl)',
-                padding: 'var(--gap-md) 1rem',
-                minHeight: '7rem',
-              }}>
-                <div style={{
-                  fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)',
-                  color: bc.bgActive, textTransform: 'uppercase',
-                  letterSpacing: '0.04em', marginBottom: 'var(--sp-2)',
-                  fontWeight: 500,
-                }}>
-                  {label}
-                </div>
-                <div style={{
-                  fontSize: '2.25rem',
-                  fontWeight: 700, lineHeight: 1,
-                  letterSpacing: '-0.02em',
-                  color: bc.bgActive,
-                }}>
-                  {value}
-                </div>
-              </div>
-            ))}
-          </div>
-        )
-      })()}
-      <div className="card">
-        <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
-          <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
+        {/* 3-column category grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'var(--gap-md)' }}>
+          <CategoryCard title="Completion Reports" forms={catalog.completion} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
+          <CategoryCard title="Inspection Reports" forms={catalog.inspection} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
+          <CategoryCard title="Site Surveys"       forms={catalog.survey}     branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
         </div>
-        {branchCompletions.length === 0
-          ? <div className="empty"><div className="empty-desc">No completions for this branch yet.</div></div>
-          : branchCompletions.map(f => <CompletionRow key={f.id} form={f} />)
-        }
+
       </div>
-
-      {/* Legacy submissions */}
-      <div className="card">
-        <div className="card-header">
-          <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />All Submissions</span>
-        </div>
-        {loading
-          ? <div className="loading"><div className="spinner" /></div>
-          : submissions.length===0
-            ? <div className="empty"><div className="empty-icon">📝</div><div className="empty-title">No forms yet</div><div className="empty-desc">Start a completion form above.</div></div>
-            : submissions.map(s => (
-              <div key={s.id} className="project-item">
-                <div style={{ flex:1 }}>
-                  <div className="project-name">{s.projects?.name||'Unknown Project'}</div>
-                  <div className="project-meta">{s.submitted_by} · {new Date(s.created_at).toLocaleDateString()}</div>
-                </div>
-                <span className={`badge ${STATUS_BADGE[s.status]||'badge-hold'}`}>{s.status}</span>
-              </div>
-            ))
-        }
-      </div>
-
-        {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-        <SectionDivider title="Forms" label="Field Overview" accent="var(--navy)" />
-
-        {/* Completion form type tiles */}
-        <div style={{ background:'var(--surface)', borderRadius:'var(--r-xl)', overflow:'hidden' }}>
-          <div className="card-header">
-            <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />Start a Form</span>
-          </div>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap:'var(--gap-md)', padding:'var(--gap-md) 0 0' }}>
-            {Object.entries(COMPLETION_TYPES).map(([type, cfg]) => {
-              const Icon = cfg.icon
-              return (
-                <button key={type} onClick={()=>handleStart(type)} style={{
-                  display:'flex', alignItems:'center', gap:'var(--sp-3)',
-                  padding:'var(--sp-3)', background:'var(--surface-raised)',
-                  borderRadius:'var(--r-lg)',
-                  textAlign:'left', transition:'background var(--ease-fast)',
-                }}
-                  onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
-                  onMouseLeave={e=>e.currentTarget.style.background='var(--surface-raised)'}
-                >
-                  <Icon size={18} weight="regular" style={{ color:'var(--text-1)', flexShrink:0 }} />
-                  <div style={{ flex:1, minWidth:0 }}>
-                    <div className="project-name">{cfg.short}</div>
-                    <div className="project-meta" style={{ fontFamily:'var(--mono)', textTransform:'uppercase' }}>{cfg.ref}</div>
-                  </div>
-                  <CaretRight size={11} style={{ color:'var(--text-3)', flexShrink:0 }} />
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-      </div>{/* end page-stack */}
     </div>
   )
 }
