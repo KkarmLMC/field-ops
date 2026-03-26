@@ -189,17 +189,17 @@ function FieldRow({ p, navigate }) {
       </div>
 
       {/* Right: action */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: 6, flexShrink: 0, alignItems: 'center' }}>
         <button
           className="btn btn-secondary"
-          style={{ fontSize: 11, padding: '5px 10px', whiteSpace: 'nowrap' }}
+          style={{ fontSize: 12, padding: '7px 12px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
-          <ClipboardText size={12} /> DFL
+          <ClipboardText size={13} /> DFL
         </button>
         <button
           className="btn btn-secondary"
-          style={{ fontSize: 11, padding: '5px 10px', whiteSpace: 'nowrap' }}
+          style={{ fontSize: 12, padding: '7px 12px', whiteSpace: 'nowrap' }}
           onClick={e => { e.stopPropagation(); navigate(`/installations/${p.id}`) }}
         >
           View
