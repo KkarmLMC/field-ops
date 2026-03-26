@@ -2835,46 +2835,66 @@ textarea { resize: vertical; }
 
 /* =============================================================================
    BOTTOM NAV  (.bottom-nav)
-   Mobile-only (hidden ≥768px). 4 tabs + slide-up More tray.
+   Mobile-only horizontal scroll-snap navigation bar (hidden ≥768px).
+   All items live in one scrollable row — swipe left/right to reveal more.
+   Active tab auto-scrolls into centre on route change.
    ============================================================================= */
 
-/* ── CSS custom property for other components to reference nav height ────────── */
+/* ── Token ───────────────────────────────────────────────────────────────────── */
 :root {
   --bottom-nav-h: 4rem;
 }
 
-/* ── Bar ─────────────────────────────────────────────────────────────────────── */
+/* ── Bar shell ───────────────────────────────────────────────────────────────── */
 
 .bottom-nav {
-  /* Only shown on mobile */
-  display: none;
+  display: none; /* desktop: hidden */
 }
 
 @media (max-width: 767px) {
   .bottom-nav {
-    display: flex;
+    display: block;
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: var(--bottom-nav-h);
-    /* Account for iPhone home indicator */
-    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
     background: var(--surface);
     border-top: 1px solid var(--border-l);
     z-index: 150;
-    /* Prevent background scroll bleed */
-    isolation: isolate;
+    /* Contain the fade overlays */
+    overflow: hidden;
   }
 
-  /* Page content needs extra bottom padding when nav is visible */
+  /* Page content clears the bar */
   .page-content {
     padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--sp-4));
   }
 }
 
+/* ── Scrollable track ────────────────────────────────────────────────────────── */
+
+.bottom-nav__track {
+  display: flex;
+  align-items: stretch;
+  height: var(--bottom-nav-h);
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Snap each tab into place */
+  scroll-snap-type: x mandatory;
+  /* Hide scrollbar — navigation is gestural */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.bottom-nav__track::-webkit-scrollbar { display: none; }
+
 /* ── Tab button ──────────────────────────────────────────────────────────────── */
 
 .bottom-nav__tab {
-  flex: 1;
+  /* Fixed width — 5 tabs visible at once on most phones, scroll to see more */
+  flex: 0 0 20%;
+  min-width: 4.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2885,14 +2905,15 @@ textarea { resize: vertical; }
   cursor: pointer;
   position: relative;
   padding: 0.5rem var(--sp-1);
-  /* Prevent blue flash on iOS tap */
+  /* Each tab snaps to left edge of the track */
+  scroll-snap-align: start;
   -webkit-tap-highlight-color: transparent;
   transition: opacity var(--ease-fast);
 }
 
-.bottom-nav__tab:active { opacity: 0.7; }
+.bottom-nav__tab:active { opacity: 0.65; }
 
-/* ── Active indicator — red pill at top of tab ───────────────────────────────── */
+/* ── Active indicator — red pill at top ──────────────────────────────────────── */
 
 .bottom-nav__indicator {
   position: absolute;
@@ -2933,11 +2954,32 @@ textarea { resize: vertical; }
   color: var(--text-2);
   font-family: var(--font);
   letter-spacing: 0.01em;
-  transition: color var(--ease-fast), font-weight var(--ease-fast);
   white-space: nowrap;
+  transition: color var(--ease-fast);
 }
 
 .bottom-nav__tab--active .bottom-nav__label {
   color: var(--red);
   font-weight: 700;
+}
+
+/* ── Edge fade — hints that more items exist off-screen ──────────────────────── */
+
+.bottom-nav__fade {
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: var(--bottom-nav-h);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bottom-nav__fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+
+.bottom-nav__fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
 }
