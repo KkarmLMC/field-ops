@@ -312,7 +312,7 @@ export default function Installations() {
           <button
             className="dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
-            onClick={() => navigate('/installations/kanban')}
+            onClick={() => navigate('/installations/pipeline')}
           >
             <div className="dash-tile-icon"><SquaresFour size={18} /></div>
             <div className="dash-tile-text">

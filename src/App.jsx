@@ -31,7 +31,7 @@ const PAGE_META = {
 }
 
 function getPageMeta(pathname) {
-  if (pathname === '/installations/kanban')
+  if (pathname === '/installations/pipeline')
     return { title: 'Project Pipeline', parent: '/installations' }
   if (/^\/installations\/[^/]+$/.test(pathname))
     return { title: 'Project Detail', parent: '/installations' }
@@ -173,11 +173,11 @@ export default function App() {
 
             {/* Installations */}
             <Route path="/installations"                                       element={<Installations />} />
-            <Route path="/installations/kanban"                                element={<Installs />} />
+            <Route path="/installations/pipeline"                                element={<Installs />} />
             <Route path="/installations/:id"                                   element={<ProjectDetail />} />
 
             {/* Legacy redirects */}
-            <Route path="/installations/installs"                              element={<Navigate to="/installations/kanban" replace />} />
+            <Route path="/installations/installs"                              element={<Navigate to="/installations/pipeline" replace />} />
             <Route path="/installations/installs/:jobId"                       element={<Navigate to="/installations" replace />} />
             <Route path="/installations/installs/:jobId/form/:formId"          element={<FormRunner />} />
 

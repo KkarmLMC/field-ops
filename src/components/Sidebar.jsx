@@ -21,7 +21,7 @@ const NAV_ITEMS = [
     Icon: HardHat,
     label: 'Installations',
     children: [
-      { path: '/installations/kanban', Icon: Rows,          label: 'Project Pipeline' },
+      { path: '/installations/pipeline', Icon: Rows,          label: 'Project Pipeline' },
       { path: '/daily-field-log',      Icon: BookOpen,      label: 'Field Logs'       },
       { path: '/reports',              Icon: ClipboardText, label: 'Field Reports'    },
     ],
