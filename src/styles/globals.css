@@ -556,6 +556,14 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 
 /* Mobile: single-card swipe carousel */
 @media (max-width: 599px) {
+  /* Lock page-content from becoming a horizontal scroll container.
+     overflow-y:auto implicitly sets overflow-x to auto by CSS spec, which lets
+     the negative-margin bleed from branch-tabs make page-content scrollable
+     horizontally. On content-light pages the browser then steals horizontal
+     swipe gestures away from the branch-tabs track. overflow-x:hidden fixes this. */
+  .page-content {
+    overflow-x: hidden;
+  }
   .branch-tabs {
     /* Break out of page-content horizontal padding */
     margin-left: calc(-1 * var(--content-pad));
@@ -569,6 +577,9 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     gap: 0;
     padding: 4px 0 var(--sp-2);
     scrollbar-width: none;
+    /* Explicitly handle horizontal touch so the browser routes swipes here,
+       not to any ancestor scroll container */
+    touch-action: pan-x pinch-zoom;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
   /* Snap slide: transparent 100vw wrapper — owns the snap/sizing */
