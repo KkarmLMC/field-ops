@@ -135,8 +135,8 @@ export default function ProjectDetail() {
       try {
         const [{ data: p }, { data: r }, { data: s }] = await Promise.all([
           db.from('projects').select('*').eq('id', id).single(),
-          db.from('daily_field_logs').select('*').eq('project_id', id).order('report_date', { ascending: false }),
-          db.from('form_submissions').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+          db.from('daily_field_logs').select('*').eq('project_id', id).order('report_date', { ascending: false }).range(0, 24),
+          db.from('form_submissions').select('*').eq('project_id', id).order('created_at', { ascending: false }).range(0, 24),
         ])
         // Use Supabase data if found, otherwise fall back to mock
         setProject(p || PROJECTS.find(x => x.id === id) || null)

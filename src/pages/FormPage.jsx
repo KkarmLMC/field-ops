@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { CheckCircle, SpinnerGap, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import FormEngine, { validateSchema } from '../components/FormEngine.jsx'
+import { queueSubmission, getCachedForm, cacheFormSchemas } from '../lib/offline.js'
 
 export default function FormPage() {
   const { formType } = useParams()
@@ -15,8 +16,9 @@ export default function FormPage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitErr,  setSubmitErr]  = useState(null)
   const [success,    setSuccess]    = useState(null)
+  const [savedOffline, setSavedOffline] = useState(false)
 
-  // Fetch schema from Supabase
+  // Fetch schema from Supabase, fall back to IndexedDB cache if offline
   useEffect(() => {
     db.from('form_definitions')
       .select('*')
@@ -25,10 +27,20 @@ export default function FormPage() {
       .single()
       .then(({ data, error }) => {
         if (error || !data) {
-          setLoading(false)
+          // Try cached version
+          getCachedForm(formType).then(cached => {
+            if (cached) setSchema(cached)
+            setLoading(false)
+          })
           return
         }
         setSchema(data)
+        cacheFormSchemas([data]) // Cache for offline use
+        setLoading(false)
+      })
+      .catch(async () => {
+        const cached = await getCachedForm(formType)
+        if (cached) setSchema(cached)
         setLoading(false)
       })
   }, [formType])
@@ -42,7 +54,6 @@ export default function FormPage() {
     const validationErrors = validateSchema(schema, values)
     if (Object.keys(validationErrors).length) {
       setErrors(validationErrors)
-      // Scroll to first error
       const firstErrId = Object.keys(validationErrors)[0]
       document.getElementById(`field-${firstErrId}`)?.scrollIntoView({ behavior:'smooth', block:'center' })
       return
@@ -51,21 +62,29 @@ export default function FormPage() {
     setSubmitting(true)
     setSubmitErr(null)
 
-    try {
-      const { data, error } = await db.from('form_submissions_v2').insert({
-        form_slug:    formType,
-        branch:       values.branch || 'lm',
-        job_number:   values.job_number || null,
-        site_name:    values.site_name || null,
-        submitted_by: values.tech_name || null,
-        status:       'submitted',
-        form_data:    values,
-      }).select().single()
+    const payload = {
+      form_slug:    formType,
+      branch:       values.branch || 'lm',
+      job_number:   values.job_number || null,
+      site_name:    values.site_name || null,
+      submitted_by: values.tech_name || null,
+      status:       'submitted',
+      form_data:    values,
+    }
 
+    try {
+      const { data, error } = await db.from('form_submissions_v2').insert(payload).select().single()
       if (error) throw error
       setSuccess({ siteName: values.site_name || 'Site', formTitle: schema.title })
-    } catch (err) {
-      setSubmitErr('Submission failed. Check your connection and try again.')
+    } catch {
+      // If offline or network error — queue locally
+      if (!navigator.onLine) {
+        await queueSubmission(payload)
+        setSavedOffline(true)
+        setSuccess({ siteName: values.site_name || 'Site', formTitle: schema.title, offline: true })
+      } else {
+        setSubmitErr('Submission failed. Check your connection and try again.')
+      }
       setSubmitting(false)
     }
   }
@@ -96,11 +115,15 @@ export default function FormPage() {
   if (success) {
     return (
       <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--sp-10) var(--sp-6)', textAlign:'center' }}>
-        <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:'var(--sp-3)' }} />
-        <div style={{ fontSize:'var(--fs-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>Form Submitted</div>
-        <div style={{ color:'var(--text-2)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-6)' }}>
-          {success.formTitle} for {success.siteName} has been saved.
+        <CheckCircle size={52} style={{ color: success.offline ? 'var(--amber)' : 'var(--green)', marginBottom:'var(--sp-3)' }} />
+        <div style={{ fontSize:'var(--fs-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>
+          {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>
+        <div style={{ color:'var(--text-2)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-6)' }}>
+          {success.offline
+            ? `${success.formTitle} for ${success.siteName} has been queued and will sync when you're back online.`
+            : `${success.formTitle} for ${success.siteName} has been saved.`
+          }</div>
         <div style={{ display:'flex', gap:'var(--sp-3)' }}>
           <button onClick={()=>navigate('/forms')}
             style={{ padding:'var(--sp-2) var(--sp-5)', borderRadius:'var(--r-md)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--fs-sm)', color:'var(--text-2)' }}>

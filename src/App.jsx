@@ -3,17 +3,20 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-
 import { List, ArrowLeft } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
-import Dashboard     from './pages/Dashboard'
-import Installs       from './pages/Installs'
-import Installations  from './pages/Installations'
-import ProjectDetail  from './pages/ProjectDetail'
-import Inspections   from './pages/Inspections'
-import DailyFieldLog from './pages/DailyFieldLog'
-import Reports       from './pages/Reports'
-import Forms         from './pages/Forms'
-import FormPage      from './pages/FormPage'
-import Technicians   from './pages/Technicians'
-import FormBuilder   from './pages/FormBuilder'
+import { lazy, Suspense } from 'react'
+
+// ─── Lazy-loaded page chunks — each route downloads only when first visited ───
+const Dashboard     = lazy(() => import('./pages/Dashboard'))
+const Installs      = lazy(() => import('./pages/Installs'))
+const Installations = lazy(() => import('./pages/Installations'))
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
+const Inspections   = lazy(() => import('./pages/Inspections'))
+const DailyFieldLog = lazy(() => import('./pages/DailyFieldLog'))
+const Reports       = lazy(() => import('./pages/Reports'))
+const Forms         = lazy(() => import('./pages/Forms'))
+const FormPage      = lazy(() => import('./pages/FormPage'))
+const Technicians   = lazy(() => import('./pages/Technicians'))
+const FormBuilder   = lazy(() => import('./pages/FormBuilder'))
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -168,6 +171,7 @@ export default function App() {
         <MobileHeader onMenuOpen={() => setMobileOpen(true)} />
         <DesktopTopBar />
         <PageTransition>
+          <Suspense fallback={<div className="page-content" style={{ display:'flex',alignItems:'center',justifyContent:'center',minHeight:'60vh' }}><div className="spinner"/></div>}>
           <Routes>
             <Route path="/"                                                    element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard"                                           element={<Dashboard />} />
@@ -198,6 +202,7 @@ export default function App() {
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
+          </Suspense>
         </PageTransition>
       </div>
     </div>

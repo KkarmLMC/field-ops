@@ -1531,15 +1531,19 @@ export default function DailyFieldLog() {
   const isManagement = location.pathname === '/installations/field-logs'
 
   const [branch, setBranch]           = useState('lm')
-  const [formMode, setFormMode]       = useState(null) // null | 'part1' | 'part2'
+  const [formMode, setFormMode]       = useState(null)
   const [closeoutId, setCloseoutId]   = useState(null)
   const [entries, setEntries]         = useState([])
   const [loading, setLoading]         = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [hasMore, setHasMore]         = useState(true)
   const [savingPdf, setSavingPdf]     = useState(false)
 
   const bc = BRANCH_COLORS[branch] || BRANCH_COLORS.lm
 
-  // ── Load entries from Supabase on mount ─────────────────────────────────────
+  const PAGE_SIZE = 20
+
+  // ── Load entries from Supabase with pagination ───────────────────────────────
   useEffect(() => {
     async function load() {
       setLoading(true)
@@ -1547,11 +1551,29 @@ export default function DailyFieldLog() {
         .from('daily_field_logs')
         .select('*')
         .order('report_date', { ascending: false })
-      if (!error && data) setEntries(data)
+        .range(0, PAGE_SIZE - 1)
+      if (!error && data) {
+        setEntries(data)
+        setHasMore(data.length === PAGE_SIZE)
+      }
       setLoading(false)
     }
     load()
   }, [])
+
+  const loadMore = async () => {
+    setLoadingMore(true)
+    const { data, error } = await db
+      .from('daily_field_logs')
+      .select('*')
+      .order('report_date', { ascending: false })
+      .range(entries.length, entries.length + PAGE_SIZE - 1)
+    if (!error && data) {
+      setEntries(e => [...e, ...data])
+      setHasMore(data.length === PAGE_SIZE)
+    }
+    setLoadingMore(false)
+  }
 
   const lmCount         = entries.filter(r => r.branch === 'lm').length
   const boltCount       = entries.filter(r => r.branch === 'bolt').length
@@ -1717,6 +1739,12 @@ export default function DailyFieldLog() {
                   {reports.map(r => (
                     <EntryCard key={r.id} entry={r} bc={bc} onCloseOut={openCloseOut} />
                   ))}
+                  {hasMore && (
+                    <button onClick={loadMore} disabled={loadingMore}
+                      style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                      {loadingMore ? 'Loading…' : 'Load more'}
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -1764,9 +1792,15 @@ export default function DailyFieldLog() {
               </div>
             ) : (
               <div className="dfl-entries-list">
-                {entries.slice(0, 10).map(r => (
+                {entries.map(r => (
                   <EntryCard key={r.id} entry={r} bc={bc} onCloseOut={openCloseOut} />
                 ))}
+                {hasMore && (
+                  <button onClick={loadMore} disabled={loadingMore}
+                    style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                    {loadingMore ? 'Loading…' : 'Load more'}
+                  </button>
+                )}
               </div>
             )}
           </div>
