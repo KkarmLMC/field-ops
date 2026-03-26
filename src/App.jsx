@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { List, ArrowLeft } from '@phosphor-icons/react'
+import { ArrowLeft } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
+import BottomNav     from './components/BottomNav'
 import { lazy, Suspense } from 'react'
 
 // ─── Lazy-loaded page chunks — each route downloads only when first visited ───
@@ -51,7 +52,7 @@ function getPageMeta(pathname) {
 }
 
 // ─── Mobile top bar ────────────────────────────────────────────────────────────
-function MobileHeader({ onMenuOpen }) {
+function MobileHeader() {
   const location = useLocation()
   const navigate = useNavigate()
   const meta = getPageMeta(location.pathname)
@@ -63,11 +64,10 @@ function MobileHeader({ onMenuOpen }) {
           <ArrowLeft size={18} />
         </button>
       ) : (
-        <button className="mobile-header-btn" onClick={onMenuOpen}>
-          <List size={18} />
-        </button>
+        /* Spacer so title stays centered when there's no back button */
+        <div style={{ width: '2.125rem', flexShrink: 0 }} />
       )}
-      <div className="mobile-header-title">
+      <div className="mobile-header-title" style={{ textAlign: 'center' }}>
         {meta.sub && <div style={{ fontSize: '0.5625rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{meta.sub}</div>}
         {meta.title}
       </div>
@@ -156,19 +156,16 @@ function PageTransition({ children }) {
 
 // ─── Root ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [collapsed,  setCollapsed]  = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
 
   return (
     <div className="app-shell">
       <Sidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed(c => !c)}
-        mobileOpen={mobileOpen}
-        onClose={() => setMobileOpen(false)}
       />
       <div className="main-area">
-        <MobileHeader onMenuOpen={() => setMobileOpen(true)} />
+        <MobileHeader />
         <DesktopTopBar />
         <PageTransition>
           <Suspense fallback={<div className="page-content" style={{ display:'flex',alignItems:'center',justifyContent:'center',minHeight:'60vh' }}><div className="spinner"/></div>}>
@@ -205,6 +202,7 @@ export default function App() {
           </Suspense>
         </PageTransition>
       </div>
+      <BottomNav />
     </div>
   )
 }

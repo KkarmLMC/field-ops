@@ -2831,3 +2831,113 @@ textarea { resize: vertical; }
 
 .list-search-wrap--open .list-search-icon-btn { color: var(--navy); }
 .list-search-wrap--open .list-search-input    { width: auto; }
+
+
+/* =============================================================================
+   BOTTOM NAV  (.bottom-nav)
+   Mobile-only (hidden ≥768px). 4 tabs + slide-up More tray.
+   ============================================================================= */
+
+/* ── CSS custom property for other components to reference nav height ────────── */
+:root {
+  --bottom-nav-h: 4rem;
+}
+
+/* ── Bar ─────────────────────────────────────────────────────────────────────── */
+
+.bottom-nav {
+  /* Only shown on mobile */
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--bottom-nav-h);
+    /* Account for iPhone home indicator */
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--surface);
+    border-top: 1px solid var(--border-l);
+    z-index: 150;
+    /* Prevent background scroll bleed */
+    isolation: isolate;
+  }
+
+  /* Page content needs extra bottom padding when nav is visible */
+  .page-content {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--sp-4));
+  }
+}
+
+/* ── Tab button ──────────────────────────────────────────────────────────────── */
+
+.bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem var(--sp-1);
+  /* Prevent blue flash on iOS tap */
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity var(--ease-fast);
+}
+
+.bottom-nav__tab:active { opacity: 0.7; }
+
+/* ── Active indicator — red pill at top of tab ───────────────────────────────── */
+
+.bottom-nav__indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0.1875rem;
+  background: var(--red);
+  border-radius: 0 0 var(--r-xs) var(--r-xs);
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-nav__tab--active .bottom-nav__indicator {
+  width: 1.75rem;
+}
+
+/* ── Icon ────────────────────────────────────────────────────────────────────── */
+
+.bottom-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  transition: color var(--ease-fast), transform var(--ease-fast);
+}
+
+.bottom-nav__tab--active .bottom-nav__icon {
+  color: var(--red);
+  transform: translateY(-1px) scale(1.1);
+}
+
+/* ── Label ───────────────────────────────────────────────────────────────────── */
+
+.bottom-nav__label {
+  font-size: var(--fs-2xs);
+  font-weight: 500;
+  color: var(--text-3);
+  font-family: var(--font);
+  letter-spacing: 0.01em;
+  transition: color var(--ease-fast), font-weight var(--ease-fast);
+  white-space: nowrap;
+}
+
+.bottom-nav__tab--active .bottom-nav__label {
+  color: var(--red);
+  font-weight: 700;
+}

@@ -128,19 +128,14 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
 }
 
 // ── Sidebar ────────────────────────────────────────────────────────────────────
-export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
+export default function Sidebar({ collapsed, onToggle }) {
   const navigate   = useNavigate()
   const location   = useLocation()
-  const goTo = (path) => {
-    navigate(path)
-    onClose?.()
-  }
+  const goTo = (path) => navigate(path)
 
   return (
     <>
-      {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
-
-      <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''} ${mobileOpen ? 'sidebar-open' : ''}`}>
+      <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
 
         {/* Logo */}
         <div className="sidebar-brand-row">
