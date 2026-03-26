@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Buildings, MagnifyingGlass, ArrowRight, CheckCircle, Warning,
   HardHat, Lightning, Wrench, Plus, FileText, SquaresFour,
-  ClipboardText, Clock, CaretDown,
+  ClipboardText, Clock, CaretDown, BookOpen,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
@@ -311,12 +311,24 @@ export default function Installations() {
           <button
             className="dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+            onClick={() => navigate('/installations/field-logs')}
+          >
+            <div className="dash-tile-icon"><BookOpen size={18} /></div>
+            <div className="dash-tile-text">
+              <div className="dash-tile-label">Field Logs</div>
+              <div className="dash-tile-sub">Daily activity</div>
+            </div>
+            <ArrowRight size={14} className="dash-tile-arrow" />
+          </button>
+          <button
+            className="dash-tile"
+            style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
             onClick={() => navigate('/reports')}
           >
             <div className="dash-tile-icon"><FileText size={18} /></div>
             <div className="dash-tile-text">
               <div className="dash-tile-label">Field Reports</div>
-              <div className="dash-tile-sub">View all logs</div>
+              <div className="dash-tile-sub">Submitted forms</div>
             </div>
             <ArrowRight size={14} className="dash-tile-arrow" />
           </button>
