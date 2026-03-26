@@ -44,21 +44,21 @@ function shouldHide(pathname) {
 
 const FIELD_ITEMS = [
   { id: 'overview',      path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
-  { id: 'fieldlog',      path: '/daily-field-log',  Icon: BookOpen,       label: 'Field Log'    },
-  { id: 'forms',         path: '/forms',             Icon: FileText,       label: 'Forms',        exactMatch: true },
-  { id: 'inspections',   path: '/inspections',       Icon: MagnifyingGlass,label: 'Inspect'  },
-  { id: 'risk',          path: '/risk-assessment',   Icon: ChartBar,       label: 'Assess'         },
+  { id: 'fieldlog',      path: '/daily-field-log',  Icon: BookOpen,       label: 'Field Logs'    },
+  { id: 'forms',         path: '/forms',             Icon: FileText,       label: 'Report Forms',        exactMatch: true },
+  { id: 'inspections',   path: '/inspections',       Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'risk',          path: '/risk-assessment',   Icon: ChartBar,       label: 'Assessment'         },
   { id: 'jsa',           path: '/forms/jsa',         Icon: HardHat,        label: 'JSA'          },
 ]
 
 const MGMT_ITEMS = [
   { id: 'overview',    path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
-  { id: 'installs',    path: '/installations',    Icon: HardHat,        label: 'Installs',exactMatch: true },
-  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspect'  },
-  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Log'    },
-  { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Forms',        exactMatch: true },
-  { id: 'risk',        path: '/risk-assessment',   Icon: ChartBar,       label: 'Assess'         },
-  { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Techs'  },
+  { id: 'installs',    path: '/installations',    Icon: HardHat,        label: 'Installations',exactMatch: true },
+  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Logs'    },
+  { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Report Forms',        exactMatch: true },
+  { id: 'risk',        path: '/risk-assessment',   Icon: ChartBar,       label: 'Assessment'         },
+  { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Technicians'  },
 ]
 
 // ─── Active path detection ────────────────────────────────────────────────────
