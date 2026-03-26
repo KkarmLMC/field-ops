@@ -148,7 +148,7 @@ function FieldRow({ p, navigate }) {
   return (
     <div style={{
       padding: '12px 14px', borderBottom: '1px solid var(--border-l)',
-      display: 'flex', gap: 12, alignItems: 'flex-start',
+      display: 'flex', gap: 12, alignItems: 'center',
     }}>
       {/* Left: icon */}
       <div style={{
@@ -191,15 +191,15 @@ function FieldRow({ p, navigate }) {
       {/* Right: action */}
       <div style={{ display: 'flex', flexDirection: 'row', gap: 6, flexShrink: 0, alignItems: 'center' }}>
         <button
-          className="btn btn-secondary"
-          style={{ fontSize: 12, padding: '7px 12px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
+          className="btn btn-primary"
+          style={{ fontSize: 13, padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
-          <ClipboardText size={13} /> DFL
+          <ClipboardText size={14} /> DFL
         </button>
         <button
-          className="btn btn-secondary"
-          style={{ fontSize: 12, padding: '7px 12px', whiteSpace: 'nowrap' }}
+          className="btn btn-primary"
+          style={{ fontSize: 13, padding: '8px 14px', whiteSpace: 'nowrap' }}
           onClick={e => { e.stopPropagation(); navigate(`/installations/${p.id}`) }}
         >
           View
