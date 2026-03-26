@@ -425,12 +425,23 @@ function FormEditor({ form, onSave, onCancel }) {
       {error && <div style={{ padding:'var(--sp-3)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>{error}</div>}
 
       {sections.map((sec, i) => (
-        <SectionEditor key={sec.title+i} section={sec} sectionIdx={i} totalSections={sections.length} onChange={updateSection} onDelete={deleteSection} onMoveSection={moveSection} />
+        <div key={sec.title+i}>
+          <SectionEditor section={sec} sectionIdx={i} totalSections={sections.length} onChange={updateSection} onDelete={deleteSection} onMoveSection={moveSection} />
+          {/* Add Section button between sections */}
+          <button type="button" onClick={() => {
+            const next = [...sections]
+            next.splice(i + 1, 0, { title:'New Section', fields:[] })
+            setSections(next)
+          }}
+            style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-md)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--fs-xs)', marginBottom:'var(--sp-3)', background:'none' }}>
+            <Plus size={11}/> Add Section Below
+          </button>
+        </div>
       ))}
 
       <button type="button" onClick={addSection}
         style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', borderRadius:'var(--r-lg)', border:'2px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-8)' }}>
-        <Plus size={16}/> Add Section
+        <Plus size={16}/> Add Section at End
       </button>
     </div>
   )
