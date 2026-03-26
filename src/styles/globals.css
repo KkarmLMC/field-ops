@@ -571,16 +571,18 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
     scrollbar-width: none;
   }
   .branch-tabs-mobile-track::-webkit-scrollbar { display: none; }
-  .branch-tabs-mobile-track .branch-card {
-    /* Full viewport width so snap always lands perfectly */
+  /* Snap slide: transparent 100vw wrapper — owns the snap/sizing */
+  .branch-tabs-mobile-track .branch-card-slide {
     flex: 0 0 100vw;
     width: 100vw;
     box-sizing: border-box;
-    /* Visual inset via padding instead of gap/margin */
-    padding-left: var(--content-pad);
-    padding-right: var(--content-pad);
+    padding: 0 var(--content-pad);
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  /* Visual card fills the slide, keeps its own bg/radius/padding */
+  .branch-tabs-mobile-track .branch-card {
+    width: 100%;
   }
   /* Dots visible on mobile */
   .branch-dots {

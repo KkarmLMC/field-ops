@@ -58,8 +58,8 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
           const total = tab.total || 1
 
           return (
+            <div key={tab.id} className="branch-card-slide">
             <button
-              key={tab.id}
               className={`branch-card${isActive ? ' branch-card--active' : ''}`}
               onClick={() => onChange(tab.id)}
               onMouseEnter={() => setHoveredId(tab.id)}
@@ -95,6 +95,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
                 ))}
               </div>
             </button>
+            </div>
           )
         })}
       </div>
