@@ -5,11 +5,12 @@
  * All changes save directly to the form_definitions table in Supabase.
  * No code deploy required — forms update live across the app.
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Plus, Trash, ArrowUp, ArrowDown, FloppyDisk,
   PencilSimple, Eye, CaretRight, CheckCircle, SpinnerGap, X,
+  DotsSixVertical,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
@@ -37,18 +38,35 @@ function slugify(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
-// ─── Field Editor row ─────────────────────────────────────────────────────────
-function FieldRow({ field, index, total, onChange, onDelete, onMove }) {
+// ─── Field Editor row — draggable ─────────────────────────────────────────────
+function FieldRow({ field, index, total, onChange, onDelete, onDragStart, onDragOver, onDrop, isDragOver }) {
   const [expanded, setExpanded] = useState(false)
-  const needsOptions = ['select','radio','checklist'].includes(field.type)
+  const needsOptions = ['select','radio','checklist','checkbox-group','radio'].includes(field.type)
 
   return (
-    <div style={{ background:'var(--surface)', border:'1px solid var(--border-l)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-2)', overflow:'hidden' }}>
+    <div
+      draggable
+      onDragStart={e => onDragStart(e, index)}
+      onDragOver={e => { e.preventDefault(); onDragOver(index) }}
+      onDrop={e => { e.preventDefault(); onDrop(index) }}
+      style={{
+        background: isDragOver ? 'var(--card-header-bg)' : 'var(--surface)',
+        border: `1px solid ${isDragOver ? 'var(--navy)' : 'var(--border-l)'}`,
+        borderRadius: 'var(--r-md)',
+        marginBottom: 'var(--sp-2)',
+        overflow: 'hidden',
+        transition: 'border-color var(--ease-fast), background var(--ease-fast)',
+        cursor: 'default',
+      }}
+    >
       {/* Collapsed header */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
-        <div style={{ display:'flex', flexDirection:'column', gap:2, flexShrink:0 }}>
-          <button type="button" onClick={()=>onMove(index,-1)} disabled={index===0} style={{ opacity:index===0?0.3:1, padding:'0 var(--sp-1)' }}><ArrowUp size={11}/></button>
-          <button type="button" onClick={()=>onMove(index,1)} disabled={index===total-1} style={{ opacity:index===total-1?0.3:1, padding:'0 var(--sp-1)' }}><ArrowDown size={11}/></button>
+        {/* Drag handle */}
+        <div
+          style={{ color:'var(--text-4)', cursor:'grab', padding:'var(--sp-1)', flexShrink:0, display:'flex', alignItems:'center' }}
+          title="Drag to reorder"
+        >
+          <DotsSixVertical size={16} weight="bold" />
         </div>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ fontWeight:600, fontSize:'var(--fs-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
@@ -114,6 +132,9 @@ function FieldRow({ field, index, total, onChange, onDelete, onMove }) {
 
 // ─── Section Editor ───────────────────────────────────────────────────────────
 function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete, onMoveSection }) {
+  const [dragOverIdx, setDragOverIdx] = useState(null)
+  const dragSrcIdx = useRef(null)
+
   const addField = () => {
     const newField = { id:`field_${Date.now()}`, label:'', type:'text', required:false }
     onChange(sectionIdx, { ...section, fields:[...section.fields, newField] })
@@ -128,16 +149,32 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
     onChange(sectionIdx, { ...section, fields:section.fields.filter((_,i)=>i!==fieldIdx) })
   }
 
-  const moveField = (fieldIdx, dir) => {
+  const handleDragStart = (e, idx) => {
+    dragSrcIdx.current = idx
+    e.dataTransfer.effectAllowed = 'move'
+  }
+
+  const handleDragOver = (idx) => {
+    setDragOverIdx(idx)
+  }
+
+  const handleDrop = (targetIdx) => {
+    const src = dragSrcIdx.current
+    if (src === null || src === targetIdx) { setDragOverIdx(null); return }
     const fields = [...section.fields]
-    const target = fieldIdx + dir
-    if (target < 0 || target >= fields.length) return
-    ;[fields[fieldIdx], fields[target]] = [fields[target], fields[fieldIdx]]
+    const [moved] = fields.splice(src, 1)
+    fields.splice(targetIdx, 0, moved)
     onChange(sectionIdx, { ...section, fields })
+    dragSrcIdx.current = null
+    setDragOverIdx(null)
   }
 
   return (
-    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}>
+    <div
+      style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}
+      onDragLeave={() => setDragOverIdx(null)}
+      onDrop={() => setDragOverIdx(null)}
+    >
       {/* Section header */}
       <div style={{ background:'var(--navy)', padding:'var(--sp-3) var(--sp-4)', display:'flex', alignItems:'center', gap:'var(--sp-3)' }}>
         <div style={{ flex:1 }}>
@@ -165,7 +202,10 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
             total={section.fields.length}
             onChange={updateField}
             onDelete={deleteField}
-            onMove={moveField}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            isDragOver={dragOverIdx === fi}
           />
         ))}
         <button type="button" onClick={addField}
