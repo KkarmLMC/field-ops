@@ -204,8 +204,8 @@ export default function App() {
             <Route path="/installations/field-reports"                        element={<Reports />} />
             <Route path="/reports"                                             element={<Navigate to="/installations/field-reports" replace />} />
             <Route path="/forms"                                               element={<Forms />} />
-            <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/forms/builder"                                      element={<FormBuilder />} />
+            <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
