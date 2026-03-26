@@ -370,14 +370,14 @@ function SigPad({ value, onChange }) {
   const clear = () => { canvasRef.current.getContext('2d').clearRect(0,0,480,80); onChange(null) }
 
   return (
-    <div style={{ position:'relative' }}>
-      <canvas ref={canvasRef} width={480} height={80}
+    <div style={{ position:'relative', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', overflow:'hidden' }}>
+      <canvas ref={canvasRef} width={480} height={100}
         onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
         onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:'5rem', borderRadius:'var(--r-sm)', display:'block', background:'var(--bg)', cursor:'crosshair', touchAction:'none' }}
+        style={{ width:'100%', height:'6rem', display:'block', background:'#FAFAFA', cursor:'crosshair', touchAction:'none' }}
       />
-      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-3)', fontSize:'var(--fs-sm)', pointerEvents:'none', fontFamily:'var(--mono)' }}>Sign here</div>}
-      {value  && <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'var(--hover)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'var(--text-2)', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}><Trash size={10}/> Clear</button>}
+      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-3)', fontSize:'var(--fs-sm)', pointerEvents:'none', fontFamily:'var(--font)' }}>Sign here</div>}
+      {value  && <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'rgba(0,0,0,0.45)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'#fff', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}><Trash size={10}/> Clear</button>}
     </div>
   )
 }
@@ -526,7 +526,7 @@ async function generateCompletionPdf(formType, formData) {
 
 // ─── Field renderer ────────────────────────────────────────────────────────────
 function FormField({ field, value, onChange }) {
-  const base = { width:'100%', fontSize:'var(--fs-md)' }
+  const base = { width:'100%', fontSize:'var(--fs-md)', background:'#FFFFFF', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)' }
   if (field.type==='select') return (
     <select value={value||''} onChange={e=>onChange(e.target.value)} style={base}>
       <option value="">Select…</option>
@@ -534,16 +534,16 @@ function FormField({ field, value, onChange }) {
     </select>
   )
   if (field.type==='boolean') return (
-    <div style={{ display:'flex', gap:'var(--sp-2)' }}>
+    <div style={{ display:'flex', gap:'var(--sp-2)', padding:'0.25rem', background:'var(--surface-raised)', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)' }}>
       {['Yes','No'].map(opt => {
         const active = opt==='Yes'?value===true:value===false
         return (
           <button key={opt} type="button" onClick={()=>onChange(opt==='Yes')} style={{
-            flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-md)',
-            border:`1px solid ${active?'var(--navy)':'var(--border)'}`,
-            background: active?'var(--navy)':'var(--surface)',
-            color: active?'#fff':'var(--text-2)',
-            fontWeight: active?600:400, transition:'all var(--ease-fast)',
+            flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-xs)', fontSize:'var(--fs-md)',
+            border: active ? '1px solid var(--navy)' : '1px solid transparent',
+            background: active ? 'var(--navy)' : 'transparent',
+            color: active ? '#fff' : 'var(--text-2)',
+            fontWeight: active ? 600 : 400, transition:'all var(--ease-fast)',
           }}>{opt}</button>
         )
       })}
@@ -556,7 +556,7 @@ function FormField({ field, value, onChange }) {
   if (field.type==='email')   return <input type="email"  value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
   if (field.type==='signature') return <SigPad value={value||null} onChange={onChange} />
   if (field.type==='gps') return (
-    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', background:'var(--bg)', border:'1px solid var(--border)', borderRadius:'var(--r-sm)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
+    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', background:'var(--bg)', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
       <MapPin size={13} style={{ color:'var(--blue)', flexShrink:0 }} />
       <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-sm)' }}>{value || 'Acquiring location…'}</span>
     </div>
@@ -574,14 +574,14 @@ function FormField({ field, value, onChange }) {
       <label htmlFor={fid} style={{ cursor:'pointer', display:'block' }}>
         <input id={fid} type="file" accept="image/*" capture="environment" style={{ display:'none' }} onChange={handleFile} />
         {value
-          ? <div style={{ position:'relative' }}>
-              <img src={value} alt={field.label} style={{ width:'100%', maxHeight:'200px', objectFit:'cover', borderRadius:'var(--r-sm)', display:'block' }} />
+          ? <div style={{ position:'relative', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', overflow:'hidden' }}>
+              <img src={value} alt={field.label} style={{ width:'100%', maxHeight:'200px', objectFit:'cover', display:'block' }} />
               <button type="button" onClick={e=>{e.preventDefault();e.stopPropagation();onChange(null)}}
                 style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'rgba(0,0,0,0.55)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'#fff', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}>
                 <X size={10}/> Remove
               </button>
             </div>
-          : <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', background:'var(--bg)', border:'1.5px dashed var(--border)', borderRadius:'var(--r-sm)', color:'var(--text-3)', fontSize:'var(--fs-md)' }}>
+          : <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', background:'var(--bg)', border:'1.5px dashed #C9CDD4', borderRadius:'var(--r-sm)', color:'var(--text-3)', fontSize:'var(--fs-md)' }}>
               <Camera size={15}/> Tap to choose photo
             </div>
         }
@@ -606,7 +606,7 @@ function Section({ title, children, open, onToggle }) {
         <span style={{ fontFamily:'var(--font)', fontSize:'var(--fs-sm)', fontWeight:600, color:'rgba(255,255,255,0.9)' }}>{title}</span>
         <CaretDown size={12} style={{ color:'rgba(255,255,255,0.6)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
-      {open && <div style={{ padding:'var(--sp-4)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>{children}</div>}
+      {open && <div style={{ padding:'var(--sp-4)', display:'flex', flexDirection:'column', gap:'var(--sp-4)', background:'var(--surface-raised)' }}>{children}</div>}
     </div>
   )
 }
