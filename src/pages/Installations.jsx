@@ -234,11 +234,8 @@ function FieldMiniRow({ p, navigate, stageKey }) {
       }}
       onClick={() => navigate(`/installations/${p.id}`)}
     >
-      <div style={{
-        width: 30, height: 30, borderRadius: 7, flexShrink: 0,
-        background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <Icon size={14} style={{ color: cfg.color }} />
+      <div className="dash-job-icon">
+        <Icon size={15} />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 600, fontSize: 'var(--fs-sm)', color: 'var(--text-1)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
