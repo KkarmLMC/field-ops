@@ -649,7 +649,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   margin: 0 0 2px;
 }
 .section-divider-title {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -657,12 +657,12 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   flex-shrink: 0;
 }
 .section-divider-sep {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-xs);
   color: var(--text-3);
   flex-shrink: 0;
 }
 .section-divider-label {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
