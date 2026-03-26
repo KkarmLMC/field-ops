@@ -33,6 +33,8 @@ const PAGE_META = {
 function getPageMeta(pathname) {
   if (pathname === '/installations/pipeline')
     return { title: 'Project Pipeline', parent: '/installations' }
+  if (pathname === '/installations/field-logs')
+    return { title: 'Field Logs', parent: '/installations' }
   if (/^\/installations\/[^/]+$/.test(pathname))
     return { title: 'Project Detail', parent: '/installations' }
   if (/^\/installations\/installs\/[^/]+\/form\/[^/]+$/.test(pathname)) {
@@ -173,7 +175,8 @@ export default function App() {
 
             {/* Installations */}
             <Route path="/installations"                                       element={<Installations />} />
-            <Route path="/installations/pipeline"                                element={<Installs />} />
+            <Route path="/installations/pipeline"                              element={<Installs />} />
+            <Route path="/installations/field-logs"                            element={<DailyFieldLog />} />
             <Route path="/installations/:id"                                   element={<ProjectDetail />} />
 
             {/* Legacy redirects */}

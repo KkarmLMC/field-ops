@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import {
   Clock, CheckCircle, FileText, Plus, MapPin,
   X, User, Users, Truck, Pencil, Warning, ClipboardText,
@@ -1567,6 +1568,10 @@ function SectionDivider({ label, accent = 'var(--text-3)' }) {
 }
 
 export default function DailyFieldLog() {
+  const location = useLocation()
+  // Management view when accessed via /installations/field-logs; field-only otherwise
+  const isManagement = location.pathname === '/installations/field-logs'
+
   const [branch, setBranch]           = useState('lm')
   const [formMode, setFormMode]       = useState(null) // null | 'part1' | 'part2'
   const [closeoutId, setCloseoutId]   = useState(null)
@@ -1682,98 +1687,90 @@ export default function DailyFieldLog() {
   return (
     <div className="page-content fade-in">
 
-      {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
-      <SectionDivider label="Management Overview" accent="var(--navy)" />
+      {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
+      {isManagement && (
+        <>
+          <SectionDivider label="Management Overview" accent="var(--navy)" />
 
-      <BranchTabs
-        active={branch}
-        onChange={setBranch}
-        lmCount={lmCount}
-        boltCount={boltCount}
-        boltDallasCount={boltDallasCount}
-      />
+          <BranchTabs
+            active={branch}
+            onChange={setBranch}
+            lmCount={lmCount}
+            boltCount={boltCount}
+            boltDallasCount={boltDallasCount}
+          />
 
-      {/* Summary strip */}
-      <div className="dfl-summary-strip">
-        {[
-          { label: 'Total Entries',      value: reports.length,   icon: <FileText size={15} weight="bold" /> },
-          { label: 'Hours Logged',       value: `${totalHours}h`, icon: <Clock size={15} weight="bold" /> },
-          { label: 'Reviewed',           value: reviewedCount,    icon: <CheckCircle size={15} weight="bold" /> },
-          { label: 'Drafts In Progress', value: draftCount,       icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
-        ].map(s => (
-          <div
-            key={s.label}
-            className="dfl-summary-card"
-            style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
-          >
-            <div
-              className="dfl-summary-icon"
-              style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}
-            >
-              {s.icon}
-            </div>
-            <div>
+          {/* Summary strip */}
+          <div className="dfl-summary-strip">
+            {[
+              { label: 'Total Entries',      value: reports.length,   icon: <FileText size={15} weight="bold" /> },
+              { label: 'Hours Logged',       value: `${totalHours}h`, icon: <Clock size={15} weight="bold" /> },
+              { label: 'Reviewed',           value: reviewedCount,    icon: <CheckCircle size={15} weight="bold" /> },
+              { label: 'Drafts In Progress', value: draftCount,       icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
+            ].map(s => (
               <div
-                className="dfl-summary-value"
-                style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}
+                key={s.label}
+                className="dfl-summary-card"
+                style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
               >
-                {s.value}
+                <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+                  {s.icon}
+                </div>
+                <div>
+                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+                    {s.value}
+                  </div>
+                  <div className="dfl-summary-label">{s.label}</div>
+                </div>
               </div>
-              <div className="dfl-summary-label">{s.label}</div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Draft entries callout */}
-      {draftCount > 0 && (
-        <div className="dfl-draft-callout" style={{ borderLeftColor: bc.bgActive }}>
-          <ArrowsClockwise size={14} weight="bold" style={{ color: bc.bgActive, flexShrink: 0 }} />
-          <span>
-            <strong>{draftCount} log{draftCount !== 1 ? 's' : ''} in progress</strong>
-            {' '}— morning check-in saved. Complete the end-of-day close-out when work is done.
-          </span>
-        </div>
-      )}
-
-      {/* Entries list */}
-      <div className="dash-card">
-        <div
-          className="dash-card-head"
-          style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
-        >
-          <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-            <Clock size={14} />
-            Field Log Entries
-          </span>
-          <span className="dash-card-meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
-        </div>
-
-        <div>
-          {reports.length === 0 ? (
-            <div className="dfl-empty-state">
-              <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
-              <div>No log entries for this branch</div>
-            </div>
-          ) : (
-            <div className="dfl-entries-list">
-              {reports.map(r => (
-                <EntryCard
-                  key={r.id}
-                  entry={r}
-                  bc={bc}
-                  onCloseOut={openCloseOut}
-                />
-              ))}
+          {/* Draft entries callout */}
+          {draftCount > 0 && (
+            <div className="dfl-draft-callout" style={{ borderLeftColor: bc.bgActive }}>
+              <ArrowsClockwise size={14} weight="bold" style={{ color: bc.bgActive, flexShrink: 0 }} />
+              <span>
+                <strong>{draftCount} log{draftCount !== 1 ? 's' : ''} in progress</strong>
+                {' '}— morning check-in saved. Complete the end-of-day close-out when work is done.
+              </span>
             </div>
           )}
-        </div>
-      </div>
+
+          {/* Entries list */}
+          <div className="dash-card">
+            <div
+              className="dash-card-head"
+              style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
+            >
+              <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <Clock size={14} />
+                Field Log Entries
+              </span>
+              <span className="dash-card-meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
+            </div>
+            <div>
+              {reports.length === 0 ? (
+                <div className="dfl-empty-state">
+                  <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <div>No log entries for this branch</div>
+                </div>
+              ) : (
+                <div className="dfl-entries-list">
+                  {reports.map(r => (
+                    <EntryCard key={r.id} entry={r} bc={bc} onCloseOut={openCloseOut} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-      <SectionDivider label="Field" accent="var(--orange)" />
+      {isManagement && <SectionDivider label="Field" accent="var(--orange)" />}
 
-      {/* Field quick actions */}
+      {/* Field quick actions — shown on both routes */}
       <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
         <button
           className="btn btn-primary"
@@ -1794,6 +1791,33 @@ export default function DailyFieldLog() {
           </button>
         )}
       </div>
+
+      {/* Field-only: show the entries list below the action buttons */}
+      {!isManagement && (
+        <div className="dash-card">
+          <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
+            <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+              <Clock size={14} />
+              My Log Entries
+            </span>
+            <span className="dash-card-meta">{entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}</span>
+          </div>
+          <div>
+            {entries.length === 0 ? (
+              <div className="dfl-empty-state">
+                <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                <div>No log entries yet — start one above</div>
+              </div>
+            ) : (
+              <div className="dfl-entries-list">
+                {entries.slice(0, 10).map(r => (
+                  <EntryCard key={r.id} entry={r} bc={bc} onCloseOut={openCloseOut} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Part 1 Form */}
       {formMode === 'part1' && (
