@@ -1,12 +1,10 @@
-import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   PencilSimple, SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar, Rows, UserCircle,
+  BookOpen, ChartBar, Rows,
 } from '@phosphor-icons/react'
-import useRole, { setRole, getRole } from '../lib/useRole.js'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
 // Top-level items may have `children` for a collapsible sub-nav group.
@@ -135,29 +133,9 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
   const navigate   = useNavigate()
   const location   = useLocation()
-  const { role, isManagement } = useRole()
-  const [, forceUpdate] = useState(0)
-
   const goTo = (path) => {
     navigate(path)
     onClose?.()
-  }
-
-  // Filter nav items — hide Form Builder from technicians
-  const visibleNavItems = NAV_ITEMS.map(item => {
-    if (item.path === '/forms' && item.children) {
-      return {
-        ...item,
-        children: item.children.filter(c => c.path !== '/forms/builder' || isManagement),
-      }
-    }
-    return item
-  })
-
-  const cycleRole = () => {
-    const next = role === 'field' ? 'management' : 'field'
-    setRole(next)
-    forceUpdate(n => n + 1)
   }
 
   return (
@@ -178,7 +156,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
         <nav className="sidebar-nav">
           {!collapsed && <div className="sidebar-section-label">MENU</div>}
 
-          {visibleNavItems.map(item => (
+          {NAV_ITEMS.map(item => (
             <NavGroup
               key={item.path}
               item={item}
@@ -199,22 +177,6 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
             </button>
           ))}
 
-          {/* Role indicator — tap to cycle between technician/manager for dev/demo */}
-          <button
-            className="sidebar-item"
-            onClick={cycleRole}
-            title={collapsed ? `Role: ${role}` : undefined}
-            style={{ opacity: 0.7 }}
-          >
-            <UserCircle size={17} style={{ flexShrink: 0 }} />
-            {!collapsed && (
-              <span className="sidebar-item-label" style={{ display:'flex', alignItems:'center', gap:'0.375rem' }}>
-                <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-2xs)', padding:'0.1rem 0.375rem', borderRadius:'var(--r-full)', background: isManagement ? 'rgba(4,36,92,0.12)' : 'rgba(0,0,0,0.06)', color: isManagement ? 'var(--navy)' : 'var(--text-3)' }}>
-                  {isManagement ? 'Management' : 'Field'}
-                </span>
-              </span>
-            )}
-          </button>
 
           <button
             className="sidebar-item sidebar-collapse-btn"

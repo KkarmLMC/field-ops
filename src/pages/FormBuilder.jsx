@@ -12,7 +12,6 @@ import {
   PencilSimple, Eye, CaretRight, CheckCircle, SpinnerGap, X,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import useRole from '../lib/useRole.js'
 
 const FIELD_TYPES = [
   { value: 'text',          label: 'Text' },
@@ -240,15 +239,9 @@ function FormEditor({ form, onSave, onCancel }) {
 export default function FormBuilder() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { isManagement } = useRole()
   const [forms,    setForms]    = useState([])
   const [loading,  setLoading]  = useState(true)
   const [editing,  setEditing]  = useState(null)
-
-  // Redirect non-managers away
-  useEffect(() => {
-    if (!isManagement) navigate('/forms', { replace: true })
-  }, [isManagement])
 
   useEffect(() => {
     db.from('form_definitions').select('*').eq('active', true).order('sort_order', { ascending:true })
