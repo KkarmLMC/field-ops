@@ -632,6 +632,37 @@ export default function Forms() {
           </div>
         )
       })()}
+      <div className="card">
+        <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
+          <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
+        </div>
+        {branchCompletions.length === 0
+          ? <div className="empty"><div className="empty-desc">No completions for this branch yet.</div></div>
+          : branchCompletions.map(f => <CompletionRow key={f.id} form={f} />)
+        }
+      </div>
+
+      {/* Legacy submissions */}
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />All Submissions</span>
+        </div>
+        {loading
+          ? <div className="loading"><div className="spinner" /></div>
+          : submissions.length===0
+            ? <div className="empty"><div className="empty-icon">📝</div><div className="empty-title">No forms yet</div><div className="empty-desc">Start a completion form above.</div></div>
+            : submissions.map(s => (
+              <div key={s.id} className="project-item">
+                <div style={{ flex:1 }}>
+                  <div className="project-name">{s.projects?.name||'Unknown Project'}</div>
+                  <div className="project-meta">{s.submitted_by} · {new Date(s.created_at).toLocaleDateString()}</div>
+                </div>
+                <span className={`badge ${STATUS_BADGE[s.status]||'badge-hold'}`}>{s.status}</span>
+              </div>
+            ))
+        }
+      </div>
+
         {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
         <SectionDivider title="Completion Forms" label="Field Overview" accent="var(--navy)" />
 
@@ -664,37 +695,6 @@ export default function Forms() {
             })}
           </div>
         </div>
-
-      <div className="card">
-        <div className="card-header" style={{ background: BRANCH_COLORS[branch].bgActive }}>
-          <span className="card-title"><span className="card-dot" style={{ background:'rgba(255,255,255,0.6)' }} />Completed Forms</span>
-        </div>
-        {branchCompletions.length === 0
-          ? <div className="empty"><div className="empty-desc">No completions for this branch yet.</div></div>
-          : branchCompletions.map(f => <CompletionRow key={f.id} form={f} />)
-        }
-      </div>
-
-      {/* Legacy submissions */}
-      <div className="card">
-        <div className="card-header">
-          <span className="card-title"><span className="card-dot" style={{ background:'var(--red)' }} />All Submissions</span>
-        </div>
-        {loading
-          ? <div className="loading"><div className="spinner" /></div>
-          : submissions.length===0
-            ? <div className="empty"><div className="empty-icon">📝</div><div className="empty-title">No forms yet</div><div className="empty-desc">Start a completion form above.</div></div>
-            : submissions.map(s => (
-              <div key={s.id} className="project-item">
-                <div style={{ flex:1 }}>
-                  <div className="project-name">{s.projects?.name||'Unknown Project'}</div>
-                  <div className="project-meta">{s.submitted_by} · {new Date(s.created_at).toLocaleDateString()}</div>
-                </div>
-                <span className={`badge ${STATUS_BADGE[s.status]||'badge-hold'}`}>{s.status}</span>
-              </div>
-            ))
-        }
-      </div>
 
       </div>{/* end page-stack */}
     </div>
