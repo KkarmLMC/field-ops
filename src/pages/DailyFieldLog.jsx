@@ -1559,7 +1559,7 @@ function SectionDivider({ label, accent = 'var(--text-3)', title }) {
     textTransform: 'uppercase', flexShrink: 0,
   }
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '2px 0' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 2px' }}>
       {title && (
         <>
           <span style={{ ...textStyle, color: 'var(--text-1)' }}>{title}</span>
@@ -1691,6 +1691,7 @@ export default function DailyFieldLog() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
       {isManagement && (
@@ -1852,6 +1853,7 @@ export default function DailyFieldLog() {
         </div>
       )}
 
+      </div>
     </div>
   )
 }

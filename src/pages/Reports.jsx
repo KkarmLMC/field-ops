@@ -52,7 +52,7 @@ function SectionDivider({ label, accent = 'var(--text-3)', title }) {
     textTransform: 'uppercase', flexShrink: 0,
   }
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '2px 0' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 2px' }}>
       {title && (
         <>
           <span style={{ ...textStyle, color: 'var(--text-1)' }}>{title}</span>
@@ -187,6 +187,7 @@ export default function Reports() {
 
   return (
     <div className="page-content fade-in">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
       {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
       <SectionDivider title="Field Reports" label="Management Overview" accent="var(--navy)" />
@@ -309,6 +310,7 @@ export default function Reports() {
         </button>
       </div>
 
+      </div>
     </div>
   )
 }
