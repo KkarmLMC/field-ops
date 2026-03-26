@@ -57,7 +57,7 @@ const FIELD_TABS = [
     id:    'log',
     path:  '/daily-field-log',
     Icon:  BookOpen,
-    label: 'My Log',
+    label: 'Field Log',
   },
   {
     id:    'forms',
