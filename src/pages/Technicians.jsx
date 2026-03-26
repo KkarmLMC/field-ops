@@ -94,7 +94,7 @@ export default function Technicians() {
         })}
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider title="Technicians" label="Field" accent="var(--orange)" />
+        <SectionDivider title="Technicians" label="Field Overview" accent="var(--navy)" />
 
         <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
           <button
