@@ -116,17 +116,116 @@ Object.assign(COMPLETION_TYPES, {
     ],
   },
   'swd-production': {
-    label: 'SWD Production Install Complete', short: 'SWD Production',
+    label: 'SWD Production Install Completion', short: 'SWD Production',
     icon: Drop, color: '#6366F1', colorDim: '#EEF2FF',
     desc: 'SWD and Production sites completion form after new installation', ref: 'NFPA 780',
-    fields: [
-      { id: 'site_type',        label: 'Site Type',               type: 'select',  options: ['SWD', 'Production', 'Tank Battery', 'Other'], required: true },
-      { id: 'tank_count',       label: 'Number of Tanks',         type: 'number',  required: true },
-      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
-      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
-      { id: 'ground_rods',      label: 'Ground Rods',             type: 'number',  required: true },
-      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
-      { id: 'resistance_ohms',  label: 'Ground Resistance (ohms)',type: 'number' },
+    fields: [], // flat fields kept for PDF compat; sections drives the form UI
+    sections: [
+      { title: 'Job Information', fields: [
+        { id: 'customer_account',       label: 'Customer Account',           type: 'select', required: true,
+          options: ['Select customer…'] },
+        { id: 'site_name',              label: 'Site Name',                  type: 'text',  required: true },
+        { id: 'job_number',             label: 'Job Number',                 type: 'text',  required: true },
+        { id: 'location',               label: 'Location',                   type: 'gps',   required: true },
+        { id: 'location_notes',         label: 'Location Notes',             type: 'textarea' },
+        { id: 'primary_contact',        label: 'Primary Contact',            type: 'text',  required: true },
+        { id: 'primary_contact_email',  label: 'Primary Contact Email',      type: 'email', hint: 'If more than one email, separate each by a space.' },
+        { id: 'primary_contact_phone',  label: 'Primary Contact Phone',      type: 'tel' },
+        { id: 'lm_representative',      label: 'Lightning Master Representative', type: 'text', required: true },
+        { id: 'lm_installers',          label: 'Lightning Master Installers', type: 'text', required: true },
+        { id: 'customer_signature',     label: 'Customer Signature',         type: 'signature',
+          hint: 'Confirms delivery receipt of materials and installation is completed to Lightning Master Corporation best practices standards.' },
+        { id: 'customer_name_sig',      label: 'Customer Name for Signature', type: 'text' },
+        { id: 'site_sign',              label: 'Site Sign',                  type: 'photo', required: true },
+      ]},
+      { title: 'Site Details', fields: [
+        { id: 'site_type',              label: 'Salt Water Disposal or Production Site?', type: 'radio', required: true,
+          options: ['Salt Water Disposal', 'Production and Storage', 'Tank Storage', 'SWD & Production', 'Other'] },
+        { id: 'scope_of_work',          label: 'Scope of Work — Select all that apply', type: 'checklist',
+          options: [
+            'Lightning Master Technicians Installation',
+            'Supervision of 3rd party installation',
+            'Full Lightning Master lightning protection system installed to best practices',
+            'Tank Bottom Grounding (Installed new Grounding system)',
+            'Tank Bottom Grounding (Tied into existing Grounding system)',
+            'Tank Bottom Bonding',
+            'Tank Top Air Terminals installed and bonded only',
+            'Install protection on a customer selected portion of the site and not the entire site',
+            'Other',
+          ]},
+        { id: 'fiberglass_tanks',       label: 'If any, FIBERGLASS Tanks Quantity and Size', type: 'text', hint: "example: 4-15', 2-25'" },
+        { id: 'steel_tanks',            label: 'If any, STEEL Tanks Quantity and Size',      type: 'text', hint: "example: 4-15', 2-25'" },
+        { id: 'tank_type_qty',          label: 'Tank Type and Quantity',                     type: 'text' },
+        { id: 'ground_electrode',       label: 'Ground Electrode System in place',           type: 'select', required: true,
+          options: ['Yes — LM Installed', 'Yes — Existing System Tied In', 'Inherently Self Grounded (Steel)', 'No — Not Required', 'Other'] },
+        { id: 'berm_containment',       label: 'Type of Berm/Containment used',             type: 'select',
+          options: ['Metal', 'Concrete', 'Earthen/Dirt', 'No Containment', 'Other'] },
+        { id: 'photo_battery_overall',  label: 'Capture 3 Photos of the Battery overall from corners if possible (excluding Production area)', type: 'photo', required: true },
+        { id: 'photo_catwalk_views',    label: 'Catwalk Views of Tank Tops Overall',        type: 'photo' },
+        { id: 'photo_fiberglass_top',   label: 'Detail Photo: FIBERGLASS tank top and thief hatch connections', type: 'photo' },
+        { id: 'photo_steel_top',        label: 'Detail Photo: STEEL Tank top and thief hatch connections',      type: 'photo' },
+        { id: 'tank_top_ventline',      label: 'Select all areas confirmed installed on TANK TOPS and VENTLINE PIPING according to LMC best practices and standards', type: 'checklist', required: true,
+          options: [
+            'In-Tank Static Drain (ITSD) installed in FIBERGLASS tanks',
+            'In-Tank Static Drain (ITSD) installed in Lined STEEL tanks',
+            'Thief hatch bonded to Lightning Protection System',
+            'Air Terminal on STEEL horizontal ventline piping',
+            'Air Terminals on Horizontal Non-Metallic Vent line piping installed with conductor bonded to backbone at BOTH ENDS',
+            'Air Terminals placed around outer edge of tank and bonded with conductor to lightning protection system',
+            'FIBERGLASS TANKS-Bonded Isolated metal bodies within 6\' of main conductor (steel vent line, lifting eyes, tank sticks, overflow flanges, bull plugs,)',
+            'Windsocks placed in visible areas with Streamer Retarding Air Terminals and bonded into main backbone',
+            'NON-METALLIC PIPING- Bonded any VENTING APPURTENANCES to conductor',
+            'Other',
+          ]},
+      ]},
+      { title: 'Tank Bottom Bonding and Grounding', fields: [
+        { id: 'photo_tank_bottom',      label: 'Photo Overall of Tank BOTTOM bonding (2 photos max if applicable)', type: 'photo' },
+        { id: 'photo_grounding_ends',   label: 'Photo Verify Grounding Ends (example: where catwalk ends at ground electrode or where downleads end; where conductor goes over containment to ground electrode) 2 photo max', type: 'photo' },
+        { id: 'tank_bottom_verified',   label: 'Verified areas installed for BOTTOM TANK grounding and bonding to Lightning Master best practices and standards for installation', type: 'checklist',
+          options: [
+            'Bonded C-Veil into lightning protection system',
+            'FIBERGLASS TANKS-Bonded metal bodies within 6\' of tank bottom are bonded into Lightning Protection System for equipotential',
+            'Lightning Master Installed Ground Electrodes',
+            'Tied Lightning Protection system in EXISTING grounding system',
+            'Inherently Self Grounded STEEL TANKS used for bonding and grounding',
+            'Bonded Metal containment with minimum (2) places every 100 feet or less.',
+            'Bonded Steel walkovers to metal containment wall.',
+            'Installed Conductor Downleads just before catwalk goes into upward direction at a FIBERGLASS tank',
+            'Other',
+          ]},
+      ]},
+      { title: 'Production Area', fields: [
+        { id: 'photo_production_area',  label: 'Capture Photo of PRODUCTION area from at least 2 angles (4 photos max)', type: 'photo' },
+        { id: 'photo_vessel_types',     label: '(1) Photo of each UNIQUE TYPE of vessel installed with lightning protection (ex: 1 Heater Treater, 1 Horiz Separator, 1 VRT, 1 Vertical Separator)', type: 'photo' },
+        { id: 'vessel_list',            label: 'List vessel type, orientation, quantity', type: 'textarea', hint: 'example: Separator Horizontal 4: Heater Treater Vertical 2: Scrubber Horizontal 1: VRU vertical 1' },
+        { id: 'production_area_verified', label: 'Select all areas verified installation is completed in PRODUCTION AREA according to Lightning Master installation best practices and standards', type: 'checklist',
+          options: [
+            'Air Terminals bonded directly to grounded vessels',
+            'Air Terminals installed with conductor and downleads to ground',
+            'Lightning Master Installed Ground electrodes',
+            'Grounded vessels using EXISTING ground system',
+            'Poles kits installed to create zone of protection',
+            'Other',
+          ]},
+      ]},
+      { title: 'Light Poles, SCADA, Communications', fields: [
+        { id: 'photo_pole_types',       label: 'Capture 1 photo of EACH type of pole lightning protection was installed (Example: "Light Pole" or "SCADA" or "Surveillance Camera or similar pole")', type: 'photo' },
+        { id: 'pole_list',              label: 'List type and quantity of each type of pole protected', type: 'text', hint: 'example: 3 Wooden poles, 2 metal site lights on building, 1 SCADA' },
+        { id: 'light_pole_notes',       label: 'Light Pole Notes', type: 'textarea' },
+      ]},
+      { title: 'Buildings, Awnings, Electrical Panel', fields: [
+        { id: 'photo_buildings',        label: 'LMC INSTALLED PROTECTION ONLY — (1) Photo of each Building and/or Canopy and/or Awning, and/or Electric Panel with Air Terminals (Exclude Battery, Production area and Light Poles) 6 photos max', type: 'photo' },
+      ]},
+      { title: 'Other Miscellaneous Notes', fields: [
+        { id: 'remarks',                label: 'Remarks / Additional Notes',                              type: 'textarea' },
+        { id: 'photo_misc',             label: 'Photo of Miscellaneous or additional photos needed',      type: 'photo' },
+        { id: 'added_structures_scope', label: 'Added Structures Scope',                                  type: 'textarea' },
+        { id: 'photo_added_structures', label: 'Added Structures',                                        type: 'photo' },
+      ]},
+      { title: 'Lightning Master Notes', fields: [
+        { id: 'lm_notes',               label: 'Internal Notes',                                          type: 'textarea' },
+        { id: 'date_completed',         label: 'Date of Completion',                                      type: 'date', required: true },
+      ]},
     ],
   },
   'golden-triangle': {
@@ -555,6 +654,59 @@ function FormField({ field, value, onChange }) {
   if (field.type==='tel')     return <input type="tel"    value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
   if (field.type==='email')   return <input type="email"  value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
   if (field.type==='signature') return <SigPad value={value||null} onChange={onChange} />
+  if (field.type==='radio') return (
+    <div style={{ border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', overflow:'hidden' }}>
+      {field.options.map((opt, i) => {
+        const active = value === opt
+        return (
+          <button key={opt} type="button" onClick={() => onChange(opt)} style={{
+            width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between',
+            background: active ? '#EEF2FF' : '#fff',
+            border: 'none',
+            borderTop: i > 0 ? '1px solid #E5E7EB' : 'none',
+            textAlign:'left', fontSize:'var(--fs-md)', color: active ? '#6366F1' : 'var(--text-1)',
+            fontWeight: active ? 600 : 400,
+          }}>
+            {opt}
+            <span style={{ width:18, height:18, borderRadius:'50%', border: active ? '5px solid #6366F1' : '2px solid #C9CDD4', flexShrink:0, display:'inline-block' }} />
+          </button>
+        )
+      })}
+      {field.allowOther && value === 'Other' && (
+        <input type="text" placeholder="Please specify…" style={{ width:'100%', padding:'8px 14px', border:'none', borderTop:'1px solid #E5E7EB', fontSize:'var(--fs-md)', background:'#FAFAFA' }} />
+      )}
+    </div>
+  )
+  if (field.type==='checklist') return (
+    <div style={{ border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', overflow:'hidden' }}>
+      {field.options.map((opt, i) => {
+        const checked = Array.isArray(value) && value.includes(opt)
+        const toggle = () => {
+          const cur = Array.isArray(value) ? value : []
+          onChange(checked ? cur.filter(v => v !== opt) : [...cur, opt])
+        }
+        return (
+          <button key={opt} type="button" onClick={toggle} style={{
+            width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10,
+            background: checked ? '#EEF2FF' : (i % 2 === 0 ? '#fff' : '#FAFAFA'),
+            borderTop: i > 0 ? '1px solid #E5E7EB' : 'none', border:'none',
+            textAlign:'left', fontSize:'var(--fs-sm)', color: checked ? '#4F46E5' : 'var(--text-1)',
+            fontWeight: checked ? 600 : 400,
+          }}>
+            <span style={{ flex:1, lineHeight:1.4 }}>{opt}</span>
+            <span style={{
+              width:17, height:17, borderRadius:4, flexShrink:0,
+              border: checked ? '2px solid #4F46E5' : '2px solid #C9CDD4',
+              background: checked ? '#4F46E5' : 'transparent',
+              display:'flex', alignItems:'center', justifyContent:'center',
+            }}>
+              {checked && <span style={{ color:'#fff', fontSize:10, lineHeight:1 }}>✓</span>}
+            </span>
+          </button>
+        )
+      })}
+    </div>
+  )
   if (field.type==='gps') return (
     <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', background:'var(--bg)', border:'1px solid #E5E7EB', borderRadius:'var(--r-sm)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
       <MapPin size={13} style={{ color:'var(--blue)', flexShrink:0 }} />
