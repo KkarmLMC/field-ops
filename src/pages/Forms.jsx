@@ -397,51 +397,6 @@ Object.assign(COMPLETION_TYPES, {
   'midstream-summary':    { label: 'Recommendations Summary',             short: 'Recommendations',icon: ClipboardText,   color: '#0EA5E9', colorDim: '#E0F2FE', desc: 'Summary of findings and recommendations', ref: 'NFPA 780', fields: [ { id: 'overall_result', label: 'Overall Assessment', type: 'select', options: ['Satisfactory', 'Satisfactory with Conditions', 'Unsatisfactory'], required: true }, { id: 'priority_repairs', label: 'Priority Repairs Required', type: 'boolean' }, { id: 'recommendations', label: 'Recommendations', type: 'textarea', required: true }, { id: 'next_inspection', label: 'Next Inspection Due', type: 'date' } ] },
 })
 
-// ─── Form catalog by branch ────────────────────────────────────────────────────
-const FORM_CATALOG = {
-  lm: {
-    completion: [
-      { id: 'midstream-install', label: 'Midstream Install Completion', desc: 'New installation of midstream facilities',            icon: Factory   },
-      { id: 'swd-production',    label: 'SWD Production Install',       desc: 'SWD and Production sites after new installation',    icon: Drop      },
-      { id: 'golden-triangle',   label: 'Golden Triangle Polymers',     desc: 'Structure Completion Report',                        icon: Buildings },
-      { id: 'northstar',         label: 'Northstar',                    desc: 'Structure Completion Report',                        icon: Buildings },
-    ],
-    inspection: [
-      { id: 'midstream-facilities', label: 'Midstream Facilities Inspection', desc: 'Compressor Stations, Metering, Gas Processing', icon: MagnifyingGlass, hasSubs: true },
-      { id: 'swd-inspection',       label: 'SWD LP Inspection Report',        desc: 'Upstream tank batteries & midstream facilities', icon: Drop            },
-    ],
-    survey: [
-      { id: 'site-survey', label: 'Site Survey Quote Form', desc: 'Assets to protect, materials and site information', icon: Ruler },
-    ],
-  },
-  bolt: {
-    completion: [
-      { id: 'bolt-completion', label: 'Bolt Completion Report', desc: 'Bolt completion report for LPS installation', icon: Lightning },
-    ],
-    inspection: [
-      { id: 'bolt-inspection', label: 'Bolt Inspection Report', desc: 'Bolt inspection and compliance report',        icon: MagnifyingGlass },
-    ],
-    survey: [
-      { id: 'site-survey', label: 'Site Survey Quote Form', desc: 'Assets to protect, materials and site information', icon: Ruler },
-    ],
-  },
-}
-
-// ─── Midstream Facilities sub-sections ────────────────────────────────────────
-const MIDSTREAM_SUBS = [
-  { id: 'midstream-general',    label: 'General Site Information',             required: true  },
-  { id: 'midstream-buildings',  label: 'Buildings and Offices'                                 },
-  { id: 'midstream-cable',      label: 'Elevated Cable Trays and Pipe Racks'                   },
-  { id: 'midstream-fans',       label: 'Air Cooled Heat Exchanger Fans'                        },
-  { id: 'midstream-tanks',      label: 'Storage Tanks'                                         },
-  { id: 'midstream-generators', label: 'Power Generators'                                      },
-  { id: 'midstream-vessels',    label: 'Scrubber / Separator Vessels'                          },
-  { id: 'midstream-poles',      label: 'Light Poles and Communication Towers'                  },
-  { id: 'midstream-fence',      label: 'Perimeter Chain Link Fence'                            },
-  { id: 'midstream-misc',       label: 'Other Miscellaneous Areas'                             },
-  { id: 'midstream-summary',    label: 'Recommendations Summary'                               },
-]
-
 // ─── Signature pad ─────────────────────────────────────────────────────────────
 import { useRef } from 'react'
 
@@ -995,24 +950,26 @@ function CompletionRow({ form }) {
 }
 
 // ─── Category card ─────────────────────────────────────────────────────────────
-function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
+// ─── Category card — fully DB-driven ─────────────────────────────────────────
+function CategoryCard({ category, forms, children, branch, onStart, expandedSlug, onToggle }) {
   const bc = BRANCH_COLORS[branch]
+  if (!forms.length) return null
   return (
     <div className="card" style={{ display:'flex', flexDirection:'column' }}>
       <div className="card-header" style={{ background: bc.bgActive }}>
         <span className="card-title">
           <span className="card-dot" style={{ background:'rgba(255,255,255,0.5)' }} />
-          {title}
+          {category.label}
         </span>
       </div>
       <div style={{ flex:1 }}>
         {forms.map(form => {
-          const Icon     = form.icon
-          const isExpand = expandedId === form.id
+          const hasChildren = (children[form.slug] || []).length > 0
+          const isExpanded  = expandedSlug === form.slug
           return (
-            <div key={form.id}>
+            <div key={form.slug}>
               <button
-                onClick={() => form.hasSubs ? onToggle(isExpand ? null : form.id) : onStart(form.id)}
+                onClick={() => hasChildren ? onToggle(isExpanded ? null : form.slug) : onStart(form.slug)}
                 style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
                   display:'flex', alignItems:'center', gap:'var(--sp-3)',
                   padding:'0.75rem var(--sp-4)', borderBottom:'1px solid var(--border-l)',
@@ -1021,25 +978,25 @@ function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
-                <Icon size={16} style={{ color: bc.bgActive, flexShrink:0 }} />
+                <div style={{ width:8, height:8, borderRadius:'50%', background: form.color || bc.bgActive, flexShrink:0 }} />
                 <div style={{ flex:1, minWidth:0 }}>
-                  <div className="project-name">{form.label}</div>
-                  <div className="project-meta">{form.desc}</div>
+                  <div className="project-name">{form.title}</div>
+                  {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
-                {form.hasSubs
-                  ? <CaretDown size={12} style={{ color:'var(--text-3)', flexShrink:0, transition:'transform 0.15s', transform: isExpand ? 'rotate(180deg)' : 'none' }} />
+                {hasChildren
+                  ? <CaretDown size={12} style={{ color:'var(--text-3)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
                   : <CaretRight size={12} style={{ color:'var(--text-3)', flexShrink:0 }} />
                 }
               </button>
-              {form.hasSubs && isExpand && (
+              {hasChildren && isExpanded && (
                 <div style={{ background:'var(--surface-raised)' }}>
-                  {MIDSTREAM_SUBS.map(sub => (
+                  {(children[form.slug] || []).map(sub => (
                     <button
-                      key={sub.id}
-                      onClick={() => onStart(sub.id)}
+                      key={sub.slug}
+                      onClick={() => onStart(sub.slug)}
                       style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
                         display:'flex', alignItems:'center', gap:'var(--sp-2)',
-                        padding:'0.5rem var(--sp-4) 0.5rem 2.75rem',
+                        padding:'0.625rem var(--sp-4) 0.625rem 2.75rem',
                         borderBottom:'1px solid var(--border-l)',
                         transition:'background var(--ease-fast)',
                       }}
@@ -1047,8 +1004,10 @@ function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >
                       <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-3)', flexShrink:0 }} />
-                      <span style={{ flex:1, fontSize:'var(--fs-sm)', fontWeight:500, color:'var(--text-1)' }}>{sub.label}</span>
-                      {sub.required && <span style={{ fontSize:'var(--fs-2xs)', color:'var(--red)', fontFamily:'var(--mono)', fontWeight:600 }}>REQ</span>}
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <span style={{ fontSize:'var(--fs-sm)', fontWeight:500, color:'var(--text-1)' }}>{sub.title}</span>
+                        {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
+                      </div>
                       <CaretRight size={10} style={{ color:'var(--text-4)', flexShrink:0 }} />
                     </button>
                   ))}
@@ -1062,66 +1021,84 @@ function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
   )
 }
 
-// ─── Main Report Forms page ───────────────────────────────────────────────────
+// ─── Main Report Forms page — fully DB-driven ─────────────────────────────────
 export default function Forms() {
-  const navigate    = useNavigate()
-  const [branch,     setBranch]     = useState('lm')
-  const [expandedId, setExpandedId] = useState(null)
-  const [dbForms,    setDbForms]    = useState([])
-  const [dbLoading,  setDbLoading]  = useState(true)
+  const navigate = useNavigate()
+  const [branch,       setBranch]       = useState('lm')
+  const [expandedSlug, setExpandedSlug] = useState(null)
+  const [categories,   setCategories]   = useState([])
+  const [allForms,     setAllForms]     = useState([])
+  const [loading,      setLoading]      = useState(true)
 
-  // Pull live form catalog from Supabase
   useEffect(() => {
-    db.from('form_definitions')
-      .select('slug, title, short, description, category, branch, icon_name, sort_order')
-      .eq('active', true)
-      .order('sort_order', { ascending: true })
-      .then(({ data }) => {
-        if (data) setDbForms(data)
-        setDbLoading(false)
-      })
-      .catch(() => setDbLoading(false))
+    Promise.all([
+      db.from('form_categories')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order', { ascending: true }),
+      db.from('form_definitions')
+        .select('slug, title, short, description, category, branch, color, color_dim, sort_order, parent_slug')
+        .eq('active', true)
+        .order('sort_order', { ascending: true }),
+    ]).then(([catRes, formRes]) => {
+      if (catRes.data) setCategories(catRes.data)
+      if (formRes.data) setAllForms(formRes.data)
+      setLoading(false)
+    }).catch(() => setLoading(false))
   }, [])
 
-  const handleStart = (type) => navigate(`/forms/${type}`)
+  const handleStart = (slug) => navigate(`/forms/${slug}`)
 
-  // Build catalog from DB forms, filtering by branch (null = all branches)
-  const branchForms = dbForms.filter(f => !f.branch || f.branch === branch)
-  const dbCatalog = {
-    completion: branchForms.filter(f => f.category === 'completion'),
-    inspection: branchForms.filter(f => f.category === 'inspection'),
-    survey:     branchForms.filter(f => f.category === 'survey'),
-  }
+  // Filter to current branch (null = all branches)
+  const branchForms = allForms.filter(f => !f.branch || f.branch === branch)
 
-  // Convert DB form to catalog card format
-  const toCardForm = f => ({
-    id: f.slug, label: f.title, desc: f.description || '', icon: Buildings,
+  // Top-level forms only (no parent)
+  const topLevel = branchForms.filter(f => !f.parent_slug)
+
+  // Children keyed by parent slug
+  const childMap = {}
+  branchForms.filter(f => f.parent_slug).forEach(f => {
+    if (!childMap[f.parent_slug]) childMap[f.parent_slug] = []
+    childMap[f.parent_slug].push(f)
   })
 
-  // Fall back to hardcoded FORM_CATALOG if DB hasn't loaded yet
-  const staticCatalog = FORM_CATALOG[branch]
-  const catalog = dbLoading ? staticCatalog : {
-    completion: dbCatalog.completion.length ? dbCatalog.completion.map(toCardForm) : staticCatalog.completion,
-    inspection: dbCatalog.inspection.length ? dbCatalog.inspection.map(toCardForm) : staticCatalog.inspection,
-    survey:     dbCatalog.survey.length     ? dbCatalog.survey.map(toCardForm)     : staticCatalog.survey,
-  }
+  // Forms grouped by category slug
+  const formsByCategory = {}
+  topLevel.forEach(f => {
+    if (!formsByCategory[f.category]) formsByCategory[f.category] = []
+    formsByCategory[f.category].push(f)
+  })
+
+  // Filter categories that have forms for this branch
+  const visibleCategories = categories.filter(cat =>
+    (!cat.branch || cat.branch === branch) &&
+    (formsByCategory[cat.slug]?.length > 0)
+  )
 
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
-
-        {/* ══ FIELD OVERVIEW ════════════════════════════════════════════════════ */}
         <SectionDivider title="Report Forms" label="Field Overview" accent="var(--navy)" />
-
         <BranchTabs active={branch} onChange={setBranch} />
 
-        {/* 3-column category grid → 1-column on mobile */}
-        <div className="form-catalog-grid">
-          <CategoryCard title="Completion Reports" forms={catalog.completion} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
-          <CategoryCard title="Inspection Reports" forms={catalog.inspection} branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
-          <CategoryCard title="Site Surveys"       forms={catalog.survey}     branch={branch} onStart={handleStart} expandedId={expandedId} onToggle={setExpandedId} />
-        </div>
-
+        {loading ? (
+          <div className="loading"><div className="spinner" /></div>
+        ) : (
+          <div className="form-catalog-grid">
+            {visibleCategories.map(cat => (
+              <CategoryCard
+                key={cat.slug}
+                category={cat}
+                forms={formsByCategory[cat.slug] || []}
+                children={childMap}
+                branch={branch}
+                onStart={handleStart}
+                expandedSlug={expandedSlug}
+                onToggle={setExpandedSlug}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
