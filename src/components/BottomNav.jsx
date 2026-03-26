@@ -55,7 +55,7 @@ const MGMT_ITEMS = [
   { id: 'overview',    path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
   { id: 'installs',    path: '/installations',    Icon: HardHat,        label: 'Installations',exactMatch: true },
   { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Logs'    },
+  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Field Log'    },
   { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Report Forms',        exactMatch: true },
   { id: 'risk',        path: '/risk-assessment',   Icon: ChartBar,       label: 'Assessment'         },
   { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Technicians'  },
