@@ -593,8 +593,8 @@ function FormField({ field, value, onChange }) {
 
 function FieldLabel({ label, required }) {
   return (
-    <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-1)' }}>
-      {label}{required&&<span style={{ color:'var(--red)', marginLeft:'var(--sp-1)' }}>*</span>}
+    <div style={{ fontFamily:'var(--font)', fontSize:'var(--fs-sm)', fontWeight:600, color:'var(--text-2)', marginBottom:'var(--sp-1)' }}>
+      {label}{required&&<span style={{ color:'var(--red)', marginLeft:'2px' }}>*</span>}
     </div>
   )
 }
@@ -670,17 +670,7 @@ export function CompletionFormView({ formType, onSave, onCancel }) {
 
   return (
     <div className="page-content fade-in">
-      {/* Back header */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
-          <ArrowLeft size={14} /> Back
-        </button>
-        <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
-        <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
-          <Icon size={14} style={{ color: cfg.color }} />
-          <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', background:'var(--navy)' }}>{cfg.ref}</span>
-        </div>
-      </div>
+      <div className="page-stack">
 
       {/* Sections: dynamic (sections-based forms) or legacy hardcoded */}
       {cfg.sections ? (
@@ -774,6 +764,8 @@ export function CompletionFormView({ formType, onSave, onCancel }) {
       </Section>
         </>
       )}
+
+      </div>{/* /page-stack */}
 
       {error && <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>{error}</div>}
 
