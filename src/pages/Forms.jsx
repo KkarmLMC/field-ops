@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import {
   CaretRight, CaretDown, CheckCircle, Eye,
-  Trash, X, ArrowLeft,
+  Trash, X, ArrowLeft, Plus, SpinnerGap,
   Lightning, MagnifyingGlass, Ruler, ClipboardText,
-  Buildings, Factory, Drop,
+  Buildings, Factory, Drop, Camera, MapPin,
 } from '@phosphor-icons/react'
 import { jsPDF } from 'jspdf'
 import { db } from '../lib/supabase.js'
@@ -176,26 +176,111 @@ Object.assign(COMPLETION_TYPES, {
     label: 'Bolt Completion Report', short: 'Bolt Completion',
     icon: Lightning, color: '#C0101B', colorDim: '#FEF0F1',
     desc: 'Bolt completion report for LPS installation', ref: 'NFPA 780 / UL 96A',
-    fields: [
-      { id: 'lps_class',        label: 'LPS Class',               type: 'select',  options: ['Class I', 'Class II'], required: true },
-      { id: 'air_terminals',    label: 'Air Terminals Installed', type: 'number',  required: true },
-      { id: 'down_conductors',  label: 'Down Conductors',         type: 'number',  required: true },
-      { id: 'ground_rods',      label: 'Ground Rods Installed',   type: 'number',  required: true },
-      { id: 'bonding_complete', label: 'Bonding Complete',        type: 'boolean', required: true },
-      { id: 'ul_label',         label: 'UL Master Label Applied', type: 'boolean' },
-      { id: 'resistance_ohms',  label: 'Ground Resistance (ohms)',type: 'number' },
+    fields: [], // flat fields kept for PDF compat; sections drives the form UI
+    sections: [
+      { title: 'Project Information', fields: [
+        { id: 'customer_name',          label: 'Customer Name',          type: 'text',  required: true },
+        { id: 'site_facility_name',     label: 'Site / Facility Name',   type: 'text',  required: true },
+        { id: 'job_number',             label: 'Job Number',             type: 'text',  required: true },
+        { id: 'location',               label: 'Location',               type: 'gps' },
+        { id: 'primary_contact_name',   label: 'Primary Contact Name',   type: 'text',  required: true },
+        { id: 'primary_contact_phone',  label: 'Primary Contact Phone',  type: 'tel',   required: true },
+        { id: 'primary_contact_email',  label: 'Primary Contact Email',  type: 'email', hint: 'If more than one email, separate each by a space.' },
+        { id: 'field_contact_name',     label: 'Field Contact Name',     type: 'text',  required: true },
+        { id: 'field_contact_number',   label: 'Field Contact Number',   type: 'tel' },
+      ]},
+      { title: 'Bolt Crew Information', fields: [
+        { id: 'bolt_representative',    label: 'Bolt Representative',    type: 'text',  required: true },
+        { id: 'bolt_supervisor_email',  label: 'Bolt Supervisor Email',  type: 'email', required: true, hint: 'If more than one email, separate each by a space.' },
+        { id: 'installer_names',        label: 'Installer Names',        type: 'text',  required: true },
+        { id: 'date_of_completion',     label: 'Date Of Completion',     type: 'date',  required: true },
+        { id: 'customer_name_sig',      label: 'Customer Name for Signature', type: 'text' },
+        { id: 'site_sign',              label: 'Site Sign',              type: 'photo', required: true },
+        { id: 'front_of_facility',      label: 'Front of Facility',      type: 'photo', required: true },
+      ]},
+      { title: 'Scope of Work', fields: [
+        { id: 'scope_of_work',          label: 'Scope of Work',          type: 'textarea', required: true },
+      ]},
+      { title: 'Site Detail', fields: [
+        { id: 'type_of_installation',   label: 'Type Of Installation',   type: 'select', required: true,
+          options: ['New Installation', 'Retrofit', 'Addition / Extension', 'Replacement'] },
+        { id: 'common_bond',            label: 'Common Bond?',           type: 'select', required: true, options: ['Yes', 'No'] },
+        { id: 'surge_protection',       label: 'Was Surge Protection Provided?', type: 'select', required: true, options: ['Yes', 'No'] },
+        { id: 'ul_certificate',         label: 'UL Master Certificate or Letter Of Findings?', type: 'select', required: true,
+          options: ['UL Master Certificate', 'Letter of Findings', 'Both', 'Neither / Pending'] },
+        { id: 'additional_notes',       label: 'Additional Notes',       type: 'textarea' },
+      ]},
+      { title: 'Site Pictures', fields: [
+        { id: 'photo_roof_top',         label: 'Roof Top',               type: 'photo', required: true },
+        { id: 'notes_roof_top',         label: 'Notes',                  type: 'text' },
+        { id: 'photo_perimeter',        label: 'Perimeter',              type: 'photo' },
+        { id: 'notes_perimeter',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_rtu_mid_roof',     label: 'RTU / Mid-roof',         type: 'photo' },
+        { id: 'notes_rtu_mid_roof',     label: 'Notes',                  type: 'text' },
+        { id: 'photo_thru_roof',        label: 'Thru-Roof',              type: 'photo' },
+        { id: 'notes_thru_roof',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_downleads',        label: 'Downleads & Grounding',  type: 'photo' },
+        { id: 'notes_downleads',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_common_bond',      label: 'Common Bond',            type: 'photo' },
+        { id: 'notes_common_bond',      label: 'Notes',                  type: 'text' },
+        { id: 'photo_additional',       label: 'Additional Photos',      type: 'photo' },
+        { id: 'notes_additional',       label: 'Notes',                  type: 'text' },
+      ]},
     ],
   },
   'bolt-inspection': {
     label: 'Bolt Inspection Report', short: 'Bolt Inspection',
     icon: MagnifyingGlass, color: '#C0101B', colorDim: '#FEF0F1',
-    desc: 'Bolt inspection report for LPS systems', ref: 'LPI-175 / LPI-177',
-    fields: [
-      { id: 'inspection_type',  label: 'Inspection Type',         type: 'select',  options: ['Annual', 'Bi-Annual', 'Post-Strike', 'Pre-Certification'], required: true },
-      { id: 'overall_result',   label: 'Overall Result',          type: 'select',  options: ['Pass', 'Pass with Conditions', 'Fail'], required: true },
-      { id: 'deficiencies',     label: 'Deficiencies Found',      type: 'textarea' },
-      { id: 'corrective_req',   label: 'Corrective Action Required', type: 'boolean' },
-      { id: 'next_inspection',  label: 'Next Inspection Due',     type: 'date' },
+    desc: 'Bolt inspection and compliance report', ref: 'NFPA 780 / UL 96A',
+    fields: [], // flat fields kept for PDF compat; sections drives the form UI
+    sections: [
+      { title: 'Project Information', fields: [
+        { id: 'customer_name',          label: 'Customer Name',          type: 'text',  required: true },
+        { id: 'site_facility_name',     label: 'Site / Facility Name',   type: 'text',  required: true },
+        { id: 'job_number',             label: 'Job Number',             type: 'text' },
+        { id: 'location',               label: 'Location',               type: 'gps' },
+        { id: 'primary_contact_name',   label: 'Primary Contact Name',   type: 'text',  required: true },
+        { id: 'primary_contact_phone',  label: 'Primary Contact Phone',  type: 'tel',   required: true },
+        { id: 'primary_contact_email',  label: 'Primary Contact Email',  type: 'email', hint: 'If more than one email, separate each by a space.' },
+        { id: 'field_contact_name',     label: 'Field Contact Name',     type: 'text',  required: true },
+        { id: 'field_contact_number',   label: 'Field Contact Number',   type: 'tel' },
+      ]},
+      { title: 'Bolt Crew Information', fields: [
+        { id: 'bolt_representative',    label: 'Bolt Representative',    type: 'text',  required: true },
+        { id: 'bolt_supervisor_email',  label: 'Bolt Supervisor Email',  type: 'email', required: true, hint: 'If more than one email, separate each by a space.' },
+        { id: 'installer_names',        label: 'Installer Names',        type: 'text',  required: true },
+        { id: 'date_of_completion',     label: 'Date Of Completion',     type: 'date',  required: true },
+        { id: 'customer_signature',     label: 'Customer Signature',     type: 'signature',
+          hint: 'Confirms delivery receipt of materials and installation is completed to Bolt Lightning Protection best practices standards.' },
+        { id: 'customer_name_sig',      label: 'Customer Name for Signature', type: 'text' },
+        { id: 'site_sign',              label: 'Site Sign',              type: 'photo', required: true },
+        { id: 'front_of_facility',      label: 'Front of Facility',      type: 'photo', required: true },
+      ]},
+      { title: 'Site Detail', fields: [
+        { id: 'type_of_installation',   label: 'Type Of Installation',   type: 'select', required: true,
+          options: ['New Installation', 'Retrofit', 'Addition / Extension', 'Replacement'] },
+        { id: 'common_bond',            label: 'Common Bond?',           type: 'select', required: true, options: ['Yes', 'No'] },
+        { id: 'additional_notes',       label: 'Additional Notes',       type: 'textarea' },
+        { id: 'total_thru_roofs',       label: 'Total Number Of Thru-Roofs', type: 'number', required: true },
+        { id: 'is_surge_installed',     label: 'Is Surge Installed?',    type: 'text' },
+        { id: 'remediations',           label: 'Remediations',           type: 'photo' },
+      ]},
+      { title: 'Site Pictures', fields: [
+        { id: 'photo_roof_top',         label: 'Roof Top',               type: 'photo', required: true },
+        { id: 'notes_roof_top',         label: 'Notes',                  type: 'text' },
+        { id: 'photo_perimeter',        label: 'Perimeter',              type: 'photo' },
+        { id: 'notes_perimeter',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_rtu_mid_roof',     label: 'RTU / Mid-roof',         type: 'photo' },
+        { id: 'notes_rtu_mid_roof',     label: 'Notes',                  type: 'text' },
+        { id: 'photo_thru_roof',        label: 'Thru-roof',              type: 'photo' },
+        { id: 'notes_thru_roof',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_downleads',        label: 'Downleads & Grounding',  type: 'photo' },
+        { id: 'notes_downleads',        label: 'Notes',                  type: 'text' },
+        { id: 'photo_common_bond',      label: 'Common Bond',            type: 'photo' },
+        { id: 'notes_common_bond',      label: 'Notes',                  type: 'text' },
+        { id: 'photo_additional',       label: 'Additional Photos',      type: 'photo' },
+        { id: 'notes_additional',       label: 'Notes',                  type: 'text' },
+      ]},
     ],
   },
   // Midstream Facilities sub-section forms
@@ -466,6 +551,42 @@ function FormField({ field, value, onChange }) {
   if (field.type==='textarea') return <textarea value={value||''} onChange={e=>onChange(e.target.value)} rows={3} style={{ ...base, resize:'vertical', lineHeight:1.5, padding:'var(--sp-2) var(--sp-3)' }} />
   if (field.type==='date')    return <input type="date"   value={value||''} onChange={e=>onChange(e.target.value)} style={base} />
   if (field.type==='number')  return <input type="number" step="any" value={value||''} onChange={e=>onChange(e.target.value)} placeholder="0" style={base} />
+  if (field.type==='tel')     return <input type="tel"    value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
+  if (field.type==='email')   return <input type="email"  value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
+  if (field.type==='signature') return <SigPad value={value||null} onChange={onChange} />
+  if (field.type==='gps') return (
+    <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', background:'var(--bg)', border:'1px solid var(--border)', borderRadius:'var(--r-sm)', color:'var(--text-2)', fontSize:'var(--fs-md)' }}>
+      <MapPin size={13} style={{ color:'var(--blue)', flexShrink:0 }} />
+      <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-sm)' }}>{value || 'Acquiring location…'}</span>
+    </div>
+  )
+  if (field.type==='photo') {
+    const fid = `photo-${field.id}`
+    const handleFile = e => {
+      const f = e.target.files[0]
+      if (!f) return
+      const reader = new FileReader()
+      reader.onload = ev => onChange(ev.target.result)
+      reader.readAsDataURL(f)
+    }
+    return (
+      <label htmlFor={fid} style={{ cursor:'pointer', display:'block' }}>
+        <input id={fid} type="file" accept="image/*" capture="environment" style={{ display:'none' }} onChange={handleFile} />
+        {value
+          ? <div style={{ position:'relative' }}>
+              <img src={value} alt={field.label} style={{ width:'100%', maxHeight:'200px', objectFit:'cover', borderRadius:'var(--r-sm)', display:'block' }} />
+              <button type="button" onClick={e=>{e.preventDefault();e.stopPropagation();onChange(null)}}
+                style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'rgba(0,0,0,0.55)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'#fff', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}>
+                <X size={10}/> Remove
+              </button>
+            </div>
+          : <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', background:'var(--bg)', border:'1.5px dashed var(--border)', borderRadius:'var(--r-sm)', color:'var(--text-3)', fontSize:'var(--fs-md)' }}>
+              <Camera size={15}/> Tap to choose photo
+            </div>
+        }
+      </label>
+    )
+  }
   return <input type="text" value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={base} />
 }
 
@@ -493,7 +614,10 @@ function Section({ title, children, open, onToggle }) {
 function CompletionFormView({ formType, onSave, onCancel }) {
   const cfg  = COMPLETION_TYPES[formType]
   const [values,      setValues]      = useState({ date_completed: new Date().toISOString().slice(0,10), branch:'lm' })
-  const [open,        setOpen]        = useState({ job:true, details:true, notes:true, signoff:true })
+  const initOpen = cfg.sections
+    ? Object.fromEntries(cfg.sections.map(s => [s.title, true]))
+    : { job:true, details:true, notes:true, signoff:true }
+  const [open,        setOpen]        = useState(initOpen)
   const [punchItems,  setPunchItems]  = useState([''])
   const [submitting,  setSubmitting]  = useState(false)
   const [error,       setError]       = useState(null)
@@ -501,6 +625,17 @@ function CompletionFormView({ formType, onSave, onCancel }) {
   const set    = (k,v) => setValues(f=>({...f,[k]:v}))
   const toggle = (k)   => setOpen(o=>({...o,[k]:!o[k]}))
   const Icon   = cfg.icon
+
+  // Auto-capture GPS for forms that have a gps field
+  useEffect(() => {
+    const allFields = cfg.sections ? cfg.sections.flatMap(s => s.fields) : (cfg.fields || [])
+    if (allFields.some(f => f.type === 'gps')) {
+      navigator.geolocation?.getCurrentPosition(
+        pos => set('location', `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`),
+        () => set('location', 'Location unavailable')
+      )
+    }
+  }, [])
 
   const handleSubmit = async () => {
     setSubmitting(true); setError(null)
@@ -546,6 +681,23 @@ function CompletionFormView({ formType, onSave, onCancel }) {
         </div>
       </div>
 
+      {/* Sections: dynamic (sections-based forms) or legacy hardcoded */}
+      {cfg.sections ? (
+        cfg.sections.map(section => (
+          <Section key={section.title} title={section.title} open={open[section.title] !== false} onToggle={()=>toggle(section.title)}>
+            {section.fields.map(field => (
+              <div key={field.id}>
+                <FieldLabel label={field.label} required={field.required} />
+                <FormField field={field} value={values[field.id]} onChange={v=>set(field.id,v)} />
+                {field.hint && (
+                  <div style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', marginTop:'var(--sp-1)', fontStyle:'italic' }}>{field.hint}</div>
+                )}
+              </div>
+            ))}
+          </Section>
+        ))
+      ) : (
+        <>
       {/* Job info */}
       <Section title="Job Information" open={open.job} onToggle={()=>toggle('job')}>
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
@@ -619,6 +771,8 @@ function CompletionFormView({ formType, onSave, onCancel }) {
           </div>
         ))}
       </Section>
+        </>
+      )}
 
       {error && <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>{error}</div>}
 
