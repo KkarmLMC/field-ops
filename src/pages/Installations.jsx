@@ -409,7 +409,7 @@ export default function Installations() {
 
         {/* Active on site */}
         <div className="dash-card">
-          <div className="dash-card-head">
+          <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <span className="live-dot" />
               Active On Site
