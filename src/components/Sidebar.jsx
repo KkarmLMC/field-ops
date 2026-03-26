@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
-  SquaresFour, HardHat, MagnifyingGlass,
+  PencilSimple, SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
   BookOpen, ChartBar, Rows,
@@ -30,7 +30,11 @@ const NAV_ITEMS = [
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/jsa',             Icon: HardHat,         label: 'JSA'             },
   { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
-  { path: '/forms',           Icon: FileText,        label: 'Report Forms'    },
+  { path: '/forms',           Icon: FileText,        label: 'Report Forms',
+    children: [
+      { path: '/forms/builder', Icon: PencilSimple,   label: 'Form Builder' },
+    ],
+  },
   { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
 ]
 

@@ -1067,10 +1067,44 @@ export default function Forms() {
   const navigate    = useNavigate()
   const [branch,     setBranch]     = useState('lm')
   const [expandedId, setExpandedId] = useState(null)
+  const [dbForms,    setDbForms]    = useState([])
+  const [dbLoading,  setDbLoading]  = useState(true)
+
+  // Pull live form catalog from Supabase
+  useEffect(() => {
+    db.from('form_definitions')
+      .select('slug, title, short, description, category, branch, icon_name, sort_order')
+      .eq('active', true)
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        if (data) setDbForms(data)
+        setDbLoading(false)
+      })
+      .catch(() => setDbLoading(false))
+  }, [])
 
   const handleStart = (type) => navigate(`/forms/${type}`)
 
-  const catalog = FORM_CATALOG[branch]
+  // Build catalog from DB forms, filtering by branch (null = all branches)
+  const branchForms = dbForms.filter(f => !f.branch || f.branch === branch)
+  const dbCatalog = {
+    completion: branchForms.filter(f => f.category === 'completion'),
+    inspection: branchForms.filter(f => f.category === 'inspection'),
+    survey:     branchForms.filter(f => f.category === 'survey'),
+  }
+
+  // Convert DB form to catalog card format
+  const toCardForm = f => ({
+    id: f.slug, label: f.title, desc: f.description || '', icon: Buildings,
+  })
+
+  // Fall back to hardcoded FORM_CATALOG if DB hasn't loaded yet
+  const staticCatalog = FORM_CATALOG[branch]
+  const catalog = dbLoading ? staticCatalog : {
+    completion: dbCatalog.completion.length ? dbCatalog.completion.map(toCardForm) : staticCatalog.completion,
+    inspection: dbCatalog.inspection.length ? dbCatalog.inspection.map(toCardForm) : staticCatalog.inspection,
+    survey:     dbCatalog.survey.length     ? dbCatalog.survey.map(toCardForm)     : staticCatalog.survey,
+  }
 
   return (
     <div className="page-content fade-in">

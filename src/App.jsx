@@ -16,6 +16,7 @@ import { COMPLETION_TYPES } from './pages/Forms'
 import Technicians   from './pages/Technicians'
 import JobDetail     from './pages/JobDetail'
 import FormRunner    from './pages/FormRunner'
+import FormBuilder   from './pages/FormBuilder'
 import RiskAssessment from './pages/RiskAssessment'
 import JSA            from './pages/JSA'
 
@@ -204,6 +205,7 @@ export default function App() {
             <Route path="/reports"                                             element={<Navigate to="/installations/field-reports" replace />} />
             <Route path="/forms"                                               element={<Forms />} />
             <Route path="/forms/:formType"                                     element={<FormPage />} />
+            <Route path="/forms/builder"                                      element={<FormBuilder />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
