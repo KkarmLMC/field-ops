@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 // ─── Sub-nav configs keyed by parent route prefix ─────────────────────────────
 const SUB_NAV_MAP = {
   '/installations': [
-    { path: '/installations',               label: 'All Projects' },
+    { path: '/installations',               label: 'Installations' },
     { path: '/installations/pipeline',      label: 'Pipeline'     },
     { path: '/installations/field-logs',    label: 'Field Logs'   },
     { path: '/installations/field-reports', label: 'Reports'      },
