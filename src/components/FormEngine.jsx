@@ -17,52 +17,209 @@ import { useRef, useEffect, useState } from 'react'
 import {
   CaretDown, Trash, MapPin, Camera, CheckSquare, Square,
   Microphone, Stop, Play, Pause, ArrowCounterClockwise,
+  PencilSimple, CheckCircle, X,
 } from '@phosphor-icons/react'
 
-// ─── Signature Pad ────────────────────────────────────────────────────────────
-function SigPad({ value, onChange, readOnly }) {
+// ─── Signature Modal ──────────────────────────────────────────────────────────
+function SignatureModal({ onSave, onClose }) {
   const canvasRef = useRef(null)
   const drawing   = useRef(false)
+  const hasMark   = useRef(false)
+  const [hasStrokes, setHasStrokes] = useState(false)
 
+  // Size canvas to fill modal on mount and resize
   useEffect(() => {
-    if (value && canvasRef.current) {
-      const img = new Image()
-      img.onload = () => canvasRef.current?.getContext('2d')?.drawImage(img, 0, 0)
-      img.src = value
+    const resize = () => {
+      const canvas = canvasRef.current
+      if (!canvas) return
+      // Save existing drawing
+      const data = canvas.toDataURL()
+      const img  = new Image()
+      canvas.width  = canvas.offsetWidth  * window.devicePixelRatio
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio
+      const ctx = canvas.getContext('2d')
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+      img.onload = () => ctx.drawImage(img, 0, 0)
+      img.src = data
     }
+    resize()
+    window.addEventListener('resize', resize)
+    return () => window.removeEventListener('resize', resize)
   }, [])
-
-  if (readOnly) {
-    return value
-      ? <img src={value} alt="Signature" style={{ width:'100%', height:'4rem', objectFit:'contain', borderRadius:'var(--r-sm)', background:'var(--surface)' }} />
-      : <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--fs-sm)', fontStyle:'italic' }}>No signature</div>
-  }
 
   const getPos = (e, canvas) => {
     const rect = canvas.getBoundingClientRect()
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height
-    if (e.touches) return { x:(e.touches[0].clientX-rect.left)*sx, y:(e.touches[0].clientY-rect.top)*sy }
-    return { x:(e.clientX-rect.left)*sx, y:(e.clientY-rect.top)*sy }
+    if (e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top }
   }
-  const start = e => { e.preventDefault(); drawing.current=true; const ctx=canvasRef.current.getContext('2d'); const p=getPos(e,canvasRef.current); ctx.beginPath(); ctx.moveTo(p.x,p.y) }
-  const move  = e => { e.preventDefault(); if(!drawing.current) return; const ctx=canvasRef.current.getContext('2d'); const p=getPos(e,canvasRef.current); ctx.lineWidth=2; ctx.lineCap='round'; ctx.strokeStyle='#111'; ctx.lineTo(p.x,p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x,p.y) }
-  const end   = e => { e.preventDefault(); if(!drawing.current) return; drawing.current=false; onChange(canvasRef.current.toDataURL('image/png')) }
-  const clear = () => { canvasRef.current.getContext('2d').clearRect(0,0,480,80); onChange(null) }
+
+  const start = e => {
+    e.preventDefault()
+    drawing.current = true
+    const ctx = canvasRef.current.getContext('2d')
+    const p   = getPos(e, canvasRef.current)
+    ctx.beginPath()
+    ctx.moveTo(p.x, p.y)
+  }
+
+  const move = e => {
+    e.preventDefault()
+    if (!drawing.current) return
+    const canvas = canvasRef.current
+    const ctx    = canvas.getContext('2d')
+    const p      = getPos(e, canvas)
+    ctx.lineWidth   = 2.5
+    ctx.lineCap     = 'round'
+    ctx.lineJoin    = 'round'
+    ctx.strokeStyle = '#0a0a0a'
+    ctx.lineTo(p.x, p.y)
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(p.x, p.y)
+    hasMark.current = true
+  }
+
+  const end = e => {
+    e.preventDefault()
+    if (!drawing.current) return
+    drawing.current = false
+    if (hasMark.current) setHasStrokes(true)
+  }
+
+  const clear = () => {
+    const canvas = canvasRef.current
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    hasMark.current = false
+    setHasStrokes(false)
+  }
+
+  const save = () => {
+    if (!hasMark.current) return
+    const sig = canvasRef.current.toDataURL('image/png')
+    onSave({ sig, signedAt: new Date().toISOString() })
+  }
 
   return (
-    <div style={{ position:'relative' }}>
-      <canvas ref={canvasRef} width={480} height={80}
-        onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
-        onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-        style={{ width:'100%', height:'5rem', border:'1px solid var(--border-l)', borderRadius:'var(--r-sm)', background:'var(--surface)', cursor:'crosshair', touchAction:'none', display:'block' }}
-      />
-      {!value && <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', color:'var(--text-3)', fontSize:'var(--fs-sm)', pointerEvents:'none', fontStyle:'italic' }}>Sign here</div>}
-      {value  && (
-        <button type="button" onClick={clear} style={{ position:'absolute', top:'var(--sp-1)', right:'var(--sp-1)', background:'var(--hover)', border:'1px solid var(--border-l)', borderRadius:'var(--r-xs)', padding:'0.125rem 0.375rem', fontSize:'var(--fs-xs)', color:'var(--text-2)', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}>
-          <Trash size={10} /> Clear
+    <>
+      {/* Backdrop */}
+      <div onClick={onClose} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:300 }} />
+
+      {/* Modal */}
+      <div style={{
+        position: 'fixed', inset:0, zIndex:301,
+        display: 'flex', flexDirection:'column',
+        background: '#fff',
+      }}>
+        {/* Header */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--sp-4)', borderBottom:'1px solid var(--border-l)', background:'var(--navy)' }}>
+          <span style={{ fontSize:'var(--fs-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
+          <button type="button" onClick={onClose} style={{ color:'rgba(255,255,255,0.7)', padding:'var(--sp-1)' }}>
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Canvas area */}
+        <div style={{ flex:1, position:'relative', background:'#fafafa' }}>
+          {/* Baseline guide */}
+          <div style={{ position:'absolute', left:'5%', right:'5%', bottom:'35%', height:1, background:'rgba(0,0,0,0.1)', pointerEvents:'none' }} />
+          {/* Placeholder text */}
+          {!hasStrokes && (
+            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none' }}>
+              <span style={{ fontSize:'var(--fs-lg)', color:'rgba(0,0,0,0.15)', fontStyle:'italic', userSelect:'none' }}>Sign above the line</span>
+            </div>
+          )}
+          <canvas
+            ref={canvasRef}
+            onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
+            onTouchStart={start} onTouchMove={move} onTouchEnd={end}
+            style={{ width:'100%', height:'100%', cursor:'crosshair', touchAction:'none', display:'block' }}
+          />
+        </div>
+
+        {/* Footer actions */}
+        <div style={{ display:'flex', gap:'var(--sp-3)', padding:'var(--sp-4)', borderTop:'1px solid var(--border-l)', background:'#fff' }}>
+          <button type="button" onClick={clear}
+            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-md)', border:'1px solid var(--border-l)', fontSize:'var(--fs-sm)', color:'var(--text-2)', background:'var(--surface-raised)' }}>
+            <ArrowCounterClockwise size={14}/> Clear
+          </button>
+          <button type="button" onClick={save} disabled={!hasStrokes}
+            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', borderRadius:'var(--r-md)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--fs-md)', fontWeight:600, border:'none', transition:'all var(--ease-fast)' }}>
+            <CheckCircle size={16} weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}
+
+// ─── Signature Pad ────────────────────────────────────────────────────────────
+function SigPad({ value, onChange, readOnly }) {
+  const [modalOpen, setModalOpen] = useState(false)
+
+  // value shape: { sig: base64, signedAt: ISO } or null
+  // Legacy: plain base64 string also handled
+  const sigData   = value && typeof value === 'object' ? value : value ? { sig: value, signedAt: null } : null
+  const hasSig    = !!sigData?.sig
+  const signedAt  = sigData?.signedAt ? new Date(sigData.signedAt) : null
+  const fmtDate   = signedAt
+    ? signedAt.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' })
+    : null
+
+  if (readOnly) {
+    if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--fs-sm)', fontStyle:'italic' }}>No signature</div>
+    return (
+      <div>
+        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-sm)', background:'var(--surface)', border:'1px solid var(--border-l)' }} />
+        {fmtDate && <div style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', fontFamily:'var(--mono)', marginTop:'var(--sp-1)' }}>Signed {fmtDate}</div>}
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {hasSig ? (
+        /* Signed state */
+        <div style={{ border:'1px solid var(--border-l)', borderRadius:'var(--r-md)', overflow:'hidden' }}>
+          <div style={{ padding:'var(--sp-2) var(--sp-3)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--surface-raised)', borderBottom:'1px solid var(--border-l)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
+              <CheckCircle size={14} weight="fill" style={{ color:'var(--green)', flexShrink:0 }} />
+              <span style={{ fontSize:'var(--fs-xs)', color:'var(--text-2)', fontFamily:'var(--mono)' }}>
+                {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
+              </span>
+            </div>
+            <div style={{ display:'flex', gap:'var(--sp-2)' }}>
+              <button type="button" onClick={() => setModalOpen(true)}
+                style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:4 }}>
+                <PencilSimple size={12}/> Re-sign
+              </button>
+              <button type="button" onClick={() => onChange(null)}
+                style={{ fontSize:'var(--fs-xs)', color:'var(--red)', display:'flex', alignItems:'center', gap:4 }}>
+                <Trash size={12}/> Clear
+              </button>
+            </div>
+          </div>
+          <div style={{ padding:'var(--sp-2)', background:'#fff' }}>
+            <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'4rem', objectFit:'contain', display:'block' }} />
+          </div>
+        </div>
+      ) : (
+        /* Unsigned state */
+        <button type="button" onClick={() => setModalOpen(true)}
+          style={{ width:'100%', padding:'var(--sp-4)', borderRadius:'var(--r-md)', border:'2px dashed var(--border-l)', background:'var(--surface-raised)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', color:'var(--text-3)', fontSize:'var(--fs-sm)', transition:'all var(--ease-fast)' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor='var(--navy)'; e.currentTarget.style.color='var(--navy)' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-l)'; e.currentTarget.style.color='var(--text-3)' }}
+        >
+          <PencilSimple size={16}/> Tap to Sign
         </button>
       )}
-    </div>
+
+      {modalOpen && (
+        <SignatureModal
+          onSave={val => { onChange(val); setModalOpen(false) }}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+    </>
   )
 }
 
@@ -538,7 +695,8 @@ export function validateSchema(schema, values) {
       const empty =
         val === undefined || val === null || val === '' ||
         (Array.isArray(val) && val.length === 0) ||
-        (field.type==='boolean' && val !== true && val !== false)
+        (field.type==='boolean' && val !== true && val !== false) ||
+        (field.type==='signature' && !val?.sig && !val)
       if (empty) errors[field.id] = 'Required'
     }
   }
