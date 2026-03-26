@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SectionDivider from '../components/SectionDivider'
 import {
-  Lightning, Ruler, Seal, ClipboardText,
+  MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
   CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
