@@ -22,11 +22,11 @@ const NAV_ITEMS = [
     label: 'Installations',
     children: [
       { path: '/installations/kanban', Icon: Rows,          label: 'Project Pipeline' },
-      { path: '/reports',              Icon: ClipboardText,  label: 'Reports'      },
+      { path: '/daily-field-log',      Icon: BookOpen,      label: 'Field Logs'       },
+      { path: '/reports',              Icon: ClipboardText, label: 'Field Reports'    },
     ],
   },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
-  { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/jsa',             Icon: HardHat,         label: 'JSA'             },
   { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
   { path: '/forms',           Icon: FileText,        label: 'Forms'           },
