@@ -31,6 +31,7 @@ const FIELD_TYPES = [
   { value: 'personnel-sig', label: 'Personnel Sign-Off (JSA)' },
   { value: 'signature',     label: 'Signature Pad' },
   { value: 'photo',         label: 'Photo Capture' },
+  { value: 'voice-note',    label: 'Voice Note' },
   { value: 'gps',           label: 'GPS Location' },
 ]
 
@@ -256,7 +257,7 @@ const TYPE_GROUPS = [
   { label: 'Basic',    types: ['text','number','email','date','textarea'] },
   { label: 'Choice',   types: ['select','boolean','radio','checklist','checkbox-group'] },
   { label: 'Safety',   types: ['pass-fail','ok-notok-na','activity-row','personnel-sig'] },
-  { label: 'Capture',  types: ['signature','photo','gps'] },
+  { label: 'Capture',  types: ['signature','photo','voice-note','gps'] },
 ]
 const TYPE_MAP = Object.fromEntries(FIELD_TYPES.map(t => [t.value, t.label]))
 

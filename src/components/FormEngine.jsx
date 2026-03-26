@@ -16,6 +16,7 @@
 import { useRef, useEffect, useState } from 'react'
 import {
   CaretDown, Trash, MapPin, Camera, CheckSquare, Square,
+  Microphone, Stop, Play, Pause, ArrowCounterClockwise,
 } from '@phosphor-icons/react'
 
 // ─── Signature Pad ────────────────────────────────────────────────────────────
@@ -134,6 +135,150 @@ function PhotoField({ value, onChange, readOnly }) {
   )
 }
 
+// ─── Voice Note Field ─────────────────────────────────────────────────────────
+function VoiceNoteField({ value, onChange, readOnly }) {
+  const [state,    setState]    = useState('idle')   // idle | recording | playing
+  const [duration, setDuration] = useState(0)
+  const [elapsed,  setElapsed]  = useState(0)
+  const [error,    setError]    = useState(null)
+
+  const mediaRecorder = useRef(null)
+  const chunks        = useRef([])
+  const timerRef      = useRef(null)
+  const audioRef      = useRef(null)
+  const MAX_SECS      = 30
+
+  // Clean up on unmount
+  useEffect(() => () => {
+    clearInterval(timerRef.current)
+    mediaRecorder.current?.stream?.getTracks().forEach(t => t.stop())
+  }, [])
+
+  const startRecording = async () => {
+    setError(null)
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mr = new MediaRecorder(stream, { mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm' })
+      chunks.current = []
+      mr.ondataavailable = e => { if (e.data.size > 0) chunks.current.push(e.data) }
+      mr.onstop = () => {
+        const blob = new Blob(chunks.current, { type: mr.mimeType })
+        const reader = new FileReader()
+        reader.onload = () => onChange({ audio: reader.result, duration: elapsed, mimeType: mr.mimeType })
+        reader.readAsDataURL(blob)
+        stream.getTracks().forEach(t => t.stop())
+        clearInterval(timerRef.current)
+        setState('idle')
+      }
+      mr.start(100)
+      mediaRecorder.current = mr
+      setElapsed(0)
+      setState('recording')
+      timerRef.current = setInterval(() => {
+        setElapsed(s => {
+          if (s + 1 >= MAX_SECS) { mr.stop(); return s + 1 }
+          return s + 1
+        })
+      }, 1000)
+    } catch (err) {
+      setError('Microphone access denied. Check your browser permissions.')
+    }
+  }
+
+  const stopRecording = () => {
+    if (mediaRecorder.current?.state === 'recording') mediaRecorder.current.stop()
+    clearInterval(timerRef.current)
+  }
+
+  const playPause = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (state === 'playing') {
+      audio.pause()
+      setState('idle')
+    } else {
+      audio.play()
+      setState('playing')
+      audio.onended = () => { setState('idle'); setElapsed(0) }
+      audio.ontimeupdate = () => setElapsed(Math.floor(audio.currentTime))
+    }
+  }
+
+  const discard = () => {
+    clearInterval(timerRef.current)
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = '' }
+    onChange(null)
+    setElapsed(0)
+    setDuration(0)
+    setState('idle')
+  }
+
+  const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
+
+  // Read-only playback
+  if (readOnly) {
+    if (!value?.audio) return <span style={{ color:'var(--text-3)', fontStyle:'italic' }}>No recording</span>
+    return (
+      <audio controls src={value.audio} style={{ width:'100%', height:'2.5rem' }} />
+    )
+  }
+
+  const hasRecording = !!value?.audio
+  const progress = hasRecording ? (elapsed / (value?.duration || 1)) * 100 : (elapsed / MAX_SECS) * 100
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'var(--sp-2)' }}>
+      {error && <div style={{ fontSize:'var(--fs-xs)', color:'var(--red)', padding:'var(--sp-2) var(--sp-3)', background:'var(--red-soft)', borderRadius:'var(--r-sm)' }}>{error}</div>}
+
+      {/* Hidden audio element for playback */}
+      {hasRecording && <audio ref={audioRef} src={value.audio} preload="auto" style={{ display:'none' }} />}
+
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'var(--sp-3)', background:'var(--surface-raised)', borderRadius:'var(--r-md)', border:'1px solid var(--border-l)' }}>
+
+        {/* Main action button */}
+        {state === 'recording' ? (
+          <button type="button" onClick={stopRecording}
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
+            <Stop size={16} weight="fill" />
+          </button>
+        ) : hasRecording ? (
+          <button type="button" onClick={playPause}
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--navy)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            {state === 'playing' ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
+          </button>
+        ) : (
+          <button type="button" onClick={startRecording}
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            <Microphone size={16} weight="fill" />
+          </button>
+        )}
+
+        {/* Progress / waveform bar + timer */}
+        <div style={{ flex:1, minWidth:0 }}>
+          <div style={{ height:'0.375rem', background:'var(--border-l)', borderRadius:99, overflow:'hidden', marginBottom:'var(--sp-1)' }}>
+            <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--red)':'var(--navy)', borderRadius:99, transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
+          </div>
+          <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', display:'flex', justifyContent:'space-between' }}>
+            <span style={{ color: state==='recording'?'var(--red)':'var(--text-3)' }}>
+              {state === 'recording' ? `● ${fmt(elapsed)}` : hasRecording ? fmt(elapsed) : 'Tap mic to record'}
+            </span>
+            {state === 'recording' && <span>{fmt(MAX_SECS - elapsed)} left</span>}
+            {hasRecording && state !== 'recording' && <span>{fmt(value.duration || 0)}</span>}
+          </div>
+        </div>
+
+        {/* Discard / re-record */}
+        {hasRecording && state !== 'recording' && (
+          <button type="button" onClick={discard} title="Discard and re-record"
+            style={{ color:'var(--text-3)', padding:'var(--sp-1)', flexShrink:0 }}>
+            <ArrowCounterClockwise size={16} />
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ─── Single Field Renderer ────────────────────────────────────────────────────
 export function FormField({ field, value, onChange, error, readOnly }) {
   const { type, options = [], hint } = field
@@ -149,6 +294,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     if (type==='signature') return <SigPad value={value} readOnly />
     if (type==='photo')     return <PhotoField value={value} readOnly />
     if (type==='gps')       return <GpsField value={value} readOnly />
+    if (type==='voice-note') return <VoiceNoteField value={value} readOnly />
     return <span style={{ fontSize:'var(--fs-md)', color:'var(--text-1)' }}>{display}</span>
   }
 
@@ -332,6 +478,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   if (type==='signature') return <SigPad value={value} onChange={onChange} />
   if (type==='photo')     return <PhotoField value={value} onChange={onChange} />
   if (type==='gps')       return <GpsField value={value} onChange={onChange} />
+  if (type==='voice-note') return <VoiceNoteField value={value} onChange={onChange} />
 
   return <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={{ width:'100%' }} />
 }
