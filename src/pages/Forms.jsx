@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   CaretRight, CaretDown, CheckCircle, Eye,
   Trash, X, ArrowLeft, Plus, SpinnerGap,
@@ -611,7 +612,7 @@ function Section({ title, children, open, onToggle }) {
 }
 
 // ─── Completion form view ──────────────────────────────────────────────────────
-function CompletionFormView({ formType, onSave, onCancel }) {
+export function CompletionFormView({ formType, onSave, onCancel }) {
   const cfg  = COMPLETION_TYPES[formType]
   const [values,      setValues]      = useState({ date_completed: new Date().toISOString().slice(0,10), branch:'lm' })
   const initOpen = cfg.sections
@@ -796,7 +797,7 @@ function CompletionFormView({ formType, onSave, onCancel }) {
 }
 
 // ─── Success view ──────────────────────────────────────────────────────────────
-function SuccessView({ result, onBack }) {
+export function SuccessView({ result, onBack }) {
   return (
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--sp-10) var(--sp-6)' }}>
       <CheckCircle size={52} style={{ color:'var(--green)', marginBottom:'var(--sp-3)' }} />
@@ -919,18 +920,11 @@ function CategoryCard({ title, forms, branch, onStart, expandedId, onToggle }) {
 
 // ─── Main Report Forms page ───────────────────────────────────────────────────
 export default function Forms() {
-  const [view,       setView]       = useState('list')
-  const [activeType, setActiveType] = useState(null)
-  const [result,     setResult]     = useState(null)
+  const navigate    = useNavigate()
   const [branch,     setBranch]     = useState('lm')
   const [expandedId, setExpandedId] = useState(null)
 
-  const handleStart = (type) => { setActiveType(type); setView('form') }
-  const handleSave  = (res)  => { setResult(res); setView('success') }
-  const handleBack  = ()     => { setView('list'); setResult(null); setActiveType(null) }
-
-  if (view === 'form')    return <CompletionFormView formType={activeType} onSave={handleSave} onCancel={handleBack} />
-  if (view === 'success') return <SuccessView result={result} onBack={handleBack} />
+  const handleStart = (type) => navigate(`/forms/${type}`)
 
   const catalog = FORM_CATALOG[branch]
 

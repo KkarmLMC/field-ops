@@ -11,6 +11,8 @@ import Inspections   from './pages/Inspections'
 import DailyFieldLog from './pages/DailyFieldLog'
 import Reports       from './pages/Reports'
 import Forms         from './pages/Forms'
+import FormPage      from './pages/FormPage'
+import { COMPLETION_TYPES } from './pages/Forms'
 import Technicians   from './pages/Technicians'
 import JobDetail     from './pages/JobDetail'
 import FormRunner    from './pages/FormRunner'
@@ -43,6 +45,11 @@ function getPageMeta(pathname) {
     const fid    = pathname.split('/')[5]
     const labels = { 'site-survey': 'Site Survey', installation: 'Installation', inspection: 'Inspection' }
     return { title: labels[fid] || 'Form', sub: 'NFPA 780', parent: '/installations' }
+  }
+  if (/^\/forms\/[^/]+$/.test(pathname)) {
+    const formType = pathname.split('/')[2]
+    const cfg = COMPLETION_TYPES[formType]
+    return { title: cfg?.label || 'Report Form', parent: '/forms' }
   }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
@@ -196,6 +203,7 @@ export default function App() {
             <Route path="/installations/field-reports"                        element={<Reports />} />
             <Route path="/reports"                                             element={<Navigate to="/installations/field-reports" replace />} />
             <Route path="/forms"                                               element={<Forms />} />
+            <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
