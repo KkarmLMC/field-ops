@@ -43,7 +43,7 @@ const SAFETY_FORMS = [
 const STATUS_STYLE = {
   Draft:     { bg: '#FEF9C3', color: '#92400E' },
   Submitted: { bg: '#EFF6FF', color: '#1D4ED8' },
-  Reviewed:  { bg: '#F0FDF4', color: '#16A34A' },
+  Reviewed:  { bg: '#F0FDF4', color: 'var(--success-text)' },
 }
 
 // Stage labels for jobsite dropdown
@@ -122,7 +122,7 @@ function SafetyDot({ ok, label }) {
   return (
     <span
       className="dfl-safety-dot"
-      style={{ background: ok ? '#22C55E' : '#E5E7EB', color: ok ? '#fff' : '#9CA3AF' }}
+      style={{ background: ok ? 'var(--success)' : 'var(--border-l)', color: ok ? '#fff' : 'var(--text-3)' }}
       title={label}
     >
       {ok
@@ -205,7 +205,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
             >
               <Buildings size={12} style={{ flexShrink: 0, opacity: 0.5 }} />
               {name}
-              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: '#16A34A' }} />}
+              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: 'var(--success-text)' }} />}
             </li>
           ))}
         </ul>
@@ -299,7 +299,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                 >
                   <MapPin size={13} style={{ flexShrink: 0, color: '#6B7280' }} />
                   <span style={{ flex: 1 }}>{job.name}</span>
-                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
+                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
                 </div>
               )
             })
@@ -371,7 +371,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span style={{ flex: 1 }}>{tech.name}</span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
-              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
+              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -479,7 +479,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               onMouseDown={() => select(opt)}
             >
               <span style={{ flex: 1, fontFamily: 'var(--mono)', fontSize: '0.875rem' }}>{opt.label}</span>
-              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />}
+              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -686,13 +686,13 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {/* Submitted: View PDF Submission */}
       {!isDraft && entry.pdf_url && (
         <div className="dfl-closeout-row">
-          <div className="dfl-closeout-hint" style={{ color: '#16A34A' }}>
-            <SealCheck size={11} weight="fill" style={{ color: '#16A34A', flexShrink: 0 }} />
+          <div className="dfl-closeout-hint" style={{ color: 'var(--success-text)' }}>
+            <SealCheck size={11} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />
             Log finalized and stored
           </div>
           <a
             className="dfl-closeout-btn"
-            style={{ background: '#16A34A', textDecoration: 'none' }}
+            style={{ background: 'var(--success-text)', textDecoration: 'none' }}
             href={entry.pdf_url}
             target="_blank"
             rel="noopener noreferrer"
@@ -813,7 +813,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-pf-row">
           <span className="fr-pf-label">
             {field.label}
-            {field.required && <span style={{ color: '#EF4444', marginLeft: 2 }}>*</span>}
+            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
           </span>
           <div className="fr-pf-buttons">
             <button type="button" className={`fr-pf-btn fr-pf-pass ${pf.result === 'pass' ? 'active' : ''}`} onClick={() => onChange({ ...pf, result: pf.result === 'pass' ? null : 'pass' })}>Pass</button>
@@ -830,7 +830,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-ok-row">
           <span className="fr-ok-label">
             {field.label}
-            {field.required && <span style={{ color: '#EF4444', marginLeft: 2 }}>*</span>}
+            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
           </span>
           <div className="fr-ok-buttons">
             {[['ok','OK'],['notok','Not OK'],['na','N/A']].map(([k, lbl]) => (
@@ -962,7 +962,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
           <button className="dfl-btn-secondary" onClick={onBack}>Back to Safety</button>
           <button
             className="dfl-btn-primary"
-            style={{ background: '#16A34A' }}
+            style={{ background: 'var(--success-text)' }}
             onClick={() => onComplete(formKey, values)}
           >
             <CheckCircle size={14} weight="fill" />
@@ -1152,7 +1152,7 @@ const STEPS = [
                 <div key={key} className={`dfl-safety-form-item ${form[key] ? 'completed' : ''}`}>
                   <div className="dfl-safety-form-icon">
                     {form[key]
-                      ? <CheckCircle size={18} weight="fill" style={{ color: '#16A34A' }} />
+                      ? <CheckCircle size={18} weight="fill" style={{ color: 'var(--success-text)' }} />
                       : <HardHat size={18} weight="bold" style={{ color: '#6B7280' }} />
                     }
                   </div>
@@ -1213,7 +1213,7 @@ const STEPS = [
           ) : (
             <button
               className="dfl-btn-primary"
-              style={{ background: canSave ? '#16A34A' : '#9CA3AF', cursor: canSave ? 'pointer' : 'not-allowed' }}
+              style={{ background: canSave ? 'var(--success-text)' : 'var(--text-3)', cursor: canSave ? 'pointer' : 'not-allowed' }}
               onClick={() => canSave && onSave(form)}
               disabled={!canSave}
             >
@@ -1442,7 +1442,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
           ) : (
             <button
               className="dfl-btn-primary"
-              style={{ background: canSubmit ? bc.bgActive : '#9CA3AF', cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+              style={{ background: canSubmit ? bc.bgActive : 'var(--text-3)', cursor: canSubmit ? 'pointer' : 'not-allowed' }}
               onClick={() => canSubmit && onSubmit(form)}
               disabled={!canSubmit}
             >
@@ -1690,13 +1690,13 @@ export default function DailyFieldLog() {
               <div
                 key={s.label}
                 className="dfl-summary-card"
-                style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+                style={s.alert && s.value > 0 ? { borderColor: 'var(--warning-border)' } : {}}
               >
-                <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+                <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : bc.bgActive }}>
                   {s.icon}
                 </div>
                 <div>
-                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-1)' }}>
                     {s.value}
                   </div>
                   <div className="dfl-summary-label">{s.label}</div>

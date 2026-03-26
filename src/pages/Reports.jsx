@@ -21,7 +21,7 @@ const STATUS_CFG = {
   submitted:          { label: 'Submitted',          color: '#2563EB', bg: '#EFF6FF' },
   'under-review':     { label: 'Under Review',       color: '#D97706', bg: '#FFFBEB' },
   'customer-signoff': { label: 'Customer Sign-off',  color: '#7C3AED', bg: '#F5F3FF' },
-  complete:           { label: 'Complete',            color: '#16A34A', bg: '#F0FDF4' },
+  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: '#F0FDF4' },
 }
 
 // ─── Mock data (swapped for Supabase when live) ────────────────────────────────
@@ -190,13 +190,13 @@ export default function Reports() {
           <div
             key={s.label}
             className="dfl-summary-card"
-            style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+            style={s.alert && s.value > 0 ? { borderColor: 'var(--warning-border)' } : {}}
           >
-            <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+            <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : bc.bgActive }}>
               {s.icon}
             </div>
             <div>
-              <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+              <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-1)' }}>
                 {s.value}
               </div>
               <div className="dfl-summary-label">{s.label}</div>

@@ -114,13 +114,13 @@ export default function Inspections() {
             <div
               key={s.label}
               className="dfl-summary-card"
-              style={s.alert && s.value > 0 ? { borderColor: '#FCD34D' } : {}}
+              style={s.alert && s.value > 0 ? { borderColor: 'var(--warning-border)' } : {}}
             >
-              <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? '#B45309' : bc.bgActive }}>
+              <div className="dfl-summary-icon" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : bc.bgActive }}>
                 {s.icon}
               </div>
               <div>
-                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? '#B45309' : 'var(--text-1)' }}>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-1)' }}>
                   {s.value}
                 </div>
                 <div className="dfl-summary-label">{s.label}</div>

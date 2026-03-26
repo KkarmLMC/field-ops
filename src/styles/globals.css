@@ -2553,3 +2553,281 @@ textarea { resize: vertical; }
 @keyframes spin         { to { transform: rotate(360deg); } }
 @keyframes slideUp      { from { transform: translateY(2rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes dfl-spin     { to { transform: rotate(360deg); } }
+
+
+/* =============================================================================
+   VISUAL AUDIT ADDITIONS — March 2026
+   Classes found in JSX that were missing from CSS.
+   ============================================================================= */
+
+/* ── Branch tabs container ────────────────────────────────────────────────────── */
+
+.branch-tabs {
+  /* Root wrapper — layout managed by child .branch-tabs-mobile-track */
+}
+
+/* ── DFL entry card — additional elements ────────────────────────────────────── */
+
+/* Card icon — branch color dot/icon in header */
+.dfl-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+/* Card title / sub (inside card header) */
+.dfl-card-title { font-size: var(--fs-md); font-weight: 700; color: white; }
+.dfl-card-sub   { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.65); margin-top: 1px; }
+
+/* Right side of card header — hours + status pill */
+.dfl-card-head-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-1);
+  flex-shrink: 0;
+}
+
+/* Hours worked value */
+.dfl-card-hours {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status pill inside card header */
+.dfl-status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--r-full);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Separator dot between meta items */
+.dfl-dot {
+  color: var(--text-4);
+  font-size: var(--fs-xs);
+  margin: 0 var(--sp-1);
+}
+
+/* Chip row — work types shown in card */
+.dfl-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin-top: var(--sp-2);
+}
+
+.dfl-work-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  padding: 0.125rem var(--sp-2);
+  border-radius: var(--r-full);
+  background: var(--border-l);
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Safety row — inline safety doc status chips */
+.dfl-safety-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.dfl-safety-label {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dfl-safety-badges {
+  display: flex;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+}
+
+/* ── DFL detail grid — key/value metadata grid ───────────────────────────────── */
+
+.dfl-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2) var(--sp-4);
+}
+
+@media (max-width: 480px) {
+  .dfl-detail-grid { grid-template-columns: 1fr; }
+}
+
+.dfl-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1875rem;
+}
+
+/* Full-width item spanning both columns */
+.dfl-detail-full {
+  grid-column: 1 / -1;
+}
+
+.dfl-detail-value {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.4;
+}
+
+/* GPS value in mono */
+.dfl-gps {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+}
+
+/* ── DFL sign-off row ────────────────────────────────────────────────────────── */
+
+.dfl-signoff-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-l);
+  margin-top: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+/* Unsigned badge — amber warning */
+.dfl-unsigned-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--warning-text);
+  background: var(--warning-soft);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--r-full);
+  padding: var(--sp-1) var(--sp-3);
+}
+
+/* ── DFL form header Part 2 modifier ─────────────────────────────────────────── */
+
+/* Modifier applied to dfl-form-header when showing Part 2 (branch-colored bg) */
+.dfl-form-header--p2 {
+  /* background is set dynamically via inline style (bc.bgActive) */
+}
+
+/* ── DFL summary strip — stat cards row ──────────────────────────────────────── */
+
+/* Used on DailyFieldLog, Inspections, Reports, Technicians, RiskAssessment */
+.dfl-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+  gap: var(--gap-md);
+  margin-bottom: var(--sp-4);
+}
+
+.dfl-summary-card {
+  background: var(--surface-raised);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  border: 1px solid transparent;
+  transition: border-color var(--ease-fast);
+}
+
+.dfl-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.dfl-summary-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.dfl-summary-label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+/* ── Kanban card — additional meta elements ──────────────────────────────────── */
+
+.kanban-card-date {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+.kanban-card-tech {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+/* ── List search icon and clear button ───────────────────────────────────────── */
+
+/* Icon inside search wrap */
+.list-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  padding: 0 var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Clear (✕) button inside search wrap */
+.search-clear-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-3);
+  padding: var(--sp-1) var(--sp-2);
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  transition: color var(--ease-fast);
+  flex-shrink: 0;
+}
+
+.search-clear-btn:hover { color: var(--text-1); }
+
+/* BEM modifier alias — Inspections.jsx uses list-search-wrap--open */
+.list-search-wrap--open {
+  width: clamp(10rem, 40vw, 18rem);
+  border-color: var(--navy);
+}
+
+.list-search-wrap--open .list-search-icon-btn { color: var(--navy); }
+.list-search-wrap--open .list-search-input    { width: auto; }
