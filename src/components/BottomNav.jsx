@@ -27,10 +27,12 @@ const HIDDEN_PREFIXES = [
   '/installations/',
 ]
 
+// Routes inside a hidden prefix that should still show the nav
 const KEEP_ROUTES = [
   '/installations/pipeline',
   '/installations/field-logs',
   '/installations/field-reports',
+  '/forms/jsa',
 ]
 
 function shouldHide(pathname) {
