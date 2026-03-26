@@ -260,20 +260,20 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
 
   const addField = () => {
     const newField = { id:`field_${Date.now()}`, label:'', type:'text', required:false }
-    onChange(sectionIdx, { ...section, fields:[...section.fields, newField] })
+    onChange(sectionIdx, { ...section, fields:[...(section.fields||[]), newField] })
   }
 
   const updateField = (fieldIdx, updated) => {
-    const fields = section.fields.map((f,i)=>i===fieldIdx?updated:f)
+    const fields = (section.fields||[]).map((f,i)=>i===fieldIdx?updated:f)
     onChange(sectionIdx, { ...section, fields })
   }
 
   const deleteField = (fieldIdx) => {
-    onChange(sectionIdx, { ...section, fields:section.fields.filter((_,i)=>i!==fieldIdx) })
+    onChange(sectionIdx, { ...section, fields:(section.fields||[]).filter((_,i)=>i!==fieldIdx) })
   }
 
-  const { dragIdx, overIdx, rowRefs, handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown } =
-    useDragReorder(section.fields, (reordered) => onChange(sectionIdx, { ...section, fields: reordered }))
+  const { dragIdx, overIdx, ghostPos, ghostLabel, rowRefs, handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown } =
+    useDragReorder(section.fields || [], (reordered) => onChange(sectionIdx, { ...section, fields: reordered }))
 
   return (
     <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}>
@@ -301,7 +301,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
-        {section.fields.map((field, fi) => (
+        {(section.fields||[]).map((field, fi) => (
           <div key={field.id+fi} ref={el => rowRefs.current[fi] = el}>
             <FieldRow
               field={field}
