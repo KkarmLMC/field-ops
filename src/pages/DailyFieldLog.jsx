@@ -1672,7 +1672,7 @@ export default function DailyFieldLog() {
 
   return (
     <div className="page-content fade-in">
-      <div className="page-stack" style={!isManagement ? { maxWidth: '640px', margin: '0 auto' } : undefined}>
+      <div className="page-stack">
 
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
       {isManagement && (
@@ -1758,7 +1758,7 @@ export default function DailyFieldLog() {
       {isManagement && <SectionDivider title="Field Logs" label="Field Overview" accent="var(--navy)" />}
 
       {/* Field quick actions — shown on both routes */}
-      <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-sm)', maxWidth: '480px' }}>
         <button
           className="btn btn-primary"
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
