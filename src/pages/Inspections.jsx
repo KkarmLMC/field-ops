@@ -207,7 +207,7 @@ export default function Inspections() {
         </div>
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider label="Field" accent="var(--orange)" />
+        <SectionDivider title="Inspections" label="Field" accent="var(--orange)" />
 
         <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
           <button

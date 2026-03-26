@@ -1755,7 +1755,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-      {isManagement && <SectionDivider label="Field" accent="var(--orange)" />}
+      {isManagement && <SectionDivider title="Field Logs" label="Field" accent="var(--orange)" />}
 
       {/* Field quick actions — shown on both routes */}
       <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>

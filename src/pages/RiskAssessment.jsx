@@ -502,7 +502,7 @@ export default function RiskAssessment() {
         </p>
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider label="Field" accent="var(--orange)" />
+        <SectionDivider title="Risk Assessment" label="Field" accent="var(--orange)" />
 
         <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
           <button

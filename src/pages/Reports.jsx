@@ -270,7 +270,7 @@ export default function Reports() {
       </div>
 
       {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-      <SectionDivider label="Field" accent="var(--orange)" />
+      <SectionDivider title="Field Reports" label="Field" accent="var(--orange)" />
 
       <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
         <button

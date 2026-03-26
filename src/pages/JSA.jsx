@@ -621,7 +621,7 @@ export default function JSA() {
         </div>
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider label="Field" accent="var(--orange)" />
+        <SectionDivider title="JSA" label="Field" accent="var(--orange)" />
 
         <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
           <button

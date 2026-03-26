@@ -407,7 +407,7 @@ export default function Installations() {
         </div>
 
         {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-        <SectionDivider label="Field" accent="var(--orange)" />
+        <SectionDivider title="Installations" label="Field" accent="var(--orange)" />
 
         {/* Active on site */}
         <div className="dash-card">
