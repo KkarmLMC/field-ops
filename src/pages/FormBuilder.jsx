@@ -184,7 +184,6 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
       >
         {/* Collapsed header */}
         <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
-          {/* Drag handle */}
           <div
             {...dragHandleProps}
             style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--sp-2)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none', WebkitUserSelect:'none' }}
@@ -197,7 +196,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
               {field.label || <span style={{ color:'var(--text-3)', fontStyle:'italic' }}>Unlabelled field</span>}
             </div>
             <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)' }}>
-              {field.type}{field.required?' · required':''}{field.id?' · '+field.id:''}
+              {field.type}{field.required?' · required':''}
             </div>
           </div>
           <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--sp-1)' }}>
@@ -212,13 +211,9 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
         {expanded && (
           <div style={{ padding:'var(--sp-3)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
-              <div>
+              <div style={{ gridColumn:'1 / -1' }}>
                 <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Label *</label>
                 <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label" style={{ width:'100%' }}/>
-              </div>
-              <div>
-                <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Field ID</label>
-                <input value={field.id||''} onChange={e=>onChange(index,{...field, id:e.target.value})} placeholder="auto_generated" style={{ width:'100%', fontFamily:'var(--mono)' }}/>
               </div>
               <div>
                 <label style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--text-2)', display:'block', marginBottom:'var(--sp-1)' }}>Type</label>
@@ -255,12 +250,62 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
   )
 }
 
+// ─── Field type picker sheet ──────────────────────────────────────────────────
+// Groups field types visually so picking is faster than a flat list.
+const TYPE_GROUPS = [
+  { label: 'Basic',    types: ['text','number','email','date','textarea'] },
+  { label: 'Choice',   types: ['select','boolean','radio','checklist','checkbox-group'] },
+  { label: 'Safety',   types: ['pass-fail','ok-notok-na','activity-row','personnel-sig'] },
+  { label: 'Capture',  types: ['signature','photo','gps'] },
+]
+const TYPE_MAP = Object.fromEntries(FIELD_TYPES.map(t => [t.value, t.label]))
+
+function TypePickerSheet({ onPick, onClose }) {
+  return (
+    <>
+      {/* Backdrop */}
+      <div onClick={onClose} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.4)', zIndex:200 }} />
+      {/* Sheet */}
+      <div style={{
+        position:'fixed', left:0, right:0, bottom:0, zIndex:201,
+        background:'var(--surface)', borderRadius:'var(--r-xl) var(--r-xl) 0 0',
+        padding:'var(--sp-4)', maxHeight:'75vh', overflowY:'auto',
+        boxShadow:'0 -4px 32px rgba(0,0,0,0.15)',
+      }}>
+        {/* Handle */}
+        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius:99, margin:'0 auto var(--sp-4)' }} />
+        <div style={{ fontSize:'var(--fs-md)', fontWeight:700, marginBottom:'var(--sp-4)' }}>Choose Field Type</div>
+        {TYPE_GROUPS.map(group => (
+          <div key={group.label} style={{ marginBottom:'var(--sp-4)' }}>
+            <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-2)' }}>
+              {group.label}
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--sp-2)' }}>
+              {group.types.map(type => (
+                <button key={type} type="button" onClick={() => onPick(type)}
+                  style={{ padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-md)', border:'1px solid var(--border-l)', background:'var(--surface-raised)', textAlign:'left', fontSize:'var(--fs-sm)', color:'var(--text-1)', fontWeight:500, transition:'all var(--ease-fast)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background='var(--navy)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.borderColor='var(--navy)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background='var(--surface-raised)'; e.currentTarget.style.color='var(--text-1)'; e.currentTarget.style.borderColor='var(--border-l)' }}
+                >
+                  {TYPE_MAP[type]}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+
 // ─── Section Editor ───────────────────────────────────────────────────────────
 function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete, onMoveSection }) {
+  const [showTypePicker, setShowTypePicker] = useState(false)
 
-  const addField = () => {
-    const newField = { id:`field_${Date.now()}`, label:'', type:'text', required:false }
+  const addField = (type) => {
+    const newField = { id:`field_${Date.now()}`, label:'', type, required:false }
     onChange(sectionIdx, { ...section, fields:[...(section.fields||[]), newField] })
+    setShowTypePicker(false)
   }
 
   const updateField = (fieldIdx, updated) => {
@@ -317,14 +362,17 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
             />
           </div>
         ))}
-        <button type="button" onClick={addField}
-          style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', marginTop:section.fields.length?'var(--sp-2)':0 }}>
+        <button type="button" onClick={() => setShowTypePicker(true)}
+          style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', marginTop:section.fields?.length?'var(--sp-2)':0 }}>
           <Plus size={13}/> Add Field
         </button>
       </div>
 
       {/* Floating ghost follows finger/cursor */}
       <DragGhost label={ghostLabel} pos={ghostPos} visible={dragIdx !== null} />
+
+      {/* Type picker sheet */}
+      {showTypePicker && <TypePickerSheet onPick={addField} onClose={() => setShowTypePicker(false)} />}
     </div>
   )
 }
