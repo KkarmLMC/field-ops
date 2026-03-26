@@ -550,7 +550,6 @@ export default function JSA() {
 
   const lmCount         = jsas.filter(j => j.branch === 'lm').length
   const boltCount       = jsas.filter(j => j.branch === 'bolt').length
-  const boltDallasCount = jsas.filter(j => j.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
@@ -564,7 +563,6 @@ export default function JSA() {
           onChange={setBranch}
           lmCount={lmCount}
           boltCount={boltCount}
-          boltDallasCount={boltDallasCount}
         />
 
         {/* Summary stat tiles */}

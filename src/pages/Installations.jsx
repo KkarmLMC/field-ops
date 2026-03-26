@@ -253,7 +253,6 @@ export default function Installations() {
 
   const lmCount         = PROJECTS.filter(p => p.branch === 'lm').length
   const boltCount       = PROJECTS.filter(p => p.branch === 'bolt').length
-  const boltDallasCount = PROJECTS.filter(p => p.branch === 'bolt-dallas').length
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -269,7 +268,6 @@ export default function Installations() {
           onChange={val => { setBranch(val); setStageFilter('all'); setSearch('') }}
           lmCount={lmCount}
           boltCount={boltCount}
-          boltDallasCount={boltDallasCount}
         />
 
         {/* Stage stat pills */}

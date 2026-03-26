@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { STATS, PROJECTS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 
-export default function BranchTabs({ active, onChange, lmCount, boltCount, boltDallasCount }) {
+export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
   const [hoveredId, setHoveredId] = useState(null)
   const trackRef = useRef(null)
 
@@ -16,16 +16,10 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount, boltD
     scheduled: PROJECTS.filter(p => p.branch === 'bolt'        && p.stage === 'scheduled').length,
     completed: PROJECTS.filter(p => p.branch === 'bolt'        && p.stage === 'complete').length,
   }
-  const dallasStats = {
-    active:    PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'in-progress').length,
-    scheduled: PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'scheduled').length,
-    completed: PROJECTS.filter(p => p.branch === 'bolt-dallas' && p.stage === 'complete').length,
-  }
 
   const tabs = [
     { id: 'lm',          label: STATS.lm.label,             sectors: STATS.lm.sectors,             stats: lmStats,     total: lmCount        ?? (lmStats.active + lmStats.scheduled + lmStats.completed),       ...BRANCH_COLORS['lm'] },
     { id: 'bolt',        label: STATS.bolt.label,           sectors: STATS.bolt.sectors,           stats: boltStats,   total: boltCount       ?? (boltStats.active + boltStats.scheduled + boltStats.completed),   ...BRANCH_COLORS['bolt'] },
-    { id: 'bolt-dallas', label: STATS['bolt-dallas'].label, sectors: STATS['bolt-dallas'].sectors, stats: dallasStats, total: boltDallasCount ?? (dallasStats.active + dallasStats.scheduled + dallasStats.completed), ...BRANCH_COLORS['bolt-dallas'] },
   ]
 
   // Update active branch while user swipes

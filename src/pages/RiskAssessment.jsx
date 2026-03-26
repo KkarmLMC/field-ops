@@ -215,8 +215,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             <FieldLabel label="Branch" />
             <select value={form.branch} onChange={e=>set('branch',e.target.value)} style={{ width:'100%' }}>
               <option value="lm">Lightning Master</option>
-              <option value="bolt">Bolt Florida</option>
-              <option value="bolt-dallas">Bolt Dallas</option>
+              <option value="bolt">Bolt Lightning</option>
             </select>
           </div>
         </div>
@@ -431,7 +430,6 @@ export default function RiskAssessment() {
 
   const lmCount         = assessments.filter(a => a.branch === 'lm').length
   const boltCount       = assessments.filter(a => a.branch === 'bolt').length
-  const boltDallasCount = assessments.filter(a => a.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
@@ -445,7 +443,6 @@ export default function RiskAssessment() {
           onChange={setBranch}
           lmCount={lmCount}
           boltCount={boltCount}
-          boltDallasCount={boltDallasCount}
         />
 
         {/* Summary stat tiles */}

@@ -32,8 +32,8 @@ const MOCK_FIELD_REPORTS = [
   { id: 'fr-004', form_type: 'jsa',          branch: 'bolt',        project_name: 'Nassau County Courthouse LPS',       job_number: 'BOLT-2024-002', submitted_by: 'Marcus Webb',    status: 'under-review',      created_at: '2026-03-18' },
   { id: 'fr-005', form_type: 'completion',   branch: 'bolt',        project_name: 'Nassau County Courthouse LPS',       job_number: 'BOLT-2024-002', submitted_by: 'Tamika Russell', status: 'customer-signoff',  created_at: '2026-03-23' },
   { id: 'fr-006', form_type: 'site-survey',  branch: 'lm',          project_name: 'Jacksonville Port Authority',        job_number: 'LM-2024-009',   submitted_by: 'Jake Herrera',   status: 'complete',          created_at: '2026-03-10' },
-  { id: 'fr-007', form_type: 'inspection',   branch: 'bolt-dallas', project_name: 'Dallas Medical Center Phase 2',     job_number: 'BLTX-2024-003', submitted_by: 'Chris Navarro',  status: 'submitted',         created_at: '2026-03-21' },
-  { id: 'fr-008', form_type: 'jsa',          branch: 'bolt-dallas', project_name: 'DFW Cargo Terminal LPS',            job_number: 'BLTX-2024-001', submitted_by: 'Lena Kowalski',  status: 'complete',          created_at: '2026-03-15' },
+  { id: 'fr-007', form_type: 'inspection',   branch: 'bolt', project_name: 'Dallas Medical Center Phase 2',     job_number: 'BLTX-2024-003', submitted_by: 'Chris Navarro',  status: 'submitted',         created_at: '2026-03-21' },
+  { id: 'fr-008', form_type: 'jsa',          branch: 'bolt', project_name: 'DFW Cargo Terminal LPS',            job_number: 'BLTX-2024-001', submitted_by: 'Lena Kowalski',  status: 'complete',          created_at: '2026-03-15' },
   { id: 'fr-009', form_type: 'completion',   branch: 'lm',          project_name: 'Baptist Medical Center South Wing', job_number: 'LM-2024-003',   submitted_by: 'Priya Nair',     status: 'under-review',      created_at: '2026-03-19' },
   { id: 'fr-010', form_type: 'site-survey',  branch: 'bolt',        project_name: 'Orange Park Medical Complex',       job_number: 'BOLT-2024-011', submitted_by: 'Ray Thibodaux',  status: 'submitted',         created_at: '2026-03-24' },
 ]
@@ -142,7 +142,6 @@ export default function Reports() {
 
   const lmCount         = MOCK_FIELD_REPORTS.filter(r => r.branch === 'lm').length
   const boltCount       = MOCK_FIELD_REPORTS.filter(r => r.branch === 'bolt').length
-  const boltDallasCount = MOCK_FIELD_REPORTS.filter(r => r.branch === 'bolt-dallas').length
 
   const branchReports = MOCK_FIELD_REPORTS.filter(r => r.branch === branch)
 
@@ -178,7 +177,6 @@ export default function Reports() {
         onChange={setBranch}
         lmCount={lmCount}
         boltCount={boltCount}
-        boltDallasCount={boltDallasCount}
       />
 
       {/* Summary stat tiles */}

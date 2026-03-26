@@ -1583,7 +1583,6 @@ export default function DailyFieldLog() {
 
   const lmCount         = entries.filter(r => r.branch === 'lm').length
   const boltCount       = entries.filter(r => r.branch === 'bolt').length
-  const boltDallasCount = entries.filter(r => r.branch === 'bolt-dallas').length
 
   const reports = entries
     .filter(r => r.branch === branch)
@@ -1684,7 +1683,6 @@ export default function DailyFieldLog() {
             onChange={setBranch}
             lmCount={lmCount}
             boltCount={boltCount}
-            boltDallasCount={boltDallasCount}
           />
 
           {/* Summary strip */}

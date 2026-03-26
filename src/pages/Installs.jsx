@@ -169,7 +169,6 @@ export default function Installs() {
 
   const lmCount         = PROJECTS.filter(p => p.branch === 'lm').length
   const boltCount       = PROJECTS.filter(p => p.branch === 'bolt').length
-  const boltDallasCount = PROJECTS.filter(p => p.branch === 'bolt-dallas').length
 
   // All projects for this branch, optionally filtered by search
   const branchJobs = PROJECTS.filter(p =>
@@ -190,7 +189,6 @@ export default function Installs() {
         onChange={setBranch}
         lmCount={lmCount}
         boltCount={boltCount}
-        boltDallasCount={boltDallasCount}
       />
 
       {/* Search bar */}

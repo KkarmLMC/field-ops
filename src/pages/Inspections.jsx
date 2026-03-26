@@ -74,7 +74,6 @@ export default function Inspections() {
 
   const lmCount         = PROJECTS.filter(p => p.branch === 'lm'         && INSPECT_TYPES.includes(p.type)).length
   const boltCount       = PROJECTS.filter(p => p.branch === 'bolt'        && INSPECT_TYPES.includes(p.type)).length
-  const boltDallasCount = PROJECTS.filter(p => p.branch === 'bolt-dallas' && INSPECT_TYPES.includes(p.type)).length
 
   const branchJobs = PROJECTS.filter(p => p.branch === branch && INSPECT_TYPES.includes(p.type))
 
@@ -102,7 +101,6 @@ export default function Inspections() {
           onChange={val => { setBranch(val); setStageFilter('all'); setSearch('') }}
           lmCount={lmCount}
           boltCount={boltCount}
-          boltDallasCount={boltDallasCount}
         />
 
         {/* Summary stat tiles */}

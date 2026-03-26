@@ -576,7 +576,6 @@ export default function Forms() {
 
   const lmCount         = completions.filter(f => f.branch === 'lm').length
   const boltCount       = completions.filter(f => f.branch === 'bolt').length
-  const boltDallasCount = completions.filter(f => f.branch === 'bolt-dallas').length
 
   return (
     <div className="page-content fade-in">
@@ -591,7 +590,6 @@ export default function Forms() {
           onChange={setBranch}
           lmCount={lmCount}
           boltCount={boltCount}
-          boltDallasCount={boltDallasCount}
         />
 
       {/* 3 stats filtered by active branch — single row, branch-colored */}

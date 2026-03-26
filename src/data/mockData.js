@@ -1,7 +1,6 @@
 // Mock data for field-ops — maps to real NFPA field ops workflow
 // branch: 'lm'         = Lightning Master (Oilfield, Chemical, Industrial)
-//         'bolt'        = Bolt Florida     (Commercial, Municipal, Hotels)
-//         'bolt-dallas' = Bolt Dallas      (Commercial, Industrial, Energy)
+//         'bolt'        = Bolt Lightning   (Commercial, Municipal, Hotels)
 //
 // Single source of truth: one PROJECTS record per contract/PO.
 
@@ -293,7 +292,7 @@ export const PROJECTS = [
   {
     id: 'p-011',
     job_number: 'JOB-2026-0401',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'Oncor Substation LPS Install',
     type: 'installation',
     stage: 'in-progress',
@@ -318,7 +317,7 @@ export const PROJECTS = [
   {
     id: 'p-012',
     job_number: 'JOB-2026-0408',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'AT&T Discovery District Inspection',
     type: 'inspection',
     stage: 'pending-review',
@@ -345,7 +344,7 @@ export const PROJECTS = [
   {
     id: 'p-013',
     job_number: 'JOB-2026-0415',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'Dallas Cowboys Training Facility LPS',
     type: 'certification',
     stage: 'complete',
@@ -372,7 +371,7 @@ export const PROJECTS = [
   {
     id: 'p-014',
     job_number: 'JOB-2026-0422',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'Pioneer Natural Resources Annual Test',
     type: 'annual-test',
     stage: 'scheduled',
@@ -505,7 +504,7 @@ export const PROJECTS = [
   {
     id: 'p-019',
     job_number: 'JOB-2026-0349',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'Tesla Gigafactory Texas LPS',
     type: 'installation',
     stage: 'awarded',
@@ -746,7 +745,7 @@ export const PROJECTS = [
   {
     id: 'p-028',
     job_number: 'JOB-2026-0355',
-    branch: 'bolt-dallas',
+    branch: 'bolt',
     name: 'Hunt Oil HQ Site Survey',
     type: 'site-survey',
     stage: 'postponed',
@@ -919,9 +918,9 @@ export const MOCK_REPORTS = [
     supervisor_name: 'Marcus Webb', signed: true,
     status: 'Submitted', projects: { name: 'WestRock Paper Mill Annual Test' },
   },
-  // ── Bolt Dallas entries ──
+  // ── Additional Bolt entries ──
   {
-    id: 'r-009', project_id: 'p-011', branch: 'bolt-dallas', report_date: '2026-03-24', submitted_by: 'Chris Navarro',
+    id: 'r-009', project_id: 'p-011', branch: 'bolt', report_date: '2026-03-24', submitted_by: 'Chris Navarro',
     customer_site: 'Oncor Substation — Transmission Bay',
     gps_location: '32.7812, -96.7974',
     crew_on_site: ['Chris Navarro', 'Lena Kowalski'],
@@ -933,7 +932,7 @@ export const MOCK_REPORTS = [
     status: 'Draft', projects: { name: 'Oncor Substation LPS Install' },
   },
   {
-    id: 'r-010', project_id: 'p-013', branch: 'bolt-dallas', report_date: '2026-03-15', submitted_by: 'Chris Navarro',
+    id: 'r-010', project_id: 'p-013', branch: 'bolt', report_date: '2026-03-15', submitted_by: 'Chris Navarro',
     customer_site: 'Dallas Cowboys Training Facility — 3 Buildings',
     gps_location: '33.1581, -96.8350',
     crew_on_site: ['Chris Navarro', 'Lena Kowalski'],
@@ -962,8 +961,8 @@ export const TECHNICIANS = [
   { id: 'T004', branch: 'bolt', name: 'Priya Nair',     license: 'LPI-3312', status: 'field',  phone: '904-555-0219' },
   { id: 'T005', branch: 'lm',   name: 'Jake Herrera',   license: 'LPI-4410', status: 'active', phone: '904-555-0238' },
   { id: 'T006', branch: 'bolt',        name: 'Tamika Russell', license: 'LPI-3780', status: 'field',  phone: '904-555-0251' },
-  { id: 'T007', branch: 'bolt-dallas', name: 'Chris Navarro',  license: 'LPI-5102', status: 'field',  phone: '214-555-0701' },
-  { id: 'T008', branch: 'bolt-dallas', name: 'Lena Kowalski',  license: 'LPI-5218', status: 'active', phone: '214-555-0702' },
+  { id: 'T007', branch: 'bolt', name: 'Chris Navarro',  license: 'LPI-5102', status: 'field',  phone: '214-555-0701' },
+  { id: 'T008', branch: 'bolt', name: 'Lena Kowalski',  license: 'LPI-5218', status: 'active', phone: '214-555-0702' },
 ];
 
 export const FORM_TEMPLATES = {
@@ -1322,12 +1321,7 @@ export const STATS = {
   },
   bolt: {
     active: 3, scheduled: 3, completed: 4, failed: 1,
-    techsInField: 2, label: 'Bolt Florida',
+    techsInField: 2, label: 'Bolt Lightning',
     sectors: 'Commercial · Municipal · Hotels',
-  },
-  'bolt-dallas': {
-    active: 1, scheduled: 2, completed: 1, failed: 0,
-    techsInField: 1, label: 'Bolt Dallas',
-    sectors: 'Commercial · Industrial · Energy',
-  },
+  }
 };
