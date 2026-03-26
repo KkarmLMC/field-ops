@@ -1,5 +1,25 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+// ─── Section divider ──────────────────────────────────────────────────────────
+function SectionDivider({ label, accent = 'var(--text-3)', title }) {
+  const textStyle = {
+    fontSize: 10, fontWeight: 700, letterSpacing: '0.1em',
+    textTransform: 'uppercase', flexShrink: 0,
+  }
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '2px 0' }}>
+      {title && (
+        <>
+          <span style={{ ...textStyle, color: 'var(--text-1)' }}>{title}</span>
+          <span style={{ color: 'var(--text-3)', fontSize: 10, flexShrink: 0 }}>—</span>
+        </>
+      )}
+      <span style={{ ...textStyle, color: accent }}>{label}</span>
+      <div style={{ flex: 1, height: 1, background: 'var(--border-l)' }} />
+    </div>
+  )
+}
 import {
   MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
   CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
@@ -178,6 +198,9 @@ export default function Installs() {
 
   return (
     <div className="page-content fade-in">
+
+      {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
+      <SectionDivider title="Project Pipeline" label="Management Overview" accent="var(--navy)" />
 
       {/* Branch selector */}
       <BranchTabs
