@@ -10,6 +10,7 @@ export default function FormPage() {
   const navigate     = useNavigate()
 
   const { role, isManagement } = useRole()
+  const [schema,     setSchema]     = useState(null)
   const [loading,    setLoading]    = useState(true)
   const [values,     setValues]     = useState({ date_completed: new Date().toISOString().slice(0,10) })
   const [errors,     setErrors]     = useState({})
