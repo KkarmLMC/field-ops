@@ -278,6 +278,9 @@ export default function Installations() {
     <div className="page-content fade-in">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-md)' }}>
 
+        {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
+        <SectionDivider title="Installations" label="Management Overview" accent="var(--navy)" />
+
         {/* Branch selector */}
         <BranchTabs
           active={branch}
@@ -286,9 +289,6 @@ export default function Installations() {
           boltCount={boltCount}
           boltDallasCount={boltDallasCount}
         />
-
-        {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
-        <SectionDivider title="Installations" label="Management Overview" accent="var(--navy)" />
 
         {/* Stage stat pills */}
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: 2 }}>
