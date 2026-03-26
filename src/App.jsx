@@ -75,22 +75,23 @@ function MobileHeader({ onMenuOpen }) {
 function DesktopTopBar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const meta = getPageMeta(location.pathname)
+  const meta   = getPageMeta(location.pathname)
+  const parent = meta.parent || location.state?.from || null
 
   return (
     <div className="desktop-topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        {meta.parent && (
+        {parent && (
           <button
-            onClick={() => navigate(meta.parent)}
+            onClick={() => navigate(parent)}
             style={{
               display: 'flex', alignItems: 'center', gap: '0.3125rem',
               fontSize: '0.75rem', color: 'var(--text-3)', background: 'none', border: 'none',
               cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
-              transition: 'background 0.12s',
+              transition: 'color 0.12s',
             }}
-            onMouseEnter={e => e.currentTarget.style.background = 'var(--border-l)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--text-1)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-3)'}
           >
             <ArrowLeft size={13} />
             Back
