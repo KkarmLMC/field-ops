@@ -2983,3 +2983,60 @@ textarea { resize: vertical; }
   right: 0;
   background: linear-gradient(to left, var(--surface), transparent);
 }
+
+
+/* =============================================================================
+   PAGE SUB-NAV  (.page-sub-nav)
+   Horizontal tab strip shown at the top of pages with child routes.
+   Mobile-only — desktop uses the sidebar sub-nav.
+   ============================================================================= */
+
+.page-sub-nav {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .page-sub-nav {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-l);
+    padding: 0 var(--sp-4);
+    flex-shrink: 0;
+    gap: var(--sp-1);
+  }
+
+  .page-sub-nav::-webkit-scrollbar { display: none; }
+}
+
+/* ── Tab item ────────────────────────────────────────────────────────────────── */
+
+.page-sub-nav__item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem var(--sp-3);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-3);
+  white-space: nowrap;
+  border-bottom: 0.125rem solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--ease-fast), border-color var(--ease-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-sub-nav__item:hover {
+  color: var(--text-1);
+}
+
+.page-sub-nav__item--active {
+  color: var(--text-1);
+  font-weight: 700;
+  border-bottom-color: var(--red);
+}

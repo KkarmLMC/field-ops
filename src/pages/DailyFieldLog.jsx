@@ -10,10 +10,18 @@ import {
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import FormEngine from '../components/FormEngine.jsx'
+import PageSubNav from '../components/PageSubNav'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { db } from '../lib/supabase.js'
 import { generateAndUploadDFLPdf } from '../lib/generateDFLPdf.js'
+
+const INSTALL_SUB_NAV = [
+  { path: '/installations',               label: 'All Projects' },
+  { path: '/installations/pipeline',      label: 'Pipeline'     },
+  { path: '/installations/field-logs',    label: 'Field Logs'   },
+  { path: '/installations/field-reports', label: 'Reports'      },
+]
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 const WORK_TYPES = ['Inspection', 'Installation', 'Remediation', 'Site Revisit', 'Other']
@@ -1664,7 +1672,9 @@ export default function DailyFieldLog() {
   const closeoutEntry = entries.find(r => r.id === closeoutId)
 
   return (
-    <div className="page-content fade-in">
+    <>
+      {isManagement && <PageSubNav items={INSTALL_SUB_NAV} />}
+      <div className="page-content fade-in">
       <div className="page-stack">
 
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
@@ -1837,5 +1847,6 @@ export default function DailyFieldLog() {
 
       </div>
     </div>
+    </>
   )
 }

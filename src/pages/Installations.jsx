@@ -7,8 +7,16 @@ import {
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
+import PageSubNav from '../components/PageSubNav'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
+
+const INSTALL_SUB_NAV = [
+  { path: '/installations',                 label: 'All Projects'  },
+  { path: '/installations/pipeline',        label: 'Pipeline'      },
+  { path: '/installations/field-logs',      label: 'Field Logs'    },
+  { path: '/installations/field-reports',   label: 'Reports'       },
+]
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
@@ -301,7 +309,9 @@ export default function Installations() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="page-content fade-in">
+    <>
+      <PageSubNav items={INSTALL_SUB_NAV} />
+      <div className="page-content fade-in">
       <div className="page-stack">
 
         {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
@@ -536,5 +546,6 @@ export default function Installations() {
 
       </div>
     </div>
+    </>
   )
 }

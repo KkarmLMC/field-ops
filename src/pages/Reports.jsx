@@ -7,6 +7,13 @@ import {
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
+import PageSubNav from '../components/PageSubNav'
+const INSTALL_SUB_NAV = [
+  { path: '/installations',               label: 'All Projects' },
+  { path: '/installations/pipeline',      label: 'Pipeline'     },
+  { path: '/installations/field-logs',    label: 'Field Logs'   },
+  { path: '/installations/field-reports', label: 'Reports'      },
+]
 
 // ─── Form type config ──────────────────────────────────────────────────────────
 const FORM_TYPES = {
@@ -166,6 +173,8 @@ export default function Reports() {
     .sort((a, b) => b.created_at.localeCompare(a.created_at))
 
   return (
+    <>
+      <PageSubNav items={INSTALL_SUB_NAV} />
     <div className="page-content fade-in">
       <div className="page-stack">
 
@@ -269,5 +278,6 @@ export default function Reports() {
 
       </div>
     </div>
+    </>
   )
 }

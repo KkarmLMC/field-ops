@@ -7,7 +7,13 @@ import {
 import { db } from '../lib/supabase.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
+import PageSubNav from '../components/PageSubNav'
 import { BRANCH_COLORS } from '../config/branches.js'
+
+const FORMS_SUB_NAV = [
+  { path: '/forms',         label: 'Report Forms' },
+  { path: '/forms/builder', label: 'Form Builder' },
+]
 
 // ─── Category card — fully DB-driven ─────────────────────────────────────────
 function CategoryCard({ category, forms, children, branch, onStart, expandedSlug, onToggle }) {
@@ -135,7 +141,9 @@ export default function Forms() {
   )
 
   return (
-    <div className="page-content fade-in">
+    <>
+      <PageSubNav items={FORMS_SUB_NAV} />
+      <div className="page-content fade-in">
       <div className="page-stack">
         <SectionDivider title="Report Forms" label="Field Overview" accent="var(--navy)" />
         <BranchTabs active={branch} onChange={setBranch} />
@@ -160,5 +168,6 @@ export default function Forms() {
         )}
       </div>
     </div>
+    </>
   )
 }
