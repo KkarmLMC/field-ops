@@ -267,9 +267,6 @@ export default function Reports() {
         )}
       </div>
 
-      {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-      <SectionDivider title="Field Reports" label="Field Overview" accent="var(--navy)" />
-
       <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
         <button
           className="btn btn-primary"
