@@ -552,6 +552,8 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
   grid-template-columns: repeat(2, 1fr);
   gap: var(--gap-md);
 }
+/* Slide wrapper fills its grid cell; card fills the slide (handled by width:100% on .branch-card) */
+.branch-card-slide { display: flex; }
 .branch-dots { display: none; }
 
 /* Mobile: JS-driven transform carousel (no CSS scroll-snap) */
@@ -591,6 +593,7 @@ button { background: none; border: none; cursor: pointer; font-family: var(--fon
 }
 .branch-card {
   display: flex; flex-direction: column;
+  width: 100%; /* fill parent slide wrapper on both desktop grid and mobile carousel */
   padding: 1.25rem 1.125rem 1rem;
   border-radius: var(--r-xl);
   border: none; cursor: pointer; text-align: left;
