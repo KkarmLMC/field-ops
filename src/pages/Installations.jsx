@@ -424,23 +424,26 @@ export default function Installations() {
         </div>
 
         {/* Field quick actions */}
-        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
-          <button
-            className="btn btn-black"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => navigate('/daily-field-log')}
-          >
-            <Plus size={14} weight="bold" />
-            New Daily Log
-          </button>
-          <button
-            className="btn btn-secondary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => navigate('/jsa')}
-          >
-            <Plus size={14} weight="bold" />
-            New JSA
-          </button>
+        <div className="dash-tiles">
+          {[
+            { Icon: ClipboardText, label: 'Daily Log',    sub: 'Log today\'s work',   path: '/daily-field-log' },
+            { Icon: BookOpen,      label: 'JSA',          sub: 'Safety analysis',      path: '/jsa'             },
+            { Icon: FileText,      label: 'Report Form',  sub: 'Submit a report',      path: '/forms'           },
+          ].map(a => (
+            <button
+              key={a.path}
+              className="dash-tile"
+              onClick={() => navigate(a.path)}
+              style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+            >
+              <div className="dash-tile-icon"><a.Icon size={18} /></div>
+              <div className="dash-tile-text">
+                <div className="dash-tile-label">{a.label}</div>
+                <div className="dash-tile-sub">{a.sub}</div>
+              </div>
+              <ArrowRight size={14} className="dash-tile-arrow" />
+            </button>
+          ))}
         </div>
 
       </div>
