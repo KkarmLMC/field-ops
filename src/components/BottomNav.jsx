@@ -44,27 +44,28 @@ function shouldHide(pathname) {
 // ─── Nav items per role ───────────────────────────────────────────────────────
 
 const FIELD_ITEMS = [
-  { id: 'overview',    path: '/dashboard',       Icon: SquaresFour,    label: 'Overview'    },
-  { id: 'fieldlog',    path: '/daily-field-log', Icon: BookOpen,       label: 'Field Log'   },
-  { id: 'forms',       path: '/forms',            Icon: FileText,       label: 'Forms'       },
-  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections' },
-  { id: 'jsa',         path: '/forms/jsa',        Icon: HardHat,        label: 'JSA'         },
+  { id: 'overview',    path: '/dashboard',       Icon: SquaresFour,    label: 'Overview',    exactMatch: true  },
+  { id: 'fieldlog',    path: '/daily-field-log', Icon: BookOpen,       label: 'Field Log'    },
+  { id: 'forms',       path: '/forms',            Icon: FileText,       label: 'Forms',       exactMatch: true  },
+  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'jsa',         path: '/forms/jsa',        Icon: HardHat,        label: 'JSA'          },
 ]
 
 const MGMT_ITEMS = [
-  { id: 'overview',    path: '/dashboard',                     Icon: SquaresFour,    label: 'Overview'     },
-  { id: 'jobs',        path: '/installations',                 Icon: Lightning,      label: 'Jobs'         },
-  { id: 'pipeline',    path: '/installations/pipeline',        Icon: Rows,           label: 'Pipeline'     },
-  { id: 'fieldlogs',   path: '/installations/field-logs',      Icon: BookOpen,       label: 'Field Logs'   },
-  { id: 'reports',     path: '/installations/field-reports',   Icon: ClipboardText,  label: 'Reports'      },
-  { id: 'forms',       path: '/forms',                         Icon: FileText,       label: 'Forms'        },
-  { id: 'inspections', path: '/inspections',                   Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'technicians', path: '/technicians',                   Icon: Users,          label: 'Technicians'  },
+  { id: 'overview',     path: '/dashboard',                     Icon: SquaresFour,    label: 'Overview',     exactMatch: true  },
+  { id: 'installs',     path: '/installations',                 Icon: HardHat,        label: 'Installations',exactMatch: true  },
+  { id: 'pipeline',     path: '/installations/pipeline',        Icon: Rows,           label: 'Pipeline'     },
+  { id: 'fieldlogs',    path: '/installations/field-logs',      Icon: BookOpen,       label: 'Field Logs'   },
+  { id: 'reports',      path: '/installations/field-reports',   Icon: ClipboardText,  label: 'Reports'      },
+  { id: 'inspections',  path: '/inspections',                   Icon: MagnifyingGlass,label: 'Inspections'  },
+  { id: 'fieldlog',     path: '/daily-field-log',               Icon: BookOpen,       label: 'Daily Log'    },
+  { id: 'forms',        path: '/forms',                         Icon: FileText,       label: 'Forms',        exactMatch: true  },
+  { id: 'technicians',  path: '/technicians',                   Icon: Users,          label: 'Technicians'  },
 ]
 
 // ─── Active path detection ────────────────────────────────────────────────────
 function isActive(item, pathname) {
-  if (item.path === '/dashboard') return pathname === '/dashboard'
+  if (item.exactMatch) return pathname === item.path
   return pathname === item.path || pathname.startsWith(item.path + '/')
 }
 
