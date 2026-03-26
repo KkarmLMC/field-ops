@@ -1753,7 +1753,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* New Daily Log button */}
-      <div style={{ display: 'flex', gap: 'var(--gap-sm)', maxWidth: 480 }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-sm)', maxWidth: 480, width: '100%' }}>
         <button
           className="btn btn-primary"
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
