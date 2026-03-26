@@ -80,6 +80,22 @@ function DesktopTopBar() {
   return (
     <div className="desktop-topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        {meta.parent && (
+          <button
+            onClick={() => navigate(meta.parent)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '0.3125rem',
+              fontSize: '0.75rem', color: 'var(--text-3)', background: 'none', border: 'none',
+              cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
+              transition: 'background 0.12s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = 'var(--border-l)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+          >
+            <ArrowLeft size={13} />
+            Back
+          </button>
+        )}
         {meta.sub && (
           <div style={{ fontSize: '0.625rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
             {meta.sub}
