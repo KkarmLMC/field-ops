@@ -46,9 +46,17 @@ function fmtDate(d) {
 }
 
 // ─── Section divider ──────────────────────────────────────────────────────────
-function SectionDivider({ label, accent = 'var(--text-3)' }) {
+function SectionDivider({ label, accent = 'var(--text-3)', title }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '2px 0' }}>
+      {title && (
+        <>
+          <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)', flexShrink: 0, lineHeight: 1 }}>
+            {title}
+          </span>
+          <span style={{ color: 'var(--border)', fontSize: 14, flexShrink: 0 }}>·</span>
+        </>
+      )}
       <span style={{
         fontSize: 10, fontWeight: 700, letterSpacing: '0.1em',
         textTransform: 'uppercase', color: accent, flexShrink: 0,
@@ -184,7 +192,7 @@ export default function Reports() {
     <div className="page-content fade-in">
 
       {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
-      <SectionDivider label="Management Overview" accent="var(--navy)" />
+      <SectionDivider title="Field Reports" label="Management Overview" accent="var(--navy)" />
 
       <BranchTabs
         active={branch}

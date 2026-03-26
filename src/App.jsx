@@ -96,14 +96,11 @@ function DesktopTopBar() {
             Back
           </button>
         )}
-        <div>
-          {meta.sub && (
-            <div style={{ fontSize: '0.625rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.0625rem' }}>
-              {meta.sub}
-            </div>
-          )}
-          <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{meta.title}</h1>
-        </div>
+        {meta.sub && (
+          <div style={{ fontSize: '0.625rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            {meta.sub}
+          </div>
+        )}
       </div>
       <SyncBadge />
     </div>

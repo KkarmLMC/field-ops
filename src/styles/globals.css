@@ -242,8 +242,9 @@ body {
 .desktop-topbar {
   display: none;
   align-items: center; justify-content: space-between;
-  padding: 1rem 1.5rem 0;
+  padding: 0.5rem 1.5rem 0;
   flex-shrink: 0;
+  min-height: 2rem;
 }
 @media (min-width: 768px) {
   .desktop-topbar { display: flex; }
