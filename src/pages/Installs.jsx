@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import SectionDivider from '../components/SectionDivider'
 import {
   MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
-  CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
+  CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle, ArrowLeft,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
@@ -180,6 +180,17 @@ export default function Installs() {
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
+
+      {/* ══ BACK NAV ══════════════════════════════════════════════════════════ */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button
+          onClick={() => navigate('/installations')}
+          className="page-back-btn"
+        >
+          <ArrowLeft size={14} />
+          Installations
+        </button>
+      </div>
 
       {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
       <SectionDivider title="Project Pipeline" label="Management Overview" accent="var(--navy)" />

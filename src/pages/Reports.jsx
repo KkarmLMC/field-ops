@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   ClipboardText, CheckCircle, Clock, MagnifyingGlass,
-  HardHat, FileText, Plus, Eye, Lightning, Ruler, Warning,
+  HardHat, FileText, Plus, Eye, Lightning, Ruler, Warning, ArrowLeft,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
@@ -134,6 +134,8 @@ function ReportRow({ r }) {
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function Reports() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const fromInstallations = location.state?.from === '/installations'
   const [branch,       setBranch]       = useState('lm')
   const [activeType,   setActiveType]   = useState('all')
   const [activeStatus, setActiveStatus] = useState(null)
@@ -169,6 +171,16 @@ export default function Reports() {
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
+
+      {/* ══ BACK NAV — only when coming from Installations ════════════════════ */}
+      {fromInstallations && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button onClick={() => navigate('/installations')} className="page-back-btn">
+            <ArrowLeft size={14} />
+            Installations
+          </button>
+        </div>
+      )}
 
       {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
       <SectionDivider title="Field Reports" label="Management Overview" accent="var(--navy)" />

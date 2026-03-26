@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Clock, CheckCircle, FileText, Plus, MapPin,
   X, User, Users, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
   ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
-  Crosshair, SpinnerGap, BookOpen,
+  Crosshair, SpinnerGap, BookOpen, ArrowLeft,
 } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
@@ -1555,6 +1555,7 @@ function SignaturePad({ signed, onSign, onClear }) {
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function DailyFieldLog() {
   const location = useLocation()
+  const navigate  = useNavigate()
   // Management view when accessed via /installations/field-logs; field-only otherwise
   const isManagement = location.pathname === '/installations/field-logs'
 
@@ -1673,6 +1674,16 @@ export default function DailyFieldLog() {
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
+
+      {/* ══ BACK NAV — only on /installations/field-logs ══════════════════════ */}
+      {isManagement && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button onClick={() => navigate('/installations')} className="page-back-btn">
+            <ArrowLeft size={14} />
+            Installations
+          </button>
+        </div>
+      )}
 
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
       {isManagement && (
