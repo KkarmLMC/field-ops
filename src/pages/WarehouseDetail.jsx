@@ -4,7 +4,7 @@ import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight,
   PencilSimple, MapPin, Phone, Envelope, ClipboardText,
-  CaretDown, MagnifyingGlass, X, Check,
+  CaretDown, MagnifyingGlass, X, Check, Receipt,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
@@ -201,6 +201,7 @@ export default function WarehouseDetail() {
   const [showTx, setShowTx]       = useState(false)
   const [transactions, setTransactions] = useState([])
   const [showEdit, setShowEdit]   = useState(false)
+  const [warehousePOs, setWarehousePOs] = useState([])
 
   useEffect(() => {
     Promise.all([
@@ -209,9 +210,22 @@ export default function WarehouseDetail() {
         .select('*, parts(id, sku, name, unit_cost, category_id, part_categories(name))')
         .eq('warehouse_id', id)
         .order('quantity_on_hand', { ascending: true }),
-    ]).then(([{ data: wh }, { data: lvl }]) => {
+      // Find all POs that have line items for this warehouse
+      db.from('po_line_items')
+        .select('po_id')
+        .eq('warehouse_id', id),
+    ]).then(async ([{ data: wh }, { data: lvl }, { data: poLineRefs }]) => {
       setWarehouse(wh)
       setLevels(lvl || [])
+      // Fetch those POs
+      const poIds = [...new Set((poLineRefs || []).map(r => r.po_id))]
+      if (poIds.length > 0) {
+        const { data: poData } = await db.from('purchase_orders')
+          .select('id, po_number, customer_name, project_name, status, grand_total, division, po_date')
+          .in('id', poIds)
+          .order('created_at', { ascending: false })
+        setWarehousePOs(poData || [])
+      }
       setLoading(false)
     })
   }, [id])
@@ -392,6 +406,65 @@ export default function WarehouseDetail() {
           ))}
         </div>
       </div>
+
+      {/* Purchase Orders for this warehouse */}
+      {warehousePOs.length > 0 && (() => {
+        const STATUS_COLORS = {
+          draft:     { color: '#64748B', bg: '#F1F5F9' },
+          submitted: { color: '#D97706', bg: '#FEF3C7' },
+          published: { color: '#1D4ED8', bg: '#EFF6FF' },
+          fulfilled: { color: '#15803D', bg: '#F0FDF4' },
+          cancelled: { color: '#B91C1C', bg: '#FEF2F2' },
+        }
+        return (
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)', border: '1px solid var(--border-l)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', borderBottom: '1px solid var(--border-l)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+                <Receipt size={16} style={{ color: 'var(--navy)' }} />
+                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Purchase Orders</span>
+                <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', background: 'var(--hover)', padding: '2px 8px', borderRadius: 'var(--r-full)', fontWeight: 600 }}>
+                  {warehousePOs.length}
+                </span>
+              </div>
+              <button onClick={() => navigate('/inventory/purchase-orders')}
+                style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--navy)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                View all
+              </button>
+            </div>
+            {warehousePOs.map((po, idx) => {
+              const sc = STATUS_COLORS[po.status] || STATUS_COLORS.draft
+              return (
+                <button key={po.id} onClick={() => navigate(`/inventory/purchase-orders/${po.id}`)}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0, background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>
+                    {po.division === 'Bolt' ? 'BOLT' : 'LM'}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {po.customer_name}
+                    </div>
+                    <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 1 }}>
+                      {po.project_name || po.po_number}
+                      {po.po_date ? ` · ${new Date(po.po_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: sc.bg, color: sc.color, textTransform: 'capitalize' }}>
+                      {po.status}
+                    </span>
+                    {po.grand_total > 0 && (
+                      <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)' }}>
+                        ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                      </span>
+                    )}
+                    <CaretRight size={12} style={{ color: 'var(--text-3)' }} />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        )
+      })()}
 
       {/* Transaction history (collapsed by default) */}
       <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>

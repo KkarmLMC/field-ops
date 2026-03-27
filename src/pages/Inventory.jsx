@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
-  DotsSixVertical, PencilSimple,
+  DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
@@ -226,6 +226,7 @@ export default function Inventory() {
   const [showAdd, setShowAdd] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [pos, setPOs] = useState([])
   const dragItem = useRef(null)
   const dragOverItem = useRef(null)
 
@@ -233,9 +234,11 @@ export default function Inventory() {
     Promise.all([
       db.from('warehouses').select('*').eq('is_active', true).order('sort_order'),
       db.from('inventory_levels').select('*, parts(sku, unit_cost)'),
-    ]).then(([{ data: wh }, { data: lvl }]) => {
+      db.from('purchase_orders').select('id, po_number, customer_name, project_name, status, grand_total, division, po_date').in('status', ['draft','submitted','published']).order('created_at', { ascending: false }),
+    ]).then(([{ data: wh }, { data: lvl }, { data: pos }]) => {
       setWarehouses(wh || [])
       setLevels(lvl || [])
+      setPOs(pos || [])
       setLoading(false)
     })
   }, [])
@@ -327,6 +330,76 @@ export default function Inventory() {
           Drag the handles to reorder warehouses, then tap Save Order.
         </div>
       )}
+
+      {/* PO Activity Strip */}
+      {!editMode && pos.length > 0 && (() => {
+        const submitted = pos.filter(p => p.status === 'submitted')
+        const published = pos.filter(p => p.status === 'published')
+        const draft     = pos.filter(p => p.status === 'draft')
+        const totalActive = submitted.length + published.length
+        return (
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', marginBottom: 'var(--sp-5)', overflow: 'hidden' }}>
+            {/* Strip header */}
+            <button onClick={() => navigate('/inventory/purchase-orders')}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+                <Receipt size={15} style={{ color: 'var(--navy)' }} />
+                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Purchase Orders</span>
+                {submitted.length > 0 && (
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: '#FEF3C7', color: '#D97706' }}>
+                    {submitted.length} need review
+                  </span>
+                )}
+              </div>
+              <CaretRight size={13} style={{ color: 'var(--text-3)' }} />
+            </button>
+
+            {/* Stat row */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--border-l)' }}>
+              {[
+                { label: 'Draft',     count: draft.length,     color: '#64748B', bg: 'var(--surface-raised)' },
+                { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? '#D97706' : '#64748B', bg: submitted.length > 0 ? '#FFFBEB' : 'var(--surface-raised)' },
+                { label: 'Published', count: published.length, color: published.length > 0 ? '#1D4ED8' : '#64748B', bg: published.length > 0 ? '#EFF6FF' : 'var(--surface-raised)' },
+              ].map(s => (
+                <div key={s.label} style={{ background: s.bg, padding: 'var(--sp-3) var(--sp-4)' }}>
+                  <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800, color: s.color }}>{s.count}</div>
+                  <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)', marginTop: 2 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Recent active PO rows */}
+            {[...submitted, ...published].slice(0, 3).map(po => (
+              <button key={po.id} onClick={() => navigate(`/inventory/purchase-orders/${po.id}`)}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
+                <div style={{
+                  fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
+                  background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
+                  color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
+                }}>
+                  {po.division === 'Bolt' ? 'BOLT' : 'LM'}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-3)' }}>{po.project_name || po.po_number}</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
+                  <span style={{
+                    fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)',
+                    background: po.status === 'submitted' ? '#FEF3C7' : '#EFF6FF',
+                    color: po.status === 'submitted' ? '#D97706' : '#1D4ED8',
+                  }}>{po.status}</span>
+                  {po.grand_total > 0 && (
+                    <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)' }}>
+                      ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                    </span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        )
+      })()}
 
       {/* Network-wide summary */}
       {!editMode && (
