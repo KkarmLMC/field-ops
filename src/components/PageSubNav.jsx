@@ -35,8 +35,8 @@ const SUPPRESS = [
 
 function getSubNav(pathname) {
   if (SUPPRESS.includes(pathname)) return null
-  // Suppress on part detail and edit pages
   if (/^\/inventory\/part\//.test(pathname)) return null
+  if (/^\/inventory\/warehouse\//.test(pathname)) return null
   for (const [prefix, items] of Object.entries(SUB_NAV_MAP)) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
       return items

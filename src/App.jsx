@@ -23,6 +23,7 @@ const RiskAssessment = lazy(() => import('./pages/RiskAssessment'))
 const Inventory      = lazy(() => import('./pages/Inventory'))
 const InventoryStock   = lazy(() => import('./pages/InventoryStock'))
 const PartsCatalog     = lazy(() => import('./pages/PartsCatalog'))
+const WarehouseDetail  = lazy(() => import('./pages/WarehouseDetail'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
 const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
@@ -64,6 +65,8 @@ function getPageMeta(pathname) {
     return { title: 'New Part', parent: '/inventory' }
   if (pathname === '/inventory/transfer')
     return { title: 'Transfer Stock', parent: '/inventory' }
+  if (/^\/inventory\/warehouse\/[^/]+$/.test(pathname))
+    return { title: 'Warehouse', parent: '/inventory' }
   if (/^\/inventory\/part\/[^/]+\/edit$/.test(pathname))
     return { title: 'Edit Part', parent: '/inventory' }
   if (/^\/inventory\/part\/[^/]+$/.test(pathname))
@@ -221,6 +224,7 @@ export default function App() {
             <Route path="/inventory"                                           element={<Inventory />} />
             <Route path="/inventory/stock"                                     element={<InventoryStock />} />
             <Route path="/inventory/catalog"                                   element={<PartsCatalog />} />
+            <Route path="/inventory/warehouse/:id"                             element={<WarehouseDetail />} />
             <Route path="/inventory/add-part"                                  element={<AddEditPart />} />
             <Route path="/inventory/transfer"                                  element={<InventoryTransfer />} />
             <Route path="/inventory/part/:id"                                  element={<PartDetail />} />

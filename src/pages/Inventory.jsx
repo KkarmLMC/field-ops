@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
-  Plus, TrendUp, CurrencyDollar, Truck,
+  Plus, TrendUp, CurrencyDollar, Truck, CaretRight,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
@@ -15,7 +15,7 @@ function StatTile({ label, value, color = 'var(--text-1)' }) {
   )
 }
 
-function WarehouseCard({ warehouse, levels, onViewParts, onTransfer }) {
+function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) {
   const wLevels = levels.filter(l => l.warehouse_id === warehouse.id)
   const totalSkus     = wLevels.filter(l => l.quantity_on_hand > 0).length
   const totalUnits    = wLevels.reduce((s, l) => s + l.quantity_on_hand, 0)
@@ -29,8 +29,8 @@ function WarehouseCard({ warehouse, levels, onViewParts, onTransfer }) {
       background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden',
       border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)',
     }}>
-      {/* Header */}
-      <div style={{ background: 'var(--navy)', padding: 'var(--sp-4) var(--sp-5)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* Header — clickable, goes to warehouse detail */}
+      <button onClick={onPress} style={{ background: 'var(--navy)', padding: 'var(--sp-4) var(--sp-5)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
           <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-lg)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Buildings size={20} style={{ color: '#fff' }} />
@@ -44,13 +44,15 @@ function WarehouseCard({ warehouse, levels, onViewParts, onTransfer }) {
             )}
           </div>
         </div>
-        {hasAlerts && (
+        {hasAlerts ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: '#FEF3C7', borderRadius: 'var(--r-full)', padding: '3px 10px' }}>
             <WarningCircle size={13} weight="fill" style={{ color: '#D97706' }} />
             <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: '#D97706' }}>{lowStockItems} low stock</span>
           </div>
+        ) : (
+          <CaretRight size={16} style={{ color: 'rgba(255,255,255,0.4)' }} />
         )}
-      </div>
+      </button>
 
       {/* Stats 2x2 grid */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--border-l)' }}>
@@ -190,6 +192,7 @@ export default function Inventory() {
               key={wh.id}
               warehouse={wh}
               levels={levels}
+              onPress={() => navigate(`/inventory/warehouse/${wh.id}`)}
               onViewParts={() => navigate(`/inventory/stock?warehouse=${wh.id}`)}
               onTransfer={() => navigate(`/inventory/transfer?from=${wh.id}`)}
             />
