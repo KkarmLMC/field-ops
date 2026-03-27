@@ -20,10 +20,11 @@ const SUB_NAV_MAP = {
     { path: '/forms/builder', label: 'Form Builder' },
   ],
   '/inventory': [
-    { path: '/inventory',          label: 'Overview'      },
-    { path: '/inventory/stock',    label: 'Inventory'     },
-    { path: '/inventory/catalog',  label: 'Parts Catalog' },
-    { path: '/inventory/transfer', label: 'Transfer'      },
+    { path: '/inventory',                   label: 'Overview'        },
+    { path: '/inventory/stock',             label: 'Inventory'       },
+    { path: '/inventory/catalog',           label: 'Parts Catalog'   },
+    { path: '/inventory/purchase-orders',   label: 'Purchase Orders' },
+    { path: '/inventory/transfer',          label: 'Transfer'        },
   ],
 }
 
@@ -37,6 +38,7 @@ function getSubNav(pathname) {
   if (SUPPRESS.includes(pathname)) return null
   if (/^\/inventory\/part\//.test(pathname)) return null
   if (/^\/inventory\/warehouse\//.test(pathname)) return null
+  if (/^\/inventory\/purchase-orders\/.+/.test(pathname)) return null
   for (const [prefix, items] of Object.entries(SUB_NAV_MAP)) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
       return items

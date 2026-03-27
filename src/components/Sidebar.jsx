@@ -33,8 +33,9 @@ const NAV_ITEMS = [
   },
   { path: '/inventory', Icon: Package, label: 'Inventory',
     children: [
-      { path: '/inventory/stock',   Icon: Package,  label: 'Inventory'     },
-      { path: '/inventory/catalog', Icon: Package,  label: 'Parts Catalog' },
+      { path: '/inventory/stock',            Icon: Package,  label: 'Inventory'       },
+      { path: '/inventory/catalog',          Icon: Package,  label: 'Parts Catalog'   },
+      { path: '/inventory/purchase-orders',  Icon: Package,  label: 'Purchase Orders' },
     ],
   },
   { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
