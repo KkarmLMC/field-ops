@@ -283,7 +283,7 @@ export default function Inventory() {
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 'var(--sp-5)' }}>
+        <div className="warehouse-grid">
           {warehouses.map(wh => (
             <WarehouseCard
               key={wh.id}
