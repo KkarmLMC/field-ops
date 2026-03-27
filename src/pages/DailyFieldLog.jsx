@@ -609,7 +609,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
           >
             {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
           </div>
-          <div>
+          <div style={{ minWidth: 0 }}>
             <div className="dfl-card-title">{entry.customer || entry.customer_site}</div>
             <div className="dfl-card-sub">
               {fmtDate(entry.report_date)}

@@ -1828,9 +1828,9 @@ textarea { resize: vertical; }
 /* Legacy alias */
 .dfl-card-head { display: flex; align-items: center; justify-content: space-between; padding: 0.875rem var(--sp-5); background: var(--navy); }
 
-.dfl-card-head-left { display: flex; align-items: center; gap: var(--sp-2); }
-.dfl-card-date      { font-size: var(--fs-md); font-weight: 700; color: white; }
-.dfl-card-site      { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.65); margin-top: 1px; }
+.dfl-card-head-left { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; flex: 1; overflow: hidden; }
+.dfl-card-date      { font-size: var(--fs-md); font-weight: 700; color: white; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dfl-card-site      { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.65); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .dfl-card__body { padding: 0.875rem var(--sp-5); }
 
@@ -2583,8 +2583,8 @@ textarea { resize: vertical; }
 }
 
 /* Card title / sub (inside card header) */
-.dfl-card-title { font-size: var(--fs-md); font-weight: 700; color: white; }
-.dfl-card-sub   { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.65); margin-top: 1px; }
+.dfl-card-title { font-size: var(--fs-md); font-weight: 700; color: white; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dfl-card-sub   { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.65); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Right side of card header — hours + status pill */
 .dfl-card-head-right {
