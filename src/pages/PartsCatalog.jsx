@@ -39,33 +39,33 @@ function CategorySection({ category, parts, onPartPress }) {
         onClick={() => setExpanded(e => !e)}
         style={{
           width: '100%', display: 'flex', alignItems: 'center',
-          gap: 'var(--sp-3)', padding: 'var(--sp-4)',
-          border: 'none', background: 'none', cursor: 'pointer',
+          gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)',
+          border: 'none', background: 'var(--navy)', cursor: 'pointer',
           textAlign: 'left',
         }}
       >
         {/* Color dot */}
         <div style={{
-          width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-md)',
-          background: colors.bg, display: 'flex', alignItems: 'center',
-          justifyContent: 'center', flexShrink: 0,
+          width: '2rem', height: '2rem', borderRadius: 'var(--r-md)',
+          background: 'rgba(255,255,255,0.12)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
-          <div style={{ width: '0.5rem', height: '0.5rem', borderRadius: '50%', background: colors.dot }} />
+          <div style={{ width: '0.4rem', height: '0.4rem', borderRadius: '50%', background: colors.dot }} />
         </div>
 
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: 'var(--text-1)' }}>
+          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>
             {category.name}
           </div>
-          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.55)', marginTop: 1 }}>
             {parts.length} {parts.length === 1 ? 'part' : 'parts'}
           </div>
         </div>
 
         <CaretDown
-          size={16}
+          size={15}
           style={{
-            color: 'var(--text-3)', flexShrink: 0,
+            color: 'rgba(255,255,255,0.5)', flexShrink: 0,
             transform: expanded ? 'rotate(180deg)' : 'none',
             transition: 'transform 0.2s ease',
           }}
