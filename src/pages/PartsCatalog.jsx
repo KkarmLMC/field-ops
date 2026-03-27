@@ -2,29 +2,32 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Package, MagnifyingGlass, X, CaretRight, CaretDown,
-  ArrowSquareOut, Plus,
+  ArrowSquareOut, Lightning, Broadcast, GitFork,
+  Wrench, Anchor, ShieldCheck, Cube, TreeStructure,
+  Funnel, Nut, Stack, Pulse,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
-// Category accent colors for visual variety
-const CATEGORY_COLORS = {
-  'Air Terminals (SRAT)':       { bg: '#EFF6FF', text: '#1D4ED8', dot: '#3B82F6' },
-  'Candelabra Air Terminals':   { bg: '#F0FDF4', text: '#15803D', dot: '#22C55E' },
-  'Lightning Rods':             { bg: '#FFF7ED', text: '#C2410C', dot: '#F97316' },
-  'Dissipators & Static Control':{ bg: '#FDF4FF', text: '#7E22CE', dot: '#A855F7' },
-  'Conductors':                 { bg: '#ECFDF5', text: '#065F46', dot: '#10B981' },
-  'Ground Electrodes':          { bg: '#FEF3C7', text: '#92400E', dot: '#F59E0B' },
-  'Bonding Hardware':           { bg: '#F0F9FF', text: '#0369A1', dot: '#0EA5E9' },
-  'Mounting Hardware':          { bg: '#F5F3FF', text: '#5B21B6', dot: '#7C3AED' },
-  'Surge Protection':           { bg: '#FFF1F2', text: '#BE123C', dot: '#F43F5E' },
-  'MAGS Systems':               { bg: '#F0FDF4', text: '#166534', dot: '#16A34A' },
-  'Raw Materials':              { bg: '#F8FAFC', text: '#334155', dot: '#64748B' },
-  'Consumables & Hardware':     { bg: '#FAFAF9', text: '#44403C', dot: '#78716C' },
+// ─── Category icon + color map ────────────────────────────────────────────────
+const CATEGORY_META = {
+  'Air Terminals (SRAT)':        { Icon: Lightning,     dot: '#3B82F6' },
+  'Candelabra Air Terminals':    { Icon: Broadcast,     dot: '#22C55E' },
+  'Lightning Rods':              { Icon: Lightning,     dot: '#F97316' },
+  'Dissipators & Static Control':{ Icon: Pulse,         dot: '#A855F7' },
+  'Conductors':                  { Icon: GitFork,       dot: '#10B981' },
+  'Ground Electrodes':           { Icon: Anchor,        dot: '#F59E0B' },
+  'Bonding Hardware':            { Icon: Nut,           dot: '#0EA5E9' },
+  'Mounting Hardware':           { Icon: Wrench,        dot: '#7C3AED' },
+  'Surge Protection':            { Icon: ShieldCheck,   dot: '#F43F5E' },
+  'MAGS Systems':                { Icon: TreeStructure, dot: '#16A34A' },
+  'Raw Materials':               { Icon: Stack,         dot: '#64748B' },
+  'Consumables & Hardware':      { Icon: Funnel,        dot: '#78716C' },
 }
 
 function CategorySection({ category, parts, onPartPress }) {
   const [expanded, setExpanded] = useState(false)
-  const colors = CATEGORY_COLORS[category.name] || { bg: '#F8FAFC', text: '#334155', dot: '#64748B' }
+  const meta = CATEGORY_META[category.name] || { Icon: Cube, dot: '#64748B' }
+  const { Icon } = meta
 
   return (
     <div style={{
@@ -44,13 +47,12 @@ function CategorySection({ category, parts, onPartPress }) {
           textAlign: 'left',
         }}
       >
-        {/* Color dot */}
         <div style={{
           width: '2rem', height: '2rem', borderRadius: 'var(--r-md)',
           background: 'rgba(255,255,255,0.12)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
-          <div style={{ width: '0.4rem', height: '0.4rem', borderRadius: '50%', background: colors.dot }} />
+          <Icon size={15} style={{ color: '#fff' }} />
         </div>
 
         <div style={{ flex: 1 }}>
