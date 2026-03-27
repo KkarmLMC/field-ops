@@ -3,13 +3,10 @@ import {
   PencilSimple, SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar, Rows,
+  BookOpen, ChartBar, Rows, Package,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
-// Top-level items may have `children` for a collapsible sub-nav group.
-// A child whose path sits outside the parent prefix (e.g. /reports under
-// /installations) still participates in expand/collapse and active detection.
 const NAV_ITEMS = [
   {
     path: '/dashboard',
@@ -34,6 +31,7 @@ const NAV_ITEMS = [
       { path: '/forms/builder', Icon: PencilSimple,   label: 'Form Builder' },
     ],
   },
+  { path: '/inventory',       Icon: Package,         label: 'Inventory'       },
   { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
 ]
 
