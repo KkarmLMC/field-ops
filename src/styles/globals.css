@@ -1853,7 +1853,7 @@ textarea { resize: vertical; }
 .dfl-safety-dot.ok      { background: var(--success); }
 .dfl-safety-dot.missing { background: var(--error); }
 
-.dfl-entries-list { display: flex; flex-direction: column; }
+.dfl-entries-list { display: flex; flex-direction: column; padding: var(--sp-3) 0 0; }
 .dfl-empty-state  { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--sp-8) var(--sp-4); gap: var(--sp-2); color: var(--text-3); font-size: var(--fs-sm); text-align: center; }
 
 /* Signed badge */
