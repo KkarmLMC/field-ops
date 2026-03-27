@@ -26,6 +26,7 @@ const PartsCatalog     = lazy(() => import('./pages/PartsCatalog'))
 const WarehouseDetail  = lazy(() => import('./pages/WarehouseDetail'))
 const PurchaseOrders   = lazy(() => import('./pages/PurchaseOrders'))
 const PODetail         = lazy(() => import('./pages/PODetail'))
+const PONew            = lazy(() => import('./pages/PONew'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
 const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
@@ -231,7 +232,7 @@ export default function App() {
             <Route path="/inventory/stock"                                     element={<InventoryStock />} />
             <Route path="/inventory/catalog"                                   element={<PartsCatalog />} />
             <Route path="/inventory/purchase-orders"                           element={<PurchaseOrders />} />
-            <Route path="/inventory/purchase-orders/new"                       element={<PODetail />} />
+            <Route path="/inventory/purchase-orders/new"                       element={<PONew />} />
             <Route path="/inventory/purchase-orders/:id"                       element={<PODetail />} />
             <Route path="/inventory/warehouse/:id"                             element={<WarehouseDetail />} />
             <Route path="/inventory/add-part"                                  element={<AddEditPart />} />
