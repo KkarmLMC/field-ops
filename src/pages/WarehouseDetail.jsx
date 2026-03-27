@@ -426,7 +426,7 @@ export default function WarehouseDetail() {
                   {warehousePOs.length}
                 </span>
               </div>
-              <button onClick={() => navigate('/warehouse-hq/purchase-orders')}
+              <button onClick={() => navigate('/purchase-orders')}
                 style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--navy)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                 View all
               </button>
@@ -434,7 +434,7 @@ export default function WarehouseDetail() {
             {warehousePOs.map((po, idx) => {
               const sc = STATUS_COLORS[po.status] || STATUS_COLORS.draft
               return (
-                <button key={po.id} onClick={() => navigate(`/warehouse-hq/purchase-orders/${po.id}`)}
+                <button key={po.id} onClick={() => navigate(`/purchase-orders/${po.id}`)}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
                   <div style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0, background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>
                     {po.division === 'Bolt' ? 'BOLT' : 'LM'}

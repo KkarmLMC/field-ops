@@ -165,7 +165,7 @@ export default function PurchaseOrders() {
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>INVENTORY</div>
           <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Purchase Orders</div>
         </div>
-        <button onClick={() => navigate('/warehouse-hq/purchase-orders/new')}
+        <button onClick={() => navigate('/purchase-orders/new')}
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-4)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
           <Plus size={15} /> New PO
         </button>
@@ -259,7 +259,7 @@ export default function PurchaseOrders() {
           <div className="empty-title">{pos.length === 0 ? 'No purchase orders yet' : 'No POs match filters'}</div>
           <div className="empty-desc">{pos.length === 0 ? 'Create your first PO to get started.' : 'Try adjusting your filters.'}</div>
           {pos.length === 0 && (
-            <button className="btn btn-primary" style={{ marginTop: 'var(--sp-4)' }} onClick={() => navigate('/warehouse-hq/purchase-orders/new')}>
+            <button className="btn btn-primary" style={{ marginTop: 'var(--sp-4)' }} onClick={() => navigate('/purchase-orders/new')}>
               Create First PO
             </button>
           )}
@@ -267,7 +267,7 @@ export default function PurchaseOrders() {
       ) : (
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}>
           {filtered.map(po => (
-            <POCard key={po.id} po={po} totals={totals[po.id]} onPress={() => navigate(`/warehouse-hq/purchase-orders/${po.id}`)} />
+            <POCard key={po.id} po={po} totals={totals[po.id]} onPress={() => navigate(`/purchase-orders/${po.id}`)} />
           ))}
         </div>
       )}

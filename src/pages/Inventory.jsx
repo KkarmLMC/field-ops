@@ -340,7 +340,7 @@ export default function Inventory() {
         return (
           <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', marginBottom: 'var(--sp-5)', overflow: 'hidden' }}>
             {/* Strip header */}
-            <button onClick={() => navigate('/warehouse-hq/purchase-orders')}
+            <button onClick={() => navigate('/purchase-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
@@ -370,7 +370,7 @@ export default function Inventory() {
 
             {/* Recent active PO rows */}
             {[...submitted, ...published].slice(0, 3).map(po => (
-              <button key={po.id} onClick={() => navigate(`/inventory/purchase-orders/${po.id}`)}
+              <button key={po.id} onClick={() => navigate(`/purchase-orders/${po.id}`)}
                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
                 <div style={{
                   fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
@@ -463,9 +463,9 @@ export default function Inventory() {
               key={wh.id}
               warehouse={wh}
               levels={levels}
-              onPress={() => navigate(`/inventory/warehouse/${wh.id}`)}
-              onViewParts={() => navigate(`/inventory/stock?warehouse=${wh.id}`)}
-              onTransfer={() => navigate(`/inventory/transfer?from=${wh.id}`)}
+              onPress={() => navigate(`/warehouse-hq/warehouse/${wh.id}`)}
+              onViewParts={() => navigate(`/warehouse-hq?warehouse=${wh.id}`)}
+              onTransfer={() => navigate(`/warehouse-hq/transfer?from=${wh.id}`)}
             />
           ))}
         </div>

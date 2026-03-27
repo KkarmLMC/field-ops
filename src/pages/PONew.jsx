@@ -492,7 +492,7 @@ export default function PONew() {
     }
 
     setSaving(false)
-    navigate(`/warehouse-hq/purchase-orders/${newPO.id}`)
+    navigate(`/purchase-orders/${newPO.id}`)
   }
 
   return (

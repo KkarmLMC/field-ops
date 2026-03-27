@@ -3,7 +3,7 @@ import {
   PencilSimple, SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar, Rows, Package,
+  BookOpen, ChartBar, Rows, Package, Receipt,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
@@ -18,9 +18,9 @@ const NAV_ITEMS = [
     Icon: HardHat,
     label: 'Installations',
     children: [
-      { path: '/installations/pipeline',   Icon: Rows,          label: 'Project Pipeline' },
-      { path: '/installations/field-logs', Icon: BookOpen,      label: 'Field Logs'       },
-      { path: '/installations/field-reports', Icon: ClipboardText, label: 'Field Reports'  },
+      { path: '/installations/pipeline',      Icon: Rows,          label: 'Project Pipeline' },
+      { path: '/installations/field-logs',    Icon: BookOpen,      label: 'Field Logs'       },
+      { path: '/installations/field-reports', Icon: ClipboardText, label: 'Field Reports'    },
     ],
   },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
@@ -28,17 +28,17 @@ const NAV_ITEMS = [
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/forms',           Icon: FileText,        label: 'Report Forms',
     children: [
-      { path: '/forms/builder', Icon: PencilSimple,   label: 'Form Builder' },
+      { path: '/forms/builder', Icon: PencilSimple, label: 'Form Builder' },
     ],
   },
   { path: '/warehouse-hq', Icon: Package, label: 'Warehouse HQ',
     children: [
-      { path: '/warehouse-hq/stock',            Icon: Package,  label: 'Inventory'       },
-      { path: '/warehouse-hq/catalog',          Icon: Package,  label: 'Parts Catalog'   },
-      { path: '/warehouse-hq/purchase-orders',  Icon: Package,  label: 'Purchase Orders' },
+      { path: '/warehouse-hq/inventory', Icon: Package, label: 'Inventory'    },
+      { path: '/warehouse-hq/catalog',   Icon: Package, label: 'Parts Catalog' },
     ],
   },
-  { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
+  { path: '/purchase-orders', Icon: Receipt, label: 'Purchase Orders' },
+  { path: '/technicians',     Icon: Users,   label: 'Technicians'     },
 ]
 
 const FOOTER_ITEMS = [

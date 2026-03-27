@@ -14,7 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  MagnifyingGlass, Users, HardHat, ChartBar, Package,
+  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt,
 } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 
@@ -43,30 +43,30 @@ function shouldHide(pathname) {
 // ─── Nav items per role ───────────────────────────────────────────────────────
 
 const FIELD_ITEMS = [
-  { id: 'overview',      path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
-  { id: 'fieldlog',      path: '/daily-field-log',  Icon: BookOpen,       label: 'Field Logs'    },
-  { id: 'forms',         path: '/forms',             Icon: FileText,       label: 'Report Forms',        exactMatch: true },
-  { id: 'inspections',   path: '/inspections',       Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'warehouse-hq',     path: '/warehouse-hq',          Icon: Package,        label: 'Warehouse HQ',    exactMatch: true },
-  { id: 'risk',          path: '/risk-assessment',   Icon: ChartBar,       label: 'Assessment'         },
-  { id: 'jsa',           path: '/forms/jsa',         Icon: HardHat,        label: 'JSA'          },
+  { id: 'overview',        path: '/dashboard',        Icon: SquaresFour,     label: 'Overview',       exactMatch: true },
+  { id: 'fieldlog',        path: '/daily-field-log',  Icon: BookOpen,        label: 'Field Logs'      },
+  { id: 'forms',           path: '/forms',             Icon: FileText,        label: 'Report Forms',   exactMatch: true },
+  { id: 'inspections',     path: '/inspections',       Icon: MagnifyingGlass, label: 'Inspections'     },
+  { id: 'warehouse-hq',   path: '/warehouse-hq',      Icon: Package,         label: 'Warehouse HQ',   exactMatch: true },
+  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Purchase Orders', exactMatch: true },
+  { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
+  { id: 'jsa',             path: '/forms/jsa',         Icon: HardHat,         label: 'JSA'             },
 ]
 
 const MGMT_ITEMS = [
-  { id: 'overview',    path: '/dashboard',        Icon: SquaresFour,    label: 'Overview',     exactMatch: true },
-  { id: 'installs',    path: '/installations',    Icon: HardHat,        label: 'Installations',exactMatch: true },
-  { id: 'inspections', path: '/inspections',      Icon: MagnifyingGlass,label: 'Inspections'  },
-  { id: 'fieldlog',    path: '/daily-field-log',  Icon: BookOpen,       label: 'Daily Field Log'    },
-  { id: 'forms',       path: '/forms',             Icon: FileText,       label: 'Report Forms',        exactMatch: true },
-  { id: 'warehouse-hq',   path: '/warehouse-hq',          Icon: Package,        label: 'Warehouse HQ',    exactMatch: true },
-  { id: 'risk',        path: '/risk-assessment',   Icon: ChartBar,       label: 'Assessment'         },
-  { id: 'technicians', path: '/technicians',       Icon: Users,          label: 'Technicians'  },
+  { id: 'overview',        path: '/dashboard',        Icon: SquaresFour,     label: 'Overview',       exactMatch: true },
+  { id: 'installs',        path: '/installations',    Icon: HardHat,         label: 'Installations',  exactMatch: true },
+  { id: 'inspections',     path: '/inspections',      Icon: MagnifyingGlass, label: 'Inspections'     },
+  { id: 'fieldlog',        path: '/daily-field-log',  Icon: BookOpen,        label: 'Daily Field Log' },
+  { id: 'forms',           path: '/forms',             Icon: FileText,        label: 'Report Forms',   exactMatch: true },
+  { id: 'warehouse-hq',   path: '/warehouse-hq',      Icon: Package,         label: 'Warehouse HQ',   exactMatch: true },
+  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Purchase Orders', exactMatch: true },
+  { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
+  { id: 'technicians',     path: '/technicians',       Icon: Users,           label: 'Technicians'     },
 ]
 
 // ─── Active path detection ────────────────────────────────────────────────────
-// exactMatch items only highlight on their own path, EXCEPT parent items
-// that have known children — those stay highlighted on child routes too.
-const PARENT_PREFIXES = ['/installations', '/forms', '/warehouse-hq']
+const PARENT_PREFIXES = ['/installations', '/forms', '/warehouse-hq', '/purchase-orders']
 
 function isActive(item, pathname) {
   if (item.exactMatch) {
