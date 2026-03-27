@@ -98,8 +98,15 @@ function CategorySection({ category, parts, onPartPress }) {
                 cursor: 'pointer', WebkitTapHighlightColor: 'transparent',
               }}>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {part.name}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+                  <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {part.name}
+                  </div>
+                  {part.tags?.includes('shared') && (
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--r-full)', background: '#F0FDF4', color: '#15803D', border: '1px solid #BBF7D0', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                      LM + Bolt
+                    </span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 2, flexWrap: 'wrap' }}>
                   {part.sku && <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{part.sku}</span>}
@@ -127,7 +134,7 @@ export default function PartsCatalog() {
   useEffect(() => {
     Promise.all([
       db.from('part_categories').select('*').order('name'),
-      db.from('parts').select('id, sku, name, description, unit_cost, unit_of_measure, category_id, manufacturer').eq('is_active', true).order('name'),
+      db.from('parts').select('id, sku, name, description, unit_cost, unit_of_measure, category_id, manufacturer, tags').eq('is_active', true).order('name'),
     ]).then(([{ data: cats }, { data: pts }]) => {
       setCategories(cats || [])
       setParts(pts || [])
