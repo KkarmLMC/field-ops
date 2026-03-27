@@ -90,7 +90,7 @@ export default function InventoryTransfer() {
     }
 
     setSaving(false)
-    navigate('/inventory')
+    navigate('/warehouse-hq')
   }
 
   return (

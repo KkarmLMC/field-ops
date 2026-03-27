@@ -350,11 +350,11 @@ export default function WarehouseDetail() {
 
       {/* Actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-5)' }}>
-        <button onClick={() => navigate(`/inventory/transfer?from=${id}`)}
+        <button onClick={() => navigate(`/warehouse-hq/transfer?from=${id}`)}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
           <ArrowsLeftRight size={15} /> Transfer
         </button>
-        <button onClick={() => navigate('/inventory/add-part')}
+        <button onClick={() => navigate('/warehouse-hq/add-part')}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
           <Plus size={15} /> Add Part
         </button>
@@ -401,7 +401,7 @@ export default function WarehouseDetail() {
             <StockRow
               key={level.id}
               level={level}
-              onPress={() => navigate(`/inventory/part/${level.parts?.id}`)}
+              onPress={() => navigate(`/warehouse-hq/part/${level.parts?.id}`)}
             />
           ))}
         </div>
@@ -426,7 +426,7 @@ export default function WarehouseDetail() {
                   {warehousePOs.length}
                 </span>
               </div>
-              <button onClick={() => navigate('/inventory/purchase-orders')}
+              <button onClick={() => navigate('/warehouse-hq/purchase-orders')}
                 style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--navy)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                 View all
               </button>
@@ -434,7 +434,7 @@ export default function WarehouseDetail() {
             {warehousePOs.map((po, idx) => {
               const sc = STATUS_COLORS[po.status] || STATUS_COLORS.draft
               return (
-                <button key={po.id} onClick={() => navigate(`/inventory/purchase-orders/${po.id}`)}
+                <button key={po.id} onClick={() => navigate(`/warehouse-hq/purchase-orders/${po.id}`)}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
                   <div style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0, background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>
                     {po.division === 'Bolt' ? 'BOLT' : 'LM'}

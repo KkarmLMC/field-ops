@@ -41,10 +41,10 @@ const PAGE_META = {
   '/forms':                  { title: 'Report Forms',     parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
-  '/inventory':              { title: 'Inventory',         parent: null },
-  '/inventory/stock':        { title: 'Inventory',         parent: '/inventory' },
-  '/inventory/catalog':      { title: 'Parts Catalog',     parent: '/inventory' },
-  '/inventory/purchase-orders': { title: 'Purchase Orders', parent: '/inventory' },
+  '/warehouse-hq':           { title: 'Warehouse HQ',      parent: null },
+  '/warehouse-hq/stock':     { title: 'Inventory',         parent: '/warehouse-hq' },
+  '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
+  '/warehouse-hq/purchase-orders': { title: 'Purchase Orders', parent: '/warehouse-hq' },
 }
 
 function getPageMeta(pathname) {
@@ -64,20 +64,20 @@ function getPageMeta(pathname) {
   if (/^\/forms\/[^/]+$/.test(pathname)) {
     return { title: 'Report Form', parent: '/forms' }
   }
-  if (pathname === '/inventory/add-part')
-    return { title: 'New Part', parent: '/inventory' }
-  if (pathname === '/inventory/transfer')
-    return { title: 'Transfer Stock', parent: '/inventory' }
-  if (pathname === '/inventory/purchase-orders/new')
-    return { title: 'New Purchase Order', parent: '/inventory/purchase-orders' }
-  if (/^\/inventory\/purchase-orders\/[^/]+$/.test(pathname))
-    return { title: 'Purchase Order', parent: '/inventory/purchase-orders' }
-  if (/^\/inventory\/warehouse\/[^/]+$/.test(pathname))
-    return { title: 'Warehouse', parent: '/inventory' }
-  if (/^\/inventory\/part\/[^/]+\/edit$/.test(pathname))
-    return { title: 'Edit Part', parent: '/inventory' }
-  if (/^\/inventory\/part\/[^/]+$/.test(pathname))
-    return { title: 'Part Detail', parent: '/inventory' }
+  if (pathname === '/warehouse-hq/add-part')
+    return { title: 'New Part', parent: '/warehouse-hq' }
+  if (pathname === '/warehouse-hq/transfer')
+    return { title: 'Transfer Stock', parent: '/warehouse-hq' }
+  if (pathname === '/warehouse-hq/purchase-orders/new')
+    return { title: 'New Purchase Order', parent: '/warehouse-hq/purchase-orders' }
+  if (/^\/ warehouse-hq\/purchase-orders\/[^/]+$/.test(pathname))
+    return { title: 'Purchase Order', parent: '/warehouse-hq/purchase-orders' }
+  if (/^\/ warehouse-hq\/warehouse\/[^/]+$/.test(pathname))
+    return { title: 'Warehouse', parent: '/warehouse-hq' }
+  if (/^\/ warehouse-hq\/part\/[^/]+\/edit$/.test(pathname))
+    return { title: 'Edit Part', parent: '/warehouse-hq' }
+  if (/^\/ warehouse-hq\/part\/[^/]+$/.test(pathname))
+    return { title: 'Part Detail', parent: '/warehouse-hq' }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
 
@@ -228,17 +228,17 @@ export default function App() {
             <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
-            <Route path="/inventory"                                           element={<Inventory />} />
-            <Route path="/inventory/stock"                                     element={<InventoryStock />} />
-            <Route path="/inventory/catalog"                                   element={<PartsCatalog />} />
-            <Route path="/inventory/purchase-orders"                           element={<PurchaseOrders />} />
-            <Route path="/inventory/purchase-orders/new"                       element={<PONew />} />
-            <Route path="/inventory/purchase-orders/:id"                       element={<PODetail />} />
-            <Route path="/inventory/warehouse/:id"                             element={<WarehouseDetail />} />
-            <Route path="/inventory/add-part"                                  element={<AddEditPart />} />
-            <Route path="/inventory/transfer"                                  element={<InventoryTransfer />} />
-            <Route path="/inventory/part/:id"                                  element={<PartDetail />} />
-            <Route path="/inventory/part/:id/edit"                             element={<AddEditPart />} />
+            <Route path="/warehouse-hq"                                           element={<Inventory />} />
+            <Route path="/warehouse-hq/stock"                                     element={<InventoryStock />} />
+            <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
+            <Route path="/warehouse-hq/purchase-orders"                           element={<PurchaseOrders />} />
+            <Route path="/warehouse-hq/purchase-orders/new"                       element={<PONew />} />
+            <Route path="/warehouse-hq/purchase-orders/:id"                       element={<PODetail />} />
+            <Route path="/warehouse-hq/warehouse/:id"                             element={<WarehouseDetail />} />
+            <Route path="/warehouse-hq/add-part"                                  element={<AddEditPart />} />
+            <Route path="/warehouse-hq/transfer"                                  element={<InventoryTransfer />} />
+            <Route path="/warehouse-hq/part/:id"                                  element={<PartDetail />} />
+            <Route path="/warehouse-hq/part/:id/edit"                             element={<AddEditPart />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
           </Suspense>

@@ -134,11 +134,11 @@ export default function InventoryStock() {
           <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>Inventory</div>
         </div>
         <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
-          <button onClick={() => navigate('/inventory/transfer')}
+          <button onClick={() => navigate('/warehouse-hq/transfer')}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer' }}>
             <ArrowsLeftRight size={14} /> Transfer
           </button>
-          <button onClick={() => navigate('/inventory/add-part')}
+          <button onClick={() => navigate('/warehouse-hq/add-part')}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer' }}>
             <Plus size={14} /> Add Part
           </button>
@@ -208,7 +208,7 @@ export default function InventoryStock() {
               key={part.id}
               part={part}
               levels={(levels[part.id] || []).filter(l => !selectedWarehouse || l.warehouse_id === selectedWarehouse)}
-              onPress={() => navigate(`/inventory/part/${part.id}`)}
+              onPress={() => navigate(`/warehouse-hq/part/${part.id}`)}
             />
           ))}
         </div>

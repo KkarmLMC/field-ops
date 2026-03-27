@@ -270,7 +270,7 @@ export default function PartDetail() {
             <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>{part.name}</div>
             {part.sku && <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>{part.sku}</div>}
           </div>
-          <button onClick={() => navigate(`/inventory/part/${id}/edit`)}
+          <button onClick={() => navigate(`/warehouse-hq/part/${id}/edit`)}
             style={{ width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-lg)', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <PencilSimple size={16} />
           </button>
@@ -289,7 +289,7 @@ export default function PartDetail() {
           style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: '1px solid var(--navy)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
           Adjust Stock
         </button>
-        <button onClick={() => navigate('/inventory/transfer')}
+        <button onClick={() => navigate('/warehouse-hq/transfer')}
           style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
           <ArrowsLeftRight size={16} /> Transfer
         </button>

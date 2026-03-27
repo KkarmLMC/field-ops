@@ -256,7 +256,7 @@ export default function PartsCatalog() {
               key={category.id}
               category={category}
               parts={catParts}
-              onPartPress={id => navigate(`/inventory/part/${id}`)}
+              onPartPress={id => navigate(`/warehouse-hq/part/${id}`)}
             />
           ))}
         </>

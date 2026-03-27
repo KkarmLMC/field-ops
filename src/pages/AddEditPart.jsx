@@ -81,10 +81,10 @@ export default function AddEditPart() {
 
     if (isEdit) {
       await db.from('parts').update(payload).eq('id', id)
-      navigate(`/inventory/part/${id}`)
+      navigate(`/warehouse-hq/part/${id}`)
     } else {
       const { data } = await db.from('parts').insert(payload).select().single()
-      navigate(`/inventory/part/${data.id}`)
+      navigate(`/warehouse-hq/part/${data.id}`)
     }
     setSaving(false)
   }
