@@ -33,8 +33,9 @@ const NAV_ITEMS = [
   },
   { path: '/warehouse-hq', Icon: Package, label: 'Warehouse HQ',
     children: [
-      { path: '/warehouse-hq/inventory', Icon: Package, label: 'Inventory'    },
-      { path: '/warehouse-hq/catalog',   Icon: Package, label: 'Parts Catalog' },
+      { path: '/warehouse-hq/iq',        Icon: ChartBar, label: 'Warehouse IQ'  },
+      { path: '/warehouse-hq/inventory', Icon: Package,  label: 'Inventory'     },
+      { path: '/warehouse-hq/catalog',   Icon: Package,  label: 'Parts Catalog' },
     ],
   },
   { path: '/purchase-orders', Icon: Receipt, label: 'Purchase Orders' },

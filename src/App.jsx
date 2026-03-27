@@ -21,6 +21,7 @@ const Technicians   = lazy(() => import('./pages/Technicians'))
 const FormBuilder   = lazy(() => import('./pages/FormBuilder'))
 const RiskAssessment = lazy(() => import('./pages/RiskAssessment'))
 const Inventory      = lazy(() => import('./pages/Inventory'))
+const WarehouseIQ    = lazy(() => import('./pages/WarehouseIQ'))
 const InventoryStock   = lazy(() => import('./pages/InventoryStock'))
 const PartsCatalog     = lazy(() => import('./pages/PartsCatalog'))
 const WarehouseDetail  = lazy(() => import('./pages/WarehouseDetail'))
@@ -42,6 +43,7 @@ const PAGE_META = {
   '/technicians':            { title: 'Technicians',      parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
   '/warehouse-hq':           { title: 'Inventory',         parent: null },
+  '/warehouse-hq/iq':        { title: 'Warehouse IQ',      parent: '/warehouse-hq' },
   '/warehouse-hq/overview':  { title: 'Warehouse Overview', parent: '/warehouse-hq' },
   '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
   '/purchase-orders': { title: 'Purchase Orders', parent: null },
@@ -229,6 +231,7 @@ export default function App() {
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="/warehouse-hq"                                           element={<Inventory />} />
+            <Route path="/warehouse-hq/iq"                                    element={<WarehouseIQ />} />
             <Route path="/warehouse-hq/inventory"                                 element={<InventoryStock />} />
             <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
             <Route path="/purchase-orders"                           element={<PurchaseOrders />} />

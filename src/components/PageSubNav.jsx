@@ -21,6 +21,7 @@ const SUB_NAV_MAP = {
   ],
   '/warehouse-hq': [
     { path: '/warehouse-hq',           label: 'Overview'      },
+    { path: '/warehouse-hq/iq',        label: 'Warehouse IQ'  },
     { path: '/warehouse-hq/inventory', label: 'Inventory'     },
     { path: '/warehouse-hq/catalog',   label: 'Parts Catalog' },
     { path: '/warehouse-hq/transfer',  label: 'Transfer'      },
