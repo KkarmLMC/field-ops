@@ -1753,7 +1753,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* New Daily Log button */}
-      <div style={{ display: 'flex', gap: 'var(--gap-sm)', maxWidth: 480, width: '100%' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-sm)', width: '100%', marginBottom: 'var(--sp-2)' }}>
         <button
           className="btn btn-primary"
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
@@ -1776,7 +1776,7 @@ export default function DailyFieldLog() {
 
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
-        <div className="dash-card">
+        <div className="dash-card" style={{ marginTop: 'var(--sp-2)' }}>
           <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
             <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <Clock size={14} />
