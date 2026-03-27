@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { CheckCircle, SpinnerGap, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import FormEngine, { validateSchema } from '../components/FormEngine.jsx'
+import MultiPageForm from '../components/MultiPageForm.jsx'
 import { queueSubmission, getCachedForm, cacheFormSchemas } from '../lib/offline.js'
 
 export default function FormPage() {
@@ -153,42 +154,55 @@ export default function FormPage() {
         </button>
       </div>
 
-      {/* Engine renders all sections */}
-      <FormEngine
-        schema={schema}
-        values={values}
-        onChange={handleChange}
-        errors={errors}
-      />
+      {schema.multi_page ? (
+        /* ── Multi-page / tabbed mode ─────────────────────────────────── */
+        <MultiPageForm
+          schema={schema}
+          values={values}
+          onChange={handleChange}
+          errors={errors}
+          onSubmit={handleSubmit}
+          submitting={submitting}
+          submitErr={submitErr}
+        />
+      ) : (
+        /* ── Single-scroll mode (existing behaviour) ──────────────────── */
+        <>
+          <FormEngine
+            schema={schema}
+            values={values}
+            onChange={handleChange}
+            errors={errors}
+          />
 
-      {/* Error message */}
-      {submitErr && (
-        <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
-          {submitErr}
-        </div>
-      )}
-      {Object.keys(errors).length > 0 && (
-        <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
-          Please fill in all required fields before submitting.
-        </div>
-      )}
+          {submitErr && (
+            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
+              {submitErr}
+            </div>
+          )}
+          {Object.keys(errors).length > 0 && (
+            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
+              Please fill in all required fields before submitting.
+            </div>
+          )}
 
-      {/* Submit */}
-      <button onClick={handleSubmit} disabled={submitting} style={{
-        width:'100%', padding:'var(--sp-3)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-8)',
-        background: submitting?'var(--hover)':'var(--red)',
-        color: submitting?'var(--text-3)':'#fff',
-        fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600,
-        letterSpacing:'0.06em', textTransform:'uppercase',
-        border:`1px solid ${submitting?'var(--border-l)':'var(--red)'}`,
-        display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
-        transition:'all var(--ease-fast)',
-      }}>
-        {submitting
-          ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
-          : <><CheckCircle size={14} /> Submit Form</>
-        }
-      </button>
+          <button onClick={handleSubmit} disabled={submitting} style={{
+            width:'100%', padding:'var(--sp-3)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-8)',
+            background: submitting?'var(--hover)':'var(--red)',
+            color: submitting?'var(--text-3)':'#fff',
+            fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600,
+            letterSpacing:'0.06em', textTransform:'uppercase',
+            border:`1px solid ${submitting?'var(--border-l)':'var(--red)'}`,
+            display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
+            transition:'all var(--ease-fast)',
+          }}>
+            {submitting
+              ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
+              : <><CheckCircle size={14} /> Submit Form</>
+            }
+          </button>
+        </>
+      )}
     </div>
   )
 }
