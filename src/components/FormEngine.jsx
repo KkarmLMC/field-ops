@@ -19,6 +19,7 @@ import {
   Microphone, Stop, Play, Pause, ArrowCounterClockwise,
   PencilSimple, CheckCircle, X,
 } from '@phosphor-icons/react'
+import RepeaterField from './RepeaterField.jsx'
 
 // ─── Signature Modal ──────────────────────────────────────────────────────────
 function SignatureModal({ onSave, onClose }) {
@@ -636,6 +637,8 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   if (type==='photo')     return <PhotoField value={value} onChange={onChange} />
   if (type==='gps')       return <GpsField value={value} onChange={onChange} />
   if (type==='voice-note') return <VoiceNoteField value={value} onChange={onChange} />
+  if (type==='repeater' || type==='activity-row')
+    return <RepeaterField field={field} value={value} onChange={onChange} error={error} />
 
   return <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={{ width:'100%' }} />
 }
