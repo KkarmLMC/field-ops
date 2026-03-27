@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
+  DotsSixVertical, PencilSimple,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
@@ -223,10 +224,14 @@ export default function Inventory() {
   const [levels, setLevels] = useState([])
   const [loading, setLoading] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
+  const [editMode, setEditMode] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const dragItem = useRef(null)
+  const dragOverItem = useRef(null)
 
   useEffect(() => {
     Promise.all([
-      db.from('warehouses').select('*').eq('is_active', true).order('name'),
+      db.from('warehouses').select('*').eq('is_active', true).order('sort_order'),
       db.from('inventory_levels').select('*, parts(sku, unit_cost)'),
     ]).then(([{ data: wh }, { data: lvl }]) => {
       setWarehouses(wh || [])
@@ -234,6 +239,31 @@ export default function Inventory() {
       setLoading(false)
     })
   }, [])
+
+  const handleDragStart = (idx) => { dragItem.current = idx }
+  const handleDragEnter = (idx) => { dragOverItem.current = idx }
+
+  const handleDragEnd = () => {
+    if (dragItem.current === null || dragOverItem.current === null) return
+    if (dragItem.current === dragOverItem.current) return
+    const reordered = [...warehouses]
+    const dragged = reordered.splice(dragItem.current, 1)[0]
+    reordered.splice(dragOverItem.current, 0, dragged)
+    dragItem.current = null
+    dragOverItem.current = null
+    setWarehouses(reordered)
+  }
+
+  const saveOrder = async () => {
+    setSaving(true)
+    await Promise.all(
+      warehouses.map((wh, idx) =>
+        db.from('warehouses').update({ sort_order: idx }).eq('id', wh.id)
+      )
+    )
+    setSaving(false)
+    setEditMode(false)
+  }
 
   // Cross-warehouse rollup
   const totalSkus     = new Set(levels.filter(l => l.quantity_on_hand > 0).map(l => l.part_id)).size
@@ -260,29 +290,100 @@ export default function Inventory() {
           <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Warehouse Overview</div>
         </div>
         <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
-          <button onClick={() => navigate('/inventory/transfer')}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <ArrowsLeftRight size={14} /> Transfer
-          </button>
-          <button onClick={() => setShowAdd(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Plus size={14} /> Add Warehouse
-          </button>
+          {editMode ? (
+            <>
+              <button onClick={() => setEditMode(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <X size={14} /> Cancel
+              </button>
+              <button onClick={saveOrder} disabled={saving}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <Check size={14} /> {saving ? 'Saving…' : 'Save Order'}
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setEditMode(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <PencilSimple size={14} /> Edit
+              </button>
+              <button onClick={() => navigate('/inventory/transfer')}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <ArrowsLeftRight size={14} /> Transfer
+              </button>
+              <button onClick={() => setShowAdd(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <Plus size={14} /> Add Warehouse
+              </button>
+            </>
+          )}
         </div>
       </div>
 
-      {/* Network-wide summary */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--sp-3)', marginBottom: 'var(--sp-6)' }}>
-        <StatTile label="Unique SKUs" value={totalSkus.toLocaleString()} />
-        <StatTile label="Total Units" value={totalUnits.toLocaleString()} />
-        <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? '#C2410C' : 'var(--text-1)'} />
-        <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? '#1D4ED8' : 'var(--text-1)'} />
-      </div>
+      {/* Edit mode hint */}
+      {editMode && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', background: '#EFF6FF', borderRadius: 'var(--r-lg)', marginBottom: 'var(--sp-4)', fontSize: 'var(--fs-sm)', color: '#1D4ED8' }}>
+          <DotsSixVertical size={16} />
+          Drag the handles to reorder warehouses, then tap Save Order.
+        </div>
+      )}
 
-      {/* Warehouse cards */}
+      {/* Network-wide summary */}
+      {!editMode && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--sp-3)', marginBottom: 'var(--sp-6)' }}>
+          <StatTile label="Unique SKUs" value={totalSkus.toLocaleString()} />
+          <StatTile label="Total Units" value={totalUnits.toLocaleString()} />
+          <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? '#C2410C' : 'var(--text-1)'} />
+          <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? '#1D4ED8' : 'var(--text-1)'} />
+        </div>
+      )}
+
+      {/* Warehouse cards / drag list */}
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
+      ) : editMode ? (
+        /* Edit mode: vertical drag list */
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+          {warehouses.map((wh, idx) => (
+            <div
+              key={wh.id}
+              draggable
+              onDragStart={() => handleDragStart(idx)}
+              onDragEnter={() => handleDragEnter(idx)}
+              onDragEnd={handleDragEnd}
+              onDragOver={e => e.preventDefault()}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 'var(--sp-3)',
+                background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)',
+                border: '1px solid var(--border-l)', padding: 'var(--sp-4)',
+                cursor: 'grab', userSelect: 'none',
+                transition: 'box-shadow 0.15s ease',
+              }}
+            >
+              <DotsSixVertical size={22} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              <div style={{
+                width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-lg)',
+                background: 'var(--navy)', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', flexShrink: 0,
+              }}>
+                <Buildings size={18} style={{ color: '#fff' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700 }}>{wh.name}</div>
+                {(wh.city || wh.state) && (
+                  <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>
+                    {[wh.city, wh.state].filter(Boolean).join(', ')}
+                  </div>
+                )}
+              </div>
+              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', background: 'var(--hover)', borderRadius: 'var(--r-full)', padding: '2px 10px' }}>
+                #{idx + 1}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
+        /* Normal mode: warehouse cards grid */
         <div className="warehouse-grid">
           {warehouses.map(wh => (
             <WarehouseCard
