@@ -21,6 +21,7 @@ const Technicians   = lazy(() => import('./pages/Technicians'))
 const FormBuilder   = lazy(() => import('./pages/FormBuilder'))
 const RiskAssessment = lazy(() => import('./pages/RiskAssessment'))
 const Inventory      = lazy(() => import('./pages/Inventory'))
+const PartsCatalog   = lazy(() => import('./pages/PartsCatalog'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
 const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
@@ -36,6 +37,7 @@ const PAGE_META = {
   '/technicians':            { title: 'Technicians',      parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
   '/inventory':              { title: 'Inventory',         parent: null },
+  '/inventory/parts':        { title: 'Parts Catalog',      parent: '/inventory' },
 }
 
 function getPageMeta(pathname) {
@@ -215,6 +217,7 @@ export default function App() {
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
             <Route path="/inventory"                                           element={<Inventory />} />
+            <Route path="/inventory/parts"                                     element={<PartsCatalog />} />
             <Route path="/inventory/add-part"                                  element={<AddEditPart />} />
             <Route path="/inventory/transfer"                                  element={<InventoryTransfer />} />
             <Route path="/inventory/part/:id"                                  element={<PartDetail />} />

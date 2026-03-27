@@ -18,15 +18,23 @@ const SUB_NAV_MAP = {
     { path: '/forms',         label: 'Report Forms' },
     { path: '/forms/builder', label: 'Form Builder' },
   ],
+  '/inventory': [
+    { path: '/inventory',          label: 'Overview'      },
+    { path: '/inventory/parts',    label: 'Parts Catalog' },
+    { path: '/inventory/transfer', label: 'Transfer'      },
+  ],
 }
 
 // ─── Routes where sub-nav should not appear ───────────────────────────────────
 const SUPPRESS = [
-  '/forms/builder', // Form builder manages its own full-screen UI
+  '/forms/builder',
+  '/inventory/add-part',
 ]
 
 function getSubNav(pathname) {
   if (SUPPRESS.includes(pathname)) return null
+  // Suppress on part detail and edit pages
+  if (/^\/inventory\/part\//.test(pathname)) return null
   for (const [prefix, items] of Object.entries(SUB_NAV_MAP)) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
       return items

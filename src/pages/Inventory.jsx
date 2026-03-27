@@ -1,283 +1,197 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  MagnifyingGlass, Plus, Package, WarningCircle,
-  Buildings, Funnel, X, CaretRight, ArrowsLeftRight,
+  Buildings, Package, WarningCircle, ArrowsLeftRight,
+  Plus, TrendUp, CurrencyDollar, Truck,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import SectionDivider from '../components/SectionDivider.jsx'
 
-// ─── Stock badge ──────────────────────────────────────────────────────────────
-function StockBadge({ qty, minLevel, onOrder }) {
-  if (qty === 0 && onOrder > 0) return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#EFF6FF', color: '#1D4ED8' }}>
-      0 (+{onOrder} ordered)
-    </span>
-  )
-  if (qty === 0) return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#FEF2F2', color: '#B91C1C' }}>
-      Out of stock
-    </span>
-  )
-  if (minLevel && qty <= minLevel) return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#FFF7ED', color: '#C2410C' }}>
-      Low: {qty}
-    </span>
-  )
+function StatTile({ label, value, color = 'var(--text-1)' }) {
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#F0FDF4', color: '#15803D' }}>
-      {qty} {qty === 1 ? 'unit' : 'units'}
-    </span>
-  )
-}
-
-// ─── Part card ────────────────────────────────────────────────────────────────
-function PartCard({ part, levels, onPress }) {
-  const totalQty = levels.reduce((sum, l) => sum + (l.quantity_on_hand || 0), 0)
-  const totalOnOrder = levels.reduce((sum, l) => sum + (l.quantity_on_order || 0), 0)
-  const minLevel = levels.length ? Math.min(...levels.filter(l => l.min_level).map(l => l.min_level)) : null
-  const isLow = minLevel && totalQty <= minLevel
-
-  return (
-    <button
-      onClick={onPress}
-      style={{
-        display: 'flex', alignItems: 'center', gap: 'var(--sp-3)',
-        padding: 'var(--sp-3) var(--sp-4)',
-        border: 'none', background: 'none', width: '100%', textAlign: 'left',
-        borderBottom: '1px solid var(--border-l)', cursor: 'pointer',
-        WebkitTapHighlightColor: 'transparent',
-      }}
-    >
-      {/* Icon / placeholder */}
-      <div style={{
-        width: '2.75rem', height: '2.75rem', borderRadius: 'var(--r-lg)',
-        background: isLow ? '#FFF7ED' : 'var(--surface-raised)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        flexShrink: 0,
-      }}>
-        {isLow
-          ? <WarningCircle size={22} weight="fill" style={{ color: '#C2410C' }} />
-          : <Package size={22} style={{ color: 'var(--text-3)' }} />
-        }
-      </div>
-
-      {/* Info */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 'var(--fs-md)', fontWeight: 600, color: 'var(--text-1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {part.name}
-        </div>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>
-          {part.sku && <span style={{ fontFamily: 'var(--mono)' }}>{part.sku} · </span>}
-          {part.part_categories?.name || 'Uncategorized'}
-        </div>
-      </div>
-
-      {/* Stock */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
-        <StockBadge qty={totalQty} minLevel={minLevel} onOrder={totalOnOrder} />
-        <CaretRight size={14} style={{ color: 'var(--text-3)' }} />
-      </div>
-    </button>
-  )
-}
-
-// ─── Warehouse filter pills ───────────────────────────────────────────────────
-function WarehouseFilter({ warehouses, selected, onChange }) {
-  return (
-    <div style={{ display: 'flex', gap: 'var(--sp-2)', overflowX: 'auto', paddingBottom: 2, scrollbarWidth: 'none' }}>
-      <button
-        onClick={() => onChange(null)}
-        style={{
-          flexShrink: 0, padding: 'var(--sp-1) var(--sp-3)', borderRadius: 'var(--r-full)',
-          border: `1px solid ${selected === null ? 'var(--navy)' : 'var(--border-l)'}`,
-          background: selected === null ? 'var(--navy)' : 'transparent',
-          color: selected === null ? '#fff' : 'var(--text-2)',
-          fontSize: 'var(--fs-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
-        }}
-      >
-        All Warehouses
-      </button>
-      {warehouses.map(w => (
-        <button
-          key={w.id}
-          onClick={() => onChange(w.id)}
-          style={{
-            flexShrink: 0, padding: 'var(--sp-1) var(--sp-3)', borderRadius: 'var(--r-full)',
-            border: `1px solid ${selected === w.id ? 'var(--navy)' : 'var(--border-l)'}`,
-            background: selected === w.id ? 'var(--navy)' : 'transparent',
-            color: selected === w.id ? '#fff' : 'var(--text-2)',
-            fontSize: 'var(--fs-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
-          }}
-        >
-          {w.name.replace(' Warehouse', '')}
-        </button>
-      ))}
+    <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3) var(--sp-4)' }}>
+      <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4, fontWeight: 600 }}>{label}</div>
     </div>
   )
 }
 
-// ─── Main Inventory page ──────────────────────────────────────────────────────
-export default function Inventory() {
-  const navigate = useNavigate()
-  const [parts, setParts] = useState([])
-  const [levels, setLevels] = useState({}) // keyed by part_id → array of levels
-  const [warehouses, setWarehouses] = useState([])
-  const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [selectedWarehouse, setSelectedWarehouse] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState(null)
-  const [stockFilter, setStockFilter] = useState('all') // all | low | out
-
-  const load = useCallback(async () => {
-    setLoading(true)
-    const [{ data: partsData }, { data: warehousesData }, { data: categoriesData }, { data: levelsData }] = await Promise.all([
-      db.from('parts').select('*, part_categories(name)').eq('is_active', true).order('name'),
-      db.from('warehouses').select('*').eq('is_active', true).order('name'),
-      db.from('part_categories').select('*').order('name'),
-      db.from('inventory_levels').select('*'),
-    ])
-
-    setParts(partsData || [])
-    setWarehouses(warehousesData || [])
-    setCategories(categoriesData || [])
-
-    // Group levels by part_id
-    const lvlMap = {}
-    for (const l of levelsData || []) {
-      if (!lvlMap[l.part_id]) lvlMap[l.part_id] = []
-      lvlMap[l.part_id].push(l)
-    }
-    setLevels(lvlMap)
-    setLoading(false)
-  }, [])
-
-  useEffect(() => { load() }, [load])
-
-  // Stats
-  const totalParts = parts.length
-  const lowStockCount = parts.filter(p => {
-    const lvls = levels[p.id] || []
-    const qty = lvls.reduce((s, l) => s + l.quantity_on_hand, 0)
-    const min = Math.min(...lvls.filter(l => l.min_level).map(l => l.min_level))
-    return isFinite(min) && qty <= min && qty > 0
-  }).length
-  const outOfStockCount = parts.filter(p => {
-    const lvls = levels[p.id] || []
-    return lvls.reduce((s, l) => s + l.quantity_on_hand, 0) === 0
-  }).length
-
-  // Filter
-  const filtered = parts.filter(p => {
-    const lvls = levels[p.id] || []
-    const qty = lvls.reduce((s, l) => s + l.quantity_on_hand, 0)
-    const min = Math.min(...lvls.filter(l => l.min_level).map(l => l.min_level))
-
-    if (search) {
-      const q = search.toLowerCase()
-      if (!p.name.toLowerCase().includes(q) && !(p.sku || '').toLowerCase().includes(q) && !(p.manufacturer || '').toLowerCase().includes(q)) return false
-    }
-    if (selectedCategory && p.category_id !== selectedCategory) return false
-    if (selectedWarehouse) {
-      if (!lvls.some(l => l.warehouse_id === selectedWarehouse)) return false
-    }
-    if (stockFilter === 'low') {
-      if (!isFinite(min) || qty > min || qty === 0) return false
-    }
-    if (stockFilter === 'out' && qty !== 0) return false
-    return true
-  })
+function WarehouseCard({ warehouse, levels, onViewParts, onTransfer }) {
+  const wLevels = levels.filter(l => l.warehouse_id === warehouse.id)
+  const totalSkus     = wLevels.filter(l => l.quantity_on_hand > 0).length
+  const totalUnits    = wLevels.reduce((s, l) => s + l.quantity_on_hand, 0)
+  const totalOnOrder  = wLevels.reduce((s, l) => s + (l.quantity_on_order || 0), 0)
+  const lowStockItems = wLevels.filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level).length
+  const totalValue    = wLevels.reduce((s, l) => s + (l.quantity_on_hand * (l.parts?.unit_cost || 0)), 0)
+  const hasAlerts     = lowStockItems > 0
 
   return (
-    <div className="page-content fade-in">
-      <SectionDivider title="Inventory" label="Parts Catalog" accent="var(--navy)" />
+    <div style={{
+      background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden',
+      border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)',
+    }}>
+      {/* Header */}
+      <div style={{ background: 'var(--navy)', padding: 'var(--sp-4) var(--sp-5)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
+          <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-lg)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Buildings size={20} style={{ color: '#fff' }} />
+          </div>
+          <div>
+            <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: '#fff' }}>{warehouse.name}</div>
+            {(warehouse.city || warehouse.state) && (
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>
+                {[warehouse.city, warehouse.state].filter(Boolean).join(', ')}
+              </div>
+            )}
+          </div>
+        </div>
+        {hasAlerts && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: '#FEF3C7', borderRadius: 'var(--r-full)', padding: '3px 10px' }}>
+            <WarningCircle size={13} weight="fill" style={{ color: '#D97706' }} />
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: '#D97706' }}>{lowStockItems} low stock</span>
+          </div>
+        )}
+      </div>
 
-      {/* Stats strip */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--sp-3)', marginBottom: 'var(--sp-4)' }}>
+      {/* Stats 2x2 grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--border-l)' }}>
         {[
-          { label: 'Total Parts', value: totalParts, color: 'var(--navy)' },
-          { label: 'Low Stock', value: lowStockCount, color: '#C2410C' },
-          { label: 'Out of Stock', value: outOfStockCount, color: '#B91C1C' },
+          { label: 'SKUs In Stock', value: totalSkus.toLocaleString(), Icon: Package, color: 'var(--text-1)' },
+          { label: 'Total Units', value: totalUnits.toLocaleString(), Icon: TrendUp, color: 'var(--text-1)' },
+          { label: 'Low Stock', value: lowStockItems, Icon: WarningCircle, color: lowStockItems > 0 ? '#C2410C' : 'var(--text-3)' },
+          { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? '#1D4ED8' : 'var(--text-3)' },
         ].map(s => (
-          <div key={s.label} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', textAlign: 'center' }}>
-            <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: s.color }}>{s.value}</div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{s.label}</div>
+          <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--sp-3) var(--sp-4)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
+              <s.Icon size={13} />
+              <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>{s.label}</span>
+            </div>
+            <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800, color: s.color }}>{s.value}</div>
           </div>
         ))}
       </div>
 
-      {/* Search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--sp-3)' }}>
-        <MagnifyingGlass size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-        <input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search parts, SKU, manufacturer…"
-          style={{ width: '100%', paddingLeft: 36, paddingRight: search ? 36 : 12 }}
-        />
-        {search && (
-          <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}>
-            <X size={14} />
-          </button>
-        )}
-      </div>
+      {/* Value row */}
+      {totalValue > 0 && (
+        <div style={{ padding: 'var(--sp-3) var(--sp-5)', borderTop: '1px solid var(--border-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-3)' }}>
+            <CurrencyDollar size={14} />
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
+          </div>
+          <span style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: '#15803D' }}>
+            ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+          </span>
+        </div>
+      )}
 
-      {/* Warehouse filter */}
-      <div style={{ marginBottom: 'var(--sp-3)' }}>
-        <WarehouseFilter warehouses={warehouses} selected={selectedWarehouse} onChange={setSelectedWarehouse} />
-      </div>
+      {/* Low stock list */}
+      {lowStockItems > 0 && (
+        <div style={{ padding: 'var(--sp-3) var(--sp-5)', borderTop: '1px solid #FED7AA', background: '#FFFBEB' }}>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: '#92400E', marginBottom: 'var(--sp-2)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Low Stock</div>
+          {wLevels
+            .filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level)
+            .slice(0, 3)
+            .map(l => (
+              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--fs-xs)', color: '#92400E', marginBottom: 2 }}>
+                <span style={{ fontFamily: 'var(--mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '60%' }}>{l.parts?.sku || '—'}</span>
+                <span style={{ fontWeight: 700, flexShrink: 0 }}>{l.quantity_on_hand} / min {l.min_level}</span>
+              </div>
+            ))}
+          {lowStockItems > 3 && <div style={{ fontSize: 'var(--fs-xs)', color: '#92400E', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
+        </div>
+      )}
 
-      {/* Stock status filter */}
-      <div style={{ display: 'flex', gap: 'var(--sp-2)', marginBottom: 'var(--sp-4)' }}>
-        {[['all', 'All'], ['low', 'Low Stock'], ['out', 'Out of Stock']].map(([val, lbl]) => (
-          <button key={val} onClick={() => setStockFilter(val)}
-            style={{
-              padding: 'var(--sp-1) var(--sp-3)', borderRadius: 'var(--r-full)',
-              border: `1px solid ${stockFilter === val ? 'var(--red)' : 'var(--border-l)'}`,
-              background: stockFilter === val ? 'var(--red)' : 'transparent',
-              color: stockFilter === val ? '#fff' : 'var(--text-2)',
-              fontSize: 'var(--fs-xs)', fontWeight: 600, cursor: 'pointer',
-            }}>
-            {lbl}
-          </button>
-        ))}
-      </div>
-
-      {/* Quick actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-4)' }}>
-        <button onClick={() => navigate('/inventory/add-part')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: '1px solid var(--navy)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
-          <Plus size={16} /> Add Part
+      {/* Actions */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', borderTop: '1px solid var(--border-l)' }}>
+        <button onClick={onViewParts}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--navy)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700, cursor: 'pointer' }}>
+          <Package size={13} /> View Parts
         </button>
-        <button onClick={() => navigate('/inventory/transfer')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
-          <ArrowsLeftRight size={16} /> Transfer
+        <button onClick={onTransfer}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', color: 'var(--text-2)', fontSize: 'var(--fs-xs)', fontWeight: 700, cursor: 'pointer' }}>
+          <ArrowsLeftRight size={13} /> Transfer
         </button>
       </div>
+    </div>
+  )
+}
 
-      {/* Parts list */}
+export default function Inventory() {
+  const navigate = useNavigate()
+  const [warehouses, setWarehouses] = useState([])
+  const [levels, setLevels] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([
+      db.from('warehouses').select('*').eq('is_active', true).order('name'),
+      db.from('inventory_levels').select('*, parts(sku, unit_cost)'),
+    ]).then(([{ data: wh }, { data: lvl }]) => {
+      setWarehouses(wh || [])
+      setLevels(lvl || [])
+      setLoading(false)
+    })
+  }, [])
+
+  // Cross-warehouse rollup
+  const totalSkus     = new Set(levels.filter(l => l.quantity_on_hand > 0).map(l => l.part_id)).size
+  const totalUnits    = levels.reduce((s, l) => s + l.quantity_on_hand, 0)
+  const totalOnOrder  = levels.reduce((s, l) => s + (l.quantity_on_order || 0), 0)
+  const totalLowStock = (() => {
+    const byPart = {}
+    levels.forEach(l => {
+      if (!byPart[l.part_id]) byPart[l.part_id] = { qty: 0, min: null }
+      byPart[l.part_id].qty += l.quantity_on_hand
+      if (l.min_level && (byPart[l.part_id].min === null || l.min_level < byPart[l.part_id].min))
+        byPart[l.part_id].min = l.min_level
+    })
+    return Object.values(byPart).filter(p => p.min && p.qty > 0 && p.qty <= p.min).length
+  })()
+
+  return (
+    <div className="page-content fade-in">
+
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--sp-4)', marginBottom: 'var(--sp-5)', flexWrap: 'wrap' }}>
+        <div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>INVENTORY</div>
+          <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Warehouse Overview</div>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+          <button onClick={() => navigate('/inventory/transfer')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <ArrowsLeftRight size={14} /> Transfer
+          </button>
+          <button onClick={() => navigate('/inventory/parts')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <Package size={14} /> Parts Catalog
+          </button>
+          <button onClick={() => navigate('/inventory/add-part')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <Plus size={14} /> Add Part
+          </button>
+        </div>
+      </div>
+
+      {/* Network-wide summary */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--sp-3)', marginBottom: 'var(--sp-6)' }}>
+        <StatTile label="Unique SKUs" value={totalSkus.toLocaleString()} />
+        <StatTile label="Total Units" value={totalUnits.toLocaleString()} />
+        <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? '#C2410C' : 'var(--text-1)'} />
+        <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? '#1D4ED8' : 'var(--text-1)'} />
+      </div>
+
+      {/* Warehouse cards */}
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
-      ) : filtered.length === 0 ? (
-        <div className="empty">
-          <Package size={40} style={{ color: 'var(--text-3)', marginBottom: 'var(--sp-3)' }} />
-          <div className="empty-title">{parts.length === 0 ? 'No parts yet' : 'No parts match filters'}</div>
-          <div className="empty-desc">{parts.length === 0 ? 'Add your first part to get started.' : 'Try adjusting your search or filters.'}</div>
-          {parts.length === 0 && (
-            <button className="btn btn-primary" style={{ marginTop: 'var(--sp-4)' }} onClick={() => navigate('/inventory/add-part')}>
-              Add First Part
-            </button>
-          )}
-        </div>
       ) : (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}>
-          {filtered.map(part => (
-            <PartCard
-              key={part.id}
-              part={part}
-              levels={(levels[part.id] || []).filter(l => !selectedWarehouse || l.warehouse_id === selectedWarehouse)}
-              onPress={() => navigate(`/inventory/part/${part.id}`)}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 'var(--sp-5)' }}>
+          {warehouses.map(wh => (
+            <WarehouseCard
+              key={wh.id}
+              warehouse={wh}
+              levels={levels}
+              onViewParts={() => navigate(`/inventory/parts?warehouse=${wh.id}`)}
+              onTransfer={() => navigate(`/inventory/transfer?from=${wh.id}`)}
             />
           ))}
         </div>

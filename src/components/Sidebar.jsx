@@ -31,7 +31,11 @@ const NAV_ITEMS = [
       { path: '/forms/builder', Icon: PencilSimple,   label: 'Form Builder' },
     ],
   },
-  { path: '/inventory',       Icon: Package,         label: 'Inventory'       },
+  { path: '/inventory', Icon: Package, label: 'Inventory',
+    children: [
+      { path: '/inventory/parts', Icon: Package, label: 'Parts Catalog' },
+    ],
+  },
   { path: '/technicians',     Icon: Users,           label: 'Technicians'     },
 ]
 
