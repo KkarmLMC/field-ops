@@ -8,7 +8,12 @@ import { db } from '../lib/supabase.js'
 import SectionDivider from '../components/SectionDivider.jsx'
 
 // ─── Stock badge ──────────────────────────────────────────────────────────────
-function StockBadge({ qty, minLevel }) {
+function StockBadge({ qty, minLevel, onOrder }) {
+  if (qty === 0 && onOrder > 0) return (
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#EFF6FF', color: '#1D4ED8' }}>
+      0 (+{onOrder} ordered)
+    </span>
+  )
   if (qty === 0) return (
     <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: '#FEF2F2', color: '#B91C1C' }}>
       Out of stock
@@ -29,6 +34,7 @@ function StockBadge({ qty, minLevel }) {
 // ─── Part card ────────────────────────────────────────────────────────────────
 function PartCard({ part, levels, onPress }) {
   const totalQty = levels.reduce((sum, l) => sum + (l.quantity_on_hand || 0), 0)
+  const totalOnOrder = levels.reduce((sum, l) => sum + (l.quantity_on_order || 0), 0)
   const minLevel = levels.length ? Math.min(...levels.filter(l => l.min_level).map(l => l.min_level)) : null
   const isLow = minLevel && totalQty <= minLevel
 
@@ -69,7 +75,7 @@ function PartCard({ part, levels, onPress }) {
 
       {/* Stock */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
-        <StockBadge qty={totalQty} minLevel={minLevel} />
+        <StockBadge qty={totalQty} minLevel={minLevel} onOrder={totalOnOrder} />
         <CaretRight size={14} style={{ color: 'var(--text-3)' }} />
       </div>
     </button>

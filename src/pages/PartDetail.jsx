@@ -18,9 +18,12 @@ function WarehouseRow({ level, warehouseName }) {
         <Buildings size={16} style={{ color: 'var(--text-3)' }} />
         <div>
           <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{warehouseName}</div>
-          {level.min_level && (
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>Min: {level.min_level}</div>
-          )}
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', display: 'flex', gap: 'var(--sp-2)', marginTop: 2 }}>
+            {level.min_level > 0 && <span>Min: {level.min_level}</span>}
+            {level.quantity_on_order > 0 && (
+              <span style={{ color: '#1D4ED8', fontWeight: 600 }}>+{level.quantity_on_order} on order</span>
+            )}
+          </div>
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
@@ -74,26 +77,64 @@ function TransactionRow({ tx, warehouseName }) {
 }
 
 // ─── Quick adjust sheet ───────────────────────────────────────────────────────
-function AdjustSheet({ part, warehouses, onClose, onDone }) {
+function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
   const [warehouseId, setWarehouseId] = useState(warehouses[0]?.id || '')
   const [delta, setDelta] = useState(0)
   const [type, setType] = useState('adjustment')
   const [reason, setReason] = useState('')
+  const [onOrder, setOnOrder] = useState('')
+  const [minLevel, setMinLevel] = useState('')
   const [saving, setSaving] = useState(false)
 
+  // Pre-fill on_order and min_level from selected warehouse level
+  const currentLevel = levels.find(l => l.warehouse_id === warehouseId)
+  const handleWarehouseChange = (wid) => {
+    setWarehouseId(wid)
+    const lvl = levels.find(l => l.warehouse_id === wid)
+    setOnOrder(lvl?.quantity_on_order > 0 ? String(lvl.quantity_on_order) : '')
+    setMinLevel(lvl?.min_level > 0 ? String(lvl.min_level) : '')
+  }
+
   const handleSave = async () => {
-    if (!delta || delta === 0 || !warehouseId) return
+    if (!warehouseId) return
     setSaving(true)
-    await db.rpc('adjust_inventory', {
-      p_part_id: part.id,
-      p_warehouse_id: warehouseId,
-      p_quantity_delta: delta,
-      p_transaction_type: type,
-      p_reason: reason || null,
-    })
+
+    // Stock adjustment (if delta != 0)
+    if (delta !== 0) {
+      await db.rpc('adjust_inventory', {
+        p_part_id: part.id,
+        p_warehouse_id: warehouseId,
+        p_quantity_delta: delta,
+        p_transaction_type: type,
+        p_reason: reason || null,
+      })
+    }
+
+    // Update on_order and/or min_level if changed
+    const updates = {}
+    if (onOrder !== '') updates.quantity_on_order = parseInt(onOrder) || 0
+    if (minLevel !== '') updates.min_level = parseInt(minLevel) || null
+
+    if (Object.keys(updates).length > 0) {
+      // Upsert the level record with updated fields
+      await db.from('inventory_levels')
+        .upsert({
+          part_id: part.id,
+          warehouse_id: warehouseId,
+          quantity_on_hand: currentLevel?.quantity_on_hand || 0,
+          ...updates,
+        }, { onConflict: 'part_id,warehouse_id' })
+    }
+
     setSaving(false)
     onDone()
   }
+
+  const Label = ({ children }) => (
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+      {children}
+    </label>
+  )
 
   return (
     <>
@@ -101,44 +142,81 @@ function AdjustSheet({ part, warehouses, onClose, onDone }) {
       <div style={{
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 300,
         background: 'var(--surface)', borderRadius: 'var(--r-xl) var(--r-xl) 0 0',
-        padding: 'var(--sp-5)', paddingBottom: 'calc(var(--sp-5) + env(safe-area-inset-bottom))',
+        maxHeight: '92vh', display: 'flex', flexDirection: 'column',
         animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)',
       }}>
-        <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', margin: '0 auto var(--sp-4)' }} />
-        <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 700, marginBottom: 'var(--sp-4)' }}>Adjust Stock</div>
-
-        <div style={{ marginBottom: 'var(--sp-3)' }}>
-          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>Warehouse</label>
-          <select value={warehouseId} onChange={e => setWarehouseId(e.target.value)} style={{ width: '100%' }}>
-            {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
-          </select>
+        <div style={{ padding: 'var(--sp-4) var(--sp-5) 0', flexShrink: 0 }}>
+          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', margin: '0 auto var(--sp-4)' }} />
+          <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 700, marginBottom: 'var(--sp-4)' }}>Adjust Stock</div>
         </div>
 
-        <div style={{ marginBottom: 'var(--sp-3)' }}>
-          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>Transaction Type</label>
-          <select value={type} onChange={e => setType(e.target.value)} style={{ width: '100%' }}>
-            <option value="adjustment">Manual Adjustment</option>
-            <option value="receiving">Receiving / New Stock</option>
-            <option value="count_correction">Count Correction</option>
-            <option value="job_checkout">Job Checkout</option>
-            <option value="job_return">Job Return</option>
-          </select>
+        <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--sp-5)', paddingBottom: 'calc(var(--sp-2))' }}>
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Warehouse</Label>
+            <select value={warehouseId} onChange={e => handleWarehouseChange(e.target.value)} style={{ width: '100%' }}>
+              {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
+            </select>
+          </div>
+
+          {/* Divider */}
+          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Stock Adjustment</div>
+          </div>
+
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Transaction Type</Label>
+            <select value={type} onChange={e => setType(e.target.value)} style={{ width: '100%' }}>
+              <option value="adjustment">Manual Adjustment</option>
+              <option value="receiving">Receiving / New Stock</option>
+              <option value="count_correction">Count Correction</option>
+              <option value="job_checkout">Job Checkout</option>
+              <option value="job_return">Job Return</option>
+            </select>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-3)' }}>
+            <div>
+              <Label>Qty Change</Label>
+              <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value) || 0)} placeholder="0" style={{ width: '100%' }} />
+              <div style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-3)', marginTop: 3 }}>Negative to reduce</div>
+            </div>
+            <div>
+              <Label>Reason</Label>
+              <input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. PO #1234" style={{ width: '100%' }} />
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Thresholds</div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-4)' }}>
+            <div>
+              <Label>On Order</Label>
+              <input type="number" min="0" value={onOrder} onChange={e => setOnOrder(e.target.value)} placeholder="0" style={{ width: '100%' }} />
+              <div style={{ fontSize: 'var(--fs-2xs)', color: '#1D4ED8', marginTop: 3 }}>Incoming stock</div>
+            </div>
+            <div>
+              <Label>Min Level</Label>
+              <input type="number" min="0" value={minLevel} onChange={e => setMinLevel(e.target.value)} placeholder="e.g. 10" style={{ width: '100%' }} />
+              <div style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-3)', marginTop: 3 }}>Low stock alert</div>
+            </div>
+          </div>
         </div>
 
-        <div style={{ marginBottom: 'var(--sp-3)' }}>
-          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>Quantity (use negative to reduce)</label>
-          <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value) || 0)} style={{ width: '100%' }} />
+        <div style={{ padding: 'var(--sp-4) var(--sp-5)', paddingBottom: 'calc(var(--sp-4) + env(safe-area-inset-bottom))', flexShrink: 0, borderTop: '1px solid var(--border-l)' }}>
+          <button onClick={handleSave} disabled={saving || (delta === 0 && onOrder === '' && minLevel === '')}
+            style={{
+              width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none',
+              background: (delta === 0 && onOrder === '' && minLevel === '') ? 'var(--hover)' : 'var(--navy)',
+              color: (delta === 0 && onOrder === '' && minLevel === '') ? 'var(--text-3)' : '#fff',
+              fontWeight: 700, fontSize: 'var(--fs-sm)',
+              cursor: (delta === 0 && onOrder === '' && minLevel === '') ? 'default' : 'pointer',
+            }}>
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
-
-        <div style={{ marginBottom: 'var(--sp-4)' }}>
-          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>Reason (optional)</label>
-          <input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. Received PO #1234" style={{ width: '100%' }} />
-        </div>
-
-        <button onClick={handleSave} disabled={saving || delta === 0}
-          style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: delta === 0 ? 'var(--hover)' : 'var(--navy)', color: delta === 0 ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: delta === 0 ? 'default' : 'pointer' }}>
-          {saving ? 'Saving…' : 'Save Adjustment'}
-        </button>
       </div>
     </>
   )
@@ -278,6 +356,7 @@ export default function PartDetail() {
         <AdjustSheet
           part={part}
           warehouses={warehouses}
+          levels={levels}
           onClose={() => setShowAdjust(false)}
           onDone={() => { setShowAdjust(false); load() }}
         />
