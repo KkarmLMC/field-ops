@@ -4,6 +4,7 @@
  * Mobile-only (hidden ≥768px).
  */
 
+import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 // ─── Sub-nav configs keyed by parent route prefix ─────────────────────────────
@@ -48,6 +49,17 @@ export default function PageSubNav() {
   const location = useLocation()
 
   const items = getSubNav(location.pathname)
+
+  // Toggle body class so CSS can add extra bottom padding to page-content
+  useEffect(() => {
+    if (items) {
+      document.body.classList.add('has-sub-nav')
+    } else {
+      document.body.classList.remove('has-sub-nav')
+    }
+    return () => document.body.classList.remove('has-sub-nav')
+  }, [items])
+
   if (!items) return null
 
   return (
