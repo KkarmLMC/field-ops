@@ -4,6 +4,7 @@ import { CheckCircle, SpinnerGap, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import FormEngine, { validateSchema } from '../components/FormEngine.jsx'
 import MultiPageForm from '../components/MultiPageForm.jsx'
+import TabbedForm from '../components/TabbedForm.jsx'
 import { queueSubmission, getCachedForm, cacheFormSchemas } from '../lib/offline.js'
 
 export default function FormPage() {
@@ -154,9 +155,18 @@ export default function FormPage() {
         </button>
       </div>
 
-      {schema.multi_page ? (
-        /* ── Multi-page / tabbed mode ─────────────────────────────────── */
+      {schema.form_mode === 'index' ? (
         <MultiPageForm
+          schema={schema}
+          values={values}
+          onChange={handleChange}
+          errors={errors}
+          onSubmit={handleSubmit}
+          submitting={submitting}
+          submitErr={submitErr}
+        />
+      ) : schema.form_mode === 'tabbed' ? (
+        <TabbedForm
           schema={schema}
           values={values}
           onChange={handleChange}

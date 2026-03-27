@@ -378,6 +378,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
 // ─── Form Editor ──────────────────────────────────────────────────────────────
 function FormEditor({ form, onSave, onCancel }) {
   const [sections, setSections] = useState(JSON.parse(JSON.stringify(form.sections || [])))
+  const [formMode, setFormMode] = useState(form.form_mode || 'scroll')
   const [saving,   setSaving]   = useState(false)
   const [saved,    setSaved]    = useState(false)
   const [error,    setError]    = useState(null)
@@ -395,7 +396,7 @@ function FormEditor({ form, onSave, onCancel }) {
 
   const handleSave = async () => {
     setSaving(true); setError(null)
-    const { error } = await db.from('form_definitions').update({ sections }).eq('slug', form.slug)
+    const { error } = await db.from('form_definitions').update({ sections, form_mode: formMode }).eq('slug', form.slug)
     setSaving(false)
     if (error) { setError('Save failed: ' + error.message); return }
     setSaved(true)
@@ -420,6 +421,29 @@ function FormEditor({ form, onSave, onCancel }) {
       </div>
 
       {error && <div style={{ padding:'var(--sp-3)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>{error}</div>}
+
+      {/* Form mode selector */}
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)', padding:'var(--sp-3) var(--sp-4)', background:'var(--surface-raised)', borderRadius:'var(--r-lg)', border:'1px solid var(--border-l)' }}>
+        <span style={{ fontSize:'var(--fs-xs)', fontWeight:700, color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.06em', flexShrink:0 }}>Form Mode</span>
+        <div style={{ display:'flex', gap:'var(--sp-2)', flex:1 }}>
+          {[
+            { value:'scroll', label:'Scroll' },
+            { value:'tabbed', label:'Tabbed' },
+            { value:'index',  label:'Index'  },
+          ].map(opt => (
+            <button key={opt.value} type="button" onClick={() => setFormMode(opt.value)}
+              style={{
+                flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-xs)', fontWeight:600,
+                border:`1px solid ${formMode===opt.value?'var(--navy)':'var(--border-l)'}`,
+                background: formMode===opt.value?'var(--navy)':'transparent',
+                color: formMode===opt.value?'#fff':'var(--text-3)',
+                cursor:'pointer', transition:'all var(--ease-fast)',
+              }}>
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {sections.map((sec, i) => (
         <div key={sec.title+i}>
