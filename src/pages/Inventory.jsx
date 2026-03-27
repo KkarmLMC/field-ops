@@ -161,9 +161,9 @@ export default function Inventory() {
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             <ArrowsLeftRight size={14} /> Transfer
           </button>
-          <button onClick={() => navigate('/inventory/parts')}
+          <button onClick={() => navigate('/inventory/stock')}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Package size={14} /> Parts Catalog
+            <Package size={14} /> Inventory
           </button>
           <button onClick={() => navigate('/inventory/add-part')}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
@@ -190,7 +190,7 @@ export default function Inventory() {
               key={wh.id}
               warehouse={wh}
               levels={levels}
-              onViewParts={() => navigate(`/inventory/parts?warehouse=${wh.id}`)}
+              onViewParts={() => navigate(`/inventory/stock?warehouse=${wh.id}`)}
               onTransfer={() => navigate(`/inventory/transfer?from=${wh.id}`)}
             />
           ))}

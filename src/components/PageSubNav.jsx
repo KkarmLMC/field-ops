@@ -21,7 +21,8 @@ const SUB_NAV_MAP = {
   ],
   '/inventory': [
     { path: '/inventory',          label: 'Overview'      },
-    { path: '/inventory/parts',    label: 'Parts Catalog' },
+    { path: '/inventory/stock',    label: 'Inventory'     },
+    { path: '/inventory/catalog',  label: 'Parts Catalog' },
     { path: '/inventory/transfer', label: 'Transfer'      },
   ],
 }
