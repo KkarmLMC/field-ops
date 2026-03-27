@@ -863,6 +863,8 @@ textarea { resize: vertical; }
   cursor: pointer;
   transition: all var(--ease-base);
   white-space: nowrap;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .btn--primary { background: var(--red);   color: white; }
