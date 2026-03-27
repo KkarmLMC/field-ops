@@ -20,6 +20,10 @@ const FormPage      = lazy(() => import('./pages/FormPage'))
 const Technicians   = lazy(() => import('./pages/Technicians'))
 const FormBuilder   = lazy(() => import('./pages/FormBuilder'))
 const RiskAssessment = lazy(() => import('./pages/RiskAssessment'))
+const Inventory      = lazy(() => import('./pages/Inventory'))
+const PartDetail     = lazy(() => import('./pages/PartDetail'))
+const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
+const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
@@ -31,6 +35,7 @@ const PAGE_META = {
   '/forms':                  { title: 'Report Forms',     parent: null },
   '/technicians':            { title: 'Technicians',      parent: null },
   '/risk-assessment':        { title: 'Risk Assessment',  parent: null },
+  '/inventory':              { title: 'Inventory',         parent: null },
 }
 
 function getPageMeta(pathname) {
@@ -51,6 +56,14 @@ function getPageMeta(pathname) {
     const formType = pathname.split('/')[2]
     return { title: 'Report Form', parent: '/forms' }
   }
+  if (pathname === '/inventory/add-part')
+    return { title: 'New Part', parent: '/inventory' }
+  if (pathname === '/inventory/transfer')
+    return { title: 'Transfer Stock', parent: '/inventory' }
+  if (/^\/inventory\/part\/[^/]+\/edit$/.test(pathname))
+    return { title: 'Edit Part', parent: '/inventory' }
+  if (/^\/inventory\/part\/[^/]+$/.test(pathname))
+    return { title: 'Part Detail', parent: '/inventory' }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
 
@@ -201,6 +214,11 @@ export default function App() {
             <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
+            <Route path="/inventory"                                           element={<Inventory />} />
+            <Route path="/inventory/add-part"                                  element={<AddEditPart />} />
+            <Route path="/inventory/transfer"                                  element={<InventoryTransfer />} />
+            <Route path="/inventory/part/:id"                                  element={<PartDetail />} />
+            <Route path="/inventory/part/:id/edit"                             element={<AddEditPart />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
           </Suspense>
