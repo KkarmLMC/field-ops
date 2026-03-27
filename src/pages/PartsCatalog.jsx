@@ -23,7 +23,7 @@ const CATEGORY_COLORS = {
 }
 
 function CategorySection({ category, parts, onPartPress }) {
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const colors = CATEGORY_COLORS[category.name] || { bg: '#F8FAFC', text: '#334155', dot: '#64748B' }
 
   return (
