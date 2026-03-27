@@ -2,9 +2,109 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
-  Plus, TrendUp, CurrencyDollar, Truck, CaretRight,
+  Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+
+// ─── Shared label ─────────────────────────────────────────────────────────────
+function Label({ children }) {
+  return (
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+      {children}
+    </label>
+  )
+}
+
+// ─── Add Warehouse Sheet ──────────────────────────────────────────────────────
+function AddWarehouseSheet({ onClose, onSaved }) {
+  const [form, setForm] = useState({ name: '', address: '', city: '', state: '', zip: '', contact_name: '', contact_phone: '', contact_email: '', notes: '' })
+  const [saving, setSaving] = useState(false)
+  const [error, setError]   = useState('')
+  const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
+
+  const handleSave = async () => {
+    if (!form.name.trim()) { setError('Warehouse name is required.'); return }
+    setSaving(true)
+    setError('')
+    const { data, error: err } = await db.from('warehouses')
+      .insert({ ...form, is_active: true })
+      .select()
+      .single()
+    setSaving(false)
+    if (err) { setError('Save failed. Please try again.'); return }
+    onSaved(data)
+  }
+
+  return (
+    <>
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 299, background: 'rgba(0,0,0,0.5)', animation: 'anim-fade-in 0.15s ease' }} />
+      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 300, background: 'var(--surface)', borderRadius: 'var(--r-xl) var(--r-xl) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
+        {/* Header */}
+        <div style={{ padding: 'var(--sp-4) var(--sp-5) 0', flexShrink: 0 }}>
+          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', margin: '0 auto var(--sp-3)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--sp-4)' }}>
+            <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 700 }}>Add Warehouse</div>
+            <button onClick={onClose} style={{ border: 'none', background: 'var(--hover)', borderRadius: 'var(--r-full)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <X size={14} style={{ color: 'var(--text-2)' }} />
+            </button>
+          </div>
+        </div>
+
+        {/* Fields */}
+        <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--sp-5) var(--sp-2)' }}>
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Warehouse Name *</Label>
+            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Location</div>
+          </div>
+
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Street Address</Label>
+            <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 90px', gap: 'var(--sp-2)', marginBottom: 'var(--sp-3)' }}>
+            <div><Label>City</Label><input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" style={{ width: '100%' }} /></div>
+            <div><Label>State</Label><input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" style={{ width: '100%' }} /></div>
+            <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} /></div>
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Contact</div>
+          </div>
+
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Contact Name</Label>
+            <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-2)', marginBottom: 'var(--sp-3)' }}>
+            <div><Label>Phone</Label><input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
+            <div><Label>Email</Label><input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} /></div>
+          </div>
+
+          <div style={{ marginBottom: 'var(--sp-3)' }}>
+            <Label>Notes</Label>
+            <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
+          </div>
+
+          {error && <div style={{ color: '#B91C1C', fontSize: 'var(--fs-sm)', marginBottom: 'var(--sp-3)', padding: 'var(--sp-2) var(--sp-3)', background: '#FEF2F2', borderRadius: 'var(--r-md)' }}>{error}</div>}
+        </div>
+
+        {/* Footer */}
+        <div style={{ padding: 'var(--sp-4) var(--sp-5)', paddingBottom: 'calc(var(--sp-4) + env(safe-area-inset-bottom))', borderTop: '1px solid var(--border-l)', flexShrink: 0 }}>
+          <button onClick={handleSave} disabled={saving || !form.name.trim()}
+            style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+            {saving ? 'Creating…' : <><Check size={15} /> Create Warehouse</>}
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}
 
 function StatTile({ label, value, color = 'var(--text-1)' }) {
   return (
@@ -122,6 +222,7 @@ export default function Inventory() {
   const [warehouses, setWarehouses] = useState([])
   const [levels, setLevels] = useState([])
   const [loading, setLoading] = useState(true)
+  const [showAdd, setShowAdd] = useState(false)
 
   useEffect(() => {
     Promise.all([
@@ -163,13 +264,9 @@ export default function Inventory() {
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             <ArrowsLeftRight size={14} /> Transfer
           </button>
-          <button onClick={() => navigate('/inventory/stock')}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Package size={14} /> Inventory
-          </button>
-          <button onClick={() => navigate('/inventory/add-part')}
+          <button onClick={() => setShowAdd(true)}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-md)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Plus size={14} /> Add Part
+            <Plus size={14} /> Add Warehouse
           </button>
         </div>
       </div>
@@ -198,6 +295,16 @@ export default function Inventory() {
             />
           ))}
         </div>
+      )}
+
+      {showAdd && (
+        <AddWarehouseSheet
+          onClose={() => setShowAdd(false)}
+          onSaved={newWarehouse => {
+            setWarehouses(wh => [...wh, newWarehouse])
+            setShowAdd(false)
+          }}
+        />
       )}
     </div>
   )
