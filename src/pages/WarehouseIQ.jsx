@@ -254,13 +254,13 @@ export default function WarehouseIQ() {
               <span style={{ fontSize:'var(--fs-sm)', fontWeight:700 }}>Active Sales Orders</span>
               <span style={{ fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:'var(--r-full)', background:'var(--hover)', color:'var(--text-3)' }}>{pos.length}</span>
             </div>
-            <button onClick={() => navigate('/purchase-orders')}
+            <button onClick={() => navigate('/sales-orders')}
               style={{ fontSize:'var(--fs-xs)', fontWeight:600, color:'var(--navy)', background:'none', border:'none', cursor:'pointer', padding:0 }}>
               View all
             </button>
           </div>
           {pos.map((po, idx) => (
-            <button key={idx} onClick={() => navigate(`/purchase-orders/${po.id || ''}`)}
+            <button key={idx} onClick={() => navigate(`/sales-orders/${po.id || ''}`)}
               style={{ width:'100%', display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'var(--sp-2) var(--sp-4)', border:'none', background:'none', cursor:'pointer', textAlign:'left', borderBottom: idx < pos.length-1 ? '1px solid var(--border-l)' : 'none' }}>
               <div style={{ fontSize:9, fontWeight:800, padding:'2px 6px', borderRadius:4, flexShrink:0, background: po.division==='Bolt'?'#FFF1F2':'#EFF6FF', color: po.division==='Bolt'?'#BE123C':'#1D4ED8' }}>
                 {po.division==='Bolt'?'BOLT':'LM'}

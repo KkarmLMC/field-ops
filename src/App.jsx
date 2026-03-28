@@ -46,7 +46,7 @@ const PAGE_META = {
   '/warehouse-hq/iq':        { title: 'Warehouse IQ',      parent: '/warehouse-hq' },
   '/warehouse-hq/overview':  { title: 'Warehouse Overview', parent: '/warehouse-hq' },
   '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
-  '/purchase-orders': { title: 'Sales Orders', parent: null },
+  '/sales-orders': { title: 'Sales Orders', parent: null },
 }
 
 function getPageMeta(pathname) {
@@ -70,10 +70,10 @@ function getPageMeta(pathname) {
     return { title: 'New Part', parent: '/warehouse-hq' }
   if (pathname === '/warehouse-hq/transfer')
     return { title: 'Transfer Stock', parent: '/warehouse-hq' }
-  if (pathname === '/purchase-orders/new')
-    return { title: 'New Sales Order', parent: '/purchase-orders' }
-  if (/^\/purchase-orders\/[^/]+$/.test(pathname))
-    return { title: 'Sales Order', parent: '/purchase-orders' }
+  if (pathname === '/sales-orders/new')
+    return { title: 'New Sales Order', parent: '/sales-orders' }
+  if (/^\/sales-orders\/[^/]+$/.test(pathname))
+    return { title: 'Sales Order', parent: '/sales-orders' }
   if (/^\/ warehouse-hq\/warehouse\/[^/]+$/.test(pathname))
     return { title: 'Warehouse', parent: '/warehouse-hq' }
   if (/^\/ warehouse-hq\/part\/[^/]+\/edit$/.test(pathname))
@@ -234,9 +234,9 @@ export default function App() {
             <Route path="/warehouse-hq/iq"                                    element={<WarehouseIQ />} />
             <Route path="/warehouse-hq/inventory"                                 element={<InventoryStock />} />
             <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
-            <Route path="/purchase-orders"                           element={<PurchaseOrders />} />
-            <Route path="/purchase-orders/new"                       element={<PONew />} />
-            <Route path="/purchase-orders/:id"                       element={<PODetail />} />
+            <Route path="/sales-orders"                           element={<PurchaseOrders />} />
+            <Route path="/sales-orders/new"                       element={<PONew />} />
+            <Route path="/sales-orders/:id"                       element={<PODetail />} />
             <Route path="/warehouse-hq/warehouse/:id"                             element={<WarehouseDetail />} />
             <Route path="/warehouse-hq/add-part"                                  element={<AddEditPart />} />
             <Route path="/warehouse-hq/transfer"                                  element={<InventoryTransfer />} />

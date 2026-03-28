@@ -38,7 +38,7 @@ const NAV_ITEMS = [
       { path: '/warehouse-hq/catalog',   Icon: Package,  label: 'Parts Catalog' },
     ],
   },
-  { path: '/purchase-orders', Icon: Receipt, label: 'Sales Orders' },
+  { path: '/sales-orders', Icon: Receipt, label: 'Sales Orders' },
   { path: '/technicians',     Icon: Users,   label: 'Technicians'     },
 ]
 

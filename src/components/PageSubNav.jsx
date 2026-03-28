@@ -38,7 +38,7 @@ function getSubNav(pathname) {
   if (SUPPRESS.includes(pathname)) return null
   if (/^\/warehouse-hq\/part\//.test(pathname)) return null
   if (/^\/warehouse-hq\/warehouse\//.test(pathname)) return null
-  if (/^\/purchase-orders\/.+/.test(pathname)) return null
+  if (/^\/sales-orders\/.+/.test(pathname)) return null
   for (const [prefix, items] of Object.entries(SUB_NAV_MAP)) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
       return items
