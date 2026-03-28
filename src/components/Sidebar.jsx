@@ -4,7 +4,7 @@ import {
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
   BookOpen, ChartBar, Rows, Package, Receipt, CurrencyDollar,
-  SignOut, User,
+  SignOut, User, Warehouse,
 } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
 

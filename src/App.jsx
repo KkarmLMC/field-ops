@@ -31,6 +31,7 @@ const PurchaseOrders   = lazy(() => import('./pages/PurchaseOrders'))
 const PODetail         = lazy(() => import('./pages/PODetail'))
 const PONew            = lazy(() => import('./pages/PONew'))
 const Expenses         = lazy(() => import('./pages/Expenses'))
+const StockView        = lazy(() => import('./pages/StockView'))
 const ExpenseNew       = lazy(() => import('./pages/ExpenseNew'))
 const ExpenseDetail    = lazy(() => import('./pages/ExpenseDetail'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
@@ -276,6 +277,7 @@ export default function App() {
             <Route path="/warehouse-hq/iq"                                    element={<WarehouseIQ />} />
             <Route path="/warehouse-hq/inventory"                                 element={<InventoryStock />} />
             <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
+            <Route path="/stock"                                              element={<StockView />} />
             <Route path="/expenses"                                            element={<Expenses />} />
             <Route path="/expenses/new"                                        element={<ExpenseNew />} />
             <Route path="/expenses/:id"                                         element={<ExpenseDetail />} />
