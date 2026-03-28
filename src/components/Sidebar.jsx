@@ -33,14 +33,8 @@ const NAV_ITEMS = [
       { path: '/forms/builder', Icon: PencilSimple, label: 'Form Builder' },
     ],
   },
-  { path: '/warehouse-hq', Icon: Package, label: 'Warehouse HQ',
-    children: [
-      { path: '/warehouse-hq/iq',        Icon: ChartBar, label: 'Warehouse IQ'  },
-      { path: '/warehouse-hq/inventory', Icon: Package,  label: 'Inventory'     },
-      { path: '/warehouse-hq/catalog',   Icon: Package,  label: 'Parts Catalog' },
-    ],
-  },
-  { path: '/sales-orders', Icon: Receipt, label: 'Sales Orders' },
+  { path: '/stock',        Icon: Warehouse, label: 'Stock Lookup' },
+  { path: '/sales-orders', Icon: Receipt,   label: 'Sales Orders' },
   { path: '/technicians',     Icon: Users,   label: 'Technicians'     },
 ]
 

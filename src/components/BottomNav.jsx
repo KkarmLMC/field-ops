@@ -49,6 +49,8 @@ const FIELD_ITEMS = [
   { id: 'inspections',     path: '/inspections',       Icon: MagnifyingGlass, label: 'Inspections'     },
   { id: 'warehouse-hq',   path: '/warehouse-hq',      Icon: Package,         label: 'Warehouse HQ',   exactMatch: true },
   { id: 'sales-orders', path: '/sales-orders',   Icon: Receipt,         label: 'Sales Orders', exactMatch: true },
+  { id: 'stock',           path: '/stock',             Icon: Warehouse,       label: 'Stock',          exactMatch: true },
+  { id: 'expenses',        path: '/expenses',          Icon: CurrencyDollar,  label: 'Expenses',       exactMatch: true },
   { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
   { id: 'jsa',             path: '/forms/jsa',         Icon: HardHat,         label: 'JSA'             },
 ]
