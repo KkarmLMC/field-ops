@@ -6,8 +6,10 @@ import SyncBadge     from './components/SyncBadge'
 import BottomNav     from './components/BottomNav'
 import PageSubNav    from './components/PageSubNav'
 import { lazy, Suspense } from 'react'
+import { useAuth } from './lib/useAuth.jsx'
 
 // ─── Lazy-loaded page chunks — each route downloads only when first visited ───
+const Login         = lazy(() => import('./pages/Login'))
 const Dashboard     = lazy(() => import('./pages/Dashboard'))
 const Installs      = lazy(() => import('./pages/Installs'))
 const Installations = lazy(() => import('./pages/Installations'))
@@ -194,8 +196,41 @@ function PageTransition({ children }) {
 }
 
 // ─── Root ──────────────────────────────────────────────────────────────────────
+// ─── Auth guard ───────────────────────────────────────────────────────────────
+function RequireAuth({ children }) {
+  const { session, loading } = useAuth()
+  const location = useLocation()
+
+  if (loading) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
+      <div className="spinner" />
+    </div>
+  )
+
+  if (!session) return <Navigate to="/login" state={{ from: location }} replace />
+
+  return children
+}
+
 export default function App() {
   const [collapsed, setCollapsed] = useState(false)
+  const { session, loading } = useAuth()
+
+  // Show login page without shell
+  if (loading) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
+      <div className="spinner" />
+    </div>
+  )
+
+  if (!session) return (
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Suspense>
+  )
 
   return (
     <div className="app-shell">

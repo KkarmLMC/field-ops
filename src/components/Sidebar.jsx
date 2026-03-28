@@ -4,7 +4,9 @@ import {
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
   BookOpen, ChartBar, Rows, Package, Receipt, CurrencyDollar,
+  SignOut, User,
 } from '@phosphor-icons/react'
+import { useAuth } from '../lib/useAuth.jsx'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
@@ -138,6 +140,12 @@ export default function Sidebar({ collapsed, onToggle }) {
   const navigate   = useNavigate()
   const location   = useLocation()
   const goTo = (path) => navigate(path)
+  const { profile, signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/login')
+  }
 
   return (
     <>
@@ -169,13 +177,25 @@ export default function Sidebar({ collapsed, onToggle }) {
         {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && <div className="sidebar-section-label">ACCOUNT</div>}
-          {FOOTER_ITEMS.map(({ Icon, label }) => (
-            <button key={label} className="sidebar-item" title={collapsed ? label : undefined}>
-              <Icon size={17} style={{ flexShrink: 0 }} />
-              {!collapsed && <span className="sidebar-item-label">{label}</span>}
-            </button>
-          ))}
 
+          {/* User profile */}
+          {profile && !collapsed && (
+            <div style={{ padding: 'var(--sp-2) var(--sp-3)', marginBottom: 'var(--sp-1)' }}>
+              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {profile.full_name || profile.email}
+              </div>
+              <div style={{ fontSize: 10, color: 'var(--text-3)', textTransform: 'capitalize', marginTop: 1 }}>
+                {profile.role} · {profile.division}
+              </div>
+            </div>
+          )}
+
+          {/* Sign out */}
+          <button onClick={handleSignOut} className="sidebar-item" title={collapsed ? 'Sign Out' : undefined}
+            style={{ color: 'var(--text-3)' }}>
+            <SignOut size={17} style={{ flexShrink: 0 }} />
+            {!collapsed && <span className="sidebar-item-label">Sign Out</span>}
+          </button>
 
           <button
             className="sidebar-item sidebar-collapse-btn"
