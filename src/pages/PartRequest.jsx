@@ -1,0 +1,204 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Plus, Trash, Package, CheckCircle, ArrowLeft } from '@phosphor-icons/react'
+import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+
+export default function PartRequest() {
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const { profile } = useAuth()
+
+  const [parts, setParts]       = useState([])
+  const [warehouses, setWarehouses] = useState([])
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading]   = useState(true)
+  const [saving, setSaving]     = useState(false)
+  const [saved, setSaved]       = useState(false)
+  const [error, setError]       = useState('')
+
+  const [form, setForm] = useState({
+    project_id: '',
+    job_reference: '',
+    justification: '',
+    warehouse_id: params.get('warehouse') || '',
+    division: profile?.division || 'LM',
+  })
+  const [items, setItems] = useState([{ part_id: '', quantity: 1, notes: '' }])
+
+  useEffect(() => {
+    Promise.all([
+      db.from('parts').select('id, name, sku').eq('is_active', true).order('name'),
+      db.from('warehouses').select('id, name, city, state').eq('is_active', true).order('sort_order'),
+      db.from('projects').select('id, name, job_number').order('created_at', { ascending: false }).limit(30),
+    ]).then(([{ data: p }, { data: w }, { data: pr }]) => {
+      setParts(p || [])
+      setWarehouses(w || [])
+      setProjects(pr || [])
+      if (w?.length && !form.warehouse_id) setForm(f => ({ ...f, warehouse_id: w[0].id }))
+      setLoading(false)
+    })
+  }, [])
+
+  const addItem = () => setItems(i => [...i, { part_id: '', quantity: 1, notes: '' }])
+  const removeItem = idx => setItems(i => i.filter((_, j) => j !== idx))
+  const updateItem = (idx, key, val) => setItems(i => i.map((item, j) => j === idx ? { ...item, [key]: val } : item))
+
+  const handleSubmit = async () => {
+    setError('')
+    if (!form.job_reference.trim()) return setError('Job reference is required.')
+    if (!form.justification.trim()) return setError('Justification is required.')
+    if (items.some(i => !i.part_id)) return setError('Please select a part for each line item.')
+    if (!form.warehouse_id) return setError('Please select a warehouse.')
+
+    setSaving(true)
+    try {
+      const { data: co, error: coErr } = await db
+        .from('change_orders')
+        .insert({
+          project_id:    form.project_id || null,
+          job_reference: form.job_reference,
+          justification: form.justification,
+          warehouse_id:  form.warehouse_id,
+          division:      form.division,
+          submitted_by:  profile?.full_name || profile?.email || 'Field Tech',
+          submitted_by_id: profile?.id || null,
+          status:        'pending',
+        })
+        .select('id')
+        .single()
+
+      if (coErr) throw coErr
+
+      const { error: itemErr } = await db
+        .from('change_order_items')
+        .insert(items.map(i => ({ co_id: co.id, part_id: i.part_id, quantity: Number(i.quantity), notes: i.notes || null })))
+
+      if (itemErr) throw itemErr
+
+      setSaved(true)
+    } catch (e) {
+      setError(e.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (saved) return (
+    <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--sp-4)', textAlign: 'center' }}>
+      <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+      <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>Request Submitted</div>
+      <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', maxWidth: 280 }}>
+        Your part request is pending management review in Mission Control. You'll be notified once it's approved.
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 'var(--sp-2)' }}>
+        <button onClick={() => navigate('/stock')} className="btn btn-secondary">Back to Stock</button>
+        <button onClick={() => { setSaved(false); setItems([{ part_id: '', quantity: 1, notes: '' }]); setForm(f => ({ ...f, job_reference: '', justification: '' })) }}
+          className="btn btn-primary">New Request</button>
+      </div>
+    </div>
+  )
+
+  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
+
+  return (
+    <div className="page-content fade-in">
+      <div style={{ marginBottom: 'var(--sp-5)' }}>
+        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+          <ArrowLeft size={14} /> Back to Stock
+        </button>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>FIELD</div>
+        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Part Request</div>
+        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>Pending management review before fulfillment</div>
+      </div>
+
+      {/* Job details */}
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
+        <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)' }}>
+          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
+        </div>
+        <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+          <div>
+            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
+              Project <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>(optional)</span>
+            </label>
+            <select value={form.project_id} onChange={e => setForm(f => ({ ...f, project_id: e.target.value }))}>
+              <option value="">— No project —</option>
+              {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` · ${p.job_number}` : ''}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
+              Job Reference <span style={{ color: 'var(--error)' }}>*</span>
+            </label>
+            <input value={form.job_reference} onChange={e => setForm(f => ({ ...f, job_reference: e.target.value }))} placeholder="e.g. Job #1042 – Clearwater High School" />
+          </div>
+          <div>
+            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
+              Fulfillment Warehouse <span style={{ color: 'var(--error)' }}>*</span>
+            </label>
+            <select value={form.warehouse_id} onChange={e => setForm(f => ({ ...f, warehouse_id: e.target.value }))}>
+              <option value="">— Select warehouse —</option>
+              {warehouses.map(w => <option key={w.id} value={w.id}>{w.name} — {w.city}, {w.state}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
+              Justification <span style={{ color: 'var(--error)' }}>*</span>
+            </label>
+            <textarea value={form.justification} onChange={e => setForm(f => ({ ...f, justification: e.target.value }))}
+              placeholder="Why do you need these parts? What's the job context or change in scope?" rows={3} />
+          </div>
+        </div>
+      </div>
+
+      {/* Parts */}
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
+        <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
+        </div>
+        <div style={{ padding: 'var(--sp-3)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
+          {items.map((item, idx) => (
+            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', border: '1px solid var(--border-l)' }}>
+              <div style={{ display: 'flex', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>
+                <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} style={{ flex: 1 }}>
+                  <option value="">— Select part —</option>
+                  {parts.map(p => <option key={p.id} value={p.id}>{p.name}{p.sku ? ` (${p.sku})` : ''}</option>)}
+                </select>
+                <input type="number" min={1} value={item.quantity} onChange={e => updateItem(idx, 'quantity', e.target.value)}
+                  style={{ width: 64, textAlign: 'center' }} />
+                {items.length > 1 && (
+                  <button onClick={() => removeItem(idx)} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--error)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
+                    <Trash size={15} />
+                  </button>
+                )}
+              </div>
+              <input value={item.notes} onChange={e => updateItem(idx, 'notes', e.target.value)}
+                placeholder="Note (optional)" style={{ fontSize: 'var(--fs-xs)' }} />
+            </div>
+          ))}
+          <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2)', borderRadius: 'var(--r-lg)', border: '1px dashed var(--border-l)', background: 'none', color: 'var(--text-3)', cursor: 'pointer', fontSize: 'var(--fs-xs)', fontWeight: 600 }}>
+            <Plus size={14} /> Add Part
+          </button>
+        </div>
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--fs-sm)', marginBottom: 'var(--sp-4)' }}>
+          {error}
+        </div>
+      )}
+
+      {/* Submit */}
+      <button onClick={handleSubmit} disabled={saving}
+        style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--fs-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+        {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
+      </button>
+      <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+        This request goes to Mission Control for management review before any parts are pulled.
+      </div>
+    </div>
+  )
+}

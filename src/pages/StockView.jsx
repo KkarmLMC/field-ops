@@ -127,11 +127,12 @@ export default function StockView() {
           </div>
         </button>
 
-        <button disabled style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-3)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'not-allowed', textAlign: 'left', opacity: 0.6 }}>
+        <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
-            <div style={{ fontSize: 10, fontWeight: 400 }}>Coming soon</div>
+            <div style={{ fontSize: 10, fontWeight: 400, color: 'var(--text-3)' }}>Submit for approval</div>
           </div>
         </button>
       </div>
