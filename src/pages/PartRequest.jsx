@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Plus, Trash, Package, CheckCircle, ArrowLeft } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import ProjectPicker from '../components/ProjectPicker.jsx'
 import { useAuth } from '../lib/useAuth.jsx'
 
 export default function PartRequest() {
@@ -11,15 +12,13 @@ export default function PartRequest() {
 
   const [parts, setParts]       = useState([])
   const [warehouses, setWarehouses] = useState([])
-  const [projects, setProjects] = useState([])
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
   const [saved, setSaved]       = useState(false)
   const [error, setError]       = useState('')
 
+  const [project, setProject] = useState(null)   // selected project object
   const [form, setForm] = useState({
-    project_id: '',
-    job_reference: '',
     justification: '',
     warehouse_id: params.get('warehouse') || '',
     division: profile?.division || 'LM',
@@ -30,11 +29,9 @@ export default function PartRequest() {
     Promise.all([
       db.from('parts').select('id, name, sku').eq('is_active', true).order('name'),
       db.from('warehouses').select('id, name, city, state').eq('is_active', true).order('sort_order'),
-      db.from('projects').select('id, name, job_number').order('created_at', { ascending: false }).limit(30),
-    ]).then(([{ data: p }, { data: w }, { data: pr }]) => {
+    ]).then(([{ data: p }, { data: w }]) => {
       setParts(p || [])
       setWarehouses(w || [])
-      setProjects(pr || [])
       if (w?.length && !form.warehouse_id) setForm(f => ({ ...f, warehouse_id: w[0].id }))
       setLoading(false)
     })
@@ -46,7 +43,7 @@ export default function PartRequest() {
 
   const handleSubmit = async () => {
     setError('')
-    if (!form.job_reference.trim()) return setError('Job reference is required.')
+    if (!project) return setError('Please select a project from the database.')
     if (!form.justification.trim()) return setError('Justification is required.')
     if (items.some(i => !i.part_id)) return setError('Please select a part for each line item.')
     if (!form.warehouse_id) return setError('Please select a warehouse.')
@@ -56,8 +53,8 @@ export default function PartRequest() {
       const { data: co, error: coErr } = await db
         .from('change_orders')
         .insert({
-          project_id:    form.project_id || null,
-          job_reference: form.job_reference,
+          project_id:    project?.id || null,
+          job_reference: project ? `${project.name}${project.job_number ? ' · ' + project.job_number : ''}` : '',
           justification: form.justification,
           warehouse_id:  form.warehouse_id,
           division:      form.division,
@@ -93,7 +90,7 @@ export default function PartRequest() {
       </div>
       <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 'var(--sp-2)' }}>
         <button onClick={() => navigate('/stock')} className="btn btn-secondary">Back to Stock</button>
-        <button onClick={() => { setSaved(false); setItems([{ part_id: '', quantity: 1, notes: '' }]); setForm(f => ({ ...f, job_reference: '', justification: '' })) }}
+        <button onClick={() => { setSaved(false); setItems([{ part_id: '', quantity: 1, notes: '' }]); setProject(null); setForm(f => ({ ...f, justification: '' })) }}
           className="btn btn-primary">New Request</button>
       </div>
     </div>
@@ -118,21 +115,12 @@ export default function PartRequest() {
           <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
         </div>
         <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
-          <div>
-            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
-              Project <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>(optional)</span>
-            </label>
-            <select value={form.project_id} onChange={e => setForm(f => ({ ...f, project_id: e.target.value }))}>
-              <option value="">— No project —</option>
-              {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` · ${p.job_number}` : ''}</option>)}
-            </select>
-          </div>
-          <div>
-            <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
-              Job Reference <span style={{ color: 'var(--error)' }}>*</span>
-            </label>
-            <input value={form.job_reference} onChange={e => setForm(f => ({ ...f, job_reference: e.target.value }))} placeholder="e.g. Job #1042 – Clearwater High School" />
-          </div>
+          <ProjectPicker
+            value={project}
+            onChange={setProject}
+            label="Project / Job"
+            required
+          />
           <div>
             <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
               Fulfillment Warehouse <span style={{ color: 'var(--error)' }}>*</span>
