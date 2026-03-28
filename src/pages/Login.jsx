@@ -107,15 +107,20 @@ export default function Login() {
       return
     }
     // Check if user has a PIN set
-    const { data: profile } = await db.from('profiles').select('pin_hash').eq('id', data.session.user.id).single()
-    if (!profile?.pin_hash) {
-      // No PIN — offer to set one
-      setPendingSession(data.session)
-      setMode('setup-pin')
-      setLoading(false)
-    } else {
-      navigate(from, { replace: true })
-    }
+    try {
+      const { data: profile, error: profileErr } = await db
+        .from('profiles').select('pin_hash').eq('id', data.session.user.id).single()
+      if (!profileErr && !profile?.pin_hash) {
+        // No PIN set — always prompt to create one
+        setPendingSession(data.session)
+        setPinStep('enter')
+        setFirstPin('')
+        setMode('setup-pin')
+        setLoading(false)
+        return
+      }
+    } catch (_) {}
+    navigate(from, { replace: true })
   }
 
   // ── PIN login ─────────────────────────────────────────────────────────────

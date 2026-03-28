@@ -290,6 +290,7 @@ export default function App() {
             <Route path="/warehouse-hq/add-part"                                  element={<AddEditPart />} />
             <Route path="/warehouse-hq/transfer"                                  element={<InventoryTransfer />} />
             <Route path="/warehouse-hq/part/:id"                                  element={<PartDetail />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/warehouse-hq/part/:id/edit"                             element={<AddEditPart />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
