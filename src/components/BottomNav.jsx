@@ -14,7 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt,
+  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt, CurrencyDollar,
 } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 

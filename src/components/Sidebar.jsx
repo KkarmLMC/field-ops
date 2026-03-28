@@ -3,7 +3,7 @@ import {
   PencilSimple, SquaresFour, HardHat, MagnifyingGlass,
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
-  BookOpen, ChartBar, Rows, Package, Receipt,
+  BookOpen, ChartBar, Rows, Package, Receipt, CurrencyDollar,
 } from '@phosphor-icons/react'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────

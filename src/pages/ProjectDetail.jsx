@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   MapPin, Buildings, CalendarBlank, Shield, FileText, User,
   Phone, Briefcase, Lightning, MagnifyingGlass, Wrench, ClipboardText,
-  CheckCircle, Warning, Clock, CaretRight, Plus,
+  CheckCircle, Warning, Clock, CaretRight, Plus, CurrencyDollar,
+  TrendUp, Receipt, ArrowRight,
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase'
 import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/mockData.js'
@@ -129,6 +130,7 @@ export default function ProjectDetail() {
   const [reports, setReports]         = useState([])
   const [submissions, setSubmissions] = useState([])
   const [loading, setLoading]         = useState(true)
+  const [jobCost, setJobCost]         = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -138,12 +140,30 @@ export default function ProjectDetail() {
           db.from('daily_field_logs').select('*').eq('project_id', id).order('report_date', { ascending: false }).range(0, 24),
           db.from('form_submissions').select('*').eq('project_id', id).order('created_at', { ascending: false }).range(0, 24),
         ])
-        // Use Supabase data if found, otherwise fall back to mock
         setProject(p || PROJECTS.find(x => x.id === id) || null)
         setReports(r?.length ? r : (MOCK_REPORTS || []).filter(x => x.project_id === id))
         setSubmissions(s?.length ? s : (MOCK_SUBMISSIONS || []).filter(x => x.project_id === id))
+
+        // Job cost data
+        const [{ data: expenses }, { data: soData }] = await Promise.all([
+          db.from('expense_reports').select('type, grand_total, status').eq('project_id', id),
+          db.from('purchase_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', p?.job_number || ''),
+        ])
+        const logs = r || []
+        setJobCost({
+          totalHours:    logs.reduce((s, l) => s + (parseFloat(l.hours_worked) || 0), 0),
+          totalMiles:    logs.reduce((s, l) => s + (parseFloat(l.miles_driven) || 0), 0),
+          totalDriveTime:logs.reduce((s, l) => s + (parseFloat(l.drive_time)   || 0), 0),
+          crewDays:      logs.length,
+          avgCrew:       logs.length ? Math.round(logs.reduce((s, l) => s + (l.crew_on_site?.length || 0), 0) / logs.length) : 0,
+          expenseTotal:  (expenses || []).filter(e => e.type === 'expense').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
+          advanceTotal:  (expenses || []).filter(e => e.type === 'advance').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
+          expenseCount:  (expenses || []).length,
+          soTotal:       (soData || []).reduce((s, so) => s + (parseFloat(so.grand_total) || 0), 0),
+          materialsTotal:(soData || []).reduce((s, so) => s + (parseFloat(so.materials_total) || 0), 0),
+          installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0),
+        })
       } catch {
-        // Supabase unavailable — use mock data
         setProject(PROJECTS.find(x => x.id === id) || null)
         setReports((MOCK_REPORTS || []).filter(x => x.project_id === id))
         setSubmissions((MOCK_SUBMISSIONS || []).filter(x => x.project_id === id))
@@ -375,6 +395,92 @@ export default function ProjectDetail() {
                 </span>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* ── Job Cost Overview ─────────────────────────────────────────── */}
+        {jobCost && (
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+            {/* Header */}
+            <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+                <CurrencyDollar size={15} style={{ color: 'rgba(255,255,255,0.7)' }} />
+                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
+              </div>
+              {project.contract_value > 0 && (
+                <span style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+                  Contract: ${Number(project.contract_value).toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                </span>
+              )}
+            </div>
+
+            {/* Field stats row */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1px', background: 'var(--border-l)' }}>
+              {[
+                { label: 'Hours On-Site',  value: `${jobCost.totalHours}h` },
+                { label: 'Miles Driven',   value: jobCost.totalMiles.toLocaleString() },
+                { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
+              ].map(s => (
+                <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--sp-3) var(--sp-4)' }}>
+                  <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 800, color: 'var(--text-1)' }}>{s.value}</div>
+                  <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Cost breakdown */}
+            <div style={{ padding: 'var(--sp-3) var(--sp-4)' }}>
+              {[
+                { label: 'Materials',     value: jobCost.materialsTotal,  color: '#1D4ED8' },
+                { label: 'Installation',  value: jobCost.installTotal,    color: '#7C3AED' },
+                { label: 'Field Expenses',value: jobCost.expenseTotal,    color: '#D97706' },
+                { label: 'Advances Issued',value: jobCost.advanceTotal,   color: '#64748B' },
+              ].filter(r => r.value > 0).map((r, i, arr) => (
+                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-2) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)' }}>{r.label}</span>
+                  </div>
+                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>
+                    ${r.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Margin */}
+            {project.contract_value > 0 && (() => {
+              const totalCost = jobCost.materialsTotal + jobCost.installTotal + jobCost.expenseTotal
+              const margin = project.contract_value - totalCost
+              const marginPct = ((margin / project.contract_value) * 100).toFixed(1)
+              const isPositive = margin >= 0
+              return (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-3) var(--sp-4)', background: isPositive ? '#F0FDF4' : '#FEF2F2', borderTop: '2px solid var(--border-l)' }}>
+                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                    {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
+                  </span>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 'var(--fs-md)', fontWeight: 800, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                      ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                    </div>
+                    <div style={{ fontSize: 'var(--fs-xs)', color: isPositive ? '#16A34A' : '#DC2626', fontWeight: 600 }}>
+                      {isPositive ? '+' : '-'}{Math.abs(marginPct)}%
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+
+            {/* Quick link to expenses */}
+            <button onClick={() => navigate('/expenses')}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)' }}>
+              <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
+                {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
+              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--navy)' }}>
+                View Expenses <CaretRight size={12} />
+              </div>
+            </button>
           </div>
         )}
 

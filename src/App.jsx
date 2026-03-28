@@ -28,6 +28,9 @@ const WarehouseDetail  = lazy(() => import('./pages/WarehouseDetail'))
 const PurchaseOrders   = lazy(() => import('./pages/PurchaseOrders'))
 const PODetail         = lazy(() => import('./pages/PODetail'))
 const PONew            = lazy(() => import('./pages/PONew'))
+const Expenses         = lazy(() => import('./pages/Expenses'))
+const ExpenseNew       = lazy(() => import('./pages/ExpenseNew'))
+const ExpenseDetail    = lazy(() => import('./pages/ExpenseDetail'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
 const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
@@ -70,6 +73,10 @@ function getPageMeta(pathname) {
     return { title: 'New Part', parent: '/warehouse-hq' }
   if (pathname === '/warehouse-hq/transfer')
     return { title: 'Transfer Stock', parent: '/warehouse-hq' }
+  if (pathname === '/expenses/new')
+    return { title: 'New Expense', parent: '/expenses' }
+  if (/^\/expenses\/[^/]+$/.test(pathname) && pathname !== '/expenses/new')
+    return { title: 'Expense Detail', parent: '/expenses' }
   if (pathname === '/sales-orders/new')
     return { title: 'New Sales Order', parent: '/sales-orders' }
   if (/^\/sales-orders\/[^/]+$/.test(pathname))
@@ -234,6 +241,9 @@ export default function App() {
             <Route path="/warehouse-hq/iq"                                    element={<WarehouseIQ />} />
             <Route path="/warehouse-hq/inventory"                                 element={<InventoryStock />} />
             <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
+            <Route path="/expenses"                                            element={<Expenses />} />
+            <Route path="/expenses/new"                                        element={<ExpenseNew />} />
+            <Route path="/expenses/:id"                                         element={<ExpenseDetail />} />
             <Route path="/sales-orders"                           element={<PurchaseOrders />} />
             <Route path="/sales-orders/new"                       element={<PONew />} />
             <Route path="/sales-orders/:id"                       element={<PODetail />} />
