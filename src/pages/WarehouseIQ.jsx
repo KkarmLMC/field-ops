@@ -251,7 +251,7 @@ export default function WarehouseIQ() {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--sp-3) var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
               <Receipt size={15} style={{ color:'var(--navy)' }} />
-              <span style={{ fontSize:'var(--fs-sm)', fontWeight:700 }}>Active Purchase Orders</span>
+              <span style={{ fontSize:'var(--fs-sm)', fontWeight:700 }}>Active Sales Orders</span>
               <span style={{ fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:'var(--r-full)', background:'var(--hover)', color:'var(--text-3)' }}>{pos.length}</span>
             </div>
             <button onClick={() => navigate('/purchase-orders')}

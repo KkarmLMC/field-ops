@@ -407,7 +407,7 @@ export default function WarehouseDetail() {
         </div>
       </div>
 
-      {/* Purchase Orders for this warehouse */}
+      {/* Sales Orders for this warehouse */}
       {warehousePOs.length > 0 && (() => {
         const STATUS_COLORS = {
           draft:     { color: '#64748B', bg: '#F1F5F9' },
@@ -421,7 +421,7 @@ export default function WarehouseDetail() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', borderBottom: '1px solid var(--border-l)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
                 <Receipt size={16} style={{ color: 'var(--navy)' }} />
-                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Purchase Orders</span>
+                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Sales Orders</span>
                 <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', background: 'var(--hover)', padding: '2px 8px', borderRadius: 'var(--r-full)', fontWeight: 600 }}>
                   {warehousePOs.length}
                 </span>

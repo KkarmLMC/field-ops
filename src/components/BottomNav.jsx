@@ -48,7 +48,7 @@ const FIELD_ITEMS = [
   { id: 'forms',           path: '/forms',             Icon: FileText,        label: 'Report Forms',   exactMatch: true },
   { id: 'inspections',     path: '/inspections',       Icon: MagnifyingGlass, label: 'Inspections'     },
   { id: 'warehouse-hq',   path: '/warehouse-hq',      Icon: Package,         label: 'Warehouse HQ',   exactMatch: true },
-  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Purchase Orders', exactMatch: true },
+  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Sales Orders', exactMatch: true },
   { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
   { id: 'jsa',             path: '/forms/jsa',         Icon: HardHat,         label: 'JSA'             },
 ]
@@ -60,7 +60,7 @@ const MGMT_ITEMS = [
   { id: 'fieldlog',        path: '/daily-field-log',  Icon: BookOpen,        label: 'Daily Field Log' },
   { id: 'forms',           path: '/forms',             Icon: FileText,        label: 'Report Forms',   exactMatch: true },
   { id: 'warehouse-hq',   path: '/warehouse-hq',      Icon: Package,         label: 'Warehouse HQ',   exactMatch: true },
-  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Purchase Orders', exactMatch: true },
+  { id: 'purchase-orders', path: '/purchase-orders',   Icon: Receipt,         label: 'Sales Orders', exactMatch: true },
   { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
   { id: 'technicians',     path: '/technicians',       Icon: Users,           label: 'Technicians'     },
 ]

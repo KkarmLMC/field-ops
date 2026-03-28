@@ -46,7 +46,7 @@ const PAGE_META = {
   '/warehouse-hq/iq':        { title: 'Warehouse IQ',      parent: '/warehouse-hq' },
   '/warehouse-hq/overview':  { title: 'Warehouse Overview', parent: '/warehouse-hq' },
   '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
-  '/purchase-orders': { title: 'Purchase Orders', parent: null },
+  '/purchase-orders': { title: 'Sales Orders', parent: null },
 }
 
 function getPageMeta(pathname) {
@@ -71,9 +71,9 @@ function getPageMeta(pathname) {
   if (pathname === '/warehouse-hq/transfer')
     return { title: 'Transfer Stock', parent: '/warehouse-hq' }
   if (pathname === '/purchase-orders/new')
-    return { title: 'New Purchase Order', parent: '/purchase-orders' }
+    return { title: 'New Sales Order', parent: '/purchase-orders' }
   if (/^\/purchase-orders\/[^/]+$/.test(pathname))
-    return { title: 'Purchase Order', parent: '/purchase-orders' }
+    return { title: 'Sales Order', parent: '/purchase-orders' }
   if (/^\/ warehouse-hq\/warehouse\/[^/]+$/.test(pathname))
     return { title: 'Warehouse', parent: '/warehouse-hq' }
   if (/^\/ warehouse-hq\/part\/[^/]+\/edit$/.test(pathname))

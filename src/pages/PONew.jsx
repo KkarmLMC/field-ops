@@ -501,7 +501,7 @@ export default function PONew() {
       {/* Page header */}
       <div style={{ marginBottom: 'var(--sp-5)' }}>
         <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>PURCHASE ORDERS</div>
-        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>New Purchase Order</div>
+        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>New Sales Order</div>
       </div>
 
       {/* Division selector */}

@@ -344,7 +344,7 @@ export default function Inventory() {
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
-                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Purchase Orders</span>
+                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
                   <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: '#FEF3C7', color: '#D97706' }}>
                     {submitted.length} need review
