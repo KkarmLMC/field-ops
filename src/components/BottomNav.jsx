@@ -14,7 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt, CurrencyDollar, Warehouse,
+  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt, CurrencyDollar, Warehouse, UserCircle,
 } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 
@@ -53,6 +53,7 @@ const FIELD_ITEMS = [
   { id: 'expenses',        path: '/expenses',          Icon: CurrencyDollar,  label: 'Expenses',       exactMatch: true },
   { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
   { id: 'jsa',             path: '/forms/jsa',         Icon: HardHat,         label: 'JSA'             },
+  { id: 'profile',         path: '/profile',            Icon: UserCircle,      label: 'Profile',        exactMatch: true },
 ]
 
 const MGMT_ITEMS = [
@@ -65,6 +66,7 @@ const MGMT_ITEMS = [
   { id: 'sales-orders', path: '/sales-orders',   Icon: Receipt,         label: 'Sales Orders', exactMatch: true },
   { id: 'risk',            path: '/risk-assessment',   Icon: ChartBar,        label: 'Assessment'      },
   { id: 'technicians',     path: '/technicians',       Icon: Users,           label: 'Technicians'     },
+  { id: 'profile',         path: '/profile',            Icon: UserCircle,      label: 'Profile',        exactMatch: true },
 ]
 
 // ─── Active path detection ────────────────────────────────────────────────────
