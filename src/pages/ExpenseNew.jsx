@@ -5,7 +5,7 @@ import { db } from '../lib/supabase.js'
 
 function Label({ children, required }) {
   return (
-    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
       {children}{required && <span style={{ color: '#B91C1C', marginLeft: 3 }}>*</span>}
     </label>
   )
@@ -300,7 +300,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {/* Header */}
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
-              <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
+              <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
             ))}
           </div>
           {/* Rows */}
@@ -326,8 +326,8 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
 
       <Card title="Mileage Log">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-3)' }}>DATE</div>
-          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-3)', textAlign: 'right' }}>MILES</div>
+          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)' }}>DATE</div>
+          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', textAlign: 'right' }}>MILES</div>
         </div>
         {mileage.map(m => (
           <div key={m._key} style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>
@@ -453,7 +453,7 @@ export default function ExpenseNew() {
   return (
     <div className="page-content fade-in">
       <div style={{ marginBottom: 'var(--sp-5)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>New {typeLabel}</div>

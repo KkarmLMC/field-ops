@@ -145,7 +145,7 @@ export default function FormPage() {
       {/* Action bar — ref tag + Edit Form button */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-4)' }}>
         {schema.ref
-          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{schema.ref}</div>
+          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-2)', textTransform:'uppercase', letterSpacing:'0.08em' }}>{schema.ref}</div>
           : <div />
         }
         <button

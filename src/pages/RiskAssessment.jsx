@@ -22,7 +22,7 @@ const S = {
   cardBody: { padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' },
   label: {
     fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)',
-    color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em',
+    color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.1em',
   },
   row: {
     display: 'flex', alignItems: 'center', gap: 'var(--sp-3)',

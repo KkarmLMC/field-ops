@@ -98,7 +98,7 @@ export default function StockView() {
 
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-5)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>FIELD</div>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>FIELD</div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Stock Lookup</div>
         <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>Check parts availability across all warehouses</div>
       </div>

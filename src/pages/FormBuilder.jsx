@@ -277,7 +277,7 @@ function TypePickerSheet({ onPick, onClose }) {
         <div style={{ fontSize:'var(--fs-md)', fontWeight:700, marginBottom:'var(--sp-4)' }}>Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
           <div key={group.label} style={{ marginBottom:'var(--sp-4)' }}>
-            <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-2)' }}>
+            <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-2)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'var(--sp-2)' }}>
               {group.label}
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--sp-2)' }}>
@@ -408,7 +408,7 @@ function FormEditor({ form, onSave, onCancel }) {
     <div className="page-content fade-in">
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-4)' }}>
         <div>
-          <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', textTransform:'uppercase', marginBottom:'var(--sp-1)' }}>{form.ref || form.category}</div>
+          <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-2)', textTransform:'uppercase', marginBottom:'var(--sp-1)' }}>{form.ref || form.category}</div>
           <div style={{ fontSize:'var(--fs-lg)', fontWeight:700 }}>{form.title}</div>
         </div>
         <div style={{ display:'flex', gap:'var(--sp-2)' }}>
@@ -424,7 +424,7 @@ function FormEditor({ form, onSave, onCancel }) {
 
       {/* Form mode selector */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)', padding:'var(--sp-3) var(--sp-4)', background:'var(--surface-raised)', borderRadius:'var(--r-lg)', border:'1px solid var(--border-l)' }}>
-        <span style={{ fontSize:'var(--fs-xs)', fontWeight:700, color:'var(--text-3)', textTransform:'uppercase', letterSpacing:'0.06em', flexShrink:0 }}>Form Mode</span>
+        <span style={{ fontSize:'var(--fs-xs)', fontWeight:700, color:'var(--text-2)', textTransform:'uppercase', letterSpacing:'0.06em', flexShrink:0 }}>Form Mode</span>
         <div style={{ display:'flex', gap:'var(--sp-2)', flex:1 }}>
           {[
             { value:'scroll', label:'Scroll' },

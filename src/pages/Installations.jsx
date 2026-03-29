@@ -59,7 +59,7 @@ function StagePill({ stageKey, count, active, onClick }) {
       <div style={{ fontSize: 20, fontWeight: 700, color: active ? cfg.color : 'var(--text-1)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
         {count}
       </div>
-      <div style={{ fontSize: 10, fontWeight: 600, color: active ? cfg.color : 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>
+      <div style={{ fontSize: 10, fontWeight: 600, color: active ? cfg.color : 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>
         {cfg.short || cfg.label}
       </div>
     </button>
@@ -111,7 +111,7 @@ function MgmtRow({ p, navigate }) {
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 9, color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+          <span style={{ fontSize: 9, color: 'var(--text-2)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (

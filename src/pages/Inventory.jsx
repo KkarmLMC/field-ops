@@ -10,7 +10,7 @@ import { db } from '../lib/supabase.js'
 // ─── Shared label ─────────────────────────────────────────────────────────────
 function Label({ children }) {
   return (
-    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
       {children}
     </label>
   )
@@ -59,7 +59,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
-            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Location</div>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Location</div>
           </div>
 
           <div style={{ marginBottom: 'var(--sp-3)' }}>
@@ -74,7 +74,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
-            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Contact</div>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Contact</div>
           </div>
 
           <div style={{ marginBottom: 'var(--sp-3)' }}>
@@ -289,7 +289,7 @@ export default function Inventory() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--sp-4)', marginBottom: 'var(--sp-5)', flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>WAREHOUSE HQ</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>WAREHOUSE HQ</div>
           <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Warehouse HQ</div>
         </div>
         <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
@@ -449,7 +449,7 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', background: 'var(--hover)', borderRadius: 'var(--r-full)', padding: '2px 10px' }}>
+              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', background: 'var(--hover)', borderRadius: 'var(--r-full)', padding: '2px 10px' }}>
                 #{idx + 1}
               </div>
             </div>
