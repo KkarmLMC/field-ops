@@ -38,6 +38,7 @@ const ExpenseDetail    = lazy(() => import('./pages/ExpenseDetail'))
 const PartDetail     = lazy(() => import('./pages/PartDetail'))
 const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
+const Profile           = lazy(() => import('./pages/Profile'))
 
 // ─── Route metadata ────────────────────────────────────────────────────────────
 const PAGE_META = {
