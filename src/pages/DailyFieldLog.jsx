@@ -632,7 +632,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             <CaretDown
               size={14}
               style={{
-                color: 'var(--text-3)',
+                color: 'var(--text-2)',
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.18s',
                 flexShrink: 0,

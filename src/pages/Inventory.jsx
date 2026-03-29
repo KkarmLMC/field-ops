@@ -351,7 +351,7 @@ export default function Inventory() {
                   </span>
                 )}
               </div>
-              <CaretRight size={13} style={{ color: 'var(--text-3)' }} />
+              <CaretRight size={<CaretRight size={13} style={{ color: 'var(--text-2)' }}} />
             </button>
 
             {/* Stat row */}
@@ -433,7 +433,7 @@ export default function Inventory() {
                 transition: 'box-shadow 0.15s ease',
               }}
             >
-              <DotsSixVertical size={22} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              <DotsSixVertical size={22} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
               <div style={{
                 width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-lg)',
                 background: 'var(--navy)', display: 'flex', alignItems: 'center',

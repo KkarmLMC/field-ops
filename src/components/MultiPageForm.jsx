@@ -337,7 +337,7 @@ export default function MultiPageForm({
                 </div>
               </div>
 
-              <CaretRight size={16} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              <CaretRight size={16} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
             </button>
           )
         })}

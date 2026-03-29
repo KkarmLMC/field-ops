@@ -43,8 +43,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                   {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
                 {hasChildren
-                  ? <CaretDown size={12} style={{ color:'var(--text-3)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
-                  : <CaretRight size={12} style={{ color:'var(--text-3)', flexShrink:0 }} />
+                  ? <CaretDown size={12} style={{ color:'var(--text-2)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
+                  : <CaretRight size={12} style={{ color:'var(--text-2)', flexShrink:0 }} />
                 }
               </button>
               {hasChildren && isExpanded && (

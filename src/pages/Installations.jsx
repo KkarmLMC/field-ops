@@ -253,7 +253,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
           </div>
         )}
       </div>
-      <ArrowRight size={12} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+      <ArrowRight size={12} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
     </div>
   )
 }

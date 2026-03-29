@@ -65,7 +65,7 @@ function ReportCard({ report, project, onClick }) {
             ${Number(report.grand_total).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         )}
-        <CaretRight size={13} style={{ color: 'var(--text-3)', marginTop: 2 }} />
+        <CaretRight size={13} style={{ color: 'var(--text-2)', marginTop: 2 }} />
       </div>
     </button>
   )
