@@ -44,6 +44,22 @@ const FOOTER_ITEMS = [
 ]
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
+// ── Live clock ────────────────────────────────────────────────────────────────
+function Clock() {
+  const [t, setT] = useState(new Date())
+  useEffect(() => {
+    const i = setInterval(() => setT(new Date()), 1000)
+    return () => clearInterval(i)
+  }, [])
+  return (
+    <span style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
+      {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+      {' · '}
+      {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+    </span>
+  )
+}
+
 function pathMatch(itemPath, currentPath) {
   return currentPath === itemPath || currentPath.startsWith(itemPath + '/')
 }
@@ -170,7 +186,16 @@ export default function Sidebar({ collapsed, onToggle }) {
 
         {/* Footer */}
         <div className="sidebar-footer-nav">
-          {!collapsed && <div className="sidebar-section-label">ACCOUNT</div>}
+          {!collapsed && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-2) 0.625rem var(--sp-1)' }}>
+              <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
+                <Clock />
+              </div>
+            </div>
+          )}
+          {collapsed && <div style={{ height: 'var(--sp-1)' }} />}
 
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>
