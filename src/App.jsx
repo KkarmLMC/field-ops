@@ -201,7 +201,7 @@ function PageTransition({ children }) {
 // ─── Root ──────────────────────────────────────────────────────────────────────
 // ─── Auth guard ───────────────────────────────────────────────────────────────
 function RequireAuth({ children }) {
-  const { session, loading } = useAuth()
+  const { session, loading, profile } = useAuth()
   const location = useLocation()
 
   if (loading) return (
@@ -230,6 +230,16 @@ export default function App() {
     <Suspense fallback={null}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Suspense>
+  )
+
+  // PIN guard — if authenticated but no PIN set, force PIN setup before app access
+  if (session && profile !== undefined && profile !== null && !profile?.pin_hash) return (
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/login" element={<Login forcePinSetup session={session} />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Suspense>

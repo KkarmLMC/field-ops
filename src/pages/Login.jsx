@@ -96,7 +96,7 @@ function PinPad({ onPin, loading, error }) {
 }
 
 // ─── Main Login Page ──────────────────────────────────────────────────────────
-export default function Login() {
+export default function Login({ forcePinSetup = false, session: forcedSession = null }) {
   const navigate = useNavigate()
   const location = useLocation()
   const { signIn } = useAuth()
@@ -112,6 +112,16 @@ export default function Login() {
   const [firstPin, setFirstPin] = useState('')
   const [pendingSession, setPendingSession] = useState(null) // user after password login, before PIN set
 
+  // ── Force PIN setup when app-level guard redirects here ─────────────────
+  useState(() => {
+    if (forcePinSetup && forcedSession) {
+      setPendingSession(forcedSession)
+      setPinStep('enter')
+      setFirstPin('')
+      setMode('setup-pin')
+    }
+  })
+
   // ── Password sign in ──────────────────────────────────────────────────────
   const handlePasswordLogin = async (e) => {
     e.preventDefault()
@@ -123,12 +133,12 @@ export default function Login() {
       setLoading(false)
       return
     }
-    // Check if user has a PIN set
+    // Check if user has a PIN set — block navigation until PIN is confirmed
     try {
-      const { data: profile, error: profileErr } = await db
+      const { data: profile } = await db
         .from('profiles').select('pin_hash').eq('id', data.session.user.id).single()
-      if (!profileErr && !profile?.pin_hash) {
-        // No PIN set — always prompt to create one
+      if (!profile?.pin_hash) {
+        // No PIN — mandatory setup before entering the app
         setPendingSession(data.session)
         setPinStep('enter')
         setFirstPin('')
@@ -136,7 +146,15 @@ export default function Login() {
         setLoading(false)
         return
       }
-    } catch (_) {}
+    } catch (_) {
+      // Profile fetch failed — require PIN setup as a safe default
+      setPendingSession(data.session)
+      setPinStep('enter')
+      setFirstPin('')
+      setMode('setup-pin')
+      setLoading(false)
+      return
+    }
     navigate(from, { replace: true })
   }
 
@@ -182,9 +200,6 @@ export default function Login() {
     navigate(from, { replace: true })
   }
 
-  // ── Skip PIN setup ─────────────────────────────────────────────────────────
-  const skipPin = () => navigate(from, { replace: true })
-
   return (
     <div className="login-page">
       {/* Logo */}
@@ -211,15 +226,12 @@ export default function Login() {
               </div>
               <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>
                 {pinStep === 'enter'
-                  ? 'Choose a 6-digit PIN for quick access'
+                  ? (forcePinSetup ? 'Create a PIN to continue' : 'A PIN is required to access this app')
                   : 'Enter your PIN again to confirm'}
               </div>
             </div>
             <PinPad onPin={handlePinSetup} loading={loading} error={error} />
-            <button onClick={skipPin}
-              style={{ width: '100%', marginTop: 'var(--sp-4)', padding: 'var(--sp-2)', border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-sm)', cursor: 'pointer', fontFamily: 'var(--font)' }}>
-              Skip for now
-            </button>
+
           </>
         )}
 
