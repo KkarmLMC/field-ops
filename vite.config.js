@@ -2,9 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  define: {
-    '__BUILD_TIME__': '1774750164',
-  },
   plugins: [react()],
   build: {
     rollupOptions: {
