@@ -147,7 +147,7 @@ export default function ProjectDetail() {
         // Job cost data
         const [{ data: expenses }, { data: soData }] = await Promise.all([
           db.from('expense_reports').select('type, grand_total, status').eq('project_id', id),
-          db.from('purchase_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', p?.job_number || ''),
+          db.from('sales_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', p?.job_number || ''),
         ])
         const logs = r || []
         setJobCost({

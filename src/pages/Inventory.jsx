@@ -234,7 +234,7 @@ export default function Inventory() {
     Promise.all([
       db.from('warehouses').select('*').eq('is_active', true).order('sort_order'),
       db.from('inventory_levels').select('*, parts(sku, unit_cost)'),
-      db.from('purchase_orders').select('id, po_number, customer_name, project_name, status, grand_total, division, po_date').in('status', ['draft','submitted','published']).order('created_at', { ascending: false }),
+      db.from('sales_orders').select('id, so_number, customer_name, project_name, status, grand_total, division, so_date').in('status', ['draft','submitted','published']).order('created_at', { ascending: false }),
     ]).then(([{ data: wh }, { data: lvl }, { data: pos }]) => {
       setWarehouses(wh || [])
       setLevels(lvl || [])
@@ -381,7 +381,7 @@ export default function Inventory() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
-                  <div style={{ fontSize: 10, color: 'var(--text-3)' }}>{po.project_name || po.po_number}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-3)' }}>{po.project_name || po.so_number}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
                   <span style={{
