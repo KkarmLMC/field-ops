@@ -76,7 +76,7 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
           return (
             <button
               key={child.path}
-              className={`sidebar-item sidebar-sub-item ${active ? 'sidebar-item-active' : ''}`}
+              className={`sidebar-item sidebar-sub-item ${active ? 'sidebar-item--active' : ''}`}
               onClick={() => goTo(child.path)}
               title={collapsed ? child.label : undefined}
               style={{ marginBottom: 1 }}
@@ -100,7 +100,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
     <>
       {/* Parent row — always navigates to its own path */}
       <button
-        className={`sidebar-item ${active ? 'sidebar-item-active' : ''}`}
+        className={`sidebar-item ${active ? 'sidebar-item--active' : ''}`}
         onClick={() => goTo(item.path)}
         title={collapsed ? item.label : undefined}
       >
