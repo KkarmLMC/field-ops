@@ -53,7 +53,7 @@ function Clock() {
     return () => clearInterval(i)
   }, [])
   return (
-    <span style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
+    <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
       {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
       {' · '}
       {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}

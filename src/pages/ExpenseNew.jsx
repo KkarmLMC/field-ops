@@ -111,9 +111,9 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       <Card title="Per Diem">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'end', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600 }}>Description</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'right' }}>Persons</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'right' }}>Days</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Persons</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Days</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Meals <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($68/day)</span></div>
@@ -130,9 +130,9 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         {/* Hotel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Hotel <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($150/night)</span></div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Rooms</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Nights</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Rooms</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Nights</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-3)' }}>
           <div />
@@ -144,7 +144,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Car Rental <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($125/day)</span></div>
           <div />
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Days</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Days</div>
           <div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-3)' }}>
@@ -156,9 +156,9 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         {/* Fuel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Fuel</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Miles</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Mi/Gal</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>$/Gal</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Miles</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Mi/Gal</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>$/Gal</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-3)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, textAlign: 'right', gridColumn: '1' }}>${fuelTotal.toFixed(2)}</div>
@@ -169,7 +169,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         {/* Parking */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Tampa Airport Parking <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($18/day)</span></div>
-          <div /><div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Days</div><div />
+          <div /><div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Days</div><div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-3)' }}>
           <div />
@@ -180,8 +180,8 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         {/* Airline baggage */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-2)' }}>
           <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>Airline Baggage Fees <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($80/flight)</span></div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Bags</div>
-          <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center' }}>Flights</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Bags</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Flights</div>
           <div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--sp-2)', alignItems: 'center', marginBottom: 'var(--sp-3)' }}>
@@ -300,7 +300,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {/* Header */}
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
-              <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
+              <div key={h} style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
             ))}
           </div>
           {/* Rows */}
@@ -326,8 +326,8 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
 
       <Card title="Mileage Log">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)' }}>DATE</div>
-          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', textAlign: 'right' }}>MILES</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)' }}>DATE</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textAlign: 'right' }}>MILES</div>
         </div>
         {mileage.map(m => (
           <div key={m._key} style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>

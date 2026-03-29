@@ -153,7 +153,7 @@ export default function PartRequest() {
       <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
+          <span style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
         <div style={{ padding: 'var(--sp-3)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
           {items.map((item, idx) => (
@@ -193,7 +193,7 @@ export default function PartRequest() {
         style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--fs-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
         {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
       </button>
-      <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+      <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
         This request goes to Mission Control for management review before any parts are pulled.
       </div>
     </div>

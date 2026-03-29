@@ -60,7 +60,7 @@ function TypePill({ typeKey, count, active, onClick }) {
         border: active ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
         background: active ? cfg.bg : 'var(--surface)',
         color: active ? cfg.color : 'var(--text-2)',
-        fontSize: 12, fontWeight: active ? 600 : 500,
+        fontSize: 'var(--fs-sm)', fontWeight: active ? 600 : 500,
         transition: 'all 0.15s',
       }}
     >
@@ -69,7 +69,7 @@ function TypePill({ typeKey, count, active, onClick }) {
       <span style={{
         background: active ? cfg.color : 'var(--border)',
         color: active ? '#fff' : 'var(--text-2)',
-        borderRadius: 10, padding: '0 5px', fontSize: 10, fontWeight: 700, lineHeight: '16px',
+        borderRadius: 10, padding: '0 5px', fontSize: 'var(--fs-xs)', fontWeight: 700, lineHeight: '16px',
       }}>{count}</span>
     </button>
   )
@@ -96,11 +96,11 @@ function ReportRow({ r }) {
 
       {/* Main info */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: 'var(--text-1)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {r.project_name}
         </div>
-        <div style={{ fontSize: 11, color: 'var(--text-3)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-          <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 4, fontWeight: 600, fontSize: 10 }}>{type.label}</span>
+        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 4, fontWeight: 600, fontSize: 'var(--fs-xs)' }}>{type.label}</span>
           <span>{r.job_number}</span>
           <span>·</span>
           <span>{r.submitted_by}</span>
@@ -111,7 +111,7 @@ function ReportRow({ r }) {
 
       {/* Status badge */}
       <span style={{
-        fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 6, flexShrink: 0,
+        fontSize: 'var(--fs-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 6, flexShrink: 0,
         background: status.bg, color: status.color, whiteSpace: 'nowrap',
       }}>
         {status.label}
@@ -121,7 +121,7 @@ function ReportRow({ r }) {
       <button style={{
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
         padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border)',
-        background: 'var(--surface)', color: 'var(--text-2)', fontSize: 12, cursor: 'pointer',
+        background: 'var(--surface)', color: 'var(--text-2)', fontSize: 'var(--fs-sm)', cursor: 'pointer',
       }}>
         <Eye size={12} />
         View
@@ -226,7 +226,7 @@ export default function Reports() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
               padding: '3px 9px', borderRadius: 20, cursor: 'pointer',
-              fontSize: 11, fontWeight: activeStatus === key ? 600 : 500,
+              fontSize: 'var(--fs-xs)', fontWeight: activeStatus === key ? 600 : 500,
               border: activeStatus === key ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
               background: activeStatus === key ? cfg.bg : 'var(--surface)',
               color: activeStatus === key ? cfg.color : 'var(--text-3)',
@@ -237,7 +237,7 @@ export default function Reports() {
             <span style={{
               background: activeStatus === key ? cfg.color : 'var(--border)',
               color: activeStatus === key ? '#fff' : 'var(--text-2)',
-              borderRadius: 10, padding: '0 4px', fontSize: 10, fontWeight: 700, lineHeight: '15px',
+              borderRadius: 10, padding: '0 4px', fontSize: 'var(--fs-xs)', fontWeight: 700, lineHeight: '15px',
             }}>{statusCounts[key] || 0}</span>
           </button>
         ))}

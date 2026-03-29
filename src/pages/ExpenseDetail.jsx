@@ -130,14 +130,14 @@ export default function ExpenseDetail() {
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
+                <div key={h} style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             {lines.map(l => (
               <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--sp-2) var(--sp-4)', borderBottom: '1px solid var(--border-l)', minWidth: 800, alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600 }}>{l.vendor_description || '—'}</div>
-                  {l.line_date && <div style={{ fontSize: 10, color: 'var(--text-3)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
+                  {l.line_date && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
                 </div>
                 {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
                   <div key={f} style={{ textAlign: 'right', fontSize: 'var(--fs-xs)', color: l[f] > 0 ? 'var(--text-1)' : 'var(--text-3)', fontWeight: l[f] > 0 ? 600 : 400 }}>

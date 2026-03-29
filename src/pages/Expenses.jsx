@@ -17,7 +17,7 @@ const STATUS = {
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 10, fontWeight: 700, background: s.bg, color: s.color }}>
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )
@@ -39,7 +39,7 @@ function ReportCard({ report, project, onClick }) {
         width: 40, height: 40, borderRadius: 'var(--r-lg)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: report.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
-        fontSize: 9, fontWeight: 800,
+        fontSize: 'var(--fs-2xs)', fontWeight: 800,
         color: report.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
       }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
@@ -49,7 +49,7 @@ function ReportCard({ report, project, onClick }) {
           <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)' }}>
             {report.employee_name}
           </span>
-          <span style={{ fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 4,
+          <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4,
             background: isAdvance ? '#F0FDF4' : '#EFF6FF', color: isAdvance ? '#15803D' : '#1D4ED8' }}>
             {isAdvance ? 'ADVANCE' : 'EXPENSE'}
           </span>
@@ -131,7 +131,7 @@ export default function Expenses() {
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: div === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>{div}</span>
+                  <span style={{ fontSize: 'var(--fs-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: div === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>{div}</span>
                   <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
                 </button>
               ))}

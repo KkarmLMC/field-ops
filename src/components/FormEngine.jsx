@@ -275,7 +275,7 @@ function PhotoField({ value, onChange, readOnly }) {
             <img src={src} alt={`Photo ${i+1}`} style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'var(--r-md)' }} />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', fontSize:9, display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
+                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', fontSize:'var(--fs-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
             )}
           </div>
         ))}
@@ -539,7 +539,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
                 background: checked?'rgba(4,36,92,0.07)':'var(--surface)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
-                flexShrink:0, fontSize:9, color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
+                flexShrink:0, fontSize:'var(--fs-2xs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
               <span style={{ fontSize:'var(--fs-sm)', color:checked?'var(--text-1)':'var(--text-2)' }}>{opt}</span>
             </button>
           )

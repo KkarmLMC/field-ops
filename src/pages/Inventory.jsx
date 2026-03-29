@@ -346,7 +346,7 @@ export default function Inventory() {
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: '#FEF3C7', color: '#D97706' }}>
+                  <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: '#FEF3C7', color: '#D97706' }}>
                     {submitted.length} need review
                   </span>
                 )}
@@ -373,7 +373,7 @@ export default function Inventory() {
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
                 <div style={{
-                  fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
+                  fontSize: 'var(--fs-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
                   color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
                 }}>
@@ -381,11 +381,11 @@ export default function Inventory() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
-                  <div style={{ fontSize: 10, color: 'var(--text-3)' }}>{po.project_name || po.so_number}</div>
+                  <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{po.project_name || po.so_number}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
                   <span style={{
-                    fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)',
+                    fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)',
                     background: po.status === 'submitted' ? '#FEF3C7' : '#EFF6FF',
                     color: po.status === 'submitted' ? '#D97706' : '#1D4ED8',
                   }}>{po.status}</span>

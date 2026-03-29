@@ -55,7 +55,7 @@ function InfoRow({ icon: Icon, label, value }) {
     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
       <Icon size={14} style={{ color: 'var(--text-3)', marginTop: 1, flexShrink: 0 }} />
       <div>
-        <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
         <div style={{ fontSize: 'var(--fs-md)', color: 'var(--text-1)' }}>{value}</div>
       </div>
     </div>
@@ -88,7 +88,7 @@ function StagePipeline({ stage }) {
                   flexShrink: 0,
                 }} />
                 <span style={{
-                  fontSize: 9, fontWeight: isCurrent ? 700 : 500,
+                  fontSize: 'var(--fs-2xs)', fontWeight: isCurrent ? 700 : 500,
                   color: isCurrent ? cfg.color : isDone ? '#16A34A' : 'var(--text-3)',
                   whiteSpace: 'nowrap',
                 }}>
@@ -109,7 +109,7 @@ function StagePipeline({ stage }) {
       {isOffPipeline && (
         <div style={{ marginTop: 8 }}>
           <span style={{
-            fontSize: 11, fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
+            fontSize: 'var(--fs-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
             background: STAGE_CFG[stage]?.bg || 'var(--surface)',
             padding: '3px 10px', borderRadius: 20,
           }}>
@@ -213,12 +213,12 @@ export default function ProjectDetail() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <TypeIcon size={14} style={{ color: stageCfg.color }} />
-                <span style={{ fontSize: 11, fontWeight: 600, color: stageCfg.color }}>
+                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
               </div>
               <div style={{
-                fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+                fontSize: 'var(--fs-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                 color: stageCfg.color, background: stageCfg.bg,
                 border: `1px solid ${stageCfg.color}44`,
                 padding: '3px 10px', borderRadius: 20,
@@ -227,10 +227,10 @@ export default function ProjectDetail() {
               </div>
             </div>
             {/* Project name */}
-            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.2, marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.2, marginBottom: 4 }}>
               {project.name}
             </div>
-            <div style={{ fontSize: 12, color: 'var(--text-3)' }}>
+            <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>
               {project.customer_account}
               {project.job_number && (
                 <span style={{ fontFamily: 'var(--mono)', marginLeft: 8 }}>{project.job_number}</span>
@@ -245,8 +245,8 @@ export default function ProjectDetail() {
           {project.progress > 0 && (
             <div style={{ padding: '0 14px 14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 11, color: 'var(--text-3)', fontWeight: 500 }}>Progress</span>
-                <span style={{ fontSize: 11, fontFamily: 'var(--mono)', color: stageCfg.color, fontWeight: 700 }}>
+                <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 500 }}>Progress</span>
+                <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: stageCfg.color, fontWeight: 700 }}>
                   {project.progress}%
                 </span>
               </div>
@@ -268,13 +268,13 @@ export default function ProjectDetail() {
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: cfCfg.color }}>
+              <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: cfCfg.color }}>
                 Completion Form: {cfCfg.label}
               </span>
               {cfStatus === 'submitted' && (
                 <button
                   className="btn btn-secondary"
-                  style={{ fontSize: 11, padding: '3px 10px' }}
+                  style={{ fontSize: 'var(--fs-xs)', padding: '3px 10px' }}
                   onClick={() => navigate('/forms')}
                 >
                   Review →
@@ -319,7 +319,7 @@ export default function ProjectDetail() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 600, fontSize: 'var(--fs-lg)' }}>{tech.name}</div>
-                  <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 1 }}>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 1 }}>
                     {tech.license}
                     {tech.phone && ` · ${tech.phone}`}
                   </div>
@@ -364,7 +364,7 @@ export default function ProjectDetail() {
             <div className="card-header">
               <span className="card-title">Notes</span>
             </div>
-            <div style={{ padding: '10px 14px 14px', fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6 }}>
+            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6 }}>
               {project.notes}
             </div>
           </div>
@@ -378,7 +378,7 @@ export default function ProjectDetail() {
                 <span className="card-dot" style={{ background: 'var(--blue)' }} />
                 Daily Field Reports
               </span>
-              <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{reports.length}</span>
+              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>{reports.length}</span>
             </div>
             {reports.map(r => (
               <div key={r.id} className="project-item">
@@ -491,7 +491,7 @@ export default function ProjectDetail() {
                 <span className="card-dot" style={{ background: 'var(--red)' }} />
                 Completion Forms
               </span>
-              <span style={{ fontSize: 12, color: 'var(--text-3)' }}>{submissions.length}</span>
+              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>{submissions.length}</span>
             </div>
             {submissions.map(s => {
               const sCfg = COMPLETION_FORM_CFG[s.status?.toLowerCase().replace(' ', '-')] || {}
@@ -504,7 +504,7 @@ export default function ProjectDetail() {
                     </div>
                   </div>
                   <span style={{
-                    fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
+                    fontSize: 'var(--fs-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
                     color: sCfg.color || 'var(--text-3)',
                     background: sCfg.bg || 'var(--surface)',
                     padding: '3px 8px', borderRadius: 20,

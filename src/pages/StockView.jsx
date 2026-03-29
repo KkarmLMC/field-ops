@@ -13,7 +13,7 @@ function StockBadge({ qty, min }) {
   return                            <span style={badge('#F0FDF4','#15803D')}>In Stock</span>
 }
 function badge(bg, color) {
-  return { padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 10, fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
+  return { padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--fs-xs)', fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
 }
 
 // ─── Warehouse tab ────────────────────────────────────────────────────────────
@@ -35,13 +35,13 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: active ? '#fff' : 'var(--text-1)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {warehouse.name.replace(' Warehouse', '')}
       </div>
-      <div style={{ fontSize: 10, color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-3)' }}>
+      <div style={{ fontSize: 'var(--fs-xs)', color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-3)' }}>
         {warehouse.city}, {warehouse.state}
       </div>
       <div style={{ display: 'flex', gap: 'var(--sp-2)', marginTop: 4 }}>
-        {outCount > 0 && <span style={{ fontSize: 9, fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
-        {lowCount > 0 && <span style={{ fontSize: 9, fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
-        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 9, fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
+        {outCount > 0 && <span style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
+        {lowCount > 0 && <span style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
+        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
       </div>
     </button>
   )
@@ -123,7 +123,7 @@ export default function StockView() {
           <ArrowsLeftRight size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
-            <div style={{ fontSize: 10, opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
+            <div style={{ fontSize: 'var(--fs-xs)', opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
           </div>
         </button>
 
@@ -132,7 +132,7 @@ export default function StockView() {
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
-            <div style={{ fontSize: 10, fontWeight: 400, color: 'var(--text-3)' }}>Submit for approval</div>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 400, color: 'var(--text-3)' }}>Submit for approval</div>
           </div>
         </button>
       </div>
@@ -180,7 +180,7 @@ export default function StockView() {
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
-              <div key={i} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
+              <div key={i} style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
           </div>
 
@@ -200,7 +200,7 @@ export default function StockView() {
                     {l.parts?.name}
                   </div>
                   {l.parts?.sku && (
-                    <div style={{ fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{l.parts.sku}</div>
+                    <div style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{l.parts.sku}</div>
                   )}
                 </div>
                 <div style={{ textAlign: 'right', fontSize: 'var(--fs-sm)', fontWeight: 800, color: isOut ? '#B91C1C' : isLow ? '#C2410C' : 'var(--text-1)' }}>
