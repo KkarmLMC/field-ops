@@ -351,7 +351,7 @@ export default function Inventory() {
                   </span>
                 )}
               </div>
-              <CaretRight size={<CaretRight size={13} style={{ color: 'var(--text-2)' }}} />
+              <CaretRight size={13} style={{ color: 'var(--text-2)' }} />
             </button>
 
             {/* Stat row */}
