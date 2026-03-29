@@ -5,13 +5,11 @@ import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 import ProjectPicker from '../components/ProjectPicker.jsx'
-import { useAuth } from '../lib/useAuth.jsx'
 
 export default function PartRequest() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const [params] = useSearchParams()
-  const { profile } = useAuth()
 
   const [parts, setParts]       = useState([])
   const [warehouses, setWarehouses] = useState([])
