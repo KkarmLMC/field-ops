@@ -217,7 +217,7 @@ function RequireAuth({ children }) {
 
 export default function App() {
   const [collapsed, setCollapsed] = useState(false)
-  const { session, loading } = useAuth()
+  const { session, loading, profile } = useAuth()
 
   // Show login page without shell
   if (loading) return (
