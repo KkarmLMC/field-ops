@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Plus, Trash, Package, CheckCircle, ArrowLeft } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
 import ProjectPicker from '../components/ProjectPicker.jsx'
 import { useAuth } from '../lib/useAuth.jsx'
 
 export default function PartRequest() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [params] = useSearchParams()
   const { profile } = useAuth()
 
@@ -73,6 +76,14 @@ export default function PartRequest() {
 
       if (itemErr) throw itemErr
 
+      await logActivity(db, user?.id, 'field_ops', {
+        category:    'parts',
+        action:      'part_request_submitted',
+        label:       `Submitted part request (${items.length} item${items.length !== 1 ? 's' : ''})`,
+        entity_type: 'change_order',
+        entity_id:   co?.id,
+        meta:        { item_count: items.length },
+      })
       setSaved(true)
     } catch (e) {
       setError(e.message || 'Something went wrong. Please try again.')

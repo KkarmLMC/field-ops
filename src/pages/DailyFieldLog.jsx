@@ -13,6 +13,8 @@ import FormEngine from '../components/FormEngine.jsx'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
 import { generateAndUploadDFLPdf } from '../lib/generateDFLPdf.js'
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -1530,6 +1532,7 @@ export default function DailyFieldLog() {
   // Management view when accessed via /installations/field-logs; field-only otherwise
   const isManagement = location.pathname === '/installations/field-logs'
 
+  const { user } = useAuth()
   const [branch, setBranch]           = useState('lm')
   const [formMode, setFormMode]       = useState(null)
   const [closeoutId, setCloseoutId]   = useState(null)
@@ -1613,7 +1616,16 @@ export default function DailyFieldLog() {
       .insert(payload)
       .select()
       .single()
-    if (!error && data) setEntries(e => [data, ...e])
+    if (!error && data) {
+      setEntries(e => [data, ...e])
+      logActivity(db, user?.id, 'field_ops', {
+        category:    'field_log',
+        action:      'created',
+        label:       `Started Daily Field Log`,
+        entity_type: 'daily_field_log',
+        entity_id:   data.id,
+      })
+    }
     setFormMode(null)
   }
 
@@ -1651,6 +1663,13 @@ export default function DailyFieldLog() {
     setEntries(e => e.map(r =>
       r.id === closeoutId ? { ...r, ...updates, pdf_url: pdfUrl } : r
     ))
+    await logActivity(db, user?.id, 'field_ops', {
+      category:    'field_log',
+      action:      'submitted',
+      label:       `Submitted Daily Field Log`,
+      entity_type: 'daily_field_log',
+      entity_id:   closeoutId,
+    })
     setSavingPdf(false)
     setFormMode(null)
     setCloseoutId(null)
