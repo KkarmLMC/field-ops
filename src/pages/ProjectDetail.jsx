@@ -90,7 +90,6 @@ function StagePipeline({ stage }) {
                 <span style={{
                   fontSize: 9, fontWeight: isCurrent ? 700 : 500,
                   color: isCurrent ? cfg.color : isDone ? '#16A34A' : 'var(--text-3)',
-                  textTransform: 'uppercase', letterSpacing: '0.05em',
                   whiteSpace: 'nowrap',
                 }}>
                   {cfg.label}
@@ -214,7 +213,7 @@ export default function ProjectDetail() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <TypeIcon size={14} style={{ color: stageCfg.color }} />
-                <span style={{ fontSize: 11, fontWeight: 600, color: stageCfg.color, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
               </div>

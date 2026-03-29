@@ -10,7 +10,7 @@ import { db } from '../lib/supabase.js'
 // ─── Shared label ─────────────────────────────────────────────────────────────
 function Label({ children }) {
   return (
-    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 'var(--sp-1)' }}>
       {children}
     </label>
   )
@@ -59,7 +59,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
-            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Location</div>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-3)' }}>Location</div>
           </div>
 
           <div style={{ marginBottom: 'var(--sp-3)' }}>
@@ -74,7 +74,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--sp-3) 0', paddingTop: 'var(--sp-3)' }}>
-            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-3)' }}>Contact</div>
+            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-3)' }}>Contact</div>
           </div>
 
           <div style={{ marginBottom: 'var(--sp-3)' }}>
@@ -189,7 +189,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       {/* Low stock list */}
       {lowStockItems > 0 && (
         <div style={{ padding: 'var(--sp-3) var(--sp-5)', borderTop: '1px solid #FED7AA', background: '#FFFBEB' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: '#92400E', marginBottom: 'var(--sp-2)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Low Stock</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: '#92400E', marginBottom: 'var(--sp-2)' }}>Low Stock</div>
           {wLevels
             .filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level)
             .slice(0, 3)
@@ -289,7 +289,7 @@ export default function Inventory() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--sp-4)', marginBottom: 'var(--sp-5)', flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>WAREHOUSE HQ</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>WAREHOUSE HQ</div>
           <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Warehouse HQ</div>
         </div>
         <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>

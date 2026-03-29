@@ -91,7 +91,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       {/* Progress */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--sp-2)' }}>
-          <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)' }}>
             Step {page + 1} of {total}
           </span>
           <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{current.title}</span>

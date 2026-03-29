@@ -98,7 +98,7 @@ export default function StockView() {
 
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-5)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>FIELD</div>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>FIELD</div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Stock Lookup</div>
         <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>Check parts availability across all warehouses</div>
       </div>
@@ -180,7 +180,7 @@ export default function StockView() {
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
-              <div key={i} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
+              <div key={i} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
           </div>
 

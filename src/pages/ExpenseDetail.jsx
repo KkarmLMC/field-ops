@@ -82,7 +82,7 @@ export default function ExpenseDetail() {
       <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-xl)', padding: 'var(--sp-5)', marginBottom: 'var(--sp-4)', color: '#fff' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--sp-3)' }}>
           <div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.5)', fontWeight: 700, marginBottom: 4 }}>
               {report.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {isAdvance ? 'Advance Request' : 'Expense Report'}
             </div>
             <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>{report.employee_name}</div>
@@ -106,8 +106,8 @@ export default function ExpenseDetail() {
       {isAdvance && advanceLines.length > 0 && (
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--sp-4)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>Description</span>
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>Total</span>
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Description</span>
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Total</span>
           </div>
           {advanceLines.map(l => (
             <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--sp-3) var(--sp-4)', borderBottom: '1px solid var(--border-l)' }}>
@@ -130,7 +130,7 @@ export default function ExpenseDetail() {
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', textAlign: 'right' }}>{h}</div>
+                <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             {lines.map(l => (
@@ -154,8 +154,8 @@ export default function ExpenseDetail() {
       {!isAdvance && mileage.length > 0 && (
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--sp-4)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>Mileage Log</span>
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>Miles</span>
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Mileage Log</span>
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Miles</span>
           </div>
           {mileage.map(m => (
             <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--sp-2) var(--sp-4)', borderBottom: '1px solid var(--border-l)' }}>
@@ -192,7 +192,7 @@ export default function ExpenseDetail() {
 
       {report.notes && (
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--sp-4)', border: '1px solid var(--border-l)', marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-2)' }}>Notes</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Notes</div>
           <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>
       )}

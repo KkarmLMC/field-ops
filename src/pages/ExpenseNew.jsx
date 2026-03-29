@@ -5,7 +5,7 @@ import { db } from '../lib/supabase.js'
 
 function Label({ children, required }) {
   return (
-    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: 'var(--sp-1)' }}>
+    <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 'var(--sp-1)' }}>
       {children}{required && <span style={{ color: '#B91C1C', marginLeft: 3 }}>*</span>}
     </label>
   )
@@ -453,7 +453,7 @@ export default function ExpenseNew() {
   return (
     <div className="page-content fade-in">
       <div style={{ marginBottom: 'var(--sp-5)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>New {typeLabel}</div>

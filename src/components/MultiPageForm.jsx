@@ -258,7 +258,7 @@ export default function MultiPageForm({
     <div>
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-1)' }}>
+        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--sp-1)' }}>
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
