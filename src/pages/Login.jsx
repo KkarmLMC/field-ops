@@ -283,11 +283,22 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
     }
     setLoading(true); setError('')
     const hashed = await hashPin(pin)
+
+    // Always get the live authenticated user — don't rely on pendingSession
+    // which can be stale when arriving via the App-level forcePinSetup guard
+    const { data: { user: liveUser }, error: userErr } = await db.auth.getUser()
+    if (userErr || !liveUser) {
+      setError('Session expired. Please sign in again.')
+      setLoading(false)
+      return
+    }
+
     const { error: saveErr } = await db.from('profiles')
       .update({ pin_hash: hashed, pin_set_at: new Date().toISOString() })
-      .eq('id', pendingSession.user.id)
+      .eq('id', liveUser.id)
     if (saveErr) {
-      setError('Could not save PIN. Try again.')
+      console.error('[PIN setup] Save error:', saveErr)
+      setError(`Could not save PIN. ${saveErr.message || 'Try again.'}`)
       setLoading(false)
       return
     }
