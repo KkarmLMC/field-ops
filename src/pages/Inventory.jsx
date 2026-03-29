@@ -380,7 +380,7 @@ export default function Inventory() {
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
+                  <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
                   <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{po.project_name || po.so_number}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>

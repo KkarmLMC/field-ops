@@ -32,7 +32,7 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       cursor: 'pointer', textAlign: 'left',
       minWidth: 140,
     }}>
-      <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: active ? '#fff' : 'var(--text-1)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: active ? '#fff' : 'var(--text-1)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {warehouse.name.replace(' Warehouse', '')}
       </div>
       <div style={{ fontSize: 'var(--fs-xs)', color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-3)' }}>

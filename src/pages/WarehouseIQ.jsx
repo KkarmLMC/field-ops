@@ -266,7 +266,7 @@ export default function WarehouseIQ() {
                 {po.division==='Bolt'?'BOLT':'LM'}
               </div>
               <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontSize:'var(--fs-xs)', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{po.customer_name}</div>
+                <div style={{ fontSize:'var(--fs-sm)', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{po.customer_name}</div>
               </div>
               <span style={{ fontSize:'var(--fs-xs)', fontWeight:700, padding:'2px 8px', borderRadius:'var(--r-full)', background: po.status==='submitted'?'#FEF3C7':po.status==='published'?'#EFF6FF':'#F1F5F9', color: po.status==='submitted'?'#D97706':po.status==='published'?'#1D4ED8':'#64748B', textTransform:'capitalize', flexShrink:0 }}>
                 {po.status}
@@ -329,7 +329,7 @@ export default function WarehouseIQ() {
             >
               {/* Part name + SKU */}
               <div style={{ minWidth:0 }}>
-                <div style={{ fontSize:'var(--fs-xs)', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.part.name}</div>
+                <div style={{ fontSize:'var(--fs-sm)', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.part.name}</div>
                 {r.part.sku && <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)' }}>{r.part.sku}</div>}
               </div>
               {/* Start */}
