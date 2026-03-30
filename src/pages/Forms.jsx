@@ -43,8 +43,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                   {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
                 {hasChildren
-                  ? <CaretDown size={12} style={{ color:'var(--text-2)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
-                  : <CaretRight size={12} style={{ color:'var(--text-2)', flexShrink:0 }} />
+                  ? <CaretDown size={12} style={{ color:'var(--black)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
+                  : <CaretRight size={12} style={{ color:'var(--black)', flexShrink:0 }} />
                 }
               </button>
               {hasChildren && isExpanded && (
@@ -64,7 +64,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                     >
                       <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-3)', flexShrink:0 }} />
                       <div style={{ flex:1, minWidth:0 }}>
-                        <span style={{ fontSize:'var(--fs-sm)', fontWeight:500, color:'var(--text-1)' }}>{sub.title}</span>
+                        <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--black)' }}>{sub.title}</span>
                         {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
                       </div>
                       <CaretRight size={10} style={{ color:'var(--text-4)', flexShrink:0 }} />

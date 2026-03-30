@@ -113,7 +113,7 @@ function SignatureModal({ onSave, onClose }) {
       }}>
         {/* Header */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--sp-4)', borderBottom:'1px solid var(--border-l)', background:'var(--navy)' }}>
-          <span style={{ fontSize:'var(--fs-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
+          <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
           <button type="button" onClick={onClose} style={{ color:'rgba(255,255,255,0.7)', padding:'var(--sp-1)' }}>
             <X size={20} />
           </button>
@@ -126,7 +126,7 @@ function SignatureModal({ onSave, onClose }) {
           {/* Placeholder text */}
           {!hasStrokes && (
             <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none' }}>
-              <span style={{ fontSize:'var(--fs-lg)', color:'rgba(0,0,0,0.15)', fontStyle:'italic', userSelect:'none' }}>Sign above the line</span>
+              <span style={{ fontSize:'var(--text-lg)', color:'rgba(0,0,0,0.15)', fontStyle:'italic', userSelect:'none' }}>Sign above the line</span>
             </div>
           )}
           <canvas
@@ -140,11 +140,11 @@ function SignatureModal({ onSave, onClose }) {
         {/* Footer actions */}
         <div style={{ display:'flex', gap:'var(--sp-3)', padding:'var(--sp-4)', borderTop:'1px solid var(--border-l)', background:'#fff' }}>
           <button type="button" onClick={clear}
-            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-md)', border:'1px solid var(--border-l)', fontSize:'var(--fs-sm)', color:'var(--text-2)', background:'var(--surface-raised)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)', background:'var(--surface-raised)' }}>
             <ArrowCounterClockwise size={14}/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
-            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', borderRadius:'var(--r-md)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--fs-md)', fontWeight:600, border:'none', transition:'all var(--ease-fast)' }}>
+            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', borderRadius:'var(--r-m)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--text-md)', fontWeight:600, border:'none', transition:'all var(--ease-fast)' }}>
             <CheckCircle size={16} weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
           </button>
         </div>
@@ -167,11 +167,11 @@ export function SigPad({ value, onChange, readOnly }) {
     : null
 
   if (readOnly) {
-    if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--fs-sm)', fontStyle:'italic' }}>No signature</div>
+    if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--text-sm)', fontStyle:'italic' }}>No signature</div>
     return (
       <div>
-        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-sm)', background:'var(--surface)', border:'1px solid var(--border-l)' }} />
-        {fmtDate && <div style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', fontFamily:'var(--mono)', marginTop:'var(--sp-1)' }}>Signed {fmtDate}</div>}
+        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-s)', background:'var(--white)', border:'1px solid var(--border-l)' }} />
+        {fmtDate && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', fontFamily:'var(--mono)', marginTop:'var(--sp-1)' }}>Signed {fmtDate}</div>}
       </div>
     )
   }
@@ -180,21 +180,21 @@ export function SigPad({ value, onChange, readOnly }) {
     <>
       {hasSig ? (
         /* Signed state */
-        <div style={{ border:'1px solid var(--border-l)', borderRadius:'var(--r-md)', overflow:'hidden' }}>
+        <div style={{ border:'1px solid var(--border-l)', borderRadius:'var(--r-m)', overflow:'hidden' }}>
           <div style={{ padding:'var(--sp-2) var(--sp-3)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--surface-raised)', borderBottom:'1px solid var(--border-l)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
               <CheckCircle size={14} weight="fill" style={{ color:'var(--green)', flexShrink:0 }} />
-              <span style={{ fontSize:'var(--fs-xs)', color:'var(--text-2)', fontFamily:'var(--mono)' }}>
+              <span style={{ fontSize:'var(--text-xs)', color:'var(--black)', fontFamily:'var(--mono)' }}>
                 {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
               </span>
             </div>
             <div style={{ display:'flex', gap:'var(--sp-2)' }}>
               <button type="button" onClick={() => setModalOpen(true)}
-                style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:4 }}>
+                style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:4 }}>
                 <PencilSimple size={12}/> Re-sign
               </button>
               <button type="button" onClick={() => onChange(null)}
-                style={{ fontSize:'var(--fs-xs)', color:'var(--red)', display:'flex', alignItems:'center', gap:4 }}>
+                style={{ fontSize:'var(--text-xs)', color:'var(--red)', display:'flex', alignItems:'center', gap:4 }}>
                 <Trash size={12}/> Clear
               </button>
             </div>
@@ -206,7 +206,7 @@ export function SigPad({ value, onChange, readOnly }) {
       ) : (
         /* Unsigned state */
         <button type="button" onClick={() => setModalOpen(true)}
-          style={{ width:'100%', padding:'var(--sp-4)', borderRadius:'var(--r-md)', border:'2px dashed var(--border-l)', background:'var(--surface-raised)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', color:'var(--text-3)', fontSize:'var(--fs-sm)', transition:'all var(--ease-fast)' }}
+          style={{ width:'100%', padding:'var(--sp-4)', borderRadius:'var(--r-m)', border:'2px dashed var(--border-l)', background:'var(--surface-raised)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)', color:'var(--text-3)', fontSize:'var(--text-sm)', transition:'all var(--ease-fast)' }}
           onMouseEnter={e => { e.currentTarget.style.borderColor='var(--navy)'; e.currentTarget.style.color='var(--navy)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-l)'; e.currentTarget.style.color='var(--text-3)' }}
         >
@@ -238,16 +238,16 @@ function GpsField({ value, onChange, readOnly }) {
     )
   }
 
-  if (readOnly) return <span style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-sm)' }}>{value || '—'}</span>
+  if (readOnly) return <span style={{ fontFamily:'var(--mono)', fontSize:'var(--text-sm)' }}>{value || '—'}</span>
 
   return (
     <div style={{ display:'flex', gap:'var(--sp-2)', alignItems:'center' }}>
       <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder="lat, lng" style={{ flex:1 }} />
       <button type="button" onClick={capture} disabled={loading}
-        style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', background:'var(--navy)', color:'#fff', fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
+        style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-s)', background:'var(--navy)', color:'#fff', fontSize:'var(--text-xs)', fontFamily:'var(--mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
         <MapPin size={12} /> {loading ? 'Getting…' : 'Get GPS'}
       </button>
-      {error && <span style={{ color:'var(--red)', fontSize:'var(--fs-xs)' }}>{error}</span>}
+      {error && <span style={{ color:'var(--red)', fontSize:'var(--text-xs)' }}>{error}</span>}
     </div>
   )
 }
@@ -272,10 +272,10 @@ function PhotoField({ value, onChange, readOnly }) {
       <div style={{ display:'flex', flexWrap:'wrap', gap:'var(--sp-2)', marginBottom: photos.length?'var(--sp-2)':0 }}>
         {photos.map((src,i) => (
           <div key={i} style={{ position:'relative', width:'5rem', height:'5rem' }}>
-            <img src={src} alt={`Photo ${i+1}`} style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'var(--r-md)' }} />
+            <img src={src} alt={`Photo ${i+1}`} style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'var(--r-m)' }} />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', fontSize:'var(--fs-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
+                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
             )}
           </div>
         ))}
@@ -284,7 +284,7 @@ function PhotoField({ value, onChange, readOnly }) {
         <>
           <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" onChange={handleFiles} style={{ display:'none' }} />
           <button type="button" onClick={()=>fileRef.current.click()}
-            style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--fs-sm)', color:'var(--text-2)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-s)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             <Camera size={14} /> Add Photo
           </button>
         </>
@@ -386,12 +386,12 @@ function VoiceNoteField({ value, onChange, readOnly }) {
 
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'var(--sp-2)' }}>
-      {error && <div style={{ fontSize:'var(--fs-xs)', color:'var(--red)', padding:'var(--sp-2) var(--sp-3)', background:'var(--red-soft)', borderRadius:'var(--r-sm)' }}>{error}</div>}
+      {error && <div style={{ fontSize:'var(--text-xs)', color:'var(--red)', padding:'var(--sp-2) var(--sp-3)', background:'var(--red-soft)', borderRadius:'var(--r-s)' }}>{error}</div>}
 
       {/* Hidden audio element for playback */}
       {hasRecording && <audio ref={audioRef} src={value.audio} preload="auto" style={{ display:'none' }} />}
 
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'var(--sp-3)', background:'var(--surface-raised)', borderRadius:'var(--r-md)', border:'1px solid var(--border-l)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'var(--sp-3)', background:'var(--surface-raised)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)' }}>
 
         {/* Main action button */}
         {state === 'recording' ? (
@@ -416,7 +416,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
           <div style={{ height:'0.375rem', background:'var(--border-l)', borderRadius:99, overflow:'hidden', marginBottom:'var(--sp-1)' }}>
             <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--red)':'var(--navy)', borderRadius:99, transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
           </div>
-          <div style={{ fontSize:'var(--fs-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', display:'flex', justifyContent:'space-between' }}>
+          <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', display:'flex', justifyContent:'space-between' }}>
             <span style={{ color: state==='recording'?'var(--red)':'var(--text-3)' }}>
               {state === 'recording' ? `● ${fmt(elapsed)}` : hasRecording ? fmt(elapsed) : 'Tap mic to record'}
             </span>
@@ -453,7 +453,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     if (type==='photo')     return <PhotoField value={value} readOnly />
     if (type==='gps')       return <GpsField value={value} readOnly />
     if (type==='voice-note') return <VoiceNoteField value={value} readOnly />
-    return <span style={{ fontSize:'var(--fs-md)', color:'var(--text-1)' }}>{display}</span>
+    return <span style={{ fontSize:'var(--text-md)', color:'var(--black)' }}>{display}</span>
   }
 
   if (type==='text'||type==='email')
@@ -484,10 +484,10 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <div style={{ display:'flex', gap:'var(--sp-1)', flexShrink:0 }}>
           {[['pass','Pass','var(--green)'],['fail','Fail','var(--red)']].map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
-              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
                 border:`1px solid ${pf.result===k?col:'var(--border-l)'}`,
-                background: pf.result===k?col:'var(--surface)',
-                color: pf.result===k?'#fff':'var(--text-2)', transition:'all var(--ease-fast)' }}>
+                background: pf.result===k?col:'var(--white)',
+                color: pf.result===k?'#fff':'var(--black)', transition:'all var(--ease-fast)' }}>
               {lbl}
             </button>
           ))}
@@ -507,10 +507,10 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <div style={{ display:'flex', gap:'var(--sp-1)', flexShrink:0 }}>
           {cfg.map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
-              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+              style={{ padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
                 border:`1px solid ${okv.result===k?col:'var(--border-l)'}`,
-                background: okv.result===k?col:'var(--surface)',
-                color: okv.result===k?(k==='na'?'var(--text-1)':'#fff'):'var(--text-2)',
+                background: okv.result===k?col:'var(--white)',
+                color: okv.result===k?(k==='na'?'var(--black)':'#fff'):'var(--black)',
                 transition:'all var(--ease-fast)' }}>
               {lbl}
             </button>
@@ -535,12 +535,12 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
               style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)',
-                borderRadius:'var(--r-sm)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`,
-                background: checked?'rgba(4,36,92,0.07)':'var(--surface)', textAlign:'left', transition:'all var(--ease-fast)' }}>
+                borderRadius:'var(--r-s)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`,
+                background: checked?'rgba(4,36,92,0.07)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
-                flexShrink:0, fontSize:'var(--fs-2xs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
-              <span style={{ fontSize:'var(--fs-sm)', color:checked?'var(--text-1)':'var(--text-2)' }}>{opt}</span>
+                flexShrink:0, fontSize:'var(--text-2xs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
+              <span style={{ fontSize:'var(--text-sm)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>
           )
         })}
@@ -571,10 +571,10 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <input value={p.name||''}     onChange={e=>setP('name',e.target.value)}     placeholder="Name"          style={{ flex:2 }} />
         <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
         <button type="button" onClick={()=>setP('signed',!p.signed)}
-          style={{ flexShrink:0, padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', fontSize:'var(--fs-sm)', fontWeight:600,
+          style={{ flexShrink:0, padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
             border:`1px solid ${p.signed?'var(--green)':'var(--border-l)'}`,
-            background: p.signed?'var(--green)':'var(--surface)',
-            color: p.signed?'#fff':'var(--text-2)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
+            background: p.signed?'var(--green)':'var(--white)',
+            color: p.signed?'#fff':'var(--black)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
           {p.signed ? '✓ Signed' : 'Sign'}
         </button>
       </div>
@@ -588,7 +588,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = opt==='Yes'?value===true:value===false
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt==='Yes')}
-              style={{ flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-sm)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--surface)', color:active?'#fff':'var(--text-2)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--fs-md)' }}>
+              style={{ flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-s)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--text-md)' }}>
               {opt}
             </button>
           )
@@ -603,7 +603,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = value===opt
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt)}
-              style={{ padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-full)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--surface)', color:active?'#fff':'var(--text-2)', fontWeight:active?600:400, fontSize:'var(--fs-md)', transition:'all var(--ease-fast)' }}>
+              style={{ padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-full)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
               {opt}
             </button>
           )
@@ -623,9 +623,9 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const checked = selected.includes(opt)
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
-              style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-sm)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`, background:checked?'rgba(4,36,92,0.06)':'var(--surface)', textAlign:'left', transition:'all var(--ease-fast)' }}>
+              style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-s)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`, background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               {checked ? <CheckSquare size={16} style={{ color:'var(--navy)', flexShrink:0 }} /> : <Square size={16} style={{ color:'var(--text-3)', flexShrink:0 }} />}
-              <span style={{ fontSize:'var(--fs-md)', color:checked?'var(--text-1)':'var(--text-2)' }}>{opt}</span>
+              <span style={{ fontSize:'var(--text-md)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>
           )
         })}
@@ -647,12 +647,12 @@ export function FormField({ field, value, onChange, error, readOnly }) {
 function FieldLabel({ field, error }) {
   return (
     <div style={{ marginBottom:'var(--sp-1)' }}>
-      <div style={{ fontSize:'var(--fs-sm)', fontWeight:600, color: error?'var(--red)':'var(--text-2)', marginBottom: field.hint?'0.125rem':0 }}>
+      <div style={{ fontSize:'var(--text-sm)', fontWeight:600, color: error?'var(--red)':'var(--black)', marginBottom: field.hint?'0.125rem':0 }}>
         {field.label}
         {field.required && <span style={{ color:'var(--red)', marginLeft:'var(--sp-1)' }}>*</span>}
       </div>
-      {field.hint && <div style={{ fontSize:'var(--fs-xs)', color:'var(--text-3)', lineHeight:1.4 }}>{field.hint}</div>}
-      {error        && <div style={{ fontSize:'var(--fs-xs)', color:'var(--red)',   marginTop:'0.125rem' }}>{error}</div>}
+      {field.hint && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', lineHeight:1.4 }}>{field.hint}</div>}
+      {error        && <div style={{ fontSize:'var(--text-xs)', color:'var(--red)',   marginTop:'0.125rem' }}>{error}</div>}
     </div>
   )
 }
@@ -665,7 +665,7 @@ function Section({ section, values, onChange, errors, readOnly, defaultOpen=true
     <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-3)', overflow:'hidden' }}>
       <button type="button" onClick={()=>setOpen(o=>!o)}
         style={{ width:'100%', padding:'var(--sp-3) var(--sp-4)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
-        <span style={{ fontSize:'var(--fs-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>
+        <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>
         <CaretDown size={14} style={{ color:'rgba(255,255,255,0.7)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && (

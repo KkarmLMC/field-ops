@@ -138,7 +138,7 @@ function DesktopTopBar() {
               cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
               transition: 'color 0.12s',
             }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--text-1)'}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--black)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-3)'}
           >
             <ArrowLeft size={13} />

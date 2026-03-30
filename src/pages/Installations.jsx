@@ -50,16 +50,16 @@ function StagePill({ stageKey, count, active, onClick }) {
       onClick={onClick}
       style={{
         flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 10,
-        background: active ? cfg.bg : 'var(--surface)',
+        background: active ? cfg.bg : 'var(--white)',
         border: `1px solid ${active ? cfg.color + '55' : 'var(--border)'}`,
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s',
         boxShadow: active ? `0 0 0 2px ${cfg.color}22` : 'none',
       }}
     >
-      <div style={{ fontSize: 'var(--fs-stat)', fontWeight: 700, color: active ? cfg.color : 'var(--text-1)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
+      <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
         {count}
       </div>
-      <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--text-2)', marginTop: 3 }}>
+      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--black)', marginTop: 3 }}>
         {cfg.short || cfg.label}
       </div>
     </button>
@@ -94,7 +94,7 @@ function MgmtRow({ p, navigate }) {
           <div className="dash-job-name">{p.name}</div>
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
-              fontSize: 'var(--fs-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+              fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
               background: '#2563EB', color: '#fff', padding: '2px 5px', borderRadius: 3,
               flexShrink: 0,
             }}>
@@ -111,13 +111,13 @@ function MgmtRow({ p, navigate }) {
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-2)', fontWeight: 600 }}>
+          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--black)', fontWeight: 600 }}>
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (
             <>
               <span className="dash-job-dot">·</span>
-              <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{fmtDate(p.scheduled_date)}</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{fmtDate(p.scheduled_date)}</span>
             </>
           )}
         </div>
@@ -127,7 +127,7 @@ function MgmtRow({ p, navigate }) {
             <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 120 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{p.progress}%</span>
           </div>
         )}
       </div>
@@ -160,14 +160,14 @@ function FieldRow({ p, navigate }) {
 
       {/* Middle: info */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 600, fontSize: 'var(--fs-md)', color: 'var(--text-1)', marginBottom: 2 }}>
+        <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--black)', marginBottom: 2 }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginBottom: 4 }}>
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
-              marginLeft: 6, fontSize: 'var(--fs-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+              marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
               background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3,
             }}>
               NFPA {p.nfpa_class}
@@ -180,10 +180,10 @@ function FieldRow({ p, navigate }) {
             <div style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 140 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
           </div>
         )}
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>
           Lead: {getTech(p.lead_tech_id)}
         </div>
       </div>
@@ -192,14 +192,14 @@ function FieldRow({ p, navigate }) {
       <div style={{ display: 'flex', flexDirection: 'row', gap: 6, flexShrink: 0, alignItems: 'center' }}>
         <button
           className="btn btn-black"
-          style={{ fontSize: 'var(--fs-sm)', padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
+          style={{ fontSize: 'var(--text-sm)', padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
           <ClipboardText size={14} /> DFL
         </button>
         <button
           className="btn btn-black"
-          style={{ fontSize: 'var(--fs-sm)', padding: '8px 14px', whiteSpace: 'nowrap' }}
+          style={{ fontSize: 'var(--text-sm)', padding: '8px 14px', whiteSpace: 'nowrap' }}
           onClick={e => { e.stopPropagation(); navigate(`/installations/${p.id}`) }}
         >
           View
@@ -214,7 +214,7 @@ function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-3)', fontSize: 'var(--fs-md)',
+      color: 'var(--text-3)', fontSize: 'var(--text-md)',
     }}>
       {message}
     </div>
@@ -238,10 +238,10 @@ function FieldMiniRow({ p, navigate, stageKey }) {
         <Icon size={15} />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 600, fontSize: 'var(--fs-sm)', color: 'var(--text-1)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--black)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 1 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>
           {getTech(p.lead_tech_id)}{p.scheduled_date ? ` · ${fmtDate(p.scheduled_date)}` : ''}
         </div>
         {stageKey === 'in-progress' && p.progress > 0 && (
@@ -249,11 +249,11 @@ function FieldMiniRow({ p, navigate, stageKey }) {
             <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 80 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--fs-2xs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
           </div>
         )}
       </div>
-      <ArrowRight size={12} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
+      <ArrowRight size={12} style={{ color: 'var(--black)', flexShrink: 0 }} />
     </div>
   )
 }
@@ -403,7 +403,7 @@ export default function Installations() {
                 <button
                   style={{
                     background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 6,
-                    padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--fs-xs)', fontWeight: 600,
+                    padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600,
                     color: 'inherit', letterSpacing: '0.02em',
                   }}
                   onClick={() => setStageFilter('all')}
@@ -418,7 +418,7 @@ export default function Installations() {
           {searchOpen && (
             <div style={{
               padding: '8px 14px', borderBottom: '1px solid var(--border-l)',
-              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface)',
+              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)',
             }}>
               <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
               <input
@@ -428,7 +428,7 @@ export default function Installations() {
                 placeholder="Search projects, customers, job #…"
                 style={{
                   flex: 1, border: 'none', outline: 'none', background: 'none',
-                  fontFamily: 'var(--font)', fontSize: 'var(--fs-md)', color: 'var(--text-1)',
+                  fontFamily: 'var(--font)', fontSize: 'var(--text-md)', color: 'var(--black)',
                 }}
               />
               {search && (
@@ -465,7 +465,7 @@ export default function Installations() {
           {/* Upcoming */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--fs-sm)', gap: 5 }}>
+              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
                 <Clock size={12} />
                 Upcoming
               </span>
@@ -481,7 +481,7 @@ export default function Installations() {
           {/* Active */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--fs-sm)', gap: 5 }}>
+              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
                 <span className="live-dot" />
                 Active
               </span>
@@ -497,7 +497,7 @@ export default function Installations() {
           {/* Pending Review */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--fs-sm)', gap: 5 }}>
+              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
                 <Warning size={12} />
                 In Review
               </span>

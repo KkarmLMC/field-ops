@@ -634,7 +634,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             <CaretDown
               size={14}
               style={{
-                color: 'var(--text-2)',
+                color: 'var(--black)',
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.18s',
                 flexShrink: 0,
@@ -1715,7 +1715,7 @@ export default function DailyFieldLog() {
                   {s.icon}
                 </div>
                 <div>
-                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-1)' }}>
+                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
                     {s.value}
                   </div>
                   <div className="dfl-summary-label">{s.label}</div>
@@ -1760,7 +1760,7 @@ export default function DailyFieldLog() {
                   ))}
                   {hasMore && (
                     <button onClick={loadMore} disabled={loadingMore}
-                      style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                      style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
                       {loadingMore ? 'Loading…' : 'Load more'}
                     </button>
                   )}
@@ -1816,7 +1816,7 @@ export default function DailyFieldLog() {
                 ))}
                 {hasMore && (
                   <button onClick={loadMore} disabled={loadingMore}
-                    style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--fs-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                    style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
                     {loadingMore ? 'Loading…' : 'Load more'}
                   </button>
                 )}

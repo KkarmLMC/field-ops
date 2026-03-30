@@ -118,17 +118,17 @@ export default function FormPage() {
     return (
       <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--sp-10) var(--sp-6)', textAlign:'center' }}>
         <CheckCircle size={52} style={{ color: success.offline ? 'var(--amber)' : 'var(--green)', marginBottom:'var(--sp-3)' }} />
-        <div style={{ fontSize:'var(--fs-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>
+        <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>
           {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>
-        <div style={{ color:'var(--text-2)', fontSize:'var(--fs-md)', marginBottom:'var(--sp-6)' }}>
+        <div style={{ color:'var(--black)', fontSize:'var(--text-md)', marginBottom:'var(--sp-6)' }}>
           {success.offline
             ? `${success.formTitle} for ${success.siteName} has been queued and will sync when you're back online.`
             : `${success.formTitle} for ${success.siteName} has been saved.`
           }</div>
         <div style={{ display:'flex', gap:'var(--sp-3)' }}>
           <button onClick={()=>navigate('/forms')}
-            style={{ padding:'var(--sp-2) var(--sp-5)', borderRadius:'var(--r-md)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--fs-sm)', color:'var(--text-2)' }}>
+            style={{ padding:'var(--sp-2) var(--sp-5)', borderRadius:'var(--r-m)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             Back to Forms
           </button>
           <button className="btn btn-primary" onClick={()=>{ setSuccess(null); setValues({ date_completed: new Date().toISOString().slice(0,10) }) }}>
@@ -145,12 +145,12 @@ export default function FormPage() {
       {/* Action bar — ref tag + Edit Form button */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-4)' }}>
         {schema.ref
-          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', color:'var(--text-2)' }}>{schema.ref}</div>
+          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-xs)', color:'var(--black)' }}>{schema.ref}</div>
           : <div />
         }
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-sm)', border:'1px solid var(--border-l)', fontSize:'var(--fs-xs)', color:'var(--text-2)', background:'var(--surface-raised)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-xs)', color:'var(--black)', background:'var(--surface-raised)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
           <PencilSimple size={12} /> Edit Form
         </button>
       </div>
@@ -186,21 +186,21 @@ export default function FormPage() {
           />
 
           {submitErr && (
-            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
+            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
               {submitErr}
             </div>
           )}
           {Object.keys(errors).length > 0 && (
-            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-md)', fontSize:'var(--fs-sm)', color:'var(--red)' }}>
+            <div style={{ padding:'var(--sp-3) var(--sp-4)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
               Please fill in all required fields before submitting.
             </div>
           )}
 
           <button onClick={handleSubmit} disabled={submitting} style={{
-            width:'100%', padding:'var(--sp-3)', borderRadius:'var(--r-md)', marginBottom:'var(--sp-8)',
+            width:'100%', padding:'var(--sp-3)', borderRadius:'var(--r-m)', marginBottom:'var(--sp-8)',
             background: submitting?'var(--hover)':'var(--red)',
             color: submitting?'var(--text-3)':'#fff',
-            fontFamily:'var(--mono)', fontSize:'var(--fs-xs)', fontWeight:600,
+            fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
             letterSpacing:'0.06em', textTransform:'uppercase',
             border:`1px solid ${submitting?'var(--border-l)':'var(--red)'}`,
             display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',

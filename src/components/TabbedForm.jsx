@@ -14,14 +14,14 @@ function FieldLabel({ field, error }) {
   return (
     <div style={{ marginBottom: 'var(--sp-2)' }}>
       <div style={{
-        fontSize: 'var(--fs-sm)', fontWeight: 600,
-        color: error ? 'var(--red)' : 'var(--text-1)', lineHeight: 1.4,
+        fontSize: 'var(--text-sm)', fontWeight: 600,
+        color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4,
       }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)' }}>*</span>}
       </div>
-      {field.hint && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
-      {error && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--red)', marginTop: 2 }}>{error}</div>}
+      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
+      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 2 }}>{error}</div>}
     </div>
   )
 }
@@ -91,10 +91,10 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       {/* Progress */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--sp-2)' }}>
-          <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)' }}>
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-3)' }}>
             Step {page + 1} of {total}
           </span>
-          <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{current.title}</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{current.title}</span>
         </div>
         <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', overflow: 'hidden' }}>
           <div style={{
@@ -118,8 +118,8 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       {/* Section */}
       <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
-          {current.description && <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--sp-1)' }}>{current.description}</div>}
+          <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
+          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--sp-1)' }}>{current.description}</div>}
         </div>
         <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-5)' }}>
           {current.fields.map(field => (
@@ -133,7 +133,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Errors */}
       {(submitErr || Object.keys(pageErrors).length > 0) && (
-        <div style={{ padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-3)', background: 'var(--red-soft)', border: '1px solid var(--red)', borderRadius: 'var(--r-md)', fontSize: 'var(--fs-sm)', color: 'var(--red)' }}>
+        <div style={{ padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-3)', background: 'var(--red-soft)', border: '1px solid var(--red)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
           {submitErr || 'Please fill in all required fields before continuing.'}
         </div>
       )}
@@ -142,9 +142,9 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       <div style={{ display: 'flex', gap: 'var(--sp-3)', marginBottom: 'var(--sp-8)' }}>
         {!isFirst && (
           <button type="button" onClick={back} style={{
-            flex: 1, padding: 'var(--sp-3)', borderRadius: 'var(--r-md)',
+            flex: 1, padding: 'var(--sp-3)', borderRadius: 'var(--r-m)',
             border: '1px solid var(--border-l)', background: 'var(--surface-raised)',
-            color: 'var(--text-2)', fontFamily: 'var(--font)', fontSize: 'var(--fs-sm)', fontWeight: 600,
+            color: 'var(--black)', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', cursor: 'pointer',
           }}>
             <ArrowLeft size={16} /> Back
@@ -152,20 +152,20 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
         )}
         {!isLast ? (
           <button type="button" onClick={advance} style={{
-            flex: isFirst ? 1 : 2, padding: 'var(--sp-3)', borderRadius: 'var(--r-md)',
+            flex: isFirst ? 1 : 2, padding: 'var(--sp-3)', borderRadius: 'var(--r-m)',
             border: '1px solid var(--navy)', background: 'var(--navy)',
-            color: '#fff', fontFamily: 'var(--font)', fontSize: 'var(--fs-sm)', fontWeight: 700,
+            color: '#fff', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', cursor: 'pointer',
           }}>
             Next <ArrowRight size={16} />
           </button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} style={{
-            flex: isFirst ? 1 : 2, padding: 'var(--sp-3)', borderRadius: 'var(--r-md)',
+            flex: isFirst ? 1 : 2, padding: 'var(--sp-3)', borderRadius: 'var(--r-m)',
             border: `1px solid ${submitting ? 'var(--border-l)' : 'var(--red)'}`,
             background: submitting ? 'var(--hover)' : 'var(--red)',
             color: submitting ? 'var(--text-3)' : '#fff',
-            fontFamily: 'var(--font)', fontSize: 'var(--fs-sm)', fontWeight: 700,
+            fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)',
             cursor: submitting ? 'default' : 'pointer',
           }}>

@@ -120,7 +120,7 @@ export default function Inspections() {
                 {s.icon}
               </div>
               <div>
-                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-1)' }}>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
                   {s.value}
                 </div>
                 <div className="dfl-summary-label">{s.label}</div>
@@ -143,18 +143,18 @@ export default function Inspections() {
                   display: 'inline-flex', alignItems: 'center', gap: 5,
                   padding: '4px 10px', borderRadius: 20, cursor: 'pointer',
                   border: active ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
-                  background: active ? cfg.bg : 'var(--surface)',
-                  color: active ? cfg.color : 'var(--text-2)',
-                  fontSize: 'var(--fs-xs)', fontWeight: active ? 600 : 500,
+                  background: active ? cfg.bg : 'var(--white)',
+                  color: active ? cfg.color : 'var(--black)',
+                  fontSize: 'var(--text-xs)', fontWeight: active ? 600 : 500,
                   transition: 'all 0.15s',
                 }}
               >
                 {cfg.label}
                 <span style={{
                   background: active ? cfg.color : 'var(--border)',
-                  color: active ? '#fff' : 'var(--text-2)',
+                  color: active ? '#fff' : 'var(--black)',
                   borderRadius: 10, padding: '0 5px',
-                  fontSize: 'var(--fs-2xs)', fontWeight: 700, lineHeight: '16px',
+                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px',
                 }}>{count}</span>
               </button>
             )

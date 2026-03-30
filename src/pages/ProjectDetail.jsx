@@ -55,8 +55,8 @@ function InfoRow({ icon: Icon, label, value }) {
     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
       <Icon size={14} style={{ color: 'var(--text-3)', marginTop: 1, flexShrink: 0 }} />
       <div>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
-        <div style={{ fontSize: 'var(--fs-md)', color: 'var(--text-1)' }}>{value}</div>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
+        <div style={{ fontSize: 'var(--text-md)', color: 'var(--black)' }}>{value}</div>
       </div>
     </div>
   )
@@ -88,7 +88,7 @@ function StagePipeline({ stage }) {
                   flexShrink: 0,
                 }} />
                 <span style={{
-                  fontSize: 'var(--fs-2xs)', fontWeight: isCurrent ? 700 : 500,
+                  fontSize: 'var(--text-2xs)', fontWeight: isCurrent ? 700 : 500,
                   color: isCurrent ? cfg.color : isDone ? '#16A34A' : 'var(--text-3)',
                   whiteSpace: 'nowrap',
                 }}>
@@ -109,8 +109,8 @@ function StagePipeline({ stage }) {
       {isOffPipeline && (
         <div style={{ marginTop: 8 }}>
           <span style={{
-            fontSize: 'var(--fs-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
-            background: STAGE_CFG[stage]?.bg || 'var(--surface)',
+            fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
+            background: STAGE_CFG[stage]?.bg || 'var(--white)',
             padding: '3px 10px', borderRadius: 20,
           }}>
             {STAGE_CFG[stage]?.label || stage}
@@ -205,7 +205,7 @@ export default function ProjectDetail() {
         <div className="card">
           <div style={{
             padding: '14px 14px 12px',
-            background: stageCfg.bg || 'var(--surface)',
+            background: stageCfg.bg || 'var(--white)',
             borderRadius: '0.5rem 0.5rem 0 0',
             borderBottom: `2px solid ${stageCfg.color || 'var(--border)'}22`,
           }}>
@@ -213,12 +213,12 @@ export default function ProjectDetail() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <TypeIcon size={14} style={{ color: stageCfg.color }} />
-                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: stageCfg.color }}>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
               </div>
               <div style={{
-                fontSize: 'var(--fs-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+                fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                 color: stageCfg.color, background: stageCfg.bg,
                 border: `1px solid ${stageCfg.color}44`,
                 padding: '3px 10px', borderRadius: 20,
@@ -227,10 +227,10 @@ export default function ProjectDetail() {
               </div>
             </div>
             {/* Project name */}
-            <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.2, marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--black)', lineHeight: 1.2, marginBottom: 4 }}>
               {project.name}
             </div>
-            <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>
+            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>
               {project.customer_account}
               {project.job_number && (
                 <span style={{ fontFamily: 'var(--mono)', marginLeft: 8 }}>{project.job_number}</span>
@@ -245,8 +245,8 @@ export default function ProjectDetail() {
           {project.progress > 0 && (
             <div style={{ padding: '0 14px 14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 500 }}>Progress</span>
-                <span style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: stageCfg.color, fontWeight: 700 }}>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 500 }}>Progress</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: stageCfg.color, fontWeight: 700 }}>
                   {project.progress}%
                 </span>
               </div>
@@ -268,13 +268,13 @@ export default function ProjectDetail() {
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
-              <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: cfCfg.color }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: cfCfg.color }}>
                 Completion Form: {cfCfg.label}
               </span>
               {cfStatus === 'submitted' && (
                 <button
                   className="btn btn-secondary"
-                  style={{ fontSize: 'var(--fs-xs)', padding: '3px 10px' }}
+                  style={{ fontSize: 'var(--text-xs)', padding: '3px 10px' }}
                   onClick={() => navigate('/forms')}
                 >
                   Review →
@@ -313,13 +313,13 @@ export default function ProjectDetail() {
                   background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
                   color:      tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', fontWeight: 700,
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 700,
                 }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: 'var(--fs-lg)' }}>{tech.name}</div>
-                  <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>
                     {tech.license}
                     {tech.phone && ` · ${tech.phone}`}
                   </div>
@@ -329,7 +329,7 @@ export default function ProjectDetail() {
                 </span>
               </div>
             ) : (
-              <div style={{ color: 'var(--text-3)', fontSize: 'var(--fs-md)' }}>Unassigned</div>
+              <div style={{ color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>Unassigned</div>
             )}
           </div>
         </div>
@@ -364,7 +364,7 @@ export default function ProjectDetail() {
             <div className="card-header">
               <span className="card-title">Notes</span>
             </div>
-            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6 }}>
+            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>
               {project.notes}
             </div>
           </div>
@@ -378,7 +378,7 @@ export default function ProjectDetail() {
                 <span className="card-dot" style={{ background: 'var(--blue)' }} />
                 Daily Field Reports
               </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>{reports.length}</span>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{reports.length}</span>
             </div>
             {reports.map(r => (
               <div key={r.id} className="project-item">
@@ -404,10 +404,10 @@ export default function ProjectDetail() {
             <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
                 <CurrencyDollar size={15} style={{ color: 'rgba(255,255,255,0.7)' }} />
-                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
-                <span style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
                   Contract: ${Number(project.contract_value).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                 </span>
               )}
@@ -421,8 +421,8 @@ export default function ProjectDetail() {
                 { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
               ].map(s => (
                 <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--sp-3) var(--sp-4)' }}>
-                  <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 800, color: 'var(--text-1)' }}>{s.value}</div>
-                  <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--black)' }}>{s.value}</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -438,9 +438,9 @@ export default function ProjectDetail() {
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-2) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)' }}>{r.label}</span>
+                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>{r.label}</span>
                   </div>
-                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                     ${r.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
@@ -455,14 +455,14 @@ export default function ProjectDetail() {
               const isPositive = margin >= 0
               return (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-3) var(--sp-4)', background: isPositive ? '#F0FDF4' : '#FEF2F2', borderTop: '2px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? '#15803D' : '#B91C1C' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 'var(--fs-md)', fontWeight: 800, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? '#15803D' : '#B91C1C' }}>
                       ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </div>
-                    <div style={{ fontSize: 'var(--fs-xs)', color: isPositive ? '#16A34A' : '#DC2626', fontWeight: 600 }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? '#16A34A' : '#DC2626', fontWeight: 600 }}>
                       {isPositive ? '+' : '-'}{Math.abs(marginPct)}%
                     </div>
                   </div>
@@ -473,10 +473,10 @@ export default function ProjectDetail() {
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)' }}>
-              <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
+              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--navy)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--navy)' }}>
                 View Expenses <CaretRight size={12} />
               </div>
             </button>
@@ -491,7 +491,7 @@ export default function ProjectDetail() {
                 <span className="card-dot" style={{ background: 'var(--red)' }} />
                 Completion Forms
               </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>{submissions.length}</span>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{submissions.length}</span>
             </div>
             {submissions.map(s => {
               const sCfg = COMPLETION_FORM_CFG[s.status?.toLowerCase().replace(' ', '-')] || {}
@@ -504,9 +504,9 @@ export default function ProjectDetail() {
                     </div>
                   </div>
                   <span style={{
-                    fontSize: 'var(--fs-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
+                    fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
                     color: sCfg.color || 'var(--text-3)',
-                    background: sCfg.bg || 'var(--surface)',
+                    background: sCfg.bg || 'var(--white)',
                     padding: '3px 8px', borderRadius: 20,
                     border: `1px solid ${sCfg.color || 'var(--border)'}33`,
                   }}>

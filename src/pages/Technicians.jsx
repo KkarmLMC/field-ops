@@ -30,7 +30,7 @@ export default function Technicians() {
                 {s.icon}
               </div>
               <div>
-                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--orange)' : 'var(--text-1)' }}>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--orange)' : 'var(--black)' }}>
                   {s.value}
                 </div>
                 <div className="dfl-summary-label">{s.label}</div>
@@ -51,13 +51,13 @@ export default function Technicians() {
                     background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
                     color: tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', fontWeight: 600,
+                    fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 600,
                   }}>
                     {tech.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: 'var(--fs-lg)' }}>{tech.name}</div>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: '0.125rem' }}>
+                    <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: '0.125rem' }}>
                       {tech.license} · {tech.phone}
                     </div>
                   </div>
@@ -70,7 +70,7 @@ export default function Technicians() {
               {/* Assigned jobs */}
               {techJobs.length > 0 && (
                 <div style={{ padding: '8px 14px 10px' }}>
-                  <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-2)', marginBottom: 'var(--sp-1)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', marginBottom: 'var(--sp-1)' }}>
                     Assigned Jobs ({techJobs.length})
                   </div>
                   {techJobs.map(job => (
@@ -81,7 +81,7 @@ export default function Technicians() {
                       onClick={() => navigate(`/installations/${job.id}`)}
                     >
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 'var(--fs-md)', fontWeight: 500 }}>{job.name}</div>
+                        <div style={{ fontSize: 'var(--text-md)', fontWeight: 500 }}>{job.name}</div>
                         <div style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>{job.job_number}</div>
                       </div>
                       <span className={`badge badge-${job.stage === 'in-progress' ? 'active' : job.stage === 'complete' ? 'completed' : job.stage}`}>{job.stage}</span>

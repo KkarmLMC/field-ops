@@ -23,21 +23,21 @@ function FieldLabel({ field, error }) {
   return (
     <div style={{ marginBottom: 'var(--sp-2)' }}>
       <div style={{
-        fontSize: 'var(--fs-sm)',
+        fontSize: 'var(--text-sm)',
         fontWeight: 600,
-        color: error ? 'var(--red)' : 'var(--text-1)',
+        color: error ? 'var(--red)' : 'var(--black)',
         lineHeight: 1.4,
       }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)' }}>*</span>}
       </div>
       {field.hint && (
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>
           {field.hint}
         </div>
       )}
       {error && (
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--red)', marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 2 }}>
           {error}
         </div>
       )}
@@ -94,10 +94,10 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           style={{
             width: '2.25rem',
             height: '2.25rem',
-            borderRadius: 'var(--r-lg)',
+            borderRadius: 'var(--r-l)',
             border: '1px solid var(--border-l)',
             background: 'var(--surface-raised)',
-            color: 'var(--text-2)',
+            color: 'var(--black)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -107,7 +107,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         >
           <ArrowLeft size={16} />
         </button>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', fontWeight: 500 }}>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', fontWeight: 500 }}>
           Back to sections
         </div>
       </div>
@@ -124,11 +124,11 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           background: 'var(--navy)',
           padding: 'var(--sp-4)',
         }}>
-          <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 700, color: '#fff' }}>
+          <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>
             {section.title}
           </div>
           {section.description && (
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--sp-1)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--sp-1)' }}>
               {section.description}
             </div>
           )}
@@ -162,12 +162,12 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         style={{
           width: '100%',
           padding: 'var(--sp-3)',
-          borderRadius: 'var(--r-md)',
+          borderRadius: 'var(--r-m)',
           border: '1px solid var(--navy)',
           background: 'var(--navy)',
           color: '#fff',
           fontFamily: 'var(--font)',
-          fontSize: 'var(--fs-sm)',
+          fontSize: 'var(--text-sm)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',
@@ -258,7 +258,7 @@ export default function MultiPageForm({
     <div>
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--sp-1)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--sp-1)' }}>
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
@@ -322,22 +322,22 @@ export default function MultiPageForm({
               {/* Label */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{
-                  fontSize: 'var(--fs-md)',
+                  fontSize: 'var(--text-md)',
                   fontWeight: complete ? 600 : 500,
-                  color: complete ? 'var(--text-1)' : 'var(--text-2)',
+                  color: complete ? 'var(--black)' : 'var(--black)',
                   marginBottom: 2,
                 }}>
                   {section.title}
                   {hasRequired && !complete && (
-                    <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)', fontSize: 'var(--fs-xs)' }}>*</span>
+                    <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)', fontSize: 'var(--text-xs)' }}>*</span>
                   )}
                 </div>
-                <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
                   {complete ? 'Complete' : started ? 'In progress' : `${section.fields.filter(f=>f.required).length} required fields`}
                 </div>
               </div>
 
-              <CaretRight size={16} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
+              <CaretRight size={16} style={{ color: 'var(--black)', flexShrink: 0 }} />
             </button>
           )
         })}
@@ -350,8 +350,8 @@ export default function MultiPageForm({
           marginBottom: 'var(--sp-3)',
           background: 'var(--red-soft)',
           border: '1px solid var(--red)',
-          borderRadius: 'var(--r-md)',
-          fontSize: 'var(--fs-sm)',
+          borderRadius: 'var(--r-m)',
+          fontSize: 'var(--text-sm)',
           color: 'var(--red)',
         }}>
           {submitErr}
@@ -363,8 +363,8 @@ export default function MultiPageForm({
           marginBottom: 'var(--sp-3)',
           background: 'var(--surface-raised)',
           border: '1px solid var(--border-l)',
-          borderRadius: 'var(--r-md)',
-          fontSize: 'var(--fs-xs)',
+          borderRadius: 'var(--r-m)',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-3)',
           textAlign: 'center',
         }}>
@@ -380,12 +380,12 @@ export default function MultiPageForm({
         style={{
           width: '100%',
           padding: 'var(--sp-3)',
-          borderRadius: 'var(--r-md)',
+          borderRadius: 'var(--r-m)',
           border: `1px solid ${!allComplete || submitting ? 'var(--border-l)' : 'var(--red)'}`,
           background: !allComplete || submitting ? 'var(--hover)' : 'var(--red)',
           color: !allComplete || submitting ? 'var(--text-3)' : '#fff',
           fontFamily: 'var(--font)',
-          fontSize: 'var(--fs-sm)',
+          fontSize: 'var(--text-sm)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',

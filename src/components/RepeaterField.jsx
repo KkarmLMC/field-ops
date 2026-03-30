@@ -25,12 +25,12 @@ import { FormField } from './FormEngine.jsx'
 function SubLabel({ field, error }) {
   return (
     <div style={{ marginBottom: 'var(--sp-1)' }}>
-      <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: error ? 'var(--red)' : 'var(--text-1)', lineHeight: 1.4 }}>
+      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4 }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 4 }}>*</span>}
       </div>
-      {field.hint && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{field.hint}</div>}
-      {error && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--red)', marginTop: 2 }}>{error}</div>}
+      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{field.hint}</div>}
+      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 2 }}>{error}</div>}
     </div>
   )
 }
@@ -64,24 +64,24 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
       gap: 'var(--sp-3)',
       padding: 'var(--sp-3) var(--sp-4)',
       borderBottom: '1px solid var(--border-l)',
-      background: 'var(--surface)',
+      background: 'var(--white)',
     }}>
       {/* Entry number badge */}
       <div style={{
         width: '1.75rem', height: '1.75rem', borderRadius: 'var(--r-full)',
         background: 'var(--navy)', color: '#fff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 'var(--fs-xs)', fontWeight: 700, flexShrink: 0,
+        fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0,
       }}>
         {index + 1}
       </div>
 
       {/* Summary text */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: 'var(--text-1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {summary || `Entry ${index + 1}`}
         </div>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>
           {hasPhoto && <span>📷 </span>}
           {subFields.filter(f => entry[f.id] !== undefined && entry[f.id] !== null && entry[f.id] !== '').length} of {subFields.length} fields filled
         </div>
@@ -89,11 +89,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
 
       {/* Edit + Delete */}
       <button type="button" onClick={onEdit}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--text-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <PencilSimple size={14} />
       </button>
       <button type="button" onClick={onDelete}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <Trash size={14} />
       </button>
     </div>
@@ -131,7 +131,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
       {/* Sheet */}
       <div style={{
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 300,
-        background: 'var(--surface)',
+        background: 'var(--white)',
         borderRadius: 'var(--r-xl) var(--r-xl) 0 0',
         maxHeight: '90vh',
         display: 'flex', flexDirection: 'column',
@@ -145,21 +145,21 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
           borderBottom: '1px solid var(--border-l)',
           flexShrink: 0,
         }}>
-          <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: 'var(--text-1)' }}>
+          <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--black)' }}>
             {title}
           </div>
           <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
             <button type="button" onClick={onClose} style={{
-              width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-lg)',
+              width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)',
               border: '1px solid var(--border-l)', background: 'var(--surface-raised)',
-              color: 'var(--text-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+              color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
             }}>
               <X size={16} />
             </button>
             <button type="button" onClick={handleSave} style={{
-              height: '2.25rem', padding: '0 var(--sp-4)', borderRadius: 'var(--r-lg)',
+              height: '2.25rem', padding: '0 var(--sp-4)', borderRadius: 'var(--r-l)',
               border: '1px solid var(--navy)', background: 'var(--navy)',
-              color: '#fff', fontSize: 'var(--fs-sm)', fontWeight: 700,
+              color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700,
               display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', cursor: 'pointer',
             }}>
               <CheckCircle size={14} /> Save
@@ -224,7 +224,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
       {entries.length > 0 && (
         <div style={{
           border: '1px solid var(--border-l)',
-          borderRadius: 'var(--r-lg)',
+          borderRadius: 'var(--r-l)',
           overflow: 'hidden',
           marginBottom: 'var(--sp-3)',
         }}>
@@ -247,10 +247,10 @@ export default function RepeaterField({ field, value, onChange, error }) {
           padding: 'var(--sp-5)',
           textAlign: 'center',
           border: '1px dashed var(--border-l)',
-          borderRadius: 'var(--r-lg)',
+          borderRadius: 'var(--r-l)',
           marginBottom: 'var(--sp-3)',
           color: 'var(--text-3)',
-          fontSize: 'var(--fs-sm)',
+          fontSize: 'var(--text-sm)',
         }}>
           No entries yet — tap Add Entry to begin
         </div>
@@ -260,11 +260,11 @@ export default function RepeaterField({ field, value, onChange, error }) {
       <button type="button" onClick={openAdd} style={{
         display: 'flex', alignItems: 'center', gap: 'var(--sp-2)',
         padding: 'var(--sp-2) var(--sp-4)',
-        borderRadius: 'var(--r-md)',
+        borderRadius: 'var(--r-m)',
         border: '1px solid var(--navy)',
         background: 'transparent',
         color: 'var(--navy)',
-        fontSize: 'var(--fs-sm)', fontWeight: 700,
+        fontSize: 'var(--text-sm)', fontWeight: 700,
         cursor: 'pointer',
         transition: 'all var(--ease-fast)',
       }}>
@@ -273,7 +273,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Error message */}
       {error && (
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--red)', marginTop: 'var(--sp-1)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 'var(--sp-1)' }}>
           {error}
         </div>
       )}
