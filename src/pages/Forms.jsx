@@ -138,6 +138,12 @@ export default function Forms() {
 
         {loading ? (
           <div className="loading"><div className="spinner" /></div>
+        ) : visibleCategories.length === 0 ? (
+          <div className="empty">
+            <ClipboardText size={32} style={{ color: 'var(--text-3)' }} />
+            <div className="empty-title">No forms available</div>
+            <div className="empty-desc">No report forms are configured for this branch yet.</div>
+          </div>
         ) : (
           <div className="form-catalog-grid">
             {visibleCategories.map(cat => (

@@ -5,6 +5,7 @@ import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 import ProjectPicker from '../components/ProjectPicker.jsx'
+import PageHeader from '../components/ui/PageHeader'
 
 export default function PartRequest() {
   const navigate = useNavigate()

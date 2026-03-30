@@ -5,6 +5,7 @@ import {
   CaretRight, CheckCircle, Clock, PaperPlaneTilt, X,
   MagnifyingGlass, Buildings } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import PageHeader from '../components/ui/PageHeader'
 
 const STATUS = {
   draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },

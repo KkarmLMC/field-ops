@@ -4,6 +4,7 @@ import {
   MagnifyingGlass, X, ArrowsLeftRight, Package,
   Buildings, WarningCircle, ArrowRight, Clock } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import PageHeader from '../components/ui/PageHeader'
 
 // ─── Stock chip ───────────────────────────────────────────────────────────────
 function StockBadge({ qty, min }) {
