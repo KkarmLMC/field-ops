@@ -6,6 +6,7 @@ import {
   PencilSimple, MapPin, Phone, Envelope, ClipboardText,
   CaretDown, MagnifyingGlass, X, Check, Receipt } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { soStatus } from '../lib/statusColors.js'
 
 // ─── Shared label component ───────────────────────────────────────────────────
 function Label({ children }) {
@@ -402,12 +403,6 @@ export default function WarehouseDetail() {
 
       {/* Sales Orders for this warehouse */}
       {warehousePOs.length > 0 && (() => {
-        const STATUS_COLORS = {
-          draft:     { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-          submitted: { color: 'var(--warning)', bg: 'var(--warning-soft)' },
-          published: { color: 'var(--blue)', bg: 'var(--blue-soft)' },
-          fulfilled: { color: 'var(--success-text)', bg: 'var(--success-soft)' },
-          cancelled: { color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
         return (
           <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
@@ -424,7 +419,7 @@ export default function WarehouseDetail() {
               </button>
             </div>
             {warehousePOs.map((po, idx) => {
-              const sc = STATUS_COLORS[po.status] || STATUS_COLORS.draft
+              const sc = soStatus(po.status)
               return (
                 <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>

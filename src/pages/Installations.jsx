@@ -10,6 +10,8 @@ import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { projectStage } from '../lib/statusColors.js'
 
+const today = () => { const d = new Date(); d.setHours(0,0,0,0); return d }
+
 // ─── Stage config — thin wrapper over projectStage() tokens ───────────────────
 // `short` label is Installations-specific (not in the shared token) so we extend here
 const STAGE_CFG = {

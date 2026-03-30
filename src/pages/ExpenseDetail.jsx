@@ -62,7 +62,7 @@ export default function ExpenseDetail() {
   if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
   if (!report) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Report not found</div></div></div>
 
-  const sc = approvalStatus(report.status) || STATUS_COLORS.draft
+  const sc = approvalStatus(report.status)
   const flow = STATUS_FLOW[report.status]
   const isAdvance = report.type === 'advance'
   const CATS = ['fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other']
