@@ -13,9 +13,9 @@ const STATUS_FLOW = {
 
 const STATUS_COLORS = {
   draft:     { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-  submitted: { color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  approved:  { color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
+  submitted: { color: 'var(--black)', bg: 'var(--warning-soft)' },
+  approved:  { color: 'var(--black)', bg: 'var(--success-soft)' },
+  rejected:  { color: 'var(--black)', bg: 'var(--error-soft)' } }
 
 export default function ExpenseDetail() {
   const { id } = useParams()
@@ -173,7 +173,7 @@ export default function ExpenseDetail() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Less Cash Advance</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>

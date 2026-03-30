@@ -8,17 +8,17 @@ import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Form type config ──────────────────────────────────────────────────────────
 const FORM_TYPES = {
-  completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--orange)', bg: 'var(--orange-soft)' },
+  completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--black)', bg: 'var(--orange-soft)' },
   inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--blue-soft)' },
-  jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: 'var(--warning-tint-80)' },
+  jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--black)', bg: 'var(--warning-tint-80)' },
   'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' } }
 
 // ─── Status config ─────────────────────────────────────────────────────────────
 const STATUS_CFG = {
-  submitted:          { label: 'Submitted',          color: 'var(--blue)', bg: 'var(--blue-soft)' },
-  'under-review':     { label: 'Under Review',       color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  'customer-signoff': { label: 'Customer Sign-off',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: 'var(--success-soft)' } }
+  submitted:          { label: 'Submitted',          color: 'var(--black)', bg: 'var(--blue-soft)' },
+  'under-review':     { label: 'Under Review',       color: 'var(--black)', bg: 'var(--warning-soft)' },
+  'customer-signoff': { label: 'Customer Sign-off',  color: 'var(--black)', bg: 'var(--purple-soft)' },
+  complete:           { label: 'Complete',            color: 'var(--black)', bg: 'var(--success-soft)' } }
 
 // ─── Mock data (swapped for Supabase when live) ────────────────────────────────
 const MOCK_FIELD_REPORTS = [

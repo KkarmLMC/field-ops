@@ -91,7 +91,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
           </div>
 
-          {error && <div style={{ color: 'var(--error-dark)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-m)', padding: 'var(--pad-s) var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-m)' }}>{error}</div>}
+          {error && <div style={{ color: 'var(--black)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-m)', padding: 'var(--pad-s) var(--pad-m)', background: 'var(--bg)', borderRadius: 'var(--r-m)' }}>{error}</div>}
         </div>
 
         {/* Footer */}
@@ -144,9 +144,9 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           </div>
         </div>
         {hasAlerts ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--warning-soft)', borderRadius: 'var(--r-xxl)', padding: '3px 10px' }}>
-            <WarningCircle size={13} weight="fill" style={{ color: 'var(--warning)' }} />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning)' }}>{lowStockItems} low stock</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--bg)', borderRadius: 'var(--r-xxl)', padding: '3px 10px' }}>
+            <WarningCircle size={13} weight="fill" style={{ color: 'var(--black)' }} />
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>{lowStockItems} low stock</span>
           </div>
         ) : (
           <CaretRight size={16} style={{ color: 'rgba(255,255,255,0.4)' }} />
@@ -178,7 +178,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
             <CurrencyDollar size={14} />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
           </div>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--success-text)' }}>
+          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--black)' }}>
             ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
           </span>
         </div>
@@ -186,18 +186,18 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Low stock list */}
       {lowStockItems > 0 && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', borderTop: '1px solid #FED7AA', background: 'var(--warning-soft)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning-text)', marginBottom: 'var(--mar-s)' }}>Low Stock</div>
+        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', borderTop: '1px solid #FED7AA', background: 'var(--bg)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Low Stock</div>
           {wLevels
             .filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level)
             .slice(0, 3)
             .map(l => (
-              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginBottom: 2 }}>
+              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', color: 'var(--black)', marginBottom: 2 }}>
                 <span style={{ fontFamily: 'var(--mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '60%' }}>{l.parts?.sku || '—'}</span>
                 <span style={{ fontWeight: 700, flexShrink: 0 }}>{l.quantity_on_hand} / min {l.min_level}</span>
               </div>
             ))}
-          {lowStockItems > 3 && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
+          {lowStockItems > 3 && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
         </div>
       )}
 
@@ -323,7 +323,7 @@ export default function Inventory() {
 
       {/* Edit mode hint */}
       {editMode && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--blue-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-sm)', color: 'var(--blue)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--bg)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-sm)', color: 'var(--black)' }}>
           <DotsSixVertical size={16} />
           Drag the handles to reorder warehouses, then tap Save Order.
         </div>
@@ -344,7 +344,7 @@ export default function Inventory() {
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
-                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
+                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--bg)', color: 'var(--black)' }}>
                     {submitted.length} need review
                   </span>
                 )}

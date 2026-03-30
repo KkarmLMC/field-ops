@@ -130,7 +130,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Errors */}
       {(submitErr || Object.keys(pageErrors).length > 0) && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background: 'var(--red-soft)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
+        <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background: 'var(--bg)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
           {submitErr || 'Please fill in all required fields before continuing.'}
         </div>
       )}

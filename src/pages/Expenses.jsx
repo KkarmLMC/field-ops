@@ -8,9 +8,9 @@ import { db } from '../lib/supabase.js'
 
 const STATUS = {
   draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-  submitted: { label: 'Submitted', color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  approved:  { label: 'Approved',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { label: 'Rejected',  color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
+  submitted: { label: 'Submitted', color: 'var(--black)', bg: 'var(--warning-soft)' },
+  approved:  { label: 'Approved',  color: 'var(--black)', bg: 'var(--success-soft)' },
+  rejected:  { label: 'Rejected',  color: 'var(--black)', bg: 'var(--error-soft)' } }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
@@ -138,10 +138,10 @@ export default function Expenses() {
 
       {/* Pending alert */}
       {submitted > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
-          <Clock size={18} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--bg)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
+          <Clock size={18} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
+            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-shade-20)' }}>${totalPending.toLocaleString('en-US', { minimumFractionDigits: 2 })} pending</div>
           </div>
         </div>

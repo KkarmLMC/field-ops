@@ -89,7 +89,7 @@ export default function PartRequest() {
 
   if (saved) return (
     <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--gap-l)', textAlign: 'center' }}>
-      <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+      <CheckCircle size={52} weight="fill" style={{ color: 'var(--black)' }} />
       <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Request Submitted</div>
       <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 280 }}>
         Your part request is pending management review in Mission Control. You'll be notified once it's approved.
@@ -129,7 +129,7 @@ export default function PartRequest() {
           />
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
-              Fulfillment Warehouse <span style={{ color: 'var(--error)' }}>*</span>
+              Fulfillment Warehouse <span style={{ color: 'var(--black)' }}>*</span>
             </label>
             <select value={form.warehouse_id} onChange={e => setForm(f => ({ ...f, warehouse_id: e.target.value }))}>
               <option value="">— Select warehouse —</option>
@@ -138,7 +138,7 @@ export default function PartRequest() {
           </div>
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
-              Justification <span style={{ color: 'var(--error)' }}>*</span>
+              Justification <span style={{ color: 'var(--black)' }}>*</span>
             </label>
             <textarea value={form.justification} onChange={e => setForm(f => ({ ...f, justification: e.target.value }))}
               placeholder="Why do you need these parts? What's the job context or change in scope?" rows={3} />
@@ -163,7 +163,7 @@ export default function PartRequest() {
                 <input type="number" min={1} value={item.quantity} onChange={e => updateItem(idx, 'quantity', e.target.value)}
                   style={{ width: 64, textAlign: 'center' }} />
                 {items.length > 1 && (
-                  <button onClick={() => removeItem(idx)} style={{ background: 'none', cursor: 'pointer', color: 'var(--error)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
+                  <button onClick={() => removeItem(idx)} style={{ background: 'none', cursor: 'pointer', color: 'var(--black)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
                     <Trash size={15} />
                   </button>
                 )}
@@ -180,7 +180,7 @@ export default function PartRequest() {
 
       {/* Error */}
       {error && (
-        <div style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--bg)', color: 'var(--black)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
           {error}
         </div>
       )}

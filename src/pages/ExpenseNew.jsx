@@ -6,7 +6,7 @@ import { db } from '../lib/supabase.js'
 function Label({ children, required }) {
   return (
     <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>
-      {children}{required && <span style={{ color: 'var(--error-dark)', marginLeft: 3 }}>*</span>}
+      {children}{required && <span style={{ color: 'var(--black)', marginLeft: 3 }}>*</span>}
     </label>
   )
 }
@@ -215,7 +215,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--bg)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--black)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
@@ -376,7 +376,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--bg)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--black)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}

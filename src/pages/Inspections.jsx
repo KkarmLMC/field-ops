@@ -12,10 +12,10 @@ import { BRANCH_COLORS } from '../config/branches.js'
 const INSPECT_TYPES = ['inspection', 'annual-test']
 
 const STAGE_CFG = {
-  'in-progress': { label: 'Active',     color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
-  scheduled:     { label: 'Scheduled',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  complete:      { label: 'Complete',   color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  failed:        { label: 'Failed',     color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
+  'in-progress': { label: 'Active',     color: 'var(--black)', bg: 'var(--orange-soft)' },
+  scheduled:     { label: 'Scheduled',  color: 'var(--black)', bg: 'var(--purple-soft)' },
+  complete:      { label: 'Complete',   color: 'var(--black)', bg: 'var(--success-soft)' },
+  failed:        { label: 'Failed',     color: 'var(--black)', bg: 'var(--error-soft)' } }
 
 const TYPE_ICON = {
   inspection:    MagnifyingGlass,
