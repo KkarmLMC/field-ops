@@ -4,18 +4,13 @@ import {
   CheckCircle, Clock, PaperPlaneTilt, Warning,
   ArrowRight, Buildings, CurrencyDollar } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { approvalStatus } from '../lib/statusColors.js'
 
 const STATUS_FLOW = {
   draft:     { next: 'submitted', label: 'Submit',  bg: 'var(--warning)', color: '#fff' },
   submitted: { next: 'approved',  label: 'Approve', bg: 'var(--success-text)', color: '#fff' },
   approved:  { next: null },
   rejected:  { next: null } }
-
-const STATUS_COLORS = {
-  draft:     { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-  submitted: { color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  approved:  { color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
 
 export default function ExpenseDetail() {
   const { id } = useParams()
@@ -67,7 +62,7 @@ export default function ExpenseDetail() {
   if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
   if (!report) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Report not found</div></div></div>
 
-  const sc = STATUS_COLORS[report.status] || STATUS_COLORS.draft
+  const sc = approvalStatus(report.status) || STATUS_COLORS.draft
   const flow = STATUS_FLOW[report.status]
   const isAdvance = report.type === 'advance'
   const CATS = ['fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other']

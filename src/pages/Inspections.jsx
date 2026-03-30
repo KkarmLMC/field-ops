@@ -7,24 +7,10 @@ import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { projectStage } from '../lib/statusColors.js'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const INSPECT_TYPES = ['inspection', 'annual-test']
-
-const STAGE_CFG = {
-  'in-progress': { label: 'Active',     color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
-  scheduled:     { label: 'Scheduled',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  complete:      { label: 'Complete',   color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  failed:        { label: 'Failed',     color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
-
-const TYPE_ICON = {
-  inspection:    MagnifyingGlass,
-  'annual-test': ClipboardText }
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-function getTech(id) {
-  return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
-}
 
 function fmtDate(d) {
   if (!d) return '—'

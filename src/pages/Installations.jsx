@@ -8,28 +8,9 @@ import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { projectStage } from '../lib/statusColors.js'
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
-const STAGE_CFG = {
-  'awarded':        { label: 'Awarded',        short: 'Awarded',   color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  'scheduled':      { label: 'Scheduled',      short: 'Upcoming',  color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-  'in-progress':    { label: 'In Progress',    short: 'Active',    color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  'pending-review': { label: 'Pending Review', short: 'In Review', color: 'var(--blue)', bg: 'var(--blue-soft)' },
-  'complete':       { label: 'Complete',       short: 'Complete',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  'postponed':      { label: 'Postponed',      short: 'Postponed', color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
-  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--error-alt)', bg: 'var(--error-soft)' } }
-
-// ─── Type icons ───────────────────────────────────────────────────────────────
-const TYPE_ICON = {
-  installation:   Lightning,
-  inspection:     MagnifyingGlass,
-  'site-survey':  Wrench,
-  certification:  ClipboardText,
-  remediation:    Wrench }
-
-function getTech(id) {
-  return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
-}
 
 function fmtDate(d) {
   if (!d) return '—'
@@ -41,7 +22,7 @@ function fmtDate(d) {
 // ─── Section divider ──────────────────────────────────────────────────────────
 // ─── Stat pill ────────────────────────────────────────────────────────────────
 function StagePill({ stageKey, count, active, onClick }) {
-  const cfg = STAGE_CFG[stageKey] || {}
+  const cfg = projectStage(stageKey) || {}
   return (
     <button
       onClick={onClick}
@@ -63,7 +44,7 @@ function StagePill({ stageKey, count, active, onClick }) {
 
 // ─── Management project row ───────────────────────────────────────────────────
 function MgmtRow({ p, navigate }) {
-  const cfg = STAGE_CFG[p.stage] || {}
+  const cfg = projectStage(p.stage) || {}
   const Icon = TYPE_ICON[p.type] || Wrench
   const needsReview = p.completion_form_status === 'submitted'
 
@@ -209,7 +190,7 @@ function EmptyState({ message }) {
 
 // ─── Field pipeline mini-row ──────────────────────────────────────────────────
 function FieldMiniRow({ p, navigate, stageKey }) {
-  const cfg = STAGE_CFG[stageKey] || {}
+  const cfg = projectStage(stageKey) || {}
   const Icon = TYPE_ICON[p.type] || Wrench
 
   return (
