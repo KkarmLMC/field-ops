@@ -154,7 +154,7 @@ export default function Inspections() {
                   background: active ? cfg.color : 'var(--border)',
                   color: active ? '#fff' : 'var(--black)',
                   borderRadius: 10, padding: '0 5px',
-                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px',
+                  fontSize: 'var(--blackxs)', fontWeight: 700, lineHeight: '16px',
                 }}>{count}</span>
               </button>
             )
@@ -207,7 +207,7 @@ export default function Inspections() {
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
         <SectionDivider title="Inspections" label="Field Overview" accent="var(--navy)" />
 
-        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+        <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

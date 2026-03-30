@@ -414,7 +414,7 @@ function FormEditor({ form, onSave, onCancel }) {
         <div style={{ display:'flex', gap:'var(--sp-2)' }}>
           <button type="button" onClick={onCancel} style={{ padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
-            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-s)', background:saved?'var(--green)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-s)', background:saved?'var(--success)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
             {saving ? <><SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size={13}/> Saved!</> : <><FloppyDisk size={13}/> Save Changes</>}
           </button>
         </div>
@@ -516,7 +516,7 @@ export default function FormBuilder() {
               <div className="project-name">{form.title}</div>
               <div className="project-meta">
                 {form.short} · {form.sections?.length || 0} sections · {(form.sections||[]).reduce((n,s)=>n+(s.fields?.length||0),0)} fields
-                {form.branch && <span style={{ marginLeft:'var(--sp-2)', padding:'0 var(--sp-2)', borderRadius:'var(--r-full)', background:'var(--card-header-bg)', fontSize:'var(--text-2xs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
+                {form.branch && <span style={{ marginLeft:'var(--sp-2)', padding:'0 var(--sp-2)', borderRadius:'var(--r-full)', background:'var(--navy-tint-80)', fontSize:'var(--blackxs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
               </div>
             </div>
             <div style={{ display:'flex', gap:'var(--sp-2)', flexShrink:0 }}>

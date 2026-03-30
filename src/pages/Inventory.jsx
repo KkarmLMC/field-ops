@@ -373,7 +373,7 @@ export default function Inventory() {
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
                 <div style={{
-                  fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
+                  fontSize: 'var(--blackxs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
                   color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
                 }}>

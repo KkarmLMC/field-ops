@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-md)' }}>
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-m)' }}>
 
       {/* Branch selector */}
       <BranchTabs active={branch} onChange={setBranch} />

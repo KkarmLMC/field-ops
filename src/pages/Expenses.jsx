@@ -39,7 +39,7 @@ function ReportCard({ report, project, onClick }) {
         width: 40, height: 40, borderRadius: 'var(--r-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: report.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
-        fontSize: 'var(--text-2xs)', fontWeight: 800,
+        fontSize: 'var(--blackxs)', fontWeight: 800,
         color: report.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
       }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
@@ -131,7 +131,7 @@ export default function Expenses() {
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: div === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>{div}</span>
+                  <span style={{ fontSize: 'var(--blackxs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: div === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>{div}</span>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
                 </button>
               ))}

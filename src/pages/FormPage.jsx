@@ -117,7 +117,7 @@ export default function FormPage() {
   if (success) {
     return (
       <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--sp-10) var(--sp-6)', textAlign:'center' }}>
-        <CheckCircle size={52} style={{ color: success.offline ? 'var(--amber)' : 'var(--green)', marginBottom:'var(--sp-3)' }} />
+        <CheckCircle size={52} style={{ color: success.offline ? 'var(--warning)' : 'var(--success)', marginBottom:'var(--sp-3)' }} />
         <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--sp-2)' }}>
           {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>

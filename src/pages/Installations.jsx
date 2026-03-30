@@ -94,7 +94,7 @@ function MgmtRow({ p, navigate }) {
           <div className="dash-job-name">{p.name}</div>
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
-              fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+              fontSize: 'var(--blackxs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
               background: '#2563EB', color: '#fff', padding: '2px 5px', borderRadius: 3,
               flexShrink: 0,
             }}>
@@ -111,7 +111,7 @@ function MgmtRow({ p, navigate }) {
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--black)', fontWeight: 600 }}>
+          <span style={{ fontSize: 'var(--blackxs)', color: 'var(--black)', fontWeight: 600 }}>
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (
@@ -167,7 +167,7 @@ function FieldRow({ p, navigate }) {
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
-              marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+              marginLeft: 6, fontSize: 'var(--blackxs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
               background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3,
             }}>
               NFPA {p.nfpa_class}
@@ -249,7 +249,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
             <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 80 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--blackxs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
           </div>
         )}
       </div>

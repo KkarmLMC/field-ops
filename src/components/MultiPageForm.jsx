@@ -266,7 +266,7 @@ export default function MultiPageForm({
           <div style={{
             height: '100%',
             width: `${(sections.filter(s => isSectionComplete(s, values)).length / sections.length) * 100}%`,
-            background: allComplete ? 'var(--green)' : 'var(--navy)',
+            background: allComplete ? 'var(--success)' : 'var(--navy)',
             borderRadius: 'var(--r-full)',
             transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           }} />
@@ -311,7 +311,7 @@ export default function MultiPageForm({
               {/* Status icon */}
               <div style={{ flexShrink: 0 }}>
                 {complete ? (
-                  <CheckCircle size={22} weight="fill" style={{ color: 'var(--green)' }} />
+                  <CheckCircle size={22} weight="fill" style={{ color: 'var(--success)' }} />
                 ) : started ? (
                   <Warning size={22} weight="fill" style={{ color: 'var(--amber, #D97706)' }} />
                 ) : (

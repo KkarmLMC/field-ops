@@ -48,7 +48,7 @@ export default function Technicians() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{
                     width: '2.5rem', height: '2.5rem', borderRadius: '0.375rem',
-                    background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
+                    background: tech.status === 'field' ? 'var(--orange-soft)' : 'var(--blue-soft)',
                     color: tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 600,
@@ -96,7 +96,7 @@ export default function Technicians() {
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
         <SectionDivider title="Technicians" label="Field Overview" accent="var(--navy)" />
 
-        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+        <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

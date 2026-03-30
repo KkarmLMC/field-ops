@@ -300,7 +300,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {/* Header */}
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
-              <div key={h} style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
+              <div key={h} style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
             ))}
           </div>
           {/* Rows */}

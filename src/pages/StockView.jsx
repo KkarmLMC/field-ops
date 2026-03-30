@@ -39,9 +39,9 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
         {warehouse.city}, {warehouse.state}
       </div>
       <div style={{ display: 'flex', gap: 'var(--sp-2)', marginTop: 4 }}>
-        {outCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
-        {lowCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
-        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
+        {outCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
+        {lowCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
+        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
       </div>
     </button>
   )

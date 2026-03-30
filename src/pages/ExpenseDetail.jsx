@@ -130,7 +130,7 @@ export default function ExpenseDetail() {
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
+                <div key={h} style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             {lines.map(l => (

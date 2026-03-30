@@ -100,8 +100,8 @@ function ResultBadge({ result, ratio }) {
       padding:'0.1875rem 0.625rem', borderRadius:'var(--r-s)',
       fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
       letterSpacing:'0.05em', textTransform:'uppercase',
-      background: req ? 'var(--red-soft)' : 'var(--green-s)',
-      color:       req ? 'var(--red)'     : 'var(--green)',
+      background: req ? 'var(--red-soft)' : 'var(--success-soft)',
+      color:       req ? 'var(--red)'     : 'var(--success)',
     }}>
       {req ? <Warning size={11} /> : <CheckCircle size={11} />}
       {req ? 'LPS Required' : 'LPS Optional'}
@@ -295,17 +295,17 @@ function NewAssessmentForm({ onSave, onCancel }) {
       {/* Result */}
       {result && (
         <div style={{
-          background: result.required ? 'var(--red-soft)'  : 'var(--green-s)',
-          border:`1px solid ${result.required ? 'var(--red)' : 'var(--green)'}`,
+          background: result.required ? 'var(--red-soft)'  : 'var(--success-soft)',
+          border:`1px solid ${result.required ? 'var(--red)' : 'var(--success)'}`,
           borderRadius:'var(--r-l)', padding:'var(--sp-4)', marginBottom:'var(--sp-3)',
         }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-3)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
               {result.required
                 ? <Warning size={20} style={{ color:'var(--red)' }} />
-                : <CheckCircle size={20} style={{ color:'var(--green)' }} />
+                : <CheckCircle size={20} style={{ color:'var(--success)' }} />
               }
-              <span style={{ fontFamily:'var(--font)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--red)' : 'var(--green)' }}>
+              <span style={{ fontFamily:'var(--font)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--red)' : 'var(--success)' }}>
                 {result.required ? 'LPS Required' : 'LPS Not Required'}
               </span>
             </div>
@@ -319,7 +319,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
               <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--r-s)', padding:'0.5rem 0.625rem' }}>
-                <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--sp-1)' }}>{label}</div>
+                <div style={{ ...S.label, fontSize:'var(--blackxs)', marginBottom:'var(--sp-1)' }}>{label}</div>
                 <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--black)' }}>{val}</div>
               </div>
             ))}
@@ -363,10 +363,10 @@ function AssessmentRow({ a }) {
     <div style={{ ...S.row, cursor:'default' }}>
       <div style={{
         width:'2.25rem', height:'2.25rem', borderRadius:'var(--r-m)', flexShrink:0,
-        background: req ? 'var(--red-soft)' : 'var(--green-s)',
+        background: req ? 'var(--red-soft)' : 'var(--success-soft)',
         display:'flex', alignItems:'center', justifyContent:'center',
       }}>
-        {req ? <Warning size={16} style={{ color:'var(--red)' }} /> : <CheckCircle size={16} style={{ color:'var(--green)' }} />}
+        {req ? <Warning size={16} style={{ color:'var(--red)' }} /> : <CheckCircle size={16} style={{ color:'var(--success)' }} />}
       </div>
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
@@ -501,7 +501,7 @@ export default function RiskAssessment() {
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
         <SectionDivider title="Risk Assessment" label="Field Overview" accent="var(--navy)" />
 
-        <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+        <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

@@ -88,7 +88,7 @@ function StagePipeline({ stage }) {
                   flexShrink: 0,
                 }} />
                 <span style={{
-                  fontSize: 'var(--text-2xs)', fontWeight: isCurrent ? 700 : 500,
+                  fontSize: 'var(--blackxs)', fontWeight: isCurrent ? 700 : 500,
                   color: isCurrent ? cfg.color : isDone ? '#16A34A' : 'var(--text-3)',
                   whiteSpace: 'nowrap',
                 }}>
@@ -199,7 +199,7 @@ export default function ProjectDetail() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-md)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
 
         {/* ── Header card ──────────────────────────────────────────────────── */}
         <div className="card">
@@ -310,7 +310,7 @@ export default function ProjectDetail() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{
                   width: '2.5rem', height: '2.5rem', borderRadius: '0.5rem',
-                  background: tech.status === 'field' ? 'var(--orange-s)' : 'var(--blue-soft)',
+                  background: tech.status === 'field' ? 'var(--orange-soft)' : 'var(--blue-soft)',
                   color:      tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 700,
@@ -336,7 +336,7 @@ export default function ProjectDetail() {
 
         {/* ── Field actions ─────────────────────────────────────────────────── */}
         {(project.stage === 'in-progress' || project.stage === 'scheduled') && (
-          <div style={{ display: 'flex', gap: 'var(--gap-sm)' }}>
+          <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
             <button
               className="btn btn-primary"
               style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
