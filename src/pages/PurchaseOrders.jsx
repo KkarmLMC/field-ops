@@ -114,7 +114,7 @@ export default function PurchaseOrders() {
       db.from('so_line_items').select('so_id, line_type, quantity, unit_cost'),
     ]).then(([{ data: poData }, { data: lineData }]) => {
       setPos(poData || [])
-      // Compute totals per PO
+      // Compute totals per SO
       const t = {}
       for (const li of lineData || []) {
         if (!t[li.so_id]) t[li.so_id] = { materials: 0, labor: 0 }
@@ -168,7 +168,7 @@ export default function PurchaseOrders() {
         </div>
         <button onClick={() => navigate('/sales-orders/new')}
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-          <Plus size={15} /> New PO
+          <Plus size={15} /> New Sales Order
         </button>
       </div>
 
@@ -177,11 +177,11 @@ export default function PurchaseOrders() {
         <div style={{
           display: 'flex', alignItems: 'center', gap: '0.75rem',
           padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)',
-          borderRadius: 'var(--r-l)', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => setActiveTab('submitted')}>
+          borderRadius: 'var(--r-l)', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => setActiveTab('queued')}>
           <Warning size={18} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>
-              {queuedCount} PO{queuedCount !== 1 ? 's' : ''} awaiting review
+              {queuedCount} Sales Order{queuedCount !== 1 ? 's' : ''} in queue
             </div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-text)' }}>
               Tap to review and publish
@@ -194,8 +194,8 @@ export default function PurchaseOrders() {
       {/* Stats strip */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         {[
-          { label: 'Total POs', value: pos.length },
-          { label: 'Pending Review', value: queuedCount, color: queuedCount > 0 ? 'var(--warning)' : undefined },
+          { label: 'Total Orders', value: pos.length },
+          { label: 'In Queue', value: queuedCount, color: queuedCount > 0 ? 'var(--warning)' : undefined },
           { label: 'Published Value', value: '$' + (totalPublishedValue / 1000).toFixed(0) + 'k', color: 'var(--success-text)' },
         ].map(s => (
           <div key={s.label} style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', textAlign: 'center' }}>
@@ -231,7 +231,7 @@ export default function PurchaseOrders() {
         <div style={{ position: 'relative', flex: 1, minWidth: 200 }}>
           <MagnifyingGlass size={15} style={{ position: 'absolute', left: 11, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
           <input value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search PO, customer, project…"
+            placeholder="Search SO#, customer, project…"
             style={{ width: '100%', paddingLeft: 34, paddingRight: search ? 34 : 12 }} />
           {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size={13} /></button>}
         </div>
@@ -254,10 +254,10 @@ export default function PurchaseOrders() {
         <div className="empty">
           <Receipt size={40} style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
           <div className="empty-title">{pos.length === 0 ? 'No sales orders yet' : 'No SOs match filters'}</div>
-          <div className="empty-desc">{pos.length === 0 ? 'Create your first PO to get started.' : 'Try adjusting your filters.'}</div>
+          <div className="empty-desc">{pos.length === 0 ? 'Create your first Sales Order to get started.' : 'Try adjusting your filters.'}</div>
           {pos.length === 0 && (
             <button className="btn btn-primary" style={{ marginTop: 'var(--mar-l)' }} onClick={() => navigate('/sales-orders/new')}>
-              Create First PO
+              Create First Sales Order
             </button>
           )}
         </div>

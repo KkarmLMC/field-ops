@@ -5,6 +5,9 @@ import {
   DotsSixVertical, Buildings, Package, Wrench, Check,
   ArrowRight, Warning } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
+const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 import ProjectPicker from '../components/ProjectPicker.jsx'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -358,6 +361,7 @@ function TotalsBar({ sections, laborItems }) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function PONew() {
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   // Header fields
   const [division, setDivision]       = useState('LM')
@@ -403,7 +407,7 @@ export default function PONew() {
         setWarehouses(data || [])
         if (data?.length) setDefaultWarehouseId(data[0].id)
       })
-    // Generate next PO number
+    // Generate next SO number
     db.from('sales_orders').select('so_number').order('created_at', { ascending: false }).limit(1)
       .then(({ data }) => {
         if (data?.[0]?.so_number) {
@@ -439,12 +443,12 @@ export default function PONew() {
       s + sec.items.reduce((ss, i) => ss + ((parseFloat(i.quantity)||0)*(parseFloat(i.unit_cost)||0)), 0), 0)
     const installationTotal = laborItems.reduce((s, i) => s + ((parseFloat(i.quantity)||0)*(parseFloat(i.unit_cost)||0)), 0)
 
-    // Generate PO number
+    // Generate SO number
     const year = new Date().getFullYear()
     const { count } = await db.from('sales_orders').select('*', { count: 'exact', head: true })
-    const poNumber = `PO-${year}-${String((count || 0) + 1).padStart(4, '0')}`
+    const poNumber = `SO-${year}-${String((count || 0) + 1).padStart(4, '0')}`
 
-    // Create PO
+    // Create SO
     const { data: newPO, error: poErr } = await db.from('sales_orders').insert({
       so_number: poNumber,
       quote_number: quoteNumber || null,
@@ -466,7 +470,7 @@ export default function PONew() {
       grand_total: materialsTotal + installationTotal,
       queued_at: new Date().toISOString() }).select().single()
 
-    if (poErr || !newPO) { setError('Failed to save PO. Please try again.'); setSaving(false); return }
+    if (poErr || !newPO) { setError('Failed to save Sales Order. Please try again.'); setSaving(false); return }
 
     // Insert line items
     let sortOrder = 0
@@ -497,6 +501,13 @@ export default function PONew() {
         sort_order: sortOrder++ })
     }
 
+    await logActivity(db, user?.id, APP_SOURCE, {
+      category:    'sales_order',
+      action:      'created',
+      label:       `Created Sales Order ${poNumber}`,
+      entity_type: 'sales_order',
+      entity_id:   newPO.id,
+      meta:        { so_number: poNumber, customer: customerName, total: materialsTotal + installationTotal } })
     setSaving(false)
     navigate(`/sales-orders/${newPO.id}`)
   }
@@ -506,7 +517,7 @@ export default function PONew() {
 
       {/* Page header */}
       <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>PURCHASE ORDERS</div>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>SALES ORDERS</div>
         <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>New Sales Order</div>
       </div>
 
@@ -623,7 +634,7 @@ export default function PONew() {
       {/* Notes */}
       <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
         <Label>Notes</Label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this PO…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
       </div>
 
       {/* Running total */}

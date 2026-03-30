@@ -66,7 +66,7 @@ function PinPad({ onPin, loading, error, confirmPin = null, requireConfirm = fal
       {/* Match hint when confirming */}
       {confirmPin && isFull && (
         <div style={{
-          fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'center',
+          fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', textAlign: 'center',
           color: digits.join('') === confirmPin ? 'var(--success)' : 'var(--error)' }}>
           {digits.join('') === confirmPin ? '✓ PINs match' : '✗ PINs do not match'}
         </div>
@@ -127,7 +127,10 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
   const navigate = useNavigate()
   const location = useLocation()
   const { signIn, refreshProfile } = useAuth()
-  const from = location.state?.from?.pathname || '/dashboard'
+  // Default route — explicit env var, or infer from app name
+  const defaultRoute = import.meta.env.VITE_DEFAULT_ROUTE
+    || ({ 'Mission Control': '/opportunities', 'Warehouse IQ': '/warehouse-hq', 'Field Ops': '/dashboard' }[import.meta.env.VITE_APP_NAME] || '/dashboard')
+  const from = location.state?.from?.pathname || defaultRoute
 
   const [mode, setMode] = useState('pin') // pin | password | setup-pin
   const [email, setEmail] = useState('')
@@ -254,13 +257,13 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
       {/* Logo */}
       <div style={{ marginBottom: 'var(--mar-xxl)', textAlign: 'center', minHeight: 148 }}>
         <div style={{ width: 56, height: 56, borderRadius: 'var(--r-m)', background: 'var(--navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto var(--mar-l)' }}>
-          <Lightning size={28} weight="fill" style={{ color: '#fff' }} />
+          <Lightning size={28} weight="fill" style={{ color: 'var(--white)' }} />
         </div>
-        <div style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800, lineHeight: 1.1 }}>
-          {import.meta.env.VITE_APP_NAME || 'Field Ops'}
+        <div style={{ fontSize: 'var(--text-xxl)', fontWeight: 'var(--fw-black)', lineHeight: 'var(--lh-display)', letterSpacing: 'var(--ls-xxl)' }}>
+          {import.meta.env.VITE_APP_NAME || 'LMC Platform'}
         </div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 6, maxWidth: 280, margin: '6px auto 0' }}>
-          Field operations management — inspections, installs & reporting
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 'var(--mar-xs)', maxWidth: 280, margin: 'var(--mar-xs) auto 0' }}>
+          {import.meta.env.VITE_APP_SUBTITLE || 'Lightning Master Controls · Bolt Lightning Protection'}
         </div>
       </div>
 
@@ -270,7 +273,7 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
         {mode === 'setup-pin' && (
           <>
             <div style={{ textAlign: 'center', marginBottom: 'var(--mar-xl)' }}>
-              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, marginBottom: 4 }}>
+              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--fw-bold)', marginBottom: 'var(--mar-xs)' }}>
                 {pinStep === 'enter' ? 'Set Your PIN' : 'Confirm PIN'}
               </div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>
@@ -288,7 +291,7 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
         {mode === 'pin' && (
           <>
             <div style={{ textAlign: 'center', marginBottom: 'var(--mar-xl)' }}>
-              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, marginBottom: 4 }}>Enter PIN</div>
+              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--fw-bold)', marginBottom: 'var(--mar-xs)' }}>Enter PIN</div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>Enter your 6-digit PIN</div>
             </div>
             <PinPad onPin={handlePinLogin} loading={loading} error={error} requireConfirm={true} />
@@ -307,17 +310,17 @@ export default function Login({ forcePinSetup = false, session: forcedSession = 
                 style={{ color: 'var(--text-3)', display: 'flex' }}>
                 <ArrowLeft size={18} />
               </button>
-              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Sign in</div>
+              <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--fw-bold)' }}>Sign in</div>
             </div>
             <form onSubmit={handlePasswordLogin}>
               <div style={{ marginBottom: 'var(--mar-m)' }}>
-                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Email</label>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Email</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" autoComplete="email" style={{ width: '100%' }} autoFocus />
               </div>
               <div style={{ marginBottom: 'var(--mar-xl)' }}>
-                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Password</label>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Password</label>
                 <div style={{ position: 'relative' }}>
-                  <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" autoComplete="current-password" style={{ width: '100%', paddingRight: 40 }} />
+                  <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" autoComplete="current-password" style={{ width: '100%', paddingRight: 'var(--sp-10)' }} />
                   <button type="button" onClick={() => setShowPw(s => !s)}
                     style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0 }}>
                     {showPw ? <EyeSlash size={16} /> : <Eye size={16} />}

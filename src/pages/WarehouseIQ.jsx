@@ -93,7 +93,7 @@ export default function WarehouseIQ() {
       db.from('so_line_items')
         .select('so_id, part_id, quantity, sales_orders(so_number, customer_name, status, grand_total, division)')
         .eq('warehouse_id', activeWH)
-        .in('sales_orders.status', ['submitted','published','draft']),
+        .in('sales_orders.status', ['queued','running','fulfillment','shipment','back_ordered']),
     ])
 
     // Build snap map
@@ -265,7 +265,7 @@ export default function WarehouseIQ() {
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ fontSize:'var(--text-sm)', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{po.customer_name}</div>
               </div>
-              <span style={{ fontSize:'var(--text-xs)', fontWeight:700, padding:'2px 8px', borderRadius:'var(--r-s)', background: po.status==='submitted'?'var(--warning-soft)':po.status==='published'?'var(--blue-soft)':'var(--grey-tint-80)', color: po.status==='submitted'?'var(--warning)':po.status==='published'?'var(--blue)':'var(--grey-base)', textTransform:'capitalize', flexShrink:0 }}>
+              <span style={{ fontSize:'var(--text-xs)', fontWeight:700, padding:'2px 8px', borderRadius:'var(--r-s)', background: po.status==='queued'?'var(--purple-soft)':po.status==='running'?'var(--warning-soft)':po.status==='fulfillment'?'var(--blue-soft)':po.status==='shipment'?'var(--blue-tint-80)':'var(--success-soft)', color: po.status==='queued'?'var(--purple-tint-20)':po.status==='running'?'var(--warning)':po.status==='fulfillment'?'var(--blue)':po.status==='shipment'?'var(--blue-shade-20)':'var(--success-text)', textTransform:'capitalize', flexShrink:0 }}>
                 {po.status}
               </span>
             </button>

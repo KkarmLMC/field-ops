@@ -3,21 +3,24 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   Receipt, Buildings, MapPin, Phone, Envelope,
   CalendarBlank, CheckCircle, PaperPlaneTilt,
-  Clock, CaretDown, ArrowRight, Lightning, ClipboardText, Truck } from '@phosphor-icons/react'
+  Clock, CaretDown, ArrowRight, Lightning, ClipboardText, Truck,
+  Warning, X } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { soStatus } from '../lib/statusColors.js'
 
-const STATUS_DISPLAY = {
-  draft:        { label: 'Draft',        icon: Clock,          color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-  queued:       { label: 'Queued',       icon: Clock,          color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-  running:      { label: 'Running',      icon: PaperPlaneTilt, color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  submitted:    { label: 'Submitted',    icon: PaperPlaneTilt, color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  fulfillment:  { label: 'Fulfillment',  icon: Receipt,        color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
-  published:    { label: 'Published',    icon: Receipt,        color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
-  shipment:     { label: 'Shipment',     icon: Receipt,        color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' },
-  back_ordered: { label: 'Back Order',   icon: Clock,          color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' },
-  complete:     { label: 'Complete',     icon: CheckCircle,    color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  fulfilled:    { label: 'Complete',     icon: CheckCircle,    color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  cancelled:    { label: 'Cancelled',    icon: Clock,          color: 'var(--grey-tint-20)', bg: 'var(--grey-tint-80)' } }
+// Local icon map — color/bg come from soStatus() in statusColors.js
+const SO_STATUS_ICON = {
+  draft: Clock, queued: Clock, running: PaperPlaneTilt, submitted: PaperPlaneTilt,
+  fulfillment: Receipt, published: Receipt, shipment: Truck,
+  back_ordered: Warning, complete: CheckCircle, fulfilled: CheckCircle, cancelled: X }
+
+// Action config — what the CTA button does per status
+const ACTION_CFG = {
+  queued:       { label: 'Run Order',             sub: 'Process parts & generate fulfillment sheet', color: 'var(--navy)',   path: id => `/warehouse-hq/queue/${id}` },
+  running:      { label: 'Continue Run Order',    sub: 'Order is being processed',                   color: 'var(--navy)',   path: id => `/warehouse-hq/queue/${id}` },
+  fulfillment:  { label: 'Process Fulfillment',   sub: 'Pick parts and confirm availability',        color: 'var(--blue-shade-40)',       path: id => `/warehouse-hq/fulfillment/${id}` },
+  shipment:     { label: 'Process Shipment',      sub: 'Enter carrier details and mark shipped',     color: 'var(--blue-shade-20)',       path: id => `/warehouse-hq/shipment/${id}` },
+  back_ordered:  { label: 'Re-enter Queue',        sub: 'Stock arrived — push back to fulfillment',  color: 'var(--warning)',  path: id => `/warehouse-hq/queue/${id}` } }
 
 function SectionGroup({ label, items }) {
   const [open, setOpen] = useState(true)
@@ -56,6 +59,7 @@ function SectionGroup({ label, items }) {
           </div>
         </div>
       ))}
+
     </div>
   )
 }
@@ -78,12 +82,10 @@ export default function PODetail() {
 
   useEffect(() => { load() }, [id])
 
-
-
   if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
   if (!po) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Sales Order not found</div></div></div>
 
-  const statusDisplay = STATUS_DISPLAY[po.status] || STATUS_DISPLAY.draft
+  const statusDisplay = soStatus(po.status)
   const materialLines = lines.filter(l => l.line_type === 'material')
   const laborLines = lines.filter(l => l.line_type === 'labor')
 
@@ -108,7 +110,7 @@ export default function PODetail() {
     warehouseImpact[wName].qty += line.quantity
   }
 
-  const StatusIcon = statusDisplay.icon || CheckCircle
+  const StatusIcon = SO_STATUS_ICON[po.status] || SO_STATUS_ICON[order?.status] || CheckCircle
 
   return (
     <div className="page-content fade-in">
@@ -187,8 +189,6 @@ export default function PODetail() {
         </div>
       )}
 
-
-
       {/* Line items — materials by section */}
       {sections.length > 0 && (
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)', maxWidth: '100%' }}>
@@ -255,6 +255,27 @@ export default function PODetail() {
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{po.notes}</div>
         </div>
       )}
+
+      {/* ── Contextual Action Button ────────────────────────────────────────── */}
+      {ACTION_CFG[po.status] && (() => {
+        const cfg = ACTION_CFG[po.status]
+        return (
+          <button
+            onClick={() => navigate(cfg.path(po.id))}
+            style={{
+              width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: 'var(--pad-l) var(--pad-xl)', borderRadius: 'var(--r-m)',
+              background: cfg.color, cursor: 'pointer',
+              marginBottom: 'var(--mar-xxl)' }}
+          >
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: '#fff' }}>{cfg.label}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 2 }}>{cfg.sub}</div>
+            </div>
+            <ArrowRight size={20} style={{ color: '#fff', flexShrink: 0 }} weight="bold" />
+          </button>
+        )
+      })()}
 
     </div>
   )

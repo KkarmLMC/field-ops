@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CheckCircle, SpinnerGap } from '@phosphor-icons/react'
+import { useAuth } from '../lib/useAuth.jsx'
 import { db } from '../lib/supabase.js'
+import { logActivity } from '../lib/logActivity.js'
+const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 
 export default function AddEditPart() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const { id } = useParams() // present if editing
   const isEdit = !!id
 
@@ -78,9 +82,23 @@ export default function AddEditPart() {
 
     if (isEdit) {
       await db.from('parts').update(payload).eq('id', id)
+      await logActivity(db, user?.id, APP_SOURCE, {
+        category:    'parts',
+        action:      'updated',
+        label:       `Updated Part ${form.sku || form.name}`,
+        entity_type: 'part',
+        entity_id:   id,
+        meta:        { sku: form.sku, name: form.name } })
       navigate(`/warehouse-hq/part/${id}`)
     } else {
       const { data } = await db.from('parts').insert(payload).select().single()
+      await logActivity(db, user?.id, APP_SOURCE, {
+        category:    'parts',
+        action:      'created',
+        label:       `Created Part ${form.sku || form.name}`,
+        entity_type: 'part',
+        entity_id:   data.id,
+        meta:        { sku: form.sku, name: form.name } })
       navigate(`/warehouse-hq/part/${data.id}`)
     }
     setSaving(false)
