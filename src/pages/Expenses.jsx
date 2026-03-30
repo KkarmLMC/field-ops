@@ -15,7 +15,7 @@ const STATUS = {
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-xxl)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-s)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )

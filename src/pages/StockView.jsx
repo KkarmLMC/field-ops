@@ -12,7 +12,7 @@ function StockBadge({ qty, min }) {
   return                            <span style={badge('var(--success-soft)','var(--success-text)')}>In Stock</span>
 }
 function badge(bg, color) {
-  return { padding: '2px 8px', borderRadius: 'var(--r-xxl)', fontSize: 'var(--text-xs)', fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
+  return { padding: '2px 8px', borderRadius: 'var(--r-s)', fontSize: 'var(--text-xs)', fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
 }
 
 // ─── Warehouse tab ────────────────────────────────────────────────────────────

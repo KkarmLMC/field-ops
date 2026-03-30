@@ -344,7 +344,7 @@ export default function Inventory() {
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
-                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
+                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
                     {submitted.length} need review
                   </span>
                 )}
@@ -382,7 +382,7 @@ export default function Inventory() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', flexShrink: 0 }}>
                   <span style={{
-                    fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)',
+                    fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)',
                     background: po.status === 'submitted' ? 'var(--warning-soft)' : 'var(--blue-soft)',
                     color: po.status === 'submitted' ? 'var(--warning)' : 'var(--blue)' }}>{po.status}</span>
                   {po.grand_total > 0 && (

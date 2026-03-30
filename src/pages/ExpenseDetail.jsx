@@ -80,7 +80,7 @@ export default function ExpenseDetail() {
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>{report.employee_name}</div>
             {project && <div style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>{project.name}</div>}
           </div>
-          <span style={{ padding: '4px 12px', borderRadius: 'var(--r-xxl)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
+          <span style={{ padding: '4px 12px', borderRadius: 'var(--r-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}
           </span>
         </div>
