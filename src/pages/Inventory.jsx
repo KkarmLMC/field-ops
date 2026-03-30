@@ -5,6 +5,7 @@ import {
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
   DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import PageHeader from '../components/ui/PageHeader'
 
 // ─── Shared label ─────────────────────────────────────────────────────────────
 function Label({ children }) {
@@ -284,42 +285,37 @@ export default function Inventory() {
   return (
     <div className="page-content fade-in">
 
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--gap-l)', marginBottom: 'var(--mar-xl)', flexWrap: 'wrap' }}>
-        <div>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>WAREHOUSE HQ</div>
-          <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, lineHeight: 1.1 }}>Warehouse HQ</div>
-        </div>
+      <PageHeader eyebrow="WAREHOUSE HQ" title="Warehouse HQ" action={
         <div style={{ display: 'flex', gap: 'var(--gap-s)', flexWrap: 'wrap' }}>
           {editMode ? (
             <>
               <button onClick={() => setEditMode(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <X size={14} /> Cancel
               </button>
               <button onClick={saveOrder} disabled={saving}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <Check size={14} /> {saving ? 'Saving…' : 'Save Order'}
               </button>
             </>
           ) : (
             <>
               <button onClick={() => setEditMode(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <PencilSimple size={14} /> Edit
               </button>
               <button onClick={() => navigate('/warehouse-hq/transfer')}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <ArrowsLeftRight size={14} /> Transfer
               </button>
               <button onClick={() => setShowAdd(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <Plus size={14} /> Add Warehouse
               </button>
             </>
           )}
         </div>
-      </div>
+      } />
 
       {/* Edit mode hint */}
       {editMode && (
