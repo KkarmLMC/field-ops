@@ -11,23 +11,23 @@ import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/m
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
-  'awarded':        { label: 'Awarded',        color: '#7C3AED', bg: '#F5F3FF', order: 0 },
-  'scheduled':      { label: 'Scheduled',      color: '#6366F1', bg: '#EEF2FF', order: 1 },
-  'in-progress':    { label: 'In Progress',    color: '#D97706', bg: '#FFFBEB', order: 2 },
-  'pending-review': { label: 'Pending Review', color: '#2563EB', bg: '#EFF6FF', order: 3 },
-  'complete':       { label: 'Complete',       color: '#16A34A', bg: '#F0FDF4', order: 4 },
-  'postponed':      { label: 'Postponed',      color: '#EA580C', bg: '#FFF7ED', order: 5 },
-  'failed':         { label: 'Failed',         color: '#DC2626', bg: '#FEF2F2', order: 6 },
+  'awarded':        { label: 'Awarded',        color: 'var(--purple)', bg: 'var(--purple-soft)', order: 0 },
+  'scheduled':      { label: 'Scheduled',      color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)', order: 1 },
+  'in-progress':    { label: 'In Progress',    color: 'var(--warning)', bg: 'var(--warning-soft)', order: 2 },
+  'pending-review': { label: 'Pending Review', color: 'var(--blue)', bg: 'var(--blue-soft)', order: 3 },
+  'complete':       { label: 'Complete',       color: 'var(--success-text)', bg: 'var(--success-soft)', order: 4 },
+  'postponed':      { label: 'Postponed',      color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)', order: 5 },
+  'failed':         { label: 'Failed',         color: 'var(--error-alt)', bg: 'var(--error-soft)', order: 6 },
 }
 
 const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
-  'draft':           { label: 'Draft',           color: '#6B7280', bg: '#F9FAFB' },
-  'submitted':       { label: 'Needs Review',     color: '#2563EB', bg: '#EFF6FF' },
-  'under-review':    { label: 'Under Review',     color: '#D97706', bg: '#FFFBEB' },
-  'customer-signoff':{ label: 'Customer Sign-off',color: '#7C3AED', bg: '#F5F3FF' },
-  'complete':        { label: 'Approved',         color: '#16A34A', bg: '#F0FDF4' },
+  'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: '#F9FAFB' },
+  'submitted':       { label: 'Needs Review',     color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  'under-review':    { label: 'Under Review',     color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  'customer-signoff':{ label: 'Customer Sign-off',color: 'var(--purple)', bg: 'var(--purple-soft)' },
+  'complete':        { label: 'Approved',         color: 'var(--success-text)', bg: 'var(--success-soft)' },
 }
 
 const TYPE_ICON = {
@@ -81,15 +81,15 @@ function StagePipeline({ stage }) {
                   width:  isCurrent ? 14 : 10,
                   height: isCurrent ? 14 : 10,
                   borderRadius: '50%',
-                  background: isCurrent ? cfg.color : isDone ? '#22C55E' : 'var(--border)',
+                  background: isCurrent ? cfg.color : isDone ? 'var(--success)' : 'var(--border)',
                   border: isCurrent ? `3px solid ${cfg.bg}` : 'none',
                   boxShadow: isCurrent ? `0 0 0 2px ${cfg.color}` : 'none',
                   transition: 'all 0.2s',
                   flexShrink: 0,
                 }} />
                 <span style={{
-                  fontSize: 'var(--blackxs)', fontWeight: isCurrent ? 700 : 500,
-                  color: isCurrent ? cfg.color : isDone ? '#16A34A' : 'var(--text-3)',
+                  fontSize: 'var(--text-2xs)', fontWeight: isCurrent ? 700 : 500,
+                  color: isCurrent ? cfg.color : isDone ? 'var(--success-text)' : 'var(--text-3)',
                   whiteSpace: 'nowrap',
                 }}>
                   {cfg.label}
@@ -98,7 +98,7 @@ function StagePipeline({ stage }) {
               {i < STAGE_PIPELINE.length - 1 && (
                 <div style={{
                   width: 24, height: 2, margin: '0 4px', marginBottom: 14,
-                  background: isDone ? '#22C55E' : 'var(--border)',
+                  background: isDone ? 'var(--success)' : 'var(--border)',
                   borderRadius: 1, flexShrink: 0,
                 }} />
               )}
@@ -399,7 +399,7 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
@@ -430,10 +430,10 @@ export default function ProjectDetail() {
             {/* Cost breakdown */}
             <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
               {[
-                { label: 'Materials',     value: jobCost.materialsTotal,  color: '#1D4ED8' },
-                { label: 'Installation',  value: jobCost.installTotal,    color: '#7C3AED' },
-                { label: 'Field Expenses',value: jobCost.expenseTotal,    color: '#D97706' },
-                { label: 'Advances Issued',value: jobCost.advanceTotal,   color: '#64748B' },
+                { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--blue)' },
+                { label: 'Installation',  value: jobCost.installTotal,    color: 'var(--purple)' },
+                { label: 'Field Expenses',value: jobCost.expenseTotal,    color: 'var(--warning)' },
+                { label: 'Advances Issued',value: jobCost.advanceTotal,   color: 'var(--grey-base)' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
@@ -454,15 +454,15 @@ export default function ProjectDetail() {
               const marginPct = ((margin / project.contract_value) * 100).toFixed(1)
               const isPositive = margin >= 0
               return (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)', background: isPositive ? '#F0FDF4' : '#FEF2F2', borderTop: '2px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)', background: isPositive ? 'var(--success-soft)' : 'var(--error-soft)', borderTop: '2px solid var(--border-l)' }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? 'var(--success-text)' : 'var(--error-dark)' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? '#15803D' : '#B91C1C' }}>
+                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? 'var(--success-text)' : 'var(--error-dark)' }}>
                       ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? '#16A34A' : '#DC2626', fontWeight: 600 }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? 'var(--success-text)' : 'var(--error-alt)', fontWeight: 600 }}>
                       {isPositive ? '+' : '-'}{Math.abs(marginPct)}%
                     </div>
                   </div>

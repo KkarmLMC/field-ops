@@ -42,10 +42,10 @@ function AddWarehouseSheet({ onClose, onSaved }) {
       <div style={{ position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 300, background: 'var(--white)', borderRadius: 'var(--r-xl) var(--r-xl) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Header */}
         <div style={{ padding: 'var(--pad-l) var(--pad-xl) 0', flexShrink: 0 }}>
-          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', margin: '0 auto var(--mar-m)' }} />
+          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', margin: '0 auto var(--mar-m)' }} />
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-l)' }}>
             <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Add Warehouse</div>
-            <button onClick={onClose} style={{ border: 'none', background: 'var(--hover)', borderRadius: 'var(--r-full)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={onClose} style={{ border: 'none', background: 'var(--hover)', borderRadius: 'var(--r-xxl)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={14} style={{ color: 'var(--black)' }} />
             </button>
           </div>
@@ -92,7 +92,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
           </div>
 
-          {error && <div style={{ color: '#B91C1C', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-m)', padding: 'var(--pad-s) var(--pad-m)', background: '#FEF2F2', borderRadius: 'var(--r-m)' }}>{error}</div>}
+          {error && <div style={{ color: 'var(--error-dark)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-m)', padding: 'var(--pad-s) var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-m)' }}>{error}</div>}
         </div>
 
         {/* Footer */}
@@ -127,7 +127,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
   return (
     <div style={{
-      background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden',
+      background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden',
       border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)',
     }}>
       {/* Header — clickable, goes to warehouse detail */}
@@ -146,9 +146,9 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           </div>
         </div>
         {hasAlerts ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: '#FEF3C7', borderRadius: 'var(--r-full)', padding: '3px 10px' }}>
-            <WarningCircle size={13} weight="fill" style={{ color: '#D97706' }} />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: '#D97706' }}>{lowStockItems} low stock</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--warning-soft)', borderRadius: 'var(--r-xxl)', padding: '3px 10px' }}>
+            <WarningCircle size={13} weight="fill" style={{ color: 'var(--warning)' }} />
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning)' }}>{lowStockItems} low stock</span>
           </div>
         ) : (
           <CaretRight size={16} style={{ color: 'rgba(255,255,255,0.4)' }} />
@@ -160,8 +160,8 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
         {[
           { label: 'SKUs In Stock', value: totalSkus.toLocaleString(), Icon: Package, color: 'var(--black)' },
           { label: 'Total Units', value: totalUnits.toLocaleString(), Icon: TrendUp, color: 'var(--black)' },
-          { label: 'Low Stock', value: lowStockItems, Icon: WarningCircle, color: lowStockItems > 0 ? '#C2410C' : 'var(--text-3)' },
-          { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? '#1D4ED8' : 'var(--text-3)' },
+          { label: 'Low Stock', value: lowStockItems, Icon: WarningCircle, color: lowStockItems > 0 ? 'var(--orange-shade-20)' : 'var(--text-3)' },
+          { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? 'var(--blue)' : 'var(--text-3)' },
         ].map(s => (
           <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--pad-m) var(--pad-l)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
@@ -180,7 +180,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
             <CurrencyDollar size={14} />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
           </div>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: '#15803D' }}>
+          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--success-text)' }}>
             ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
           </span>
         </div>
@@ -188,18 +188,18 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Low stock list */}
       {lowStockItems > 0 && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', borderTop: '1px solid #FED7AA', background: '#FFFBEB' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: '#92400E', marginBottom: 'var(--mar-s)' }}>Low Stock</div>
+        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', borderTop: '1px solid #FED7AA', background: 'var(--warning-soft)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning-text)', marginBottom: 'var(--mar-s)' }}>Low Stock</div>
           {wLevels
             .filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level)
             .slice(0, 3)
             .map(l => (
-              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', color: '#92400E', marginBottom: 2 }}>
+              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginBottom: 2 }}>
                 <span style={{ fontFamily: 'var(--mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '60%' }}>{l.parts?.sku || '—'}</span>
                 <span style={{ fontWeight: 700, flexShrink: 0 }}>{l.quantity_on_hand} / min {l.min_level}</span>
               </div>
             ))}
-          {lowStockItems > 3 && <div style={{ fontSize: 'var(--text-xs)', color: '#92400E', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
+          {lowStockItems > 3 && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
         </div>
       )}
 
@@ -325,7 +325,7 @@ export default function Inventory() {
 
       {/* Edit mode hint */}
       {editMode && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: '#EFF6FF', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-sm)', color: '#1D4ED8' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--blue-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-sm)', color: 'var(--blue)' }}>
           <DotsSixVertical size={16} />
           Drag the handles to reorder warehouses, then tap Save Order.
         </div>
@@ -338,7 +338,7 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
@@ -346,7 +346,7 @@ export default function Inventory() {
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
-                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: '#FEF3C7', color: '#D97706' }}>
+                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
                     {submitted.length} need review
                   </span>
                 )}
@@ -357,9 +357,9 @@ export default function Inventory() {
             {/* Stat row */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--border-l)' }}>
               {[
-                { label: 'Draft',     count: draft.length,     color: '#64748B', bg: 'var(--surface-raised)' },
-                { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? '#D97706' : '#64748B', bg: submitted.length > 0 ? '#FFFBEB' : 'var(--surface-raised)' },
-                { label: 'Published', count: published.length, color: published.length > 0 ? '#1D4ED8' : '#64748B', bg: published.length > 0 ? '#EFF6FF' : 'var(--surface-raised)' },
+                { label: 'Draft',     count: draft.length,     color: 'var(--grey-base)', bg: 'var(--surface-raised)' },
+                { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? 'var(--warning)' : 'var(--grey-base)', bg: submitted.length > 0 ? 'var(--warning-soft)' : 'var(--surface-raised)' },
+                { label: 'Published', count: published.length, color: published.length > 0 ? 'var(--blue)' : 'var(--grey-base)', bg: published.length > 0 ? 'var(--blue-soft)' : 'var(--surface-raised)' },
               ].map(s => (
                 <div key={s.label} style={{ background: s.bg, padding: 'var(--pad-m) var(--pad-l)' }}>
                   <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.count}</div>
@@ -373,9 +373,9 @@ export default function Inventory() {
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-s) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
                 <div style={{
-                  fontSize: 'var(--blackxs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
-                  background: po.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
-                  color: po.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
+                  fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
+                  background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)',
+                  color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)',
                 }}>
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                 </div>
@@ -385,9 +385,9 @@ export default function Inventory() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', flexShrink: 0 }}>
                   <span style={{
-                    fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)',
-                    background: po.status === 'submitted' ? '#FEF3C7' : '#EFF6FF',
-                    color: po.status === 'submitted' ? '#D97706' : '#1D4ED8',
+                    fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)',
+                    background: po.status === 'submitted' ? 'var(--warning-soft)' : 'var(--blue-soft)',
+                    color: po.status === 'submitted' ? 'var(--warning)' : 'var(--blue)',
                   }}>{po.status}</span>
                   {po.grand_total > 0 && (
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>
@@ -406,8 +406,8 @@ export default function Inventory() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
           <StatTile label="Unique SKUs" value={totalSkus.toLocaleString()} />
           <StatTile label="Total Units" value={totalUnits.toLocaleString()} />
-          <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? '#C2410C' : 'var(--black)'} />
-          <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? '#1D4ED8' : 'var(--black)'} />
+          <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? 'var(--orange-shade-20)' : 'var(--black)'} />
+          <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? 'var(--blue)' : 'var(--black)'} />
         </div>
       )}
 
@@ -427,7 +427,7 @@ export default function Inventory() {
               onDragOver={e => e.preventDefault()}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
-                background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)',
+                background: 'var(--surface-raised)', borderRadius: 'var(--r-m)',
                 border: '1px solid var(--border-l)', padding: '1rem',
                 cursor: 'grab', userSelect: 'none',
                 transition: 'box-shadow 0.15s ease',
@@ -449,7 +449,7 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', background: 'var(--hover)', borderRadius: 'var(--r-full)', padding: '2px 10px' }}>
+              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', background: 'var(--hover)', borderRadius: 'var(--r-xxl)', padding: '2px 10px' }}>
                 #{idx + 1}
               </div>
             </div>

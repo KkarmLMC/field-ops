@@ -43,20 +43,20 @@ const SAFETY_FORMS = [
 ]
 
 const STATUS_STYLE = {
-  Draft:     { bg: '#FEF9C3', color: '#92400E' },
-  Submitted: { bg: '#EFF6FF', color: '#1D4ED8' },
-  Reviewed:  { bg: '#F0FDF4', color: 'var(--success-text)' },
+  Draft:     { bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
+  Submitted: { bg: 'var(--blue-soft)', color: 'var(--blue)' },
+  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--success-text)' },
 }
 
 // Stage labels for jobsite dropdown
 const JOB_STATUS_STYLE = {
-  'in-progress':    { label: 'Active',         bg: '#FEF9C3', color: '#92400E' },
-  'scheduled':      { label: 'Scheduled',      bg: '#EDE9FE', color: '#6D28D9' },
-  'pending-review': { label: 'Pending Review', bg: '#E0F2FE', color: '#0369A1' },
-  'postponed':      { label: 'Postponed',      bg: '#FFF7ED', color: '#C2410C' },
-  'complete':       { label: 'Completed',      bg: '#F0FDF4', color: '#15803D' },
-  'failed':         { label: 'Failed',         bg: '#FEF2F2', color: '#B91C1C' },
-  'awarded':        { label: 'Awarded',        bg: '#F5F3FF', color: '#7C3AED' },
+  'in-progress':    { label: 'Active',         bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
+  'scheduled':      { label: 'Scheduled',      bg: 'var(--purple-tint-60)', color: 'var(--purple-shade-20)' },
+  'pending-review': { label: 'Pending Review', bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-40)' },
+  'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
+  'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--success-text)' },
+  'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--error-dark)' },
+  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--purple)' },
 }
 
 // Derive unique customer names from all PROJECTS (alphabetical)
@@ -260,7 +260,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
           <span className="dfl-jobsite-selected">
             <span
               className="dfl-jobsite-status-dot"
-              style={{ background: JOB_STATUS_STYLE[selected.stage]?.color || '#6B7280' }}
+              style={{ background: JOB_STATUS_STYLE[selected.stage]?.color || 'var(--grey-base)' }}
             />
             <span className="dfl-jobsite-selected-name">{selected.name}</span>
             <span className="dfl-jobsite-selected-id">{selected.job_number}</span>
@@ -299,7 +299,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   className={`dfl-jobsite-item ${isActive ? 'selected' : ''}`}
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
-                  <MapPin size={13} style={{ flexShrink: 0, color: '#6B7280' }} />
+                  <MapPin size={13} style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
                   <span style={{ flex: 1 }}>{job.name}</span>
                   {isActive && <CheckCircle size={13} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
                 </div>
@@ -605,8 +605,8 @@ function EntryCard({ entry, bc, onCloseOut }) {
           <div
             className="dfl-card-icon"
             style={{
-              background: isDraft ? '#FEF9C3' : bc.bgInactive,
-              color:      isDraft ? '#92400E' : bc.bgActive,
+              background: isDraft ? 'var(--warning-tint-80)' : bc.bgInactive,
+              color:      isDraft ? 'var(--warning-text)' : bc.bgActive,
             }}
           >
             {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
@@ -671,7 +671,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {isDraft && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint">
-            <Warning size={11} weight="fill" style={{ color: '#F59E0B', flexShrink: 0 }} />
+            <Warning size={11} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
             Complete end-of-day close-out to submit this log
           </div>
           <button
@@ -1155,7 +1155,7 @@ const STEPS = [
                   <div className="dfl-safety-form-icon">
                     {form[key]
                       ? <CheckCircle size={18} weight="fill" style={{ color: 'var(--success-text)' }} />
-                      : <HardHat size={18} weight="bold" style={{ color: '#6B7280' }} />
+                      : <HardHat size={18} weight="bold" style={{ color: 'var(--grey-base)' }} />
                     }
                   </div>
                   <div className="dfl-safety-form-info">

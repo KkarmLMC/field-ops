@@ -516,7 +516,7 @@ export default function FormBuilder() {
               <div className="project-name">{form.title}</div>
               <div className="project-meta">
                 {form.short} · {form.sections?.length || 0} sections · {(form.sections||[]).reduce((n,s)=>n+(s.fields?.length||0),0)} fields
-                {form.branch && <span style={{ marginLeft: 'var(--mar-s)', padding: '0 var(--pad-s)', borderRadius:'var(--r-full)', background:'var(--navy-tint-80)', fontSize:'var(--blackxs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
+                {form.branch && <span style={{ marginLeft: 'var(--mar-s)', padding: '0 var(--pad-s)', borderRadius:'var(--r-xxl)', background:'var(--navy-tint-80)', fontSize:'var(--text-2xs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
               </div>
             </div>
             <div style={{ display:'flex', gap:'var(--gap-s)', flexShrink:0 }}>

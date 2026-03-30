@@ -6,14 +6,14 @@ import { db } from '../lib/supabase.js'
 function Label({ children, required }) {
   return (
     <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>
-      {children}{required && <span style={{ color: '#B91C1C', marginLeft: 3 }}>*</span>}
+      {children}{required && <span style={{ color: 'var(--error-dark)', marginLeft: 3 }}>*</span>}
     </label>
   )
 }
 
 function Card({ title, children }) {
   return (
-    <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+    <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
       {title && <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>{title}</div>}
       {children}
     </div>
@@ -205,7 +205,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       </Card>
 
       {/* Total */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-l)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-l)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>Total Requested</span>
         <span style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
       </div>
@@ -216,15 +216,15 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: '#FEF2F2', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: '#B91C1C', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : 'Save Draft'}
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           <ArrowRight size={15} /> Submit Request
         </button>
       </div>
@@ -300,7 +300,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {/* Header */}
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
-              <div key={h} style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
+              <div key={h} style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
             ))}
           </div>
           {/* Rows */}
@@ -346,7 +346,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
       </Card>
 
       {/* Totals */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
         {[
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (
@@ -378,15 +378,15 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: '#FEF2F2', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: '#B91C1C', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : 'Save Draft'}
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           <ArrowRight size={15} /> Submit Report
         </button>
       </div>

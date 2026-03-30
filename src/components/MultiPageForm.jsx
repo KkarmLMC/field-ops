@@ -115,7 +115,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
       {/* Section card */}
       <div style={{
         background: 'var(--surface-raised)',
-        borderRadius: 'var(--r-xl)',
+        borderRadius: 'var(--r-m)',
         overflow: 'hidden',
         marginBottom: 'var(--mar-l)',
       }}>
@@ -262,12 +262,12 @@ export default function MultiPageForm({
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
-        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', overflow: 'hidden' }}>
+        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${(sections.filter(s => isSectionComplete(s, values)).length / sections.length) * 100}%`,
             background: allComplete ? 'var(--success)' : 'var(--navy)',
-            borderRadius: 'var(--r-full)',
+            borderRadius: 'var(--r-xxl)',
             transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           }} />
         </div>
@@ -276,7 +276,7 @@ export default function MultiPageForm({
       {/* Section list */}
       <div style={{
         background: 'var(--surface-raised)',
-        borderRadius: 'var(--r-xl)',
+        borderRadius: 'var(--r-m)',
         overflow: 'hidden',
         marginBottom: 'var(--mar-l)',
       }}>

@@ -8,12 +8,12 @@ import { db } from '../lib/supabase.js'
 
 // ─── Stock chip ───────────────────────────────────────────────────────────────
 function StockBadge({ qty, min }) {
-  if (qty === 0)             return <span style={badge('#FEF2F2','#B91C1C')}>Out</span>
-  if (min && qty <= min)     return <span style={badge('#FFF7ED','#C2410C')}>Low</span>
-  return                            <span style={badge('#F0FDF4','#15803D')}>In Stock</span>
+  if (qty === 0)             return <span style={badge('var(--error-soft)','var(--error-dark)')}>Out</span>
+  if (min && qty <= min)     return <span style={badge('var(--orange-soft)','var(--orange-shade-20)')}>Low</span>
+  return                            <span style={badge('var(--success-soft)','var(--success-text)')}>In Stock</span>
 }
 function badge(bg, color) {
-  return { padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--text-xs)', fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
+  return { padding: '2px 8px', borderRadius: 'var(--r-xxl)', fontSize: 'var(--text-xs)', fontWeight: 700, background: bg, color, whiteSpace: 'nowrap' }
 }
 
 // ─── Warehouse tab ────────────────────────────────────────────────────────────
@@ -26,7 +26,7 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
     <button onClick={onClick} style={{
       flexShrink: 0,
       padding: 'var(--pad-m) var(--pad-l)',
-      borderRadius: 'var(--r-xl)',
+      borderRadius: 'var(--r-m)',
       border: `1px solid ${active ? 'var(--navy)' : 'var(--border-l)'}`,
       background: active ? 'var(--navy)' : 'var(--surface-raised)',
       cursor: 'pointer', textAlign: 'left',
@@ -39,9 +39,9 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
         {warehouse.city}, {warehouse.state}
       </div>
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginTop: 4 }}>
-        {outCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
-        {lowCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
-        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
+        {outCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--error-tint-40)' : 'var(--error-dark)' }}>{outCount} out</span>}
+        {lowCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--warning-border)' : 'var(--orange-shade-20)' }}>{lowCount} low</span>}
+        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
       </div>
     </button>
   )
@@ -119,7 +119,7 @@ export default function StockView() {
       {/* Quick actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <ArrowsLeftRight size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
@@ -128,7 +128,7 @@ export default function StockView() {
         </button>
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
@@ -157,7 +157,7 @@ export default function StockView() {
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All Parts'], ['low','Low Stock'], ['out','Out of Stock']].map(([val, lbl]) => (
           <button key={val} onClick={() => setFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-full)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'transparent', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'transparent', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
@@ -176,7 +176,7 @@ export default function StockView() {
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
@@ -193,7 +193,7 @@ export default function StockView() {
                 padding: 'var(--pad-m) var(--pad-l)',
                 borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-l)' : 'none',
                 alignItems: 'center',
-                background: isOut ? '#FFF5F5' : isLow ? '#FFFBEB' : 'transparent',
+                background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent',
               }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -203,7 +203,7 @@ export default function StockView() {
                     <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{l.parts.sku}</div>
                   )}
                 </div>
-                <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 800, color: isOut ? '#B91C1C' : isLow ? '#C2410C' : 'var(--black)' }}>
+                <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 800, color: isOut ? 'var(--error-dark)' : isLow ? 'var(--orange-shade-20)' : 'var(--black)' }}>
                   {l.quantity_on_hand.toLocaleString()}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -217,7 +217,7 @@ export default function StockView() {
 
       {/* Transfer CTA at bottom when viewing a warehouse with issues */}
       {(filtered.some(l => l.quantity_on_hand === 0 || (l.min_level && l.quantity_on_hand <= l.min_level))) && (
-        <div style={{ marginTop: 'var(--mar-l)', background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-m)' }}>
+        <div style={{ marginTop: 'var(--mar-l)', background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-m)' }}>
           <div>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Need parts restocked?</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>Submit a transfer request to move stock from another warehouse.</div>

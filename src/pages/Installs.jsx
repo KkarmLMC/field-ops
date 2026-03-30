@@ -26,18 +26,18 @@ const TYPE_LABEL = {
 }
 
 const PRIORITY_DOT = {
-  high:   '#EF4444',
-  medium: '#F59E0B',
-  low:    '#D1D5DB',
+  high:   'var(--error)',
+  medium: 'var(--warning)',
+  low:    'var(--grey-tint-40)',
 }
 
 const KANBAN_COLS = [
-  { id: 'awarded',        label: 'Awarded',                Icon: CalendarBlank, accent: '#A855F7', stages: ['awarded']                        },
+  { id: 'awarded',        label: 'Awarded',                Icon: CalendarBlank, accent: 'var(--purple)', stages: ['awarded']                        },
   { id: 'scheduled',      label: 'Upcoming',               Icon: CalendarBlank, accent: '#818CF8', stages: ['scheduled']                      },
   { id: 'in-progress',    label: 'Active',                 Icon: HardHat,       accent: '#FACC15', stages: ['in-progress']                    },
-  { id: 'pending-review', label: 'Pending Review',         Icon: Clipboard,     accent: '#38BDF8', stages: ['pending-review']                 },
-  { id: 'complete',       label: 'Completed',              Icon: CheckCircle,   accent: '#22C55E', stages: ['complete']                       },
-  { id: 'postponed',      label: 'Postponed',              Icon: PauseCircle,   accent: '#FB923C', stages: ['postponed', 'failed']            },
+  { id: 'pending-review', label: 'Pending Review',         Icon: Clipboard,     accent: 'var(--blue-tint-40)', stages: ['pending-review']                 },
+  { id: 'complete',       label: 'Completed',              Icon: CheckCircle,   accent: 'var(--success)', stages: ['complete']                       },
+  { id: 'postponed',      label: 'Postponed',              Icon: PauseCircle,   accent: 'var(--orange-tint-20)', stages: ['postponed', 'failed']            },
 ]
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────

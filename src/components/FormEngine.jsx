@@ -72,7 +72,7 @@ function SignatureModal({ onSave, onClose }) {
     ctx.lineWidth   = 2.5
     ctx.lineCap     = 'round'
     ctx.lineJoin    = 'round'
-    ctx.strokeStyle = '#0a0a0a'
+    ctx.strokeStyle = 'var(--black)'
     ctx.lineTo(p.x, p.y)
     ctx.stroke()
     ctx.beginPath()
@@ -120,7 +120,7 @@ function SignatureModal({ onSave, onClose }) {
         </div>
 
         {/* Canvas area */}
-        <div style={{ flex:1, position:'relative', background:'#fafafa' }}>
+        <div style={{ flex:1, position:'relative', background:'var(--surface-raised)' }}>
           {/* Baseline guide */}
           <div style={{ position:'absolute', left:'5%', right:'5%', bottom:'35%', height:1, background:'rgba(0,0,0,0.1)', pointerEvents:'none' }} />
           {/* Placeholder text */}
@@ -275,7 +275,7 @@ function PhotoField({ value, onChange, readOnly }) {
             <img src={src} alt={`Photo ${i+1}`} style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'var(--r-m)' }} />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', fontSize:'var(--blackxs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
+                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--r-xxl)', background:'var(--red)', color:'#fff', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
             )}
           </div>
         ))}
@@ -396,17 +396,17 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {/* Main action button */}
         {state === 'recording' ? (
           <button type="button" onClick={stopRecording}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
             <Stop size={16} weight="fill" />
           </button>
         ) : hasRecording ? (
           <button type="button" onClick={playPause}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--navy)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--navy)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
             {state === 'playing' ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
           </button>
         ) : (
           <button type="button" onClick={startRecording}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-full)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
             <Microphone size={16} weight="fill" />
           </button>
         )}
@@ -539,7 +539,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
                 background: checked?'rgba(4,36,92,0.07)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
-                flexShrink:0, fontSize:'var(--blackxs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
+                flexShrink:0, fontSize:'var(--text-2xs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
               <span style={{ fontSize:'var(--text-sm)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>
           )
@@ -603,7 +603,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = value===opt
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt)}
-              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-full)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
+              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-xxl)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
               {opt}
             </button>
           )

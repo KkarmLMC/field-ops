@@ -12,13 +12,13 @@ import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
-  'awarded':        { label: 'Awarded',        short: 'Awarded',   color: '#7C3AED', bg: '#F5F3FF' },
-  'scheduled':      { label: 'Scheduled',      short: 'Upcoming',  color: '#6366F1', bg: '#EEF2FF' },
-  'in-progress':    { label: 'In Progress',    short: 'Active',    color: '#D97706', bg: '#FFFBEB' },
-  'pending-review': { label: 'Pending Review', short: 'In Review', color: '#2563EB', bg: '#EFF6FF' },
-  'complete':       { label: 'Complete',       short: 'Complete',  color: '#16A34A', bg: '#F0FDF4' },
-  'postponed':      { label: 'Postponed',      short: 'Postponed', color: '#EA580C', bg: '#FFF7ED' },
-  'failed':         { label: 'Failed',         short: 'Failed',    color: '#DC2626', bg: '#FEF2F2' },
+  'awarded':        { label: 'Awarded',        short: 'Awarded',   color: 'var(--purple)', bg: 'var(--purple-soft)' },
+  'scheduled':      { label: 'Scheduled',      short: 'Upcoming',  color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
+  'in-progress':    { label: 'In Progress',    short: 'Active',    color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  'pending-review': { label: 'Pending Review', short: 'In Review', color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  'complete':       { label: 'Complete',       short: 'Complete',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
+  'postponed':      { label: 'Postponed',      short: 'Postponed', color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
+  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--error-alt)', bg: 'var(--error-soft)' },
 }
 
 // ─── Type icons ───────────────────────────────────────────────────────────────
@@ -94,8 +94,8 @@ function MgmtRow({ p, navigate }) {
           <div className="dash-job-name">{p.name}</div>
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
-              fontSize: 'var(--blackxs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-              background: '#2563EB', color: '#fff', padding: '2px 5px', borderRadius: 3,
+              fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+              background: 'var(--blue)', color: '#fff', padding: '2px 5px', borderRadius: 3,
               flexShrink: 0,
             }}>
               Review
@@ -111,7 +111,7 @@ function MgmtRow({ p, navigate }) {
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 'var(--blackxs)', color: 'var(--black)', fontWeight: 600 }}>
+          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--black)', fontWeight: 600 }}>
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (
@@ -167,7 +167,7 @@ function FieldRow({ p, navigate }) {
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
-              marginLeft: 6, fontSize: 'var(--blackxs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+              marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
               background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3,
             }}>
               NFPA {p.nfpa_class}
@@ -249,7 +249,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
             <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 80 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--blackxs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
           </div>
         )}
       </div>
@@ -341,7 +341,7 @@ export default function Installations() {
         <div className="dash-tiles">
           <button
             className="dash-tile"
-            style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
             <div className="dash-tile-icon"><SquaresFour size={18} /></div>
@@ -353,7 +353,7 @@ export default function Installations() {
           </button>
           <button
             className="dash-tile"
-            style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
             <div className="dash-tile-icon"><BookOpen size={18} /></div>
@@ -365,7 +365,7 @@ export default function Installations() {
           </button>
           <button
             className="dash-tile"
-            style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
             <div className="dash-tile-icon"><FileText size={18} /></div>
@@ -522,7 +522,7 @@ export default function Installations() {
               key={a.path}
               className="dash-tile"
               onClick={() => navigate(a.path)}
-              style={{ '--tile-color': '#000000', '--tile-bg': '#F3F4F6' }}
+              style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             >
               <div className="dash-tile-icon"><a.Icon size={18} /></div>
               <div className="dash-tile-text">

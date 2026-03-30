@@ -8,16 +8,16 @@ import {
 import { db } from '../lib/supabase.js'
 
 const STATUS = {
-  draft:     { label: 'Draft',     color: '#64748B', bg: '#F1F5F9' },
-  submitted: { label: 'Submitted', color: '#D97706', bg: '#FEF3C7' },
-  approved:  { label: 'Approved',  color: '#15803D', bg: '#F0FDF4' },
-  rejected:  { label: 'Rejected',  color: '#B91C1C', bg: '#FEF2F2' },
+  draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
+  submitted: { label: 'Submitted', color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  approved:  { label: 'Approved',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
+  rejected:  { label: 'Rejected',  color: 'var(--error-dark)', bg: 'var(--error-soft)' },
 }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-full)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-xxl)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )
@@ -38,9 +38,9 @@ function ReportCard({ report, project, onClick }) {
       <div style={{
         width: 40, height: 40, borderRadius: 'var(--r-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: report.division === 'Bolt' ? '#FFF1F2' : '#EFF6FF',
-        fontSize: 'var(--blackxs)', fontWeight: 800,
-        color: report.division === 'Bolt' ? '#BE123C' : '#1D4ED8',
+        background: report.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)',
+        fontSize: 'var(--text-2xs)', fontWeight: 800,
+        color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)',
       }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
       </div>
@@ -50,7 +50,7 @@ function ReportCard({ report, project, onClick }) {
             {report.employee_name}
           </span>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4,
-            background: isAdvance ? '#F0FDF4' : '#EFF6FF', color: isAdvance ? '#15803D' : '#1D4ED8' }}>
+            background: isAdvance ? 'var(--success-soft)' : 'var(--blue-soft)', color: isAdvance ? 'var(--success-text)' : 'var(--blue)' }}>
             {isAdvance ? 'ADVANCE' : 'EXPENSE'}
           </span>
           <StatusBadge status={report.status} />
@@ -131,7 +131,7 @@ export default function Expenses() {
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--blackxs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : '#EFF6FF', color: div === 'Bolt' ? '#BE123C' : '#1D4ED8' }}>{div}</span>
+                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
                 </button>
               ))}
@@ -142,11 +142,11 @@ export default function Expenses() {
 
       {/* Pending alert */}
       {submitted > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: '#FEF3C7', border: '1px solid #FDE68A', borderRadius: 'var(--r-xl)', marginBottom: 'var(--mar-l)' }}>
-          <Clock size={18} weight="fill" style={{ color: '#D97706', flexShrink: 0 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', border: '1px solid #FDE68A', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
+          <Clock size={18} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#92400E' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: '#A16207' }}>${totalPending.toLocaleString('en-US', { minimumFractionDigits: 2 })} pending</div>
+            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-shade-20)' }}>${totalPending.toLocaleString('en-US', { minimumFractionDigits: 2 })} pending</div>
           </div>
         </div>
       )}
@@ -174,7 +174,7 @@ export default function Expenses() {
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
           <button key={val} onClick={() => setTypeFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-full)', border: `1px solid ${typeFilter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: typeFilter === val ? 'var(--navy)' : 'transparent', color: typeFilter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${typeFilter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: typeFilter === val ? 'var(--navy)' : 'transparent', color: typeFilter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
@@ -190,7 +190,7 @@ export default function Expenses() {
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

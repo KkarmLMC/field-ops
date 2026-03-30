@@ -96,10 +96,10 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           </span>
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{current.title}</span>
         </div>
-        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-full)', overflow: 'hidden' }}>
+        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', overflow: 'hidden' }}>
           <div style={{
             height: '100%', width: `${((page + 1) / total) * 100}%`,
-            background: 'var(--navy)', borderRadius: 'var(--r-full)',
+            background: 'var(--navy)', borderRadius: 'var(--r-xxl)',
             transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
           }} />
         </div>
@@ -107,7 +107,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           {sections.map((_, i) => (
             <div key={i} style={{
               width: i === page ? '1.5rem' : '0.4rem', height: '0.4rem',
-              borderRadius: 'var(--r-full)', flexShrink: 0,
+              borderRadius: 'var(--r-xxl)', flexShrink: 0,
               background: i < page ? 'var(--navy)' : i === page ? 'var(--red)' : 'var(--border-l)',
               transition: 'all 0.2s ease',
             }} />
@@ -116,7 +116,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       </div>
 
       {/* Section */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
           {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--mar-xs)' }}>{current.description}</div>}

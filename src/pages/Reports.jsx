@@ -9,18 +9,18 @@ import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Form type config ──────────────────────────────────────────────────────────
 const FORM_TYPES = {
-  completion:    { label: 'Completion Form', Icon: Lightning,       color: '#F97316', bg: '#FFF7ED' },
-  inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: '#3B82F6', bg: '#EFF6FF' },
-  jsa:           { label: 'JSA',             Icon: HardHat,         color: '#EAB308', bg: '#FEFCE8' },
-  'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: '#8B5CF6', bg: '#F5F3FF' },
+  completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--orange)', bg: 'var(--orange-soft)' },
+  inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--blue-soft)' },
+  jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: '#FEFCE8' },
+  'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
 }
 
 // ─── Status config ─────────────────────────────────────────────────────────────
 const STATUS_CFG = {
-  submitted:          { label: 'Submitted',          color: '#2563EB', bg: '#EFF6FF' },
-  'under-review':     { label: 'Under Review',       color: '#D97706', bg: '#FFFBEB' },
-  'customer-signoff': { label: 'Customer Sign-off',  color: '#7C3AED', bg: '#F5F3FF' },
-  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: '#F0FDF4' },
+  submitted:          { label: 'Submitted',          color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  'under-review':     { label: 'Under Review',       color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  'customer-signoff': { label: 'Customer Sign-off',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
+  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: 'var(--success-soft)' },
 }
 
 // ─── Mock data (swapped for Supabase when live) ────────────────────────────────
@@ -48,7 +48,7 @@ function fmtDate(d) {
 // ─── Type pill ────────────────────────────────────────────────────────────────
 function TypePill({ typeKey, count, active, onClick }) {
   const cfg = typeKey === 'all'
-    ? { label: 'All', Icon: ClipboardText, color: '#374151', bg: '#F3F4F6' }
+    ? { label: 'All', Icon: ClipboardText, color: 'var(--grey-shade-40)', bg: 'var(--bg)' }
     : (FORM_TYPES[typeKey] || {})
   const { Icon } = cfg
   return (
@@ -77,8 +77,8 @@ function TypePill({ typeKey, count, active, onClick }) {
 
 // ─── Report row ───────────────────────────────────────────────────────────────
 function ReportRow({ r }) {
-  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: '#6B7280', bg: '#F9FAFB' }
-  const status = STATUS_CFG[r.status]     || { label: r.status,    color: '#6B7280', bg: '#F9FAFB' }
+  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: '#F9FAFB' }
+  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: '#F9FAFB' }
   const { Icon } = type
 
   return (
@@ -120,7 +120,7 @@ function ReportRow({ r }) {
       {/* View button */}
       <button style={{
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-        padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border)',
+        padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border-l)',
         background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer',
       }}>
         <Eye size={12} />

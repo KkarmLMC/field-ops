@@ -68,7 +68,7 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
     }}>
       {/* Entry number badge */}
       <div style={{
-        width: '1.75rem', height: '1.75rem', borderRadius: 'var(--r-full)',
+        width: '1.75rem', height: '1.75rem', borderRadius: 'var(--r-xxl)',
         background: 'var(--navy)', color: '#fff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0,

@@ -181,7 +181,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
                 width:        isActive ? '1.5rem' : '0.4375rem',
                 height:       '0.4375rem',
                 borderRadius: '0.25rem',
-                background:   isActive ? BRANCH_COLORS[tab.id].bgActive : '#D1D5DB',
+                background:   isActive ? BRANCH_COLORS[tab.id].bgActive : 'var(--grey-tint-40)',
                 border:       'none',
                 padding:      0,
                 cursor:       'pointer',

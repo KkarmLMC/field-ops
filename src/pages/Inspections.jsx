@@ -13,10 +13,10 @@ import { BRANCH_COLORS } from '../config/branches.js'
 const INSPECT_TYPES = ['inspection', 'annual-test']
 
 const STAGE_CFG = {
-  'in-progress': { label: 'Active',     color: '#C2410C', bg: '#FFF7ED' },
-  scheduled:     { label: 'Scheduled',  color: '#4F46E5', bg: '#EEF2FF' },
-  complete:      { label: 'Complete',   color: '#15803D', bg: '#F0FDF4' },
-  failed:        { label: 'Failed',     color: '#B91C1C', bg: '#FEF2F2' },
+  'in-progress': { label: 'Active',     color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
+  scheduled:     { label: 'Scheduled',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
+  complete:      { label: 'Complete',   color: 'var(--success-text)', bg: 'var(--success-soft)' },
+  failed:        { label: 'Failed',     color: 'var(--error-dark)', bg: 'var(--error-soft)' },
 }
 
 const TYPE_ICON = {
@@ -132,7 +132,7 @@ export default function Inspections() {
         {/* Stage filter pills */}
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {['all', 'in-progress', 'scheduled', 'complete', 'failed'].map(key => {
-            const cfg   = key === 'all' ? { label: 'All', color: '#374151', bg: '#F3F4F6' } : STAGE_CFG[key]
+            const cfg   = key === 'all' ? { label: 'All', color: 'var(--grey-shade-40)', bg: 'var(--bg)' } : STAGE_CFG[key]
             const count = key === 'all' ? branchJobs.length : (stageCounts[key] || 0)
             const active = stageFilter === key
             return (
@@ -154,7 +154,7 @@ export default function Inspections() {
                   background: active ? cfg.color : 'var(--border)',
                   color: active ? '#fff' : 'var(--black)',
                   borderRadius: 10, padding: '0 5px',
-                  fontSize: 'var(--blackxs)', fontWeight: 700, lineHeight: '16px',
+                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px',
                 }}>{count}</span>
               </button>
             )

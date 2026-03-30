@@ -46,10 +46,10 @@ export default function Dashboard() {
       {/* Quick nav tiles */}
       <div className="dash-tiles">
         {[
-          { Icon: Lightning,   label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: '#F3F4F6' },
-          { Icon: HardHat,     label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: '#F3F4F6' },
-          { Icon: ClipboardText, label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',              color: '#000000', bg: '#F3F4F6' },
-          { Icon: Buildings,   label: 'Installations',  sub: `${branchJobs.length} total`,       path: '/installations',          color: '#000000', bg: '#F3F4F6' },
+          { Icon: Lightning,   label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: 'var(--bg)' },
+          { Icon: HardHat,     label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: 'var(--bg)' },
+          { Icon: ClipboardText, label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',              color: '#000000', bg: 'var(--bg)' },
+          { Icon: Buildings,   label: 'Installations',  sub: `${branchJobs.length} total`,       path: '/installations',          color: '#000000', bg: 'var(--bg)' },
         ].map(a => (
           <button
             key={a.path}
@@ -161,7 +161,7 @@ function EmptyState({ message }) {
 function JobRow({ job, navigate }) {
   return (
     <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
-      <div className="dash-job-icon" style={{ background: '#F3F4F6' }}>
+      <div className="dash-job-icon" style={{ background: 'var(--bg)' }}>
         {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
@@ -179,7 +179,7 @@ function JobRow({ job, navigate }) {
           )}
         </div>
       </div>
-      <div className="dash-status-pill" style={{ background: '#F3F4F6', color: '#000000' }}>
+      <div className="dash-status-pill" style={{ background: 'var(--bg)', color: '#000000' }}>
         {job.stage}
       </div>
     </div>

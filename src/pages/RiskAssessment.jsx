@@ -11,7 +11,7 @@ import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
   card: {
-    background: 'var(--white)', border: '1px solid var(--border)',
+    background: 'var(--white)', border: '1px solid var(--border-l)',
     borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden',
   },
   cardHead: {
@@ -319,7 +319,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
               <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--r-s)', padding:'0.5rem 0.625rem' }}>
-                <div style={{ ...S.label, fontSize:'var(--blackxs)', marginBottom:'var(--mar-xs)' }}>{label}</div>
+                <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--mar-xs)' }}>{label}</div>
                 <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--black)' }}>{val}</div>
               </div>
             ))}

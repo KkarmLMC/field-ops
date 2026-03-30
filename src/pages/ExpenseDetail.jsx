@@ -7,17 +7,17 @@ import {
 import { db } from '../lib/supabase.js'
 
 const STATUS_FLOW = {
-  draft:     { next: 'submitted', label: 'Submit',  bg: '#D97706', color: '#fff' },
-  submitted: { next: 'approved',  label: 'Approve', bg: '#15803D', color: '#fff' },
+  draft:     { next: 'submitted', label: 'Submit',  bg: 'var(--warning)', color: '#fff' },
+  submitted: { next: 'approved',  label: 'Approve', bg: 'var(--success-text)', color: '#fff' },
   approved:  { next: null },
   rejected:  { next: null },
 }
 
 const STATUS_COLORS = {
-  draft:     { color: '#64748B', bg: '#F1F5F9' },
-  submitted: { color: '#D97706', bg: '#FEF3C7' },
-  approved:  { color: '#15803D', bg: '#F0FDF4' },
-  rejected:  { color: '#B91C1C', bg: '#FEF2F2' },
+  draft:     { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
+  submitted: { color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  approved:  { color: 'var(--success-text)', bg: 'var(--success-soft)' },
+  rejected:  { color: 'var(--error-dark)', bg: 'var(--error-soft)' },
 }
 
 export default function ExpenseDetail() {
@@ -79,7 +79,7 @@ export default function ExpenseDetail() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-xl)', marginBottom: 'var(--mar-l)', color: '#fff' }}>
+      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xl)', marginBottom: 'var(--mar-l)', color: '#fff' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
           <div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.5)', fontWeight: 700, marginBottom: 4 }}>
@@ -88,7 +88,7 @@ export default function ExpenseDetail() {
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>{report.employee_name}</div>
             {project && <div style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>{project.name}</div>}
           </div>
-          <span style={{ padding: '4px 12px', borderRadius: 'var(--r-full)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
+          <span style={{ padding: '4px 12px', borderRadius: 'var(--r-xxl)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}
           </span>
         </div>
@@ -104,7 +104,7 @@ export default function ExpenseDetail() {
 
       {/* Advance lines */}
       {isAdvance && advanceLines.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Description</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Total</span>
@@ -126,11 +126,11 @@ export default function ExpenseDetail() {
 
       {/* Expense line items */}
       {!isAdvance && lines.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
+                <div key={h} style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             {lines.map(l => (
@@ -152,7 +152,7 @@ export default function ExpenseDetail() {
 
       {/* Mileage log */}
       {!isAdvance && mileage.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Mileage Log</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Miles</span>
@@ -167,7 +167,7 @@ export default function ExpenseDetail() {
       )}
 
       {/* Totals */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
         {!isAdvance && (
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
@@ -176,7 +176,7 @@ export default function ExpenseDetail() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Less Cash Advance</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#B91C1C' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>
@@ -191,7 +191,7 @@ export default function ExpenseDetail() {
       </div>
 
       {report.notes && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>
@@ -199,7 +199,7 @@ export default function ExpenseDetail() {
 
       {flow?.next && (
         <button onClick={advance} disabled={advancing}
-          style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-xl)', border: 'none', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
+          style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
           {advancing ? 'Processing…' : <><ArrowRight size={18} /> {flow.label}</>}
         </button>
       )}
