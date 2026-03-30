@@ -81,11 +81,7 @@ function ReportRow({ r }) {
       display: 'flex', alignItems: 'center', gap: 12,
       padding: '10px 16px', borderBottom: '1px solid var(--border-l)' }}>
       {/* Type icon badge */}
-      <div style={{
-        width: 32, height: 32, borderRadius: 8, flexShrink: 0,
-        background: type.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Icon size={15} weight="bold" style={{ color: type.color }} />
-      </div>
+      <Icon size={15} weight="bold" style={{ color: type.color }} />
 
       {/* Main info */}
       <div style={{ flex: 1, minWidth: 0 }}>

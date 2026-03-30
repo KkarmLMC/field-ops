@@ -144,11 +144,7 @@ function FieldRow({ p, navigate }) {
       padding: '12px 14px', borderBottom: '1px solid var(--border-l)',
       display: 'flex', gap: 12, alignItems: 'center' }}>
       {/* Left: icon */}
-      <div style={{
-        width: 36, height: 36, borderRadius: 8, flexShrink: 0,
-        background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Icon size={16} style={{ color: cfg.color }} />
-      </div>
+      <Icon size={16} style={{ color: cfg.color }} />
 
       {/* Middle: info */}
       <div style={{ flex: 1, minWidth: 0 }}>
