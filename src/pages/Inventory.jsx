@@ -338,7 +338,7 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
@@ -428,7 +428,7 @@ export default function Inventory() {
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
                 background: 'var(--white)', borderRadius: 'var(--r-m)',
-                border: '1px solid var(--border-l)', padding: '1rem',
+                border: 'none', boxShadow: 'var(--shadow-xs)', padding: '1rem',
                 cursor: 'grab', userSelect: 'none',
                 transition: 'box-shadow 0.15s ease',
               }}

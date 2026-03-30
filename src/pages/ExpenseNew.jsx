@@ -13,7 +13,7 @@ function Label({ children, required }) {
 
 function Card({ title, children }) {
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
       {title && <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>{title}</div>}
       {children}
     </div>
@@ -346,7 +346,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
       </Card>
 
       {/* Totals */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
         {[
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (

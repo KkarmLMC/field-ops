@@ -44,7 +44,7 @@ export default function Technicians() {
           const techJobs = PROJECTS.filter(p => p.lead_tech_id === tech.id)
           return (
             <div key={tech.id} className="card">
-              <div style={{ padding: '14px', borderBottom: techJobs.length > 0 ? '1px solid var(--border-l)' : 'none' }}>
+              <div style={{ padding: 'var(--pad-m)', borderBottom: techJobs.length > 0 ? '1px solid var(--border-l)' : 'none' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{
                     width: '2.5rem', height: '2.5rem', borderRadius: '0.375rem',

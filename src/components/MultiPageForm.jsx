@@ -362,7 +362,7 @@ export default function MultiPageForm({
           padding: 'var(--pad-m) var(--pad-l)',
           marginBottom: 'var(--mar-m)',
           background: 'var(--white)',
-          border: '1px solid var(--border-l)',
+          border: 'none', boxShadow: 'var(--shadow-xs)',
           borderRadius: 'var(--r-m)',
           fontSize: 'var(--text-xs)',
           color: 'var(--text-3)',

@@ -11,7 +11,7 @@ import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
   card: {
-    background: 'var(--white)', border: '1px solid var(--border-l)',
+    background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)',
     borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden',
   },
   cardHead: {

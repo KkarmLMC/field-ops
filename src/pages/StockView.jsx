@@ -157,7 +157,7 @@ export default function StockView() {
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All Parts'], ['low','Low Stock'], ['out','Out of Stock']].map(([val, lbl]) => (
           <button key={val} onClick={() => setFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'transparent', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'var(--hover)', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}

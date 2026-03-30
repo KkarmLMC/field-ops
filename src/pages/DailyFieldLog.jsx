@@ -934,7 +934,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
       <div className="dfl-form-panel" onClick={e => e.stopPropagation()} style={{ maxWidth: '36rem' }}>
 
         {/* Header */}
-        <div className="dfl-form-header" style={{ background: '#1F2937' }}>
+        <div className="dfl-form-header" style={{ background: 'var(--grey-shade-40)' }}>
           <div>
             <div className="dfl-form-part-label">{schema?.ref || ''}</div>
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{schema?.title || ''}</div>

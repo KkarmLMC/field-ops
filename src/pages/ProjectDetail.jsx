@@ -23,7 +23,7 @@ const STAGE_CFG = {
 const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
-  'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: '#F9FAFB' },
+  'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: 'var(--surface-raised)' },
   'submitted':       { label: 'Needs Review',     color: 'var(--blue)', bg: 'var(--blue-soft)' },
   'under-review':    { label: 'Under Review',     color: 'var(--warning)', bg: 'var(--warning-soft)' },
   'customer-signoff':{ label: 'Customer Sign-off',color: 'var(--purple)', bg: 'var(--purple-soft)' },
@@ -399,7 +399,7 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>

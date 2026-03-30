@@ -284,7 +284,7 @@ function TypePickerSheet({ onPick, onClose }) {
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--gap-s)' }}>
               {group.types.map(type => (
                 <button key={type} type="button" onClick={() => onPick(type)}
-                  style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)', background:'var(--surface-raised)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
+                  style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border: 'none', background: 'var(--white)', boxShadow: 'var(--shadow-xs)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
                   onMouseEnter={e => { e.currentTarget.style.background='var(--navy)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.borderColor='var(--navy)' }}
                   onMouseLeave={e => { e.currentTarget.style.background='var(--surface-raised)'; e.currentTarget.style.color='var(--black)'; e.currentTarget.style.borderColor='var(--border-l)' }}
                 >
@@ -424,7 +424,7 @@ function FormEditor({ form, onSave, onCancel }) {
       {error && <div style={{ padding: 'var(--pad-m)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>{error}</div>}
 
       {/* Form mode selector */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)', padding: 'var(--pad-m) var(--pad-l)', background:'var(--surface-raised)', borderRadius:'var(--r-l)', border:'1px solid var(--border-l)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--white)', borderRadius:'var(--r-l)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
         <span style={{ fontSize:'var(--text-xs)', fontWeight:700, color:'var(--black)', flexShrink:0 }}>Form Mode</span>
         <div style={{ display:'flex', gap:'var(--gap-s)', flex:1 }}>
           {[
@@ -435,7 +435,7 @@ function FormEditor({ form, onSave, onCancel }) {
             <button key={opt.value} type="button" onClick={() => setFormMode(opt.value)}
               style={{
                 flex:1, padding:'0.5rem', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', fontWeight:600,
-                border:`1px solid ${formMode===opt.value?'var(--navy)':'var(--border-l)'}`,
+                border:'none',
                 background: formMode===opt.value?'var(--navy)':'transparent',
                 color: formMode===opt.value?'#fff':'var(--text-3)',
                 cursor:'pointer', transition:'all var(--ease-fast)',

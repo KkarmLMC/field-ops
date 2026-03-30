@@ -126,7 +126,7 @@ export default function Expenses() {
             <Plus size={15} /> New
           </button>
           {showNewMenu && (
-            <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', border: '1px solid var(--border-l)', borderRadius: 'var(--r-l)', boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', borderRadius: 'var(--r-l)', boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
               {[['LM','advance'], ['LM','expense'], ['Bolt','advance'], ['Bolt','expense']].map(([div, type]) => (
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
@@ -174,7 +174,7 @@ export default function Expenses() {
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
           <button key={val} onClick={() => setTypeFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${typeFilter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: typeFilter === val ? 'var(--navy)' : 'transparent', color: typeFilter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${typeFilter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: typeFilter === val ? 'var(--navy)' : 'var(--hover)', color: typeFilter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
@@ -190,7 +190,7 @@ export default function Expenses() {
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

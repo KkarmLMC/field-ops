@@ -11,7 +11,7 @@ import { BRANCH_COLORS } from '../config/branches.js'
 const FORM_TYPES = {
   completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--orange)', bg: 'var(--orange-soft)' },
   inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--blue-soft)' },
-  jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: '#FEFCE8' },
+  jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: 'var(--warning-tint-80)' },
   'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
 }
 
@@ -77,8 +77,8 @@ function TypePill({ typeKey, count, active, onClick }) {
 
 // ─── Report row ───────────────────────────────────────────────────────────────
 function ReportRow({ r }) {
-  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: '#F9FAFB' }
-  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: '#F9FAFB' }
+  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: 'var(--surface-raised)' }
+  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: 'var(--surface-raised)' }
   const { Icon } = type
 
   return (

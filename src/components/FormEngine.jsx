@@ -140,7 +140,7 @@ function SignatureModal({ onSave, onClose }) {
         {/* Footer actions */}
         <div style={{ display:'flex', gap:'var(--gap-m)', padding: 'var(--pad-l)', borderTop:'1px solid var(--border-l)', background:'#fff' }}>
           <button type="button" onClick={clear}
-            style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)', background:'var(--surface-raised)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-m)', border: 'none', fontSize:'var(--text-sm)', color:'var(--black)', background: 'var(--white)', boxShadow: 'var(--shadow-xs)' }}>
             <ArrowCounterClockwise size={14}/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
@@ -170,7 +170,7 @@ export function SigPad({ value, onChange, readOnly }) {
     if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--text-sm)', fontStyle:'italic' }}>No signature</div>
     return (
       <div>
-        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-s)', background:'var(--white)', border:'1px solid var(--border-l)' }} />
+        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-s)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)' }} />
         {fmtDate && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', fontFamily:'var(--mono)', marginTop:'var(--mar-xs)' }}>Signed {fmtDate}</div>}
       </div>
     )
@@ -284,7 +284,7 @@ function PhotoField({ value, onChange, readOnly }) {
         <>
           <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" onChange={handleFiles} style={{ display:'none' }} />
           <button type="button" onClick={()=>fileRef.current.click()}
-            style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             <Camera size={14} /> Add Photo
           </button>
         </>
@@ -391,7 +391,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
       {/* Hidden audio element for playback */}
       {hasRecording && <audio ref={audioRef} src={value.audio} preload="auto" style={{ display:'none' }} />}
 
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', padding: 'var(--pad-m)', background:'var(--surface-raised)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', padding: 'var(--pad-m)', background: 'var(--white)', borderRadius:'var(--r-m)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
 
         {/* Main action button */}
         {state === 'recording' ? (
@@ -485,7 +485,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           {[['pass','Pass','var(--success)'],['fail','Fail','var(--red)']].map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
               style={{ padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-                border:`1px solid ${pf.result===k?col:'var(--border-l)'}`,
+                border:'none',
                 background: pf.result===k?col:'var(--white)',
                 color: pf.result===k?'#fff':'var(--black)', transition:'all var(--ease-fast)' }}>
               {lbl}
@@ -508,7 +508,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           {cfg.map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
               style={{ padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-                border:`1px solid ${okv.result===k?col:'var(--border-l)'}`,
+                border:'none',
                 background: okv.result===k?col:'var(--white)',
                 color: okv.result===k?(k==='na'?'var(--black)':'#fff'):'var(--black)',
                 transition:'all var(--ease-fast)' }}>
@@ -535,7 +535,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
               style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)',
-                borderRadius:'var(--r-s)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`,
+                borderRadius:'var(--r-s)', border:'none',
                 background: checked?'rgba(4,36,92,0.07)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
@@ -572,7 +572,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
         <button type="button" onClick={()=>setP('signed',!p.signed)}
           style={{ flexShrink:0, padding:'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-            border:`1px solid ${p.signed?'var(--success)':'var(--border-l)'}`,
+            border:'none',
             background: p.signed?'var(--success)':'var(--white)',
             color: p.signed?'#fff':'var(--black)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
           {p.signed ? '✓ Signed' : 'Sign'}
@@ -588,7 +588,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = opt==='Yes'?value===true:value===false
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt==='Yes')}
-              style={{ flex:1, padding:'var(--pad-s)', borderRadius:'var(--r-s)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--text-md)' }}>
+              style={{ flex:1, padding:'var(--pad-s)', borderRadius:'var(--r-s)', border:'none', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--text-md)' }}>
               {opt}
             </button>
           )
@@ -603,7 +603,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = value===opt
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt)}
-              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-xxl)', border:`1px solid ${active?'var(--navy)':'var(--border-l)'}`, background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
+              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-xxl)', border:'none', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
               {opt}
             </button>
           )
@@ -623,7 +623,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const checked = selected.includes(opt)
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
-              style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', border:`1px solid ${checked?'var(--navy)':'var(--border-l)'}`, background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
+              style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', border:'none', background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               {checked ? <CheckSquare size={16} style={{ color:'var(--navy)', flexShrink:0 }} /> : <Square size={16} style={{ color:'var(--text-3)', flexShrink:0 }} />}
               <span style={{ fontSize:'var(--text-md)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>

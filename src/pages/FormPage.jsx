@@ -128,7 +128,7 @@ export default function FormPage() {
           }</div>
         <div style={{ display:'flex', gap:'var(--gap-m)' }}>
           <button onClick={()=>navigate('/forms')}
-            style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius:'var(--r-m)', background:'var(--surface-raised)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
+            style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius:'var(--r-m)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             Back to Forms
           </button>
           <button className="btn btn-primary" onClick={()=>{ setSuccess(null); setValues({ date_completed: new Date().toISOString().slice(0,10) }) }}>
@@ -150,7 +150,7 @@ export default function FormPage() {
         }
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-xs)', color:'var(--black)', background:'var(--surface-raised)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', border: 'none', fontSize:'var(--text-xs)', color:'var(--black)', background: 'var(--white)', boxShadow: 'var(--shadow-xs)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
           <PencilSimple size={12} /> Edit Form
         </button>
       </div>
