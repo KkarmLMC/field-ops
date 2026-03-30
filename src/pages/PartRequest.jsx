@@ -107,14 +107,10 @@ export default function PartRequest() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-          <ArrowLeft size={14} /> Back to Stock
-        </button>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, lineHeight: 1.1 }}>Part Request</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>Pending management review before fulfillment</div>
-      </div>
+      <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+        <ArrowLeft size={14} /> Back to Stock
+      </button>
+      <PageHeader eyebrow="FIELD" title="Part Request" subtitle="Pending management review before fulfillment" />
 
       {/* Job details */}
       <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
