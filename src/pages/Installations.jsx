@@ -53,7 +53,7 @@ function StagePill({ stageKey, count, active, onClick }) {
       style={{
         flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 'var(--r-m)',
         background: active ? cfg.bg : 'var(--white)',
-        border: none,
+        border: 'none',
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
       <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
