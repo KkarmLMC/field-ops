@@ -9,6 +9,21 @@ import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { projectStage } from '../lib/statusColors.js'
 
+// ─── Stage config ─────────────────────────────────────────────────────────────
+const STAGE_CFG = {
+  'in-progress': { ...projectStage('in-progress'), label: 'Active' },
+  'scheduled':   projectStage('scheduled'),
+  'complete':    projectStage('complete'),
+  'failed':      { ...projectStage('failed') } }
+
+const TYPE_ICON = {
+  inspection:    MagnifyingGlass,
+  'annual-test': ClipboardText }
+
+function getTech(id) {
+  return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
+}
+
 // ─── Config ───────────────────────────────────────────────────────────────────
 const INSPECT_TYPES = ['inspection', 'annual-test']
 

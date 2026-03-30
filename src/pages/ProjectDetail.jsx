@@ -7,7 +7,37 @@ import {
   TrendUp, Receipt, ArrowRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase'
 import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/mockData.js'
-import { projectStage } from '../lib/statusColors.js'
+import { projectStage, approvalStatus } from '../lib/statusColors.js'
+
+// ─── Stage config ─────────────────────────────────────────────────────────────
+const STAGE_CFG = {
+  'awarded':        { ...projectStage('awarded'),        order: 0 },
+  'scheduled':      { ...projectStage('scheduled'),      order: 1 },
+  'in-progress':    { ...projectStage('in-progress'),    order: 2 },
+  'pending-review': { ...projectStage('pending-review'), order: 3 },
+  'complete':       { ...projectStage('complete'),        order: 4 },
+  'postponed':      { ...projectStage('postponed'),      order: 5 },
+  'failed':         { ...projectStage('failed'),         order: 6 } }
+
+const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
+
+const COMPLETION_FORM_CFG = {
+  'draft':           { label: 'Draft',            color: 'var(--grey-base)',     bg: 'var(--white)' },
+  'submitted':       { label: 'Needs Review',      color: 'var(--blue)',          bg: 'var(--blue-soft)' },
+  'under-review':    { label: 'Under Review',      color: 'var(--warning)',       bg: 'var(--warning-soft)' },
+  'customer-signoff':{ label: 'Customer Sign-off', color: 'var(--purple)',        bg: 'var(--purple-soft)' },
+  'complete':        { label: 'Approved',          color: 'var(--success-text)',  bg: 'var(--success-soft)' } }
+
+const TYPE_ICON = {
+  installation:  Lightning,
+  inspection:    MagnifyingGlass,
+  'site-survey': Wrench,
+  certification: ClipboardText,
+  remediation:   Wrench }
+
+function getTech(id) {
+  return TECHNICIANS.find(t => t.id === id) || null
+}
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 

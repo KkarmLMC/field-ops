@@ -10,7 +10,29 @@ import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
 import { projectStage } from '../lib/statusColors.js'
 
-// ─── Stage config ─────────────────────────────────────────────────────────────
+// ─── Stage config — thin wrapper over projectStage() tokens ───────────────────
+// `short` label is Installations-specific (not in the shared token) so we extend here
+const STAGE_CFG = {
+  'awarded':        { ...projectStage('awarded'),        short: 'Awarded'   },
+  'scheduled':      { ...projectStage('scheduled'),      short: 'Upcoming'  },
+  'in-progress':    { ...projectStage('in-progress'),    short: 'Active'    },
+  'pending-review': { ...projectStage('pending-review'), short: 'In Review' },
+  'complete':       { ...projectStage('complete'),        short: 'Complete'  },
+  'postponed':      { ...projectStage('postponed'),      short: 'Postponed' },
+  'failed':         { ...projectStage('failed'),         short: 'Failed'    },
+}
+
+// ─── Type icons ───────────────────────────────────────────────────────────────
+const TYPE_ICON = {
+  installation:  Lightning,
+  inspection:    MagnifyingGlass,
+  'site-survey': Wrench,
+  certification: ClipboardText,
+  remediation:   Wrench }
+
+function getTech(id) {
+  return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
+}
 
 function fmtDate(d) {
   if (!d) return '—'
