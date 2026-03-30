@@ -365,7 +365,7 @@ export default function ProjectDetail() {
               <span className="card-title">
                 Daily Field Reports
               </span>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{reports.length}</span>
+              <span className="card-header__meta">{reports.length} reports</span>
             </div>
             {reports.map(r => (
               <div key={r.id} className="project-item">
@@ -477,7 +477,7 @@ export default function ProjectDetail() {
               <span className="card-title">
                 Completion Forms
               </span>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{submissions.length}</span>
+              <span className="card-header__meta">{submissions.length} forms</span>
             </div>
             {submissions.map(s => {
               const sCfg = COMPLETION_FORM_CFG[s.status?.toLowerCase().replace(' ', '-')] || {}
