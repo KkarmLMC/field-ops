@@ -330,7 +330,7 @@ export default function ProjectDetail() {
               style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
               onClick={() => navigate(`/daily-field-log?project=${project.id}`)}
             >
-              <Plus size={14} weight="bold" />
+              <Plus size={16} weight="bold" />
               Start Daily Log
             </button>
             {project.stage === 'in-progress' && !cfStatus && (
@@ -363,7 +363,6 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="card-header">
               <span className="card-title">
-                <span className="card-dot" style={{ background: 'var(--blue)' }} />
                 Daily Field Reports
               </span>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{reports.length}</span>
@@ -391,11 +390,11 @@ export default function ProjectDetail() {
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <CurrencyDollar size={15} style={{ color: 'rgba(255,255,255,0.7)' }} />
+                <CurrencyDollar size={16} style={{ color: 'rgba(255,255,255,0.7)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
-                <span style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+                <span className="card-header__meta">
                   Contract: ${Number(project.contract_value).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                 </span>
               )}
@@ -476,7 +475,6 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="card-header">
               <span className="card-title">
-                <span className="card-dot" style={{ background: 'var(--red)' }} />
                 Completion Forms
               </span>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{submissions.length}</span>

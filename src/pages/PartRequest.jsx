@@ -150,7 +150,7 @@ export default function PartRequest() {
       <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
+          <span className="card-header__meta">{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
         <div style={{ padding: 'var(--pad-m)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {items.map((item, idx) => (

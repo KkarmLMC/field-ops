@@ -16,7 +16,6 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
       <div className="card-header" style={{ background: bc.bgActive }}>
         <span className="card-title">
-          <span className="card-dot" style={{ background:'rgba(255,255,255,0.5)' }} />
           {category.label}
         </span>
       </div>

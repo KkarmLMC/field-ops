@@ -181,7 +181,7 @@ export default function Inspections() {
             className="dash-card-head"
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
           >
-            <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+            <span className="dash-card-title">
               <MagnifyingGlass size={14} />
               Inspections
             </span>

@@ -490,7 +490,7 @@ export default function FormBuilder() {
     <div className="page-content fade-in">
       <div className="card">
         <div className="card-header">
-          <span className="card-title"><span className="card-dot" style={{ background:'var(--navy)' }}/>Form Builder</span>
+          <span className="card-title">Form Builder</span>
         </div>
 
         {loading ? (

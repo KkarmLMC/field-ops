@@ -1725,7 +1725,7 @@ export default function DailyFieldLog() {
               className="dash-card-head"
               style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
             >
-              <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+              <span className="dash-card-title">
                 <Clock size={14} />
                 Field Log Entries
               </span>
@@ -1781,7 +1781,7 @@ export default function DailyFieldLog() {
       {!isManagement && (
         <div className="dash-card" style={{ marginTop: 'var(--mar-s)' }}>
           <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
-            <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+            <span className="dash-card-title">
               <Clock size={14} />
               My Log Entries
             </span>

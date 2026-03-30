@@ -451,7 +451,7 @@ export default function Installations() {
           {/* Upcoming */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
+              <span className="dash-card-title">
                 <Clock size={12} />
                 Upcoming
               </span>
@@ -467,7 +467,7 @@ export default function Installations() {
           {/* Active */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
+              <span className="dash-card-title">
                 <span className="live-dot" />
                 Active
               </span>
@@ -483,7 +483,7 @@ export default function Installations() {
           {/* Pending Review */}
           <div className="dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title" style={{ fontSize: 'var(--text-sm)', gap: 5 }}>
+              <span className="dash-card-title">
                 <Warning size={12} />
                 In Review
               </span>
