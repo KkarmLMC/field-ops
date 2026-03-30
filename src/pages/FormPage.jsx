@@ -71,8 +71,7 @@ export default function FormPage() {
       site_name:    values.site_name || null,
       submitted_by: values.tech_name || null,
       status:       'submitted',
-      form_data:    values,
-    }
+      form_data:    values }
 
     try {
       const { data, error } = await db.from('form_submissions_v2').insert(payload).select().single()
@@ -128,7 +127,7 @@ export default function FormPage() {
           }</div>
         <div style={{ display:'flex', gap:'var(--gap-m)' }}>
           <button onClick={()=>navigate('/forms')}
-            style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius:'var(--r-m)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
+            style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius:'var(--r-m)', background: 'var(--white)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             Back to Forms
           </button>
           <button className="btn btn-primary" onClick={()=>{ setSuccess(null); setValues({ date_completed: new Date().toISOString().slice(0,10) }) }}>
@@ -150,7 +149,7 @@ export default function FormPage() {
         }
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', border: 'none', fontSize:'var(--text-xs)', color:'var(--black)', background: 'var(--white)', boxShadow: 'var(--shadow-xs)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', color:'var(--black)', background: 'var(--white)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
           <PencilSimple size={12} /> Edit Form
         </button>
       </div>
@@ -186,12 +185,12 @@ export default function FormPage() {
           />
 
           {submitErr && (
-            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
+            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
               {submitErr}
             </div>
           )}
           {Object.keys(errors).length > 0 && (
-            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
+            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
               Please fill in all required fields before submitting.
             </div>
           )}
@@ -204,8 +203,7 @@ export default function FormPage() {
             letterSpacing:'0.06em', textTransform:'uppercase',
             border:`1px solid ${submitting?'var(--border-l)':'var(--red)'}`,
             display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
-            transition:'all var(--ease-fast)',
-          }}>
+            transition:'all var(--ease-fast)' }}>
             {submitting
               ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
               : <><CheckCircle size={14} /> Submit Form</>

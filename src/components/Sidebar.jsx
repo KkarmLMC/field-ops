@@ -5,8 +5,7 @@ import {
   ClipboardText, FileText, Users, Gear,
   Question, ArrowLineLeft, ArrowLineRight,
   BookOpen, ChartBar, Rows, Package, Receipt, CurrencyDollar,
-  SignOut, User, Warehouse,
-} from '@phosphor-icons/react'
+  SignOut, User, Warehouse } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
 
 // ── Nav structure ─────────────────────────────────────────────────────────────
@@ -14,8 +13,7 @@ const NAV_ITEMS = [
   {
     path: '/dashboard',
     Icon: SquaresFour,
-    label: 'Field Overview',
-  },
+    label: 'Field Overview' },
   {
     path: '/installations',
     Icon: HardHat,
@@ -24,16 +22,14 @@ const NAV_ITEMS = [
       { path: '/installations/pipeline',      Icon: Rows,          label: 'Project Pipeline' },
       { path: '/installations/field-logs',    Icon: BookOpen,      label: 'Field Logs'       },
       { path: '/installations/field-reports', Icon: ClipboardText, label: 'Field Reports'    },
-    ],
-  },
+    ] },
   { path: '/inspections',     Icon: MagnifyingGlass, label: 'Inspections'     },
   { path: '/risk-assessment', Icon: ChartBar,        label: 'Risk Assessment' },
   { path: '/daily-field-log', Icon: BookOpen,        label: 'Daily Field Log' },
   { path: '/forms',           Icon: FileText,        label: 'Report Forms',
     children: [
       { path: '/forms/builder', Icon: PencilSimple, label: 'Form Builder' },
-    ],
-  },
+    ] },
   { path: '/stock',        Icon: Warehouse, label: 'Stock Lookup' },
   { path: '/sales-orders', Icon: Receipt,   label: 'Sales Orders' },
   { path: '/technicians',     Icon: Users,   label: 'Technicians'     },
@@ -75,8 +71,7 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
   return (
     <div style={{
       overflow: 'hidden',
-      marginTop: 2,
-    }}>
+      marginTop: 2 }}>
       {/* Connecting line on the left */}
       <div style={{ position: 'relative', paddingLeft: 4 }}>
         <div style={{
@@ -86,8 +81,7 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
           bottom: 4,
           width: 1,
           background: 'var(--border)',
-          borderRadius: 1,
-        }} />
+          borderRadius: 1 }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
           return (
@@ -128,8 +122,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         {collapsed && active && (
           <div style={{
             position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)',
-          }} />
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)' }} />
         )}
       </button>
 

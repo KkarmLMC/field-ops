@@ -14,8 +14,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   SquaresFour, BookOpen, FileText,
-  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt, CurrencyDollar, Warehouse, UserCircle,
-} from '@phosphor-icons/react'
+  MagnifyingGlass, Users, HardHat, ChartBar, Package, Receipt, CurrencyDollar, Warehouse, UserCircle } from '@phosphor-icons/react'
 import useRole from '../lib/useRole.js'
 
 // ─── Routes where the bar is hidden ──────────────────────────────────────────

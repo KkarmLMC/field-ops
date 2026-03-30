@@ -13,7 +13,7 @@ function Label({ children, required }) {
 
 function Card({ title, children }) {
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
       {title && <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>{title}</div>}
       {children}
     </div>
@@ -74,8 +74,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       status: submit ? 'submitted' : 'draft',
       submitted_at: submit ? new Date().toISOString() : null,
       subtotal: travelTotal, advance_amount: 0,
-      grand_total: grandTotal, notes,
-    }, lines)
+      grand_total: grandTotal, notes }, lines)
   }
 
   const row = { marginBottom: 'var(--mar-m)' }
@@ -121,7 +120,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${mealsTotal.toFixed(2)}</div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', borderTop: '1px solid var(--border-l)', paddingTop: 'var(--pad-s)' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
         </div>
       </Card>
@@ -199,7 +198,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${(o.days * o.rate).toFixed(2)}</div>
           </div>
         ))}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', borderTop: '1px solid var(--border-l)', paddingTop: 'var(--pad-s)' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Travel Advance: ${travelTotal.toFixed(2)}</span>
         </div>
       </Card>
@@ -220,11 +219,11 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : 'Save Draft'}
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           <ArrowRight size={15} /> Submit Request
         </button>
       </div>
@@ -266,8 +265,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
       submitted_at: submit ? new Date().toISOString() : null,
       subtotal, less_advance: parseFloat(lessAdvance) || 0,
       mileage_miles: totalMiles, mileage_rate: MILEAGE_RATE, mileage_total: mileageTotal,
-      grand_total: grandTotal, notes,
-    }, lines.filter(l => l.vendor || l.total), mileage.filter(m => m.miles))
+      grand_total: grandTotal, notes }, lines.filter(l => l.vendor || l.total), mileage.filter(m => m.miles))
   }
 
   const catCols = { display: 'grid', gridTemplateColumns: `minmax(80px,1fr) 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px`, gap: 4, overflowX: 'auto' }
@@ -315,11 +313,11 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           ))}
         </div>
         <button onClick={addLine}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-s)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-s)' }}>
           <Plus size={12} /> Add row
         </button>
         {/* Subtotal */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', borderTop: '1px solid var(--border-l)', paddingTop: 'var(--pad-s)' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Subtotal: ${subtotal.toFixed(2)}</span>
         </div>
       </Card>
@@ -336,17 +334,17 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           </div>
         ))}
         <button onClick={addMile}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-xs)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-xs)' }}>
           <Plus size={12} /> Add entry
         </button>
-        <div style={{ borderTop: '1px solid var(--border-l)', marginTop: 'var(--mar-m)', paddingTop: 'var(--pad-s)', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ marginTop: 'var(--mar-m)', paddingTop: 'var(--pad-s)', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Mileage: ${mileageTotal.toFixed(2)}</span>
         </div>
       </Card>
 
       {/* Totals */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         {[
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (
@@ -382,11 +380,11 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : 'Save Draft'}
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           <ArrowRight size={15} /> Submit Report
         </button>
       </div>
@@ -432,8 +430,7 @@ export default function ExpenseNew() {
             parking: parseFloat(l.parking) || null, car_rental: parseFloat(l.car_rental) || null,
             lodging: parseFloat(l.lodging) || null, meals: parseFloat(l.meals) || null,
             supplies: parseFloat(l.supplies) || null, rentals: parseFloat(l.rentals) || null,
-            other: parseFloat(l.other) || null,
-          }))
+            other: parseFloat(l.other) || null }))
         )
       }
       if (mileageRows?.length) {

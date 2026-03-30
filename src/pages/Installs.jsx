@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import SectionDivider from '../components/SectionDivider'
 import {
   MagnifyingGlass, Lightning, Ruler, Seal, ClipboardText,
-  CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle,
-} from '@phosphor-icons/react'
+  CalendarBlank, HardHat, CheckCircle, Clipboard, PauseCircle } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
@@ -14,22 +13,19 @@ const TYPE_ICON = {
   'site-survey': Ruler,
   certification: Seal,
   'annual-test': ClipboardText,
-  inspection:    MagnifyingGlass,
-}
+  inspection:    MagnifyingGlass }
 
 const TYPE_LABEL = {
   installation:  'Install',
   'site-survey': 'Site Survey',
   certification: 'Cert',
   'annual-test': 'Annual Test',
-  inspection:    'Inspection',
-}
+  inspection:    'Inspection' }
 
 const PRIORITY_DOT = {
   high:   'var(--error)',
   medium: 'var(--warning)',
-  low:    'var(--grey-tint-40)',
-}
+  low:    'var(--grey-tint-40)' }
 
 const KANBAN_COLS = [
   { id: 'awarded',        label: 'Awarded',                Icon: CalendarBlank, accent: 'var(--purple)', stages: ['awarded']                        },
@@ -124,8 +120,7 @@ function KanbanColumn({ col, jobs, bc, onCardClick }) {
         style={{
           background: bc.bgActive,
           borderTopColor: accent,
-          transition: 'background 0.2s ease',
-        }}
+          transition: 'background 0.2s ease' }}
       >
         <div className="kanban-col-head-left">
           <Icon size={15} weight="bold" style={{ color: bc.textActive, flexShrink: 0 }} />

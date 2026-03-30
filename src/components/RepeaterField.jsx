@@ -17,8 +17,7 @@
 
 import { useState } from 'react'
 import {
-  Plus, Trash, PencilSimple, X, CheckCircle, Camera,
-} from '@phosphor-icons/react'
+  Plus, Trash, PencilSimple, X, CheckCircle, Camera } from '@phosphor-icons/react'
 import { FormField } from './FormEngine.jsx'
 
 // ─── Sub-field label ──────────────────────────────────────────────────────────
@@ -64,15 +63,13 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
       gap: 'var(--gap-m)',
       padding: 'var(--pad-m) var(--pad-l)',
       borderBottom: '1px solid var(--border-l)',
-      background: 'var(--white)',
-    }}>
+      background: 'var(--white)' }}>
       {/* Entry number badge */}
       <div style={{
         width: '1.75rem', height: '1.75rem', borderRadius: 'var(--r-xxl)',
         background: 'var(--navy)', color: '#fff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0,
-      }}>
+        fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0 }}>
         {index + 1}
       </div>
 
@@ -89,11 +86,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
 
       {/* Edit + Delete */}
       <button type="button" onClick={onEdit}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <PencilSimple size={14} />
       </button>
       <button type="button" onClick={onDelete}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <Trash size={14} />
       </button>
     </div>
@@ -125,8 +122,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
       <div onClick={onClose} style={{
         position: 'fixed', inset: 0, zIndex: 299,
         background: 'rgba(0,0,0,0.5)',
-        animation: 'anim-fade-in 0.15s ease',
-      }} />
+        animation: 'anim-fade-in 0.15s ease' }} />
 
       {/* Sheet */}
       <div style={{
@@ -135,33 +131,27 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
         borderRadius: 'var(--r-xl) var(--r-xl) 0 0',
         maxHeight: '90vh',
         display: 'flex', flexDirection: 'column',
-        animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)',
-        boxShadow: '0 -4px 32px rgba(0,0,0,0.15)',
-      }}>
+        animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Sheet header */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: 'var(--pad-l)',
           borderBottom: '1px solid var(--border-l)',
-          flexShrink: 0,
-        }}>
+          flexShrink: 0 }}>
           <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--black)' }}>
             {title}
           </div>
           <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
             <button type="button" onClick={onClose} style={{
-              width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)',
-              border: '1px solid var(--border-l)', background: 'var(--white)',
-              color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            }}>
+              width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)', background: 'var(--white)',
+              color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={16} />
             </button>
             <button type="button" onClick={handleSave} style={{
               height: '2.25rem', padding: '0 1rem', borderRadius: 'var(--r-l)',
-              border: '1px solid var(--navy)', background: 'var(--navy)',
+              background: 'var(--navy)',
               color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700,
-              display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer',
-            }}>
+              display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
               <CheckCircle size={14} /> Save
             </button>
           </div>
@@ -172,8 +162,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
           flex: 1, overflowY: 'auto',
           padding: 'var(--pad-l)',
           display: 'flex', flexDirection: 'column', gap: '1.25rem',
-          paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))',
-        }}>
+          paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))' }}>
           {subFields.map(f => (
             <div key={f.id}>
               <SubLabel field={f} error={errors[f.id]} />
@@ -222,12 +211,9 @@ export default function RepeaterField({ field, value, onChange, error }) {
     <div>
       {/* Entry list */}
       {entries.length > 0 && (
-        <div style={{
-          border: '1px solid var(--border-l)',
-          borderRadius: 'var(--r-l)',
+        <div style={{ borderRadius: 'var(--r-l)',
           overflow: 'hidden',
-          marginBottom: 'var(--mar-m)',
-        }}>
+          marginBottom: 'var(--mar-m)' }}>
           {entries.map((entry, i) => (
             <EntryRow
               key={i}
@@ -250,8 +236,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
           borderRadius: 'var(--r-l)',
           marginBottom: 'var(--mar-m)',
           color: 'var(--text-3)',
-          fontSize: 'var(--text-sm)',
-        }}>
+          fontSize: 'var(--text-sm)' }}>
           No entries yet — tap Add Entry to begin
         </div>
       )}
@@ -261,13 +246,12 @@ export default function RepeaterField({ field, value, onChange, error }) {
         display: 'flex', alignItems: 'center', gap: '0.5rem',
         padding: 'var(--pad-s) var(--pad-l)',
         borderRadius: 'var(--r-m)',
-        border: '1px solid var(--navy)',
+        
         background: 'transparent',
         color: 'var(--navy)',
         fontSize: 'var(--text-sm)', fontWeight: 700,
         cursor: 'pointer',
-        transition: 'all var(--ease-fast)',
-      }}>
+        transition: 'all var(--ease-fast)' }}>
         <Plus size={15} /> Add Entry
       </button>
 

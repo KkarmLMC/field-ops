@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ClipboardText, CheckCircle, Clock, MagnifyingGlass,
-  HardHat, FileText, Plus, Eye, Lightning, Ruler, Warning,
-} from '@phosphor-icons/react'
+  HardHat, FileText, Plus, Eye, Lightning, Ruler, Warning } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
@@ -12,16 +11,14 @@ const FORM_TYPES = {
   completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--orange)', bg: 'var(--orange-soft)' },
   inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--blue-soft)' },
   jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: 'var(--warning-tint-80)' },
-  'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-}
+  'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' } }
 
 // ─── Status config ─────────────────────────────────────────────────────────────
 const STATUS_CFG = {
   submitted:          { label: 'Submitted',          color: 'var(--blue)', bg: 'var(--blue-soft)' },
   'under-review':     { label: 'Under Review',       color: 'var(--warning)', bg: 'var(--warning-soft)' },
   'customer-signoff': { label: 'Customer Sign-off',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: 'var(--success-soft)' },
-}
+  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: 'var(--success-soft)' } }
 
 // ─── Mock data (swapped for Supabase when live) ────────────────────────────────
 const MOCK_FIELD_REPORTS = [
@@ -61,36 +58,32 @@ function TypePill({ typeKey, count, active, onClick }) {
         background: active ? cfg.bg : 'var(--white)',
         color: active ? cfg.color : 'var(--black)',
         fontSize: 'var(--text-sm)', fontWeight: active ? 600 : 500,
-        transition: 'all 0.15s',
-      }}
+        transition: 'all 0.15s' }}
     >
       {Icon && <Icon size={12} weight={active ? 'bold' : 'regular'} />}
       {cfg.label}
       <span style={{
         background: active ? cfg.color : 'var(--border)',
         color: active ? '#fff' : 'var(--black)',
-        borderRadius: 10, padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px',
-      }}>{count}</span>
+        borderRadius: 10, padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
     </button>
   )
 }
 
 // ─── Report row ───────────────────────────────────────────────────────────────
 function ReportRow({ r }) {
-  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: 'var(--surface-raised)' }
-  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: 'var(--surface-raised)' }
+  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: 'var(--white)' }
+  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: 'var(--white)' }
   const { Icon } = type
 
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 12,
-      padding: '10px 16px', borderBottom: '1px solid var(--border-l)',
-    }}>
+      padding: '10px 16px', borderBottom: '1px solid var(--border-l)' }}>
       {/* Type icon badge */}
       <div style={{
         width: 32, height: 32, borderRadius: 8, flexShrink: 0,
-        background: type.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
+        background: type.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={15} weight="bold" style={{ color: type.color }} />
       </div>
 
@@ -112,17 +105,15 @@ function ReportRow({ r }) {
       {/* Status badge */}
       <span style={{
         fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 6, flexShrink: 0,
-        background: status.bg, color: status.color, whiteSpace: 'nowrap',
-      }}>
+        background: status.bg, color: status.color, whiteSpace: 'nowrap' }}>
         {status.label}
       </span>
 
       {/* View button */}
       <button style={{
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-        padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border-l)',
-        background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer',
-      }}>
+        padding: '5px 10px', borderRadius: 6,
+        background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
         <Eye size={12} />
         View
       </button>
@@ -149,15 +140,13 @@ export default function Reports() {
     completion:    branchReports.filter(r => r.form_type === 'completion').length,
     inspection:    branchReports.filter(r => r.form_type === 'inspection').length,
     jsa:           branchReports.filter(r => r.form_type === 'jsa').length,
-    'site-survey': branchReports.filter(r => r.form_type === 'site-survey').length,
-  }
+    'site-survey': branchReports.filter(r => r.form_type === 'site-survey').length }
 
   const statusCounts = {
     submitted:          branchReports.filter(r => r.status === 'submitted').length,
     'under-review':     branchReports.filter(r => r.status === 'under-review').length,
     'customer-signoff': branchReports.filter(r => r.status === 'customer-signoff').length,
-    complete:           branchReports.filter(r => r.status === 'complete').length,
-  }
+    complete:           branchReports.filter(r => r.status === 'complete').length }
 
   const filtered = branchReports
     .filter(r => activeType === 'all' || r.form_type === activeType)
@@ -230,15 +219,13 @@ export default function Reports() {
               border: activeStatus === key ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
               background: activeStatus === key ? cfg.bg : 'var(--white)',
               color: activeStatus === key ? cfg.color : 'var(--text-3)',
-              transition: 'all 0.15s',
-            }}
+              transition: 'all 0.15s' }}
           >
             {cfg.label}
             <span style={{
               background: activeStatus === key ? cfg.color : 'var(--border)',
               color: activeStatus === key ? '#fff' : 'var(--black)',
-              borderRadius: 10, padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px',
-            }}>{statusCounts[key] || 0}</span>
+              borderRadius: 10, padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
           </button>
         ))}
       </div>

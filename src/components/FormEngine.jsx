@@ -17,8 +17,7 @@ import { useRef, useEffect, useState } from 'react'
 import {
   CaretDown, Trash, MapPin, Camera, CheckSquare, Square,
   Microphone, Stop, Play, Pause, ArrowCounterClockwise,
-  PencilSimple, CheckCircle, X,
-} from '@phosphor-icons/react'
+  PencilSimple, CheckCircle, X } from '@phosphor-icons/react'
 import RepeaterField from './RepeaterField.jsx'
 
 // ─── Signature Modal ──────────────────────────────────────────────────────────
@@ -109,8 +108,7 @@ function SignatureModal({ onSave, onClose }) {
       <div style={{
         position: 'fixed', inset:0, zIndex:301,
         display: 'flex', flexDirection:'column',
-        background: '#fff',
-      }}>
+        background: '#fff' }}>
         {/* Header */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--pad-l)', borderBottom:'1px solid var(--border-l)', background:'var(--navy)' }}>
           <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
@@ -120,7 +118,7 @@ function SignatureModal({ onSave, onClose }) {
         </div>
 
         {/* Canvas area */}
-        <div style={{ flex:1, position:'relative', background:'var(--surface-raised)' }}>
+        <div style={{ flex:1, position:'relative', background:'var(--white)' }}>
           {/* Baseline guide */}
           <div style={{ position:'absolute', left:'5%', right:'5%', bottom:'35%', height:1, background:'rgba(0,0,0,0.1)', pointerEvents:'none' }} />
           {/* Placeholder text */}
@@ -138,13 +136,13 @@ function SignatureModal({ onSave, onClose }) {
         </div>
 
         {/* Footer actions */}
-        <div style={{ display:'flex', gap:'var(--gap-m)', padding: 'var(--pad-l)', borderTop:'1px solid var(--border-l)', background:'#fff' }}>
+        <div style={{ display:'flex', gap:'var(--gap-m)', padding: 'var(--pad-l)', marginTop:'var(--mar-l)', background:'var(--white)' }}>
           <button type="button" onClick={clear}
-            style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-m)', border: 'none', fontSize:'var(--text-sm)', color:'var(--black)', background: 'var(--white)', boxShadow: 'var(--shadow-xs)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--black)', background: 'var(--white)' }}>
             <ArrowCounterClockwise size={14}/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
-            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--gap-s)', padding: 'var(--pad-m)', borderRadius:'var(--r-m)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--text-md)', fontWeight:600, border:'none', transition:'all var(--ease-fast)' }}>
+            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--gap-s)', padding: 'var(--pad-m)', borderRadius:'var(--r-m)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--text-md)', fontWeight:600, transition:'all var(--ease-fast)' }}>
             <CheckCircle size={16} weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
           </button>
         </div>
@@ -170,7 +168,7 @@ export function SigPad({ value, onChange, readOnly }) {
     if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-3)', fontSize:'var(--text-sm)', fontStyle:'italic' }}>No signature</div>
     return (
       <div>
-        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-s)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)' }} />
+        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--r-s)', background: 'var(--white)' }} />
         {fmtDate && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', fontFamily:'var(--mono)', marginTop:'var(--mar-xs)' }}>Signed {fmtDate}</div>}
       </div>
     )
@@ -180,8 +178,8 @@ export function SigPad({ value, onChange, readOnly }) {
     <>
       {hasSig ? (
         /* Signed state */
-        <div style={{ border:'1px solid var(--border-l)', borderRadius:'var(--r-m)', overflow:'hidden' }}>
-          <div style={{ padding: 'var(--pad-s) var(--pad-m)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--surface-raised)', borderBottom:'1px solid var(--border-l)' }}>
+        <div style={{ borderRadius:'var(--r-m)', overflow:'hidden' }}>
+          <div style={{ padding: 'var(--pad-s) var(--pad-m)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--white)', borderBottom:'1px solid var(--border-l)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
               <CheckCircle size={14} weight="fill" style={{ color:'var(--success)', flexShrink:0 }} />
               <span style={{ fontSize:'var(--text-xs)', color:'var(--black)', fontFamily:'var(--mono)' }}>
@@ -206,7 +204,7 @@ export function SigPad({ value, onChange, readOnly }) {
       ) : (
         /* Unsigned state */
         <button type="button" onClick={() => setModalOpen(true)}
-          style={{ width:'100%', padding:'var(--pad-l)', borderRadius:'var(--r-m)', border:'2px dashed var(--border-l)', background:'var(--surface-raised)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--gap-s)', color:'var(--text-3)', fontSize:'var(--text-sm)', transition:'all var(--ease-fast)' }}
+          style={{ width:'100%', padding:'var(--pad-l)', borderRadius:'var(--r-m)', border:'2px dashed var(--border-l)', background:'var(--white)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--gap-s)', color:'var(--text-3)', fontSize:'var(--text-sm)', transition:'all var(--ease-fast)' }}
           onMouseEnter={e => { e.currentTarget.style.borderColor='var(--navy)'; e.currentTarget.style.color='var(--navy)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-l)'; e.currentTarget.style.color='var(--text-3)' }}
         >
@@ -284,7 +282,7 @@ function PhotoField({ value, onChange, readOnly }) {
         <>
           <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" onChange={handleFiles} style={{ display:'none' }} />
           <button type="button" onClick={()=>fileRef.current.click()}
-            style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background: 'var(--white)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
             <Camera size={14} /> Add Photo
           </button>
         </>
@@ -391,7 +389,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
       {/* Hidden audio element for playback */}
       {hasRecording && <audio ref={audioRef} src={value.audio} preload="auto" style={{ display:'none' }} />}
 
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', padding: 'var(--pad-m)', background: 'var(--white)', borderRadius:'var(--r-m)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', padding: 'var(--pad-m)', background: 'var(--white)', borderRadius:'var(--r-m)' }}>
 
         {/* Main action button */}
         {state === 'recording' ? (
@@ -485,7 +483,6 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           {[['pass','Pass','var(--success)'],['fail','Fail','var(--red)']].map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
               style={{ padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-                border:'none',
                 background: pf.result===k?col:'var(--white)',
                 color: pf.result===k?'#fff':'var(--black)', transition:'all var(--ease-fast)' }}>
               {lbl}
@@ -508,7 +505,6 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           {cfg.map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
               style={{ padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-                border:'none',
                 background: okv.result===k?col:'var(--white)',
                 color: okv.result===k?(k==='na'?'var(--black)':'#fff'):'var(--black)',
                 transition:'all var(--ease-fast)' }}>
@@ -535,7 +531,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
               style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)',
-                borderRadius:'var(--r-s)', border:'none',
+                borderRadius:'var(--r-s)',
                 background: checked?'rgba(4,36,92,0.07)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
@@ -572,7 +568,6 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
         <button type="button" onClick={()=>setP('signed',!p.signed)}
           style={{ flexShrink:0, padding:'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', fontWeight:600,
-            border:'none',
             background: p.signed?'var(--success)':'var(--white)',
             color: p.signed?'#fff':'var(--black)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
           {p.signed ? '✓ Signed' : 'Sign'}
@@ -588,7 +583,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = opt==='Yes'?value===true:value===false
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt==='Yes')}
-              style={{ flex:1, padding:'var(--pad-s)', borderRadius:'var(--r-s)', border:'none', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--text-md)' }}>
+              style={{ flex:1, padding:'var(--pad-s)', borderRadius:'var(--r-s)', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, transition:'all var(--ease-fast)', fontSize:'var(--text-md)' }}>
               {opt}
             </button>
           )
@@ -603,7 +598,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const active = value===opt
           return (
             <button key={opt} type="button" onClick={()=>onChange(opt)}
-              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-xxl)', border:'none', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
+              style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-xxl)', background:active?'var(--navy)':'var(--white)', color:active?'#fff':'var(--black)', fontWeight:active?600:400, fontSize:'var(--text-md)', transition:'all var(--ease-fast)' }}>
               {opt}
             </button>
           )
@@ -623,7 +618,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           const checked = selected.includes(opt)
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
-              style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', border:'none', background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
+              style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
               {checked ? <CheckSquare size={16} style={{ color:'var(--navy)', flexShrink:0 }} /> : <Square size={16} style={{ color:'var(--text-3)', flexShrink:0 }} />}
               <span style={{ fontSize:'var(--text-md)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>
@@ -662,7 +657,7 @@ function Section({ section, values, onChange, errors, readOnly, defaultOpen=true
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--mar-m)', overflow:'hidden' }}>
+    <div style={{ background:'var(--white)', borderRadius:'var(--r-xl)', marginBottom:'var(--mar-m)', overflow:'hidden' }}>
       <button type="button" onClick={()=>setOpen(o=>!o)}
         style={{ width:'100%', padding:'var(--pad-m) var(--pad-l)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
         <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>

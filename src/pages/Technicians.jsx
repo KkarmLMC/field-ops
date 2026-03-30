@@ -51,8 +51,7 @@ export default function Technicians() {
                     background: tech.status === 'field' ? 'var(--orange-soft)' : 'var(--blue-soft)',
                     color: tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 600,
-                  }}>
+                    fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
                     {tech.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div style={{ flex: 1 }}>

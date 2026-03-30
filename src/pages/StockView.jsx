@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   MagnifyingGlass, X, ArrowsLeftRight, Package,
-  Buildings, WarningCircle, ArrowRight, Clock,
-} from '@phosphor-icons/react'
+  Buildings, WarningCircle, ArrowRight, Clock } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 // ─── Stock chip ───────────────────────────────────────────────────────────────
@@ -28,10 +27,9 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       padding: 'var(--pad-m) var(--pad-l)',
       borderRadius: 'var(--r-m)',
       border: `1px solid ${active ? 'var(--navy)' : 'var(--border-l)'}`,
-      background: active ? 'var(--navy)' : 'var(--surface-raised)',
+      background: active ? 'var(--navy)' : 'var(--white)',
       cursor: 'pointer', textAlign: 'left',
-      minWidth: 140,
-    }}>
+      minWidth: 140 }}>
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: active ? '#fff' : 'var(--black)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {warehouse.name.replace(' Warehouse', '')}
       </div>
@@ -119,7 +117,7 @@ export default function StockView() {
       {/* Quick actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <ArrowsLeftRight size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
@@ -128,7 +126,7 @@ export default function StockView() {
         </button>
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
@@ -148,7 +146,7 @@ export default function StockView() {
         />
         {search && (
           <button onClick={() => setSearch('')}
-            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}>
+            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}>
             <X size={14} />
           </button>
         )}
@@ -193,8 +191,7 @@ export default function StockView() {
                 padding: 'var(--pad-m) var(--pad-l)',
                 borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-l)' : 'none',
                 alignItems: 'center',
-                background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent',
-              }}>
+                background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent' }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {l.parts?.name}
@@ -223,7 +220,7 @@ export default function StockView() {
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>Submit a transfer request to move stock from another warehouse.</div>
           </div>
           <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
             Request <ArrowRight size={13} />
           </button>
         </div>

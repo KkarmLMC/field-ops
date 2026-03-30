@@ -22,8 +22,7 @@ export default function PartRequest() {
   const [form, setForm] = useState({
     justification: '',
     warehouse_id: params.get('warehouse') || '',
-    division: profile?.division || 'LM',
-  })
+    division: profile?.division || 'LM' })
   const [items, setItems] = useState([{ part_id: '', quantity: 1, notes: '' }])
 
   useEffect(() => {
@@ -61,8 +60,7 @@ export default function PartRequest() {
           division:      form.division,
           submitted_by:  profile?.full_name || profile?.email || 'Field Tech',
           submitted_by_id: profile?.id || null,
-          status:        'pending',
-        })
+          status:        'pending' })
         .select('id')
         .single()
 
@@ -80,8 +78,7 @@ export default function PartRequest() {
         label:       `Submitted part request (${items.length} item${items.length !== 1 ? 's' : ''})`,
         entity_type: 'change_order',
         entity_id:   co?.id,
-        meta:        { item_count: items.length },
-      })
+        meta:        { item_count: items.length } })
       setSaved(true)
     } catch (e) {
       setError(e.message || 'Something went wrong. Please try again.')
@@ -110,7 +107,7 @@ export default function PartRequest() {
   return (
     <div className="page-content fade-in">
       <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
           <ArrowLeft size={14} /> Back to Stock
         </button>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
@@ -157,7 +154,7 @@ export default function PartRequest() {
         </div>
         <div style={{ padding: 'var(--pad-m)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {items.map((item, idx) => (
-            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', border: '1px solid var(--border-l)' }}>
+            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
               <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
                 <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} style={{ flex: 1 }}>
                   <option value="">— Select part —</option>
@@ -166,7 +163,7 @@ export default function PartRequest() {
                 <input type="number" min={1} value={item.quantity} onChange={e => updateItem(idx, 'quantity', e.target.value)}
                   style={{ width: 64, textAlign: 'center' }} />
                 {items.length > 1 && (
-                  <button onClick={() => removeItem(idx)} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--error)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
+                  <button onClick={() => removeItem(idx)} style={{ background: 'none', cursor: 'pointer', color: 'var(--error)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
                     <Trash size={15} />
                   </button>
                 )}
@@ -190,7 +187,7 @@ export default function PartRequest() {
 
       {/* Submit */}
       <button onClick={handleSubmit} disabled={saving}
-        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
         {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
       </button>
       <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>

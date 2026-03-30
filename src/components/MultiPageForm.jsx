@@ -14,8 +14,7 @@
 import { useState } from 'react'
 import {
   ArrowLeft, CheckCircle, Circle, SpinnerGap,
-  CaretRight, Warning,
-} from '@phosphor-icons/react'
+  CaretRight, Warning } from '@phosphor-icons/react'
 import { FormField } from './FormEngine.jsx'
 
 // ─── Per-field label (mirrors FormEngine FieldLabel) ─────────────────────────
@@ -26,8 +25,7 @@ function FieldLabel({ field, error }) {
         fontSize: 'var(--text-sm)',
         fontWeight: 600,
         color: error ? 'var(--red)' : 'var(--black)',
-        lineHeight: 1.4,
-      }}>
+        lineHeight: 1.4 }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)' }}>*</span>}
       </div>
@@ -86,8 +84,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         display: 'flex',
         alignItems: 'center',
         gap: 'var(--gap-m)',
-        marginBottom: 'var(--mar-l)',
-      }}>
+        marginBottom: 'var(--mar-l)' }}>
         <button
           type="button"
           onClick={onBack}
@@ -95,15 +92,13 @@ function SectionView({ section, values, onChange, errors, onBack }) {
             width: '2.25rem',
             height: '2.25rem',
             borderRadius: 'var(--r-l)',
-            border: '1px solid var(--border-l)',
             background: 'var(--white)',
             color: 'var(--black)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            flexShrink: 0,
-          }}
+            flexShrink: 0 }}
         >
           <ArrowLeft size={16} />
         </button>
@@ -117,13 +112,11 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         background: 'var(--white)',
         borderRadius: 'var(--r-m)',
         overflow: 'hidden',
-        marginBottom: 'var(--mar-l)',
-      }}>
+        marginBottom: 'var(--mar-l)' }}>
         {/* Navy section header */}
         <div style={{
           background: 'var(--navy)',
-          padding: 'var(--pad-l)',
-        }}>
+          padding: 'var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>
             {section.title}
           </div>
@@ -139,8 +132,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           padding: 'var(--pad-l)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--gap-xl)',
-        }}>
+          gap: 'var(--gap-xl)' }}>
           {section.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
               <FieldLabel field={field} error={allErrors[field.id]} />
@@ -163,7 +155,6 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           width: '100%',
           padding: 'var(--pad-m)',
           borderRadius: 'var(--r-m)',
-          border: '1px solid var(--navy)',
           background: 'var(--navy)',
           color: '#fff',
           fontFamily: 'var(--font)',
@@ -174,8 +165,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           justifyContent: 'center',
           gap: 'var(--gap-s)',
           cursor: 'pointer',
-          marginBottom: 'var(--mar-xxl)',
-        }}
+          marginBottom: 'var(--mar-xxl)' }}
       >
         <CheckCircle size={16} />
         Done — Back to Sections
@@ -192,8 +182,7 @@ export default function MultiPageForm({
   errors = {},
   onSubmit,
   submitting = false,
-  submitErr = null,
-}) {
+  submitErr = null }) {
   const sections = schema.sections || []
   const [activeSection, setActiveSection] = useState(null) // null = index view
   const [sectionErrors, setSectionErrors] = useState({})
@@ -268,8 +257,7 @@ export default function MultiPageForm({
             width: `${(sections.filter(s => isSectionComplete(s, values)).length / sections.length) * 100}%`,
             background: allComplete ? 'var(--success)' : 'var(--navy)',
             borderRadius: 'var(--r-xxl)',
-            transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          }} />
+            transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} />
         </div>
       </div>
 
@@ -278,8 +266,7 @@ export default function MultiPageForm({
         background: 'var(--white)',
         borderRadius: 'var(--r-m)',
         overflow: 'hidden',
-        marginBottom: 'var(--mar-l)',
-      }}>
+        marginBottom: 'var(--mar-l)' }}>
         {sections.map((section, idx) => {
           const complete  = isSectionComplete(section, values)
           const started   = isSectionStarted(section, values)
@@ -298,13 +285,11 @@ export default function MultiPageForm({
                 gap: 'var(--gap-m)',
                 padding: 'var(--pad-l)',
                 background: complete ? 'rgba(22,163,74,0.04)' : 'transparent',
-                border: 'none',
                 borderBottom: isLast ? 'none' : '1px solid var(--border-l)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'background var(--ease-fast)',
-                WebkitTapHighlightColor: 'transparent',
-              }}
+                WebkitTapHighlightColor: 'transparent' }}
               onTouchStart={e => e.currentTarget.style.background = 'var(--hover)'}
               onTouchEnd={e => e.currentTarget.style.background = complete ? 'rgba(22,163,74,0.04)' : 'transparent'}
             >
@@ -325,8 +310,7 @@ export default function MultiPageForm({
                   fontSize: 'var(--text-md)',
                   fontWeight: complete ? 600 : 500,
                   color: complete ? 'var(--black)' : 'var(--black)',
-                  marginBottom: 2,
-                }}>
+                  marginBottom: 2 }}>
                   {section.title}
                   {hasRequired && !complete && (
                     <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)', fontSize: 'var(--text-xs)' }}>*</span>
@@ -349,11 +333,9 @@ export default function MultiPageForm({
           padding: 'var(--pad-m) var(--pad-l)',
           marginBottom: 'var(--mar-m)',
           background: 'var(--red-soft)',
-          border: '1px solid var(--red)',
           borderRadius: 'var(--r-m)',
           fontSize: 'var(--text-sm)',
-          color: 'var(--red)',
-        }}>
+          color: 'var(--red)' }}>
           {submitErr}
         </div>
       )}
@@ -362,12 +344,10 @@ export default function MultiPageForm({
           padding: 'var(--pad-m) var(--pad-l)',
           marginBottom: 'var(--mar-m)',
           background: 'var(--white)',
-          border: 'none', boxShadow: 'var(--shadow-xs)',
           borderRadius: 'var(--r-m)',
           fontSize: 'var(--text-xs)',
           color: 'var(--text-3)',
-          textAlign: 'center',
-        }}>
+          textAlign: 'center' }}>
           Complete all required sections to submit
         </div>
       )}
@@ -381,7 +361,7 @@ export default function MultiPageForm({
           width: '100%',
           padding: 'var(--pad-m)',
           borderRadius: 'var(--r-m)',
-          border: `1px solid ${!allComplete || submitting ? 'var(--border-l)' : 'var(--red)'}`,
+          
           background: !allComplete || submitting ? 'var(--hover)' : 'var(--red)',
           color: !allComplete || submitting ? 'var(--text-3)' : '#fff',
           fontFamily: 'var(--font)',
@@ -393,8 +373,7 @@ export default function MultiPageForm({
           gap: 'var(--gap-s)',
           cursor: !allComplete || submitting ? 'default' : 'pointer',
           marginBottom: 'var(--mar-xxl)',
-          transition: 'all var(--ease-fast)',
-        }}
+          transition: 'all var(--ease-fast)' }}
       >
         {submitting
           ? <><SpinnerGap size={14} style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</>

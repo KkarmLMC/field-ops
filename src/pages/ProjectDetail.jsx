@@ -4,8 +4,7 @@ import {
   MapPin, Buildings, CalendarBlank, Shield, FileText, User,
   Phone, Briefcase, Lightning, MagnifyingGlass, Wrench, ClipboardText,
   CheckCircle, Warning, Clock, CaretRight, Plus, CurrencyDollar,
-  TrendUp, Receipt, ArrowRight,
-} from '@phosphor-icons/react'
+  TrendUp, Receipt, ArrowRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase'
 import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/mockData.js'
 
@@ -17,26 +16,23 @@ const STAGE_CFG = {
   'pending-review': { label: 'Pending Review', color: 'var(--blue)', bg: 'var(--blue-soft)', order: 3 },
   'complete':       { label: 'Complete',       color: 'var(--success-text)', bg: 'var(--success-soft)', order: 4 },
   'postponed':      { label: 'Postponed',      color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)', order: 5 },
-  'failed':         { label: 'Failed',         color: 'var(--error-alt)', bg: 'var(--error-soft)', order: 6 },
-}
+  'failed':         { label: 'Failed',         color: 'var(--error-alt)', bg: 'var(--error-soft)', order: 6 } }
 
 const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
-  'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: 'var(--surface-raised)' },
+  'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: 'var(--white)' },
   'submitted':       { label: 'Needs Review',     color: 'var(--blue)', bg: 'var(--blue-soft)' },
   'under-review':    { label: 'Under Review',     color: 'var(--warning)', bg: 'var(--warning-soft)' },
   'customer-signoff':{ label: 'Customer Sign-off',color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  'complete':        { label: 'Approved',         color: 'var(--success-text)', bg: 'var(--success-soft)' },
-}
+  'complete':        { label: 'Approved',         color: 'var(--success-text)', bg: 'var(--success-soft)' } }
 
 const TYPE_ICON = {
   installation:  Lightning,
   inspection:    MagnifyingGlass,
   'site-survey': Wrench,
   certification: ClipboardText,
-  remediation:   Wrench,
-}
+  remediation:   Wrench }
 
 function getTech(id) {
   return TECHNICIANS.find(t => t.id === id) || null
@@ -83,15 +79,12 @@ function StagePipeline({ stage }) {
                   borderRadius: '50%',
                   background: isCurrent ? cfg.color : isDone ? 'var(--success)' : 'var(--border)',
                   border: isCurrent ? `3px solid ${cfg.bg}` : 'none',
-                  boxShadow: isCurrent ? `0 0 0 2px ${cfg.color}` : 'none',
                   transition: 'all 0.2s',
-                  flexShrink: 0,
-                }} />
+                  flexShrink: 0 }} />
                 <span style={{
                   fontSize: 'var(--text-2xs)', fontWeight: isCurrent ? 700 : 500,
                   color: isCurrent ? cfg.color : isDone ? 'var(--success-text)' : 'var(--text-3)',
-                  whiteSpace: 'nowrap',
-                }}>
+                  whiteSpace: 'nowrap' }}>
                   {cfg.label}
                 </span>
               </div>
@@ -99,8 +92,7 @@ function StagePipeline({ stage }) {
                 <div style={{
                   width: 24, height: 2, margin: '0 4px', marginBottom: 14,
                   background: isDone ? 'var(--success)' : 'var(--border)',
-                  borderRadius: 1, flexShrink: 0,
-                }} />
+                  borderRadius: 1, flexShrink: 0 }} />
               )}
             </div>
           )
@@ -111,8 +103,7 @@ function StagePipeline({ stage }) {
           <span style={{
             fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
             background: STAGE_CFG[stage]?.bg || 'var(--white)',
-            padding: '3px 10px', borderRadius: 20,
-          }}>
+            padding: '3px 10px', borderRadius: 20 }}>
             {STAGE_CFG[stage]?.label || stage}
           </span>
         </div>
@@ -160,8 +151,7 @@ export default function ProjectDetail() {
           expenseCount:  (expenses || []).length,
           soTotal:       (soData || []).reduce((s, so) => s + (parseFloat(so.grand_total) || 0), 0),
           materialsTotal:(soData || []).reduce((s, so) => s + (parseFloat(so.materials_total) || 0), 0),
-          installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0),
-        })
+          installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0) })
       } catch {
         setProject(PROJECTS.find(x => x.id === id) || null)
         setReports((MOCK_REPORTS || []).filter(x => x.project_id === id))
@@ -207,8 +197,7 @@ export default function ProjectDetail() {
             padding: '14px 14px 12px',
             background: stageCfg.bg || 'var(--white)',
             borderRadius: '0.5rem 0.5rem 0 0',
-            borderBottom: `2px solid ${stageCfg.color || 'var(--border)'}22`,
-          }}>
+            borderBottom: `2px solid ${stageCfg.color || 'var(--border)'}22` }}>
             {/* Type + stage */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -221,8 +210,7 @@ export default function ProjectDetail() {
                 fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                 color: stageCfg.color, background: stageCfg.bg,
                 border: `1px solid ${stageCfg.color}44`,
-                padding: '3px 10px', borderRadius: 20,
-              }}>
+                padding: '3px 10px', borderRadius: 20 }}>
                 {stageCfg.label || project.stage}
               </div>
             </div>
@@ -254,8 +242,7 @@ export default function ProjectDetail() {
                 <div style={{
                   height: '100%', width: `${project.progress}%`,
                   background: stageCfg.color || 'var(--orange)', borderRadius: 3,
-                  transition: 'width 0.4s ease',
-                }} />
+                  transition: 'width 0.4s ease' }} />
               </div>
             </div>
           )}
@@ -266,8 +253,7 @@ export default function ProjectDetail() {
               margin: '0 14px 14px',
               padding: '8px 12px', borderRadius: 8,
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            }}>
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: cfCfg.color }}>
                 Completion Form: {cfCfg.label}
               </span>
@@ -313,8 +299,7 @@ export default function ProjectDetail() {
                   background: tech.status === 'field' ? 'var(--orange-soft)' : 'var(--blue-soft)',
                   color:      tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 700,
-                }}>
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div style={{ flex: 1 }}>
@@ -399,7 +384,7 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
@@ -472,7 +457,7 @@ export default function ProjectDetail() {
 
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)' }}>
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer' }}>
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
@@ -508,8 +493,7 @@ export default function ProjectDetail() {
                     color: sCfg.color || 'var(--text-3)',
                     background: sCfg.bg || 'var(--white)',
                     padding: '3px 8px', borderRadius: 20,
-                    border: `1px solid ${sCfg.color || 'var(--border)'}33`,
-                  }}>
+                    border: `1px solid ${sCfg.color || 'var(--border)'}33` }}>
                     {s.status || 'Draft'}
                   </span>
                 </div>

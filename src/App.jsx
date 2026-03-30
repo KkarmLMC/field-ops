@@ -54,8 +54,7 @@ const PAGE_META = {
   '/warehouse-hq/iq':        { title: 'Warehouse IQ',      parent: '/warehouse-hq' },
   '/warehouse-hq/overview':  { title: 'Warehouse Overview', parent: '/warehouse-hq' },
   '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
-  '/sales-orders': { title: 'Sales Orders', parent: null },
-}
+  '/sales-orders': { title: 'Sales Orders', parent: null } }
 
 function getPageMeta(pathname) {
   if (pathname === '/installations/pipeline')
@@ -134,10 +133,9 @@ function DesktopTopBar() {
             onClick={() => navigate(meta.parent)}
             style={{
               display: 'flex', alignItems: 'center', gap: '0.3125rem',
-              fontSize: '0.75rem', color: 'var(--text-3)', background: 'none', border: 'none',
+              fontSize: '0.75rem', color: 'var(--text-3)', background: 'none',
               cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
-              transition: 'color 0.12s',
-            }}
+              transition: 'color 0.12s' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--black)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-3)'}
           >

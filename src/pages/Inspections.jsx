@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   MagnifyingGlass, ClipboardText, Plus, CheckCircle,
-  Clock, Warning, CalendarBlank,
-} from '@phosphor-icons/react'
+  Clock, Warning, CalendarBlank } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
@@ -16,13 +15,11 @@ const STAGE_CFG = {
   'in-progress': { label: 'Active',     color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
   scheduled:     { label: 'Scheduled',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
   complete:      { label: 'Complete',   color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  failed:        { label: 'Failed',     color: 'var(--error-dark)', bg: 'var(--error-soft)' },
-}
+  failed:        { label: 'Failed',     color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
 
 const TYPE_ICON = {
   inspection:    MagnifyingGlass,
-  'annual-test': ClipboardText,
-}
+  'annual-test': ClipboardText }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function getTech(id) {
@@ -81,8 +78,7 @@ export default function Inspections() {
     'in-progress': branchJobs.filter(p => p.stage === 'in-progress').length,
     scheduled:     branchJobs.filter(p => p.stage === 'scheduled').length,
     complete:      branchJobs.filter(p => p.stage === 'complete').length,
-    failed:        branchJobs.filter(p => p.stage === 'failed').length,
-  }
+    failed:        branchJobs.filter(p => p.stage === 'failed').length }
 
   const filtered = branchJobs.filter(p =>
     (stageFilter === 'all' || p.stage === stageFilter) &&
@@ -146,16 +142,14 @@ export default function Inspections() {
                   background: active ? cfg.bg : 'var(--white)',
                   color: active ? cfg.color : 'var(--black)',
                   fontSize: 'var(--text-xs)', fontWeight: active ? 600 : 500,
-                  transition: 'all 0.15s',
-                }}
+                  transition: 'all 0.15s' }}
               >
                 {cfg.label}
                 <span style={{
                   background: active ? cfg.color : 'var(--border)',
                   color: active ? '#fff' : 'var(--black)',
                   borderRadius: 10, padding: '0 5px',
-                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px',
-                }}>{count}</span>
+                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
               </button>
             )
           })}

@@ -16,13 +16,11 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
   const lmStats = {
     active:    PROJECTS.filter(p => p.branch === 'lm'   && p.stage === 'in-progress').length,
     scheduled: PROJECTS.filter(p => p.branch === 'lm'   && p.stage === 'scheduled').length,
-    completed: PROJECTS.filter(p => p.branch === 'lm'   && p.stage === 'complete').length,
-  }
+    completed: PROJECTS.filter(p => p.branch === 'lm'   && p.stage === 'complete').length }
   const boltStats = {
     active:    PROJECTS.filter(p => p.branch === 'bolt' && p.stage === 'in-progress').length,
     scheduled: PROJECTS.filter(p => p.branch === 'bolt' && p.stage === 'scheduled').length,
-    completed: PROJECTS.filter(p => p.branch === 'bolt' && p.stage === 'complete').length,
-  }
+    completed: PROJECTS.filter(p => p.branch === 'bolt' && p.stage === 'complete').length }
 
   const tabs = [
     { id: 'lm',   label: STATS.lm.label,   sectors: STATS.lm.sectors,   stats: lmStats,   total: lmCount   ?? (lmStats.active   + lmStats.scheduled   + lmStats.completed),   ...BRANCH_COLORS['lm']   },
@@ -103,8 +101,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
   const trackStyle = isMobile ? {
     width:      `${n * 100}%`,
     transform:  `translateX(calc(${-activeIdx * (100 / n)}% + ${dragOffset}px))`,
-    transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  } : {}
+    transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)' } : {}
 
   const slideStyle = isMobile ? { width: `${100 / n}%` } : {}
 
@@ -182,11 +179,9 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
                 height:       '0.4375rem',
                 borderRadius: '0.25rem',
                 background:   isActive ? BRANCH_COLORS[tab.id].bgActive : 'var(--grey-tint-40)',
-                border:       'none',
                 padding:      0,
                 cursor:       'pointer',
-                transition:   'width 0.25s ease, background 0.25s ease',
-              }}
+                transition:   'width 0.25s ease, background 0.25s ease' }}
             />
           )
         })}

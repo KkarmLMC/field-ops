@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   CaretRight, CaretDown,
-  Ruler, ClipboardText, Buildings, Factory, Drop, Camera, MapPin,
-} from '@phosphor-icons/react'
+  Ruler, ClipboardText, Buildings, Factory, Drop, Camera, MapPin } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
@@ -29,11 +28,10 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
             <div key={form.slug}>
               <button
                 onClick={() => hasChildren ? onToggle(isExpanded ? null : form.slug) : onStart(form.slug)}
-                style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
+                style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
                   display:'flex', alignItems:'center', gap:'0.75rem',
                   padding: '0.75rem var(--pad-l)', borderBottom:'1px solid var(--border-l)',
-                  transition:'background var(--ease-fast)',
-                }}
+                  transition:'background var(--ease-fast)' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
@@ -48,17 +46,16 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 }
               </button>
               {hasChildren && isExpanded && (
-                <div style={{ background:'var(--surface-raised)' }}>
+                <div style={{ background:'var(--white)' }}>
                   {(children[form.slug] || []).map(sub => (
                     <button
                       key={sub.slug}
                       onClick={() => onStart(sub.slug)}
-                      style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
+                      style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
                         display:'flex', alignItems:'center', gap:'0.5rem',
                         padding: '0.625rem var(--pad-l) 0.625rem 2.75rem',
                         borderBottom:'1px solid var(--border-l)',
-                        transition:'background var(--ease-fast)',
-                      }}
+                        transition:'background var(--ease-fast)' }}
                       onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >

@@ -2,23 +2,20 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   CheckCircle, Clock, PaperPlaneTilt, Warning,
-  ArrowRight, Buildings, CurrencyDollar,
-} from '@phosphor-icons/react'
+  ArrowRight, Buildings, CurrencyDollar } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 const STATUS_FLOW = {
   draft:     { next: 'submitted', label: 'Submit',  bg: 'var(--warning)', color: '#fff' },
   submitted: { next: 'approved',  label: 'Approve', bg: 'var(--success-text)', color: '#fff' },
   approved:  { next: null },
-  rejected:  { next: null },
-}
+  rejected:  { next: null } }
 
 const STATUS_COLORS = {
   draft:     { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
   submitted: { color: 'var(--warning)', bg: 'var(--warning-soft)' },
   approved:  { color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { color: 'var(--error-dark)', bg: 'var(--error-soft)' },
-}
+  rejected:  { color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
 
 export default function ExpenseDetail() {
   const { id } = useParams()
@@ -92,7 +89,7 @@ export default function ExpenseDetail() {
             {report.status}
           </span>
         </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 'var(--pad-m)', display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap' }}>
+        <div style={{  paddingTop: 'var(--pad-m)', display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap' }}>
           <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
             {report.report_date ? new Date(report.report_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—'}
           </div>
@@ -104,7 +101,7 @@ export default function ExpenseDetail() {
 
       {/* Advance lines */}
       {isAdvance && advanceLines.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Description</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Total</span>
@@ -126,7 +123,7 @@ export default function ExpenseDetail() {
 
       {/* Expense line items */}
       {!isAdvance && lines.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
@@ -152,7 +149,7 @@ export default function ExpenseDetail() {
 
       {/* Mileage log */}
       {!isAdvance && mileage.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Mileage Log</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Miles</span>
@@ -167,7 +164,7 @@ export default function ExpenseDetail() {
       )}
 
       {/* Totals */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         {!isAdvance && (
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
@@ -191,7 +188,7 @@ export default function ExpenseDetail() {
       </div>
 
       {report.notes && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>
@@ -199,7 +196,7 @@ export default function ExpenseDetail() {
 
       {flow?.next && (
         <button onClick={advance} disabled={advancing}
-          style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
+          style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
           {advancing ? 'Processing…' : <><ArrowRight size={18} /> {flow.label}</>}
         </button>
       )}

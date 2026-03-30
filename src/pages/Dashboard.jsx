@@ -14,8 +14,7 @@ const TYPE_ICON = {
   inspection:    MagnifyingGlass,
   'site-survey': Ruler,
   certification: Seal,
-  'annual-test': ClipboardText,
-}
+  'annual-test': ClipboardText }
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -151,8 +150,7 @@ function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-3)', fontSize: 'var(--text-md)',
-    }}>
+      color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>
       {message}
     </div>
   )

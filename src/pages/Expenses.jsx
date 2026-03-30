@@ -3,16 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import {
   Plus, Receipt, ArrowsClockwise, CurrencyDollar,
   CaretRight, CheckCircle, Clock, PaperPlaneTilt, X,
-  MagnifyingGlass, Buildings,
-} from '@phosphor-icons/react'
+  MagnifyingGlass, Buildings } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 const STATUS = {
   draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
   submitted: { label: 'Submitted', color: 'var(--warning)', bg: 'var(--warning-soft)' },
   approved:  { label: 'Approved',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { label: 'Rejected',  color: 'var(--error-dark)', bg: 'var(--error-soft)' },
-}
+  rejected:  { label: 'Rejected',  color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
@@ -32,16 +30,14 @@ function ReportCard({ report, project, onClick }) {
   return (
     <button onClick={onClick} style={{
       width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem',
-      padding: 'var(--pad-m) var(--pad-l)', border: 'none', background: 'none',
-      borderBottom: '1px solid var(--border-l)', cursor: 'pointer', textAlign: 'left',
-    }}>
+      padding: 'var(--pad-m) var(--pad-l)', background: 'none',
+      borderBottom: '1px solid var(--border-l)', cursor: 'pointer', textAlign: 'left' }}>
       <div style={{
         width: 40, height: 40, borderRadius: 'var(--r-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: report.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)',
         fontSize: 'var(--text-2xs)', fontWeight: 800,
-        color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)',
-      }}>
+        color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -122,15 +118,15 @@ export default function Expenses() {
         </div>
         <div style={{ position: 'relative' }}>
           <button onClick={() => setShowNewMenu(m => !m)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             <Plus size={15} /> New
           </button>
           {showNewMenu && (
-            <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)', borderRadius: 'var(--r-l)', boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', borderRadius: 'var(--r-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
               {[['LM','advance'], ['LM','expense'], ['Bolt','advance'], ['Bolt','expense']].map(([div, type]) => (
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
                   <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
                 </button>
@@ -142,7 +138,7 @@ export default function Expenses() {
 
       {/* Pending alert */}
       {submitted > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', border: '1px solid #FDE68A', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
           <Clock size={18} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
@@ -155,7 +151,7 @@ export default function Expenses() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         {Object.entries(STATUS).map(([key, s]) => (
           <button key={key} onClick={() => setStatusFilter(statusFilter === key ? 'all' : key)}
-            style={{ background: statusFilter === key ? s.bg : 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', border: `1px solid ${statusFilter === key ? s.color + '40' : 'var(--border-l)'}`, cursor: 'pointer', textAlign: 'left' }}>
+            style={{ background: statusFilter === key ? s.bg : 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', border: `1px solid ${statusFilter === key ? s.color + '40' : 'var(--border-l)'}`, cursor: 'pointer', textAlign: 'left' }}>
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: statusFilter === key ? s.color : 'var(--black)' }}>
               {reports.filter(r => r.status === key).length}
             </div>
@@ -169,7 +165,7 @@ export default function Expenses() {
         <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search employee or project…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size={13} /></button>}
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size={13} /></button>}
       </div>
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
@@ -190,7 +186,7 @@ export default function Expenses() {
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

@@ -32,20 +32,17 @@ export default function TabBar() {
               background: 'var(--red)',
               borderRadius: '0 0 2px 2px',
               transform: 'translateX(-50%)',
-              transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-            }} />
+              transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }} />
             <span className="tab-btn-icon" style={{
               transform: active ? 'scale(1.15) translateY(-1px)' : 'scale(1)',
               transition: 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-            }}><tab.Icon size={18} weight={active ? 'fill' : 'regular'} /></span>
+              justifyContent: 'center' }}><tab.Icon size={18} weight={active ? 'fill' : 'regular'} /></span>
             <span className="tab-btn-label" style={{
               color: active ? 'var(--red)' : 'var(--text-3)',
               fontWeight: active ? 700 : 500,
-              transition: 'color 0.15s, font-weight 0.15s',
-            }}>{tab.label}</span>
+              transition: 'color 0.15s, font-weight 0.15s' }}>{tab.label}</span>
           </button>
         )
       })}

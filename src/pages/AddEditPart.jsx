@@ -23,8 +23,7 @@ export default function AddEditPart() {
     unit_of_measure: 'each',
     unit_cost: '',
     barcode: '',
-    notes: '',
-  })
+    notes: '' })
 
   useEffect(() => {
     db.from('part_categories').select('*').order('name').then(({ data }) => setCategories(data || []))
@@ -41,8 +40,7 @@ export default function AddEditPart() {
             unit_of_measure: data.unit_of_measure || 'each',
             unit_cost: data.unit_cost || '',
             barcode: data.barcode || '',
-            notes: data.notes || '',
-          })
+            notes: data.notes || '' })
         }
         setLoading(false)
       })
@@ -76,8 +74,7 @@ export default function AddEditPart() {
       unit_cost: form.unit_cost ? parseFloat(form.unit_cost) : null,
       barcode: form.barcode.trim() || null,
       notes: form.notes.trim() || null,
-      updated_at: new Date().toISOString(),
-    }
+      updated_at: new Date().toISOString() }
 
     if (isEdit) {
       await db.from('parts').update(payload).eq('id', id)
@@ -159,10 +156,10 @@ export default function AddEditPart() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-        <button onClick={() => navigate(-1)} style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        <button onClick={() => navigate(-1)} style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           Cancel
         </button>
-        <button onClick={handleSubmit} disabled={saving} style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: saving ? 'var(--hover)' : 'var(--navy)', color: saving ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        <button onClick={handleSubmit} disabled={saving} style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: saving ? 'var(--hover)' : 'var(--navy)', color: saving ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
           {saving ? <><SpinnerGap size={14} style={{ animation: 'spin 1s linear infinite' }} /> Saving…</> : <><CheckCircle size={14} /> {isEdit ? 'Save Changes' : 'Add Part'}</>}
         </button>
       </div>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   Plus, MapPin, X, CheckCircle,
-  Warning, ArrowLeft, Crosshair, SpinnerGap, ChartBar,
-} from '@phosphor-icons/react'
+  Warning, ArrowLeft, Crosshair, SpinnerGap, ChartBar } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
@@ -11,24 +10,19 @@ import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
   card: {
-    background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)',
-    borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden',
-  },
+    background: 'var(--white)',
+    borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden' },
   cardHead: {
     padding: '0.625rem 0.875rem', background: 'var(--navy)',
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
-    color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '0.08em',
-  },
+    color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '0.08em' },
   cardBody: { padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' },
   label: {
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
-    color: 'var(--black)', textTransform: 'uppercase', letterSpacing: '0.1em',
-  },
+    color: 'var(--black)', textTransform: 'uppercase', letterSpacing: '0.1em' },
   row: {
     display: 'flex', alignItems: 'center', gap: '0.75rem',
-    padding: '0.75rem 0.875rem', borderBottom: '1px solid var(--border)',
-  },
-}
+    padding: '0.75rem 0.875rem', borderBottom: '1px solid var(--border)' } }
 
 // ─── NFPA 780 Annex L factor tables ───────────────────────────────────────────
 const C1_OPTIONS = [
@@ -101,8 +95,7 @@ function ResultBadge({ result, ratio }) {
       fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
       letterSpacing:'0.05em', textTransform:'uppercase',
       background: req ? 'var(--red-soft)' : 'var(--success-soft)',
-      color:       req ? 'var(--red)'     : 'var(--success)',
-    }}>
+      color:       req ? 'var(--red)'     : 'var(--success)' }}>
       {req ? <Warning size={11} /> : <CheckCircle size={11} />}
       {req ? 'LPS Required' : 'LPS Optional'}
       {ratio != null && ` · ${ratio.toFixed(2)}`}
@@ -114,8 +107,7 @@ function ResultBadge({ result, ratio }) {
 const EMPTY = {
   siteName:'', address:'', techName:'', branch:'bolt',
   lengthFt:'', widthFt:'', heightFt:'', flashDensity:'',
-  c1:'', c2:'', c3:'', c4:'', c5:'', c6:'',
-}
+  c1:'', c2:'', c3:'', c4:'', c5:'', c6:'' }
 
 function NewAssessmentForm({ onSave, onCancel }) {
   const [form,     setForm]     = useState(EMPTY)
@@ -167,8 +159,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
       nc:            result.Nc,
       ratio:         result.ratio,
       result:        result.required ? 'required' : 'not-required',
-      form_data:     form,
-    }
+      form_data:     form }
     const { data, error } = await db.from('risk_assessments').insert(row).select().single()
     setSaving(false)
     onSave({
@@ -181,8 +172,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
       nd:       result.Nd,
       nc:       result.Nc,
       ratio:    result.ratio,
-      result:   row.result,
-    })
+      result:   row.result })
   }
 
   return (
@@ -244,8 +234,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             display:'flex', alignItems:'center', gap:'0.5rem',
             padding:'0.5rem 0.75rem', borderRadius:'var(--r-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--blue)', whiteSpace:'nowrap',
-            flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)',
-          }}>
+            flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
             {locating ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size={13} />}
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
@@ -286,8 +275,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           letterSpacing:'0.06em', textTransform:'uppercase',
           border:`1px solid ${allFilled ? 'var(--red)' : 'var(--border)'}`,
           transition:'all var(--ease-fast)',
-          display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
-        }}>
+          display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
           <ChartBar size={14} /> Calculate Risk Score
         </button>
       )}
@@ -297,8 +285,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
         <div style={{
           background: result.required ? 'var(--red-soft)'  : 'var(--success-soft)',
           border:`1px solid ${result.required ? 'var(--red)' : 'var(--success)'}`,
-          borderRadius:'var(--r-l)', padding:'1rem', marginBottom: 'var(--mar-m)',
-        }}>
+          borderRadius:'var(--r-l)', padding:'1rem', marginBottom: 'var(--mar-m)' }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-m)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
               {result.required
@@ -338,15 +325,13 @@ function NewAssessmentForm({ onSave, onCancel }) {
               background:'var(--red)', color:'#fff',
               fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
               letterSpacing:'0.06em', textTransform:'uppercase',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
-            }}>
+              display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
               {saving ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
             <button onClick={()=>setResult(null)} style={{
               padding:'0.625rem 0.875rem', borderRadius:'var(--r-s)',
-              background:'var(--white)', fontFamily:'var(--mono)', fontSize:'var(--text-xs)', color:'var(--text-3)',
-            }}>
+              background:'var(--white)', fontFamily:'var(--mono)', fontSize:'var(--text-xs)', color:'var(--text-3)' }}>
               Recalculate
             </button>
           </div>
@@ -364,8 +349,7 @@ function AssessmentRow({ a }) {
       <div style={{
         width:'2.25rem', height:'2.25rem', borderRadius:'var(--r-m)', flexShrink:0,
         background: req ? 'var(--red-soft)' : 'var(--success-soft)',
-        display:'flex', alignItems:'center', justifyContent:'center',
-      }}>
+        display:'flex', alignItems:'center', justifyContent:'center' }}>
         {req ? <Warning size={16} style={{ color:'var(--red)' }} /> : <CheckCircle size={16} style={{ color:'var(--success)' }} />}
       </div>
       <div style={{ flex:1, minWidth:0 }}>
@@ -409,8 +393,7 @@ export default function RiskAssessment() {
             nd:       r.nd,
             nc:       r.nc,
             ratio:    r.ratio,
-            result:   r.result,
-          })))
+            result:   r.result })))
         }
         setLoading(false)
       })

@@ -10,8 +10,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Plus, Trash, ArrowUp, ArrowDown, FloppyDisk,
   PencilSimple, Eye, CaretRight, CheckCircle, SpinnerGap, X,
-  DotsSixVertical,
-} from '@phosphor-icons/react'
+  DotsSixVertical } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 const FIELD_TYPES = [
   { value: 'text',          label: 'Text' },
@@ -120,8 +119,7 @@ function useDragReorder(items, onReorder) {
     dragIdx, overIdx, ghostPos, ghostLabel,
     rowRefs,
     handleTouchStart, handleTouchMove, handleTouchEnd,
-    handleMouseDown,
-  }
+    handleMouseDown }
 }
 
 // ─── Drag Ghost — floats under finger/cursor ──────────────────────────────────
@@ -141,15 +139,13 @@ function DragGhost({ label, pos, visible }) {
       borderRadius: 'var(--r-m)',
       fontSize: 'var(--text-sm)',
       fontWeight: 600,
-      boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
       display: 'flex',
       alignItems: 'center',
       gap: 'var(--gap-s)',
       maxWidth: '16rem',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    }}>
+      textOverflow: 'ellipsis' }}>
       <DotsSixVertical size={14} weight="bold" style={{ flexShrink: 0, opacity: 0.7 }} />
       {label}
     </div>
@@ -167,21 +163,16 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
       {isOver && (
         <div style={{
           position: 'absolute', top: -2, left: 0, right: 0, height: 3,
-          background: 'var(--navy)', borderRadius: 2, zIndex: 10,
-          boxShadow: '0 0 6px rgba(4,36,92,0.4)',
-        }} />
+          background: 'var(--navy)', borderRadius: 2, zIndex: 10 }} />
       )}
       <div
         style={{
           background: 'var(--white)',
-          border: 'none',
-          boxShadow: 'var(--shadow-s)',
           borderRadius: 'var(--r-m)',
           marginBottom: 'var(--mar-s)',
           overflow: 'hidden',
           opacity: isDragging ? 0.35 : 1,
-          transition: 'opacity 0.15s',
-        }}
+          transition: 'opacity 0.15s' }}
       >
         {/* Collapsed header */}
         <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)' }}>
@@ -210,7 +201,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
 
         {/* Expanded editor */}
         {expanded && (
-          <div style={{ padding: 'var(--pad-m)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--gap-m)' }}>
+          <div style={{ padding: 'var(--pad-m)', background:'var(--white)', display:'flex', flexDirection:'column', gap:'var(--gap-m)' }}>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--gap-m)' }}>
               <div style={{ gridColumn:'1 / -1' }}>
                 <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--mar-xs)' }}>Label *</label>
@@ -270,9 +261,7 @@ function TypePickerSheet({ onPick, onClose }) {
       <div style={{
         position:'fixed', left:0, right:0, bottom:0, zIndex:201,
         background:'var(--white)', borderRadius:'var(--r-xl) var(--r-xl) 0 0',
-        padding: 'var(--pad-l)', maxHeight:'75vh', overflowY:'auto',
-        boxShadow:'0 -4px 32px rgba(0,0,0,0.15)',
-      }}>
+        padding: 'var(--pad-l)', maxHeight:'75vh', overflowY:'auto' }}>
         {/* Handle */}
         <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius:99, margin:'0 auto var(--mar-l)' }} />
         <div style={{ fontSize:'var(--text-md)', fontWeight:700, marginBottom:'var(--mar-l)' }}>Choose Field Type</div>
@@ -284,9 +273,9 @@ function TypePickerSheet({ onPick, onClose }) {
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--gap-s)' }}>
               {group.types.map(type => (
                 <button key={type} type="button" onClick={() => onPick(type)}
-                  style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border: 'none', background: 'var(--white)', boxShadow: 'var(--shadow-xs)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
+                  style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', background: 'var(--white)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
                   onMouseEnter={e => { e.currentTarget.style.background='var(--navy)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.borderColor='var(--navy)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background='var(--surface-raised)'; e.currentTarget.style.color='var(--black)'; e.currentTarget.style.borderColor='var(--border-l)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background='var(--white)'; e.currentTarget.style.color='var(--black)'; e.currentTarget.style.borderColor='var(--border-l)' }}
                 >
                   {TYPE_MAP[type]}
                 </button>
@@ -320,7 +309,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
     useDragReorder(section.fields || [], (reordered) => onChange(sectionIdx, { ...section, fields: reordered }))
 
   return (
-    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--mar-l)', overflow:'hidden' }}>
+    <div style={{ background:'var(--white)', borderRadius:'var(--r-xl)', marginBottom:'var(--mar-l)', overflow:'hidden' }}>
       {/* Section header */}
       <div style={{ background:'var(--navy)', padding:'var(--pad-m) var(--pad-l)', display:'flex', alignItems:'center', gap:'var(--gap-m)' }}>
         <div style={{ flex:1 }}>
@@ -328,7 +317,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
             value={section.title||''}
             onChange={e=>onChange(sectionIdx,{...section,title:e.target.value})}
             placeholder="Section title"
-            style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'var(--r-s)', color:'#fff', fontWeight:700, fontSize:'var(--text-md)', padding:'var(--pad-xs) var(--pad-s)', width:'100%' }}
+            style={{ background:'rgba(255,255,255,0.15)', borderRadius:'var(--r-s)', color:'#fff', fontWeight:700, fontSize:'var(--text-md)', padding:'var(--pad-xs) var(--pad-s)', width:'100%' }}
           />
         </div>
         <div style={{ display:'flex', gap:'var(--gap-xs)' }}>
@@ -356,8 +345,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
               isOver={overIdx === fi && dragIdx !== null && dragIdx !== fi}
               dragHandleProps={{
                 onTouchStart: (e) => handleTouchStart(e, fi),
-                onMouseDown:  (e) => handleMouseDown(e, fi),
-              }}
+                onMouseDown:  (e) => handleMouseDown(e, fi) }}
             />
           </div>
         ))}
@@ -413,7 +401,7 @@ function FormEditor({ form, onSave, onCancel }) {
           <div style={{ fontSize:'var(--text-lg)', fontWeight:700 }}>{form.title}</div>
         </div>
         <div style={{ display:'flex', gap:'var(--gap-s)' }}>
-          <button type="button" onClick={onCancel} style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
+          <button type="button" onClick={onCancel} style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
             style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', background:saved?'var(--success)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
             {saving ? <><SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size={13}/> Saved!</> : <><FloppyDisk size={13}/> Save Changes</>}
@@ -421,10 +409,10 @@ function FormEditor({ form, onSave, onCancel }) {
         </div>
       </div>
 
-      {error && <div style={{ padding: 'var(--pad-m)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>{error}</div>}
+      {error && <div style={{ padding: 'var(--pad-m)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>{error}</div>}
 
       {/* Form mode selector */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--white)', borderRadius:'var(--r-l)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--white)', borderRadius:'var(--r-l)' }}>
         <span style={{ fontSize:'var(--text-xs)', fontWeight:700, color:'var(--black)', flexShrink:0 }}>Form Mode</span>
         <div style={{ display:'flex', gap:'var(--gap-s)', flex:1 }}>
           {[
@@ -435,11 +423,9 @@ function FormEditor({ form, onSave, onCancel }) {
             <button key={opt.value} type="button" onClick={() => setFormMode(opt.value)}
               style={{
                 flex:1, padding:'0.5rem', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', fontWeight:600,
-                border:'none',
                 background: formMode===opt.value?'var(--navy)':'transparent',
                 color: formMode===opt.value?'#fff':'var(--text-3)',
-                cursor:'pointer', transition:'all var(--ease-fast)',
-              }}>
+                cursor:'pointer', transition:'all var(--ease-fast)' }}>
               {opt.label}
             </button>
           ))}
@@ -522,7 +508,7 @@ export default function FormBuilder() {
             </div>
             <div style={{ display:'flex', gap:'var(--gap-s)', flexShrink:0 }}>
               <button onClick={()=>navigate(`/forms/${form.slug}`)}
-                style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-xs)', color:'var(--black)' }}>
+                style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', color:'var(--black)' }}>
                 <Eye size={12}/> Preview
               </button>
               <button onClick={()=>setEditing(form)}

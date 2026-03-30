@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
-  DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight,
-} from '@phosphor-icons/react'
+  DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 // ─── Shared label ─────────────────────────────────────────────────────────────
@@ -45,7 +44,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', margin: '0 auto var(--mar-m)' }} />
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-l)' }}>
             <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Add Warehouse</div>
-            <button onClick={onClose} style={{ border: 'none', background: 'var(--hover)', borderRadius: 'var(--r-xxl)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={onClose} style={{ background: 'var(--hover)', borderRadius: 'var(--r-xxl)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={14} style={{ color: 'var(--black)' }} />
             </button>
           </div>
@@ -58,7 +57,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
+          <div style={{ margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>Location</div>
           </div>
 
@@ -73,7 +72,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} /></div>
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-l)', margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
+          <div style={{ margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>Contact</div>
           </div>
 
@@ -96,9 +95,9 @@ function AddWarehouseSheet({ onClose, onSaved }) {
         </div>
 
         {/* Footer */}
-        <div style={{ padding: 'var(--pad-l) var(--pad-xl)', paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))', borderTop: '1px solid var(--border-l)', flexShrink: 0 }}>
+        <div style={{ padding: 'var(--pad-l) var(--pad-xl)', paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
           <button onClick={handleSave} disabled={saving || !form.name.trim()}
-            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
             {saving ? 'Creating…' : <><Check size={15} /> Create Warehouse</>}
           </button>
         </div>
@@ -128,10 +127,9 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
   return (
     <div style={{
       background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden',
-      border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)',
-    }}>
+      border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)' }}>
       {/* Header — clickable, goes to warehouse detail */}
-      <button onClick={onPress} style={{ background: 'var(--navy)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
+      <button onClick={onPress} style={{ background: 'var(--navy)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
           <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-l)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Buildings size={20} style={{ color: '#fff' }} />
@@ -175,7 +173,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Value row */}
       {totalValue > 0 && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', borderTop: '1px solid var(--border-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ padding: 'var(--pad-m) var(--pad-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-3)' }}>
             <CurrencyDollar size={14} />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
@@ -204,13 +202,13 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       )}
 
       {/* Actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderTop: '1px solid var(--border-l)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)' }}>
         <button onClick={onViewParts}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--navy)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
           <Package size={13} /> View Parts
         </button>
         <button onClick={onTransfer}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'transparent', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
           <ArrowsLeftRight size={13} /> Transfer
         </button>
       </div>
@@ -296,26 +294,26 @@ export default function Inventory() {
           {editMode ? (
             <>
               <button onClick={() => setEditMode(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <X size={14} /> Cancel
               </button>
               <button onClick={saveOrder} disabled={saving}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <Check size={14} /> {saving ? 'Saving…' : 'Save Order'}
               </button>
             </>
           ) : (
             <>
               <button onClick={() => setEditMode(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <PencilSimple size={14} /> Edit
               </button>
               <button onClick={() => navigate('/warehouse-hq/transfer')}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <ArrowsLeftRight size={14} /> Transfer
               </button>
               <button onClick={() => setShowAdd(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <Plus size={14} /> Add Warehouse
               </button>
             </>
@@ -338,10 +336,10 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', border: 'none', boxShadow: 'var(--shadow-xs)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
                 <Receipt size={15} style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
@@ -357,9 +355,9 @@ export default function Inventory() {
             {/* Stat row */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--border-l)' }}>
               {[
-                { label: 'Draft',     count: draft.length,     color: 'var(--grey-base)', bg: 'var(--surface-raised)' },
-                { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? 'var(--warning)' : 'var(--grey-base)', bg: submitted.length > 0 ? 'var(--warning-soft)' : 'var(--surface-raised)' },
-                { label: 'Published', count: published.length, color: published.length > 0 ? 'var(--blue)' : 'var(--grey-base)', bg: published.length > 0 ? 'var(--blue-soft)' : 'var(--surface-raised)' },
+                { label: 'Draft',     count: draft.length,     color: 'var(--grey-base)', bg: 'var(--white)' },
+                { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? 'var(--warning)' : 'var(--grey-base)', bg: submitted.length > 0 ? 'var(--warning-soft)' : 'var(--white)' },
+                { label: 'Published', count: published.length, color: published.length > 0 ? 'var(--blue)' : 'var(--grey-base)', bg: published.length > 0 ? 'var(--blue-soft)' : 'var(--white)' },
               ].map(s => (
                 <div key={s.label} style={{ background: s.bg, padding: 'var(--pad-m) var(--pad-l)' }}>
                   <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.count}</div>
@@ -371,12 +369,11 @@ export default function Inventory() {
             {/* Recent active PO rows */}
             {[...submitted, ...published].slice(0, 3).map(po => (
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-s) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)', textAlign: 'left' }}>
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-s) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left' }}>
                 <div style={{
                   fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)',
-                  color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)',
-                }}>
+                  color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -387,8 +384,7 @@ export default function Inventory() {
                   <span style={{
                     fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)',
                     background: po.status === 'submitted' ? 'var(--warning-soft)' : 'var(--blue-soft)',
-                    color: po.status === 'submitted' ? 'var(--warning)' : 'var(--blue)',
-                  }}>{po.status}</span>
+                    color: po.status === 'submitted' ? 'var(--warning)' : 'var(--blue)' }}>{po.status}</span>
                   {po.grand_total > 0 && (
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>
                       ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
@@ -427,18 +423,14 @@ export default function Inventory() {
               onDragOver={e => e.preventDefault()}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
-                background: 'var(--white)', borderRadius: 'var(--r-m)',
-                border: 'none', boxShadow: 'var(--shadow-xs)', padding: '1rem',
-                cursor: 'grab', userSelect: 'none',
-                transition: 'box-shadow 0.15s ease',
-              }}
+                background: 'var(--white)', borderRadius: 'var(--r-m)', padding: '1rem',
+                cursor: 'grab', userSelect: 'none' }}
             >
               <DotsSixVertical size={22} style={{ color: 'var(--black)', flexShrink: 0 }} />
               <div style={{
                 width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-l)',
                 background: 'var(--navy)', display: 'flex', alignItems: 'center',
-                justifyContent: 'center', flexShrink: 0,
-              }}>
+                justifyContent: 'center', flexShrink: 0 }}>
                 <Buildings size={18} style={{ color: '#fff' }} />
               </div>
               <div style={{ flex: 1 }}>

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Buildings, MagnifyingGlass, ArrowRight, CheckCircle, Warning,
   HardHat, Lightning, Wrench, Plus, FileText, SquaresFour,
-  ClipboardText, Clock, CaretDown, BookOpen,
-} from '@phosphor-icons/react'
+  ClipboardText, Clock, CaretDown, BookOpen } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { PROJECTS, TECHNICIANS } from '../data/mockData.js'
@@ -18,8 +17,7 @@ const STAGE_CFG = {
   'pending-review': { label: 'Pending Review', short: 'In Review', color: 'var(--blue)', bg: 'var(--blue-soft)' },
   'complete':       { label: 'Complete',       short: 'Complete',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
   'postponed':      { label: 'Postponed',      short: 'Postponed', color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
-  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--error-alt)', bg: 'var(--error-soft)' },
-}
+  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--error-alt)', bg: 'var(--error-soft)' } }
 
 // ─── Type icons ───────────────────────────────────────────────────────────────
 const TYPE_ICON = {
@@ -27,8 +25,7 @@ const TYPE_ICON = {
   inspection:     MagnifyingGlass,
   'site-survey':  Wrench,
   certification:  ClipboardText,
-  remediation:    Wrench,
-}
+  remediation:    Wrench }
 
 function getTech(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
@@ -52,9 +49,7 @@ function StagePill({ stageKey, count, active, onClick }) {
         flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 10,
         background: active ? cfg.bg : 'var(--white)',
         border: `1px solid ${active ? cfg.color + '55' : 'var(--border)'}`,
-        cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s',
-        boxShadow: active ? `0 0 0 2px ${cfg.color}22` : 'none',
-      }}
+        cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
       <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
         {count}
@@ -96,8 +91,7 @@ function MgmtRow({ p, navigate }) {
             <span style={{
               fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
               background: 'var(--blue)', color: '#fff', padding: '2px 5px', borderRadius: 3,
-              flexShrink: 0,
-            }}>
+              flexShrink: 0 }}>
               Review
             </span>
           )}
@@ -148,13 +142,11 @@ function FieldRow({ p, navigate }) {
   return (
     <div style={{
       padding: '12px 14px', borderBottom: '1px solid var(--border-l)',
-      display: 'flex', gap: 12, alignItems: 'center',
-    }}>
+      display: 'flex', gap: 12, alignItems: 'center' }}>
       {/* Left: icon */}
       <div style={{
         width: 36, height: 36, borderRadius: 8, flexShrink: 0,
-        background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
+        background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={16} style={{ color: cfg.color }} />
       </div>
 
@@ -168,8 +160,7 @@ function FieldRow({ p, navigate }) {
           {p.nfpa_class && (
             <span style={{
               marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
-              background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3,
-            }}>
+              background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3 }}>
               NFPA {p.nfpa_class}
             </span>
           )}
@@ -214,8 +205,7 @@ function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-3)', fontSize: 'var(--text-md)',
-    }}>
+      color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>
       {message}
     </div>
   )
@@ -230,8 +220,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
     <div
       style={{
         padding: '10px 14px', borderBottom: '1px solid var(--border-l)',
-        display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer',
-      }}
+        display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer' }}
       onClick={() => navigate(`/installations/${p.id}`)}
     >
       <div className="dash-job-icon">
@@ -391,10 +380,9 @@ export default function Installations() {
               <span className="dash-card-meta">{filtered.length}</span>
               <button
                 style={{
-                  background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 6,
+                  background: 'rgba(255,255,255,0.15)', borderRadius: 6,
                   padding: '3px 7px', cursor: 'pointer', display: 'flex', alignItems: 'center',
-                  color: 'inherit',
-                }}
+                  color: 'inherit' }}
                 onClick={() => setSearchOpen(o => !o)}
               >
                 <MagnifyingGlass size={13} />
@@ -402,10 +390,9 @@ export default function Installations() {
               {stageFilter !== 'all' && (
                 <button
                   style={{
-                    background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 6,
+                    background: 'rgba(255,255,255,0.15)', borderRadius: 6,
                     padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600,
-                    color: 'inherit', letterSpacing: '0.02em',
-                  }}
+                    color: 'inherit', letterSpacing: '0.02em' }}
                   onClick={() => setStageFilter('all')}
                 >
                   Clear ×
@@ -418,8 +405,7 @@ export default function Installations() {
           {searchOpen && (
             <div style={{
               padding: '8px 14px', borderBottom: '1px solid var(--border-l)',
-              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)',
-            }}>
+              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)' }}>
               <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
               <input
                 autoFocus
@@ -427,13 +413,12 @@ export default function Installations() {
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search projects, customers, job #…"
                 style={{
-                  flex: 1, border: 'none', outline: 'none', background: 'none',
-                  fontFamily: 'var(--font)', fontSize: 'var(--text-md)', color: 'var(--black)',
-                }}
+                  flex: 1, outline: 'none', background: 'none',
+                  fontFamily: 'var(--font)', fontSize: 'var(--text-md)', color: 'var(--black)' }}
               />
               {search && (
                 <button
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 2 }}
+                  style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 2 }}
                   onClick={() => setSearch('')}
                 >×</button>
               )}

@@ -15,8 +15,7 @@ function FieldLabel({ field, error }) {
     <div style={{ marginBottom: 'var(--mar-s)' }}>
       <div style={{
         fontSize: 'var(--text-sm)', fontWeight: 600,
-        color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4,
-      }}>
+        color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4 }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)' }}>*</span>}
       </div>
@@ -100,8 +99,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           <div style={{
             height: '100%', width: `${((page + 1) / total) * 100}%`,
             background: 'var(--navy)', borderRadius: 'var(--r-xxl)',
-            transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
-          }} />
+            transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)' }} />
         </div>
         <div style={{ display: 'flex', gap: 'var(--gap-xs)', marginTop: 'var(--mar-s)', justifyContent: 'center' }}>
           {sections.map((_, i) => (
@@ -109,8 +107,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
               width: i === page ? '1.5rem' : '0.4rem', height: '0.4rem',
               borderRadius: 'var(--r-xxl)', flexShrink: 0,
               background: i < page ? 'var(--navy)' : i === page ? 'var(--red)' : 'var(--border-l)',
-              transition: 'all 0.2s ease',
-            }} />
+              transition: 'all 0.2s ease' }} />
           ))}
         </div>
       </div>
@@ -133,7 +130,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Errors */}
       {(submitErr || Object.keys(pageErrors).length > 0) && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background: 'var(--red-soft)', border: '1px solid var(--red)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
+        <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background: 'var(--red-soft)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
           {submitErr || 'Please fill in all required fields before continuing.'}
         </div>
       )}
@@ -142,33 +139,29 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       <div style={{ display: 'flex', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         {!isFirst && (
           <button type="button" onClick={back} style={{
-            flex: 1, padding: '0.75rem', borderRadius: 'var(--r-m)',
-            border: '1px solid var(--border-l)', background: 'var(--white)',
+            flex: 1, padding: '0.75rem', borderRadius: 'var(--r-m)', background: 'var(--white)',
             color: 'var(--black)', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 600,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer',
-          }}>
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
             <ArrowLeft size={16} /> Back
           </button>
         )}
         {!isLast ? (
           <button type="button" onClick={advance} style={{
             flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--r-m)',
-            border: '1px solid var(--navy)', background: 'var(--navy)',
+            background: 'var(--navy)',
             color: '#fff', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer',
-          }}>
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
             Next <ArrowRight size={16} />
           </button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} style={{
             flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--r-m)',
-            border: `1px solid ${submitting ? 'var(--border-l)' : 'var(--red)'}`,
+            
             background: submitting ? 'var(--hover)' : 'var(--red)',
             color: submitting ? 'var(--text-3)' : '#fff',
             fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-            cursor: submitting ? 'default' : 'pointer',
-          }}>
+            cursor: submitting ? 'default' : 'pointer' }}>
             {submitting ? <><SpinnerGap size={14} style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</> : <><CheckCircle size={14} /> Submit Form</>}
           </button>
         )}

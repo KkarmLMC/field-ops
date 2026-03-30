@@ -5,8 +5,7 @@ import {
   X, User, Users, Truck, Pencil, Warning, ClipboardText,
   HardHat, CaretDown, ArrowRight, Signature,
   ArrowsClockwise, SealCheck, MagnifyingGlass, Buildings,
-  Crosshair, SpinnerGap, BookOpen,
-} from '@phosphor-icons/react'
+  Crosshair, SpinnerGap, BookOpen } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import FormEngine from '../components/FormEngine.jsx'
@@ -26,27 +25,23 @@ const SAFETY_FORMS = [
     key:   'jsa_uploaded',
     slug:  'jsa',
     label: 'JSA — Job Safety Analysis',
-    desc:  'Hazard identification, controls & emergency procedures',
-  },
+    desc:  'Hazard identification, controls & emergency procedures' },
   {
     key:   'manlift_checklist',
     slug:  'manlift-checklist',
     label: 'Man Lift Pre-Use Checklist',
-    desc:  'Equipment inspection before operation — required per OSHA 1926.453',
-  },
+    desc:  'Equipment inspection before operation — required per OSHA 1926.453' },
   {
     key:   'fall_protection',
     slug:  'fall-protection',
     label: 'Fall Protection Plan',
-    desc:  'PPE verification, anchor points & rescue procedures',
-  },
+    desc:  'PPE verification, anchor points & rescue procedures' },
 ]
 
 const STATUS_STYLE = {
   Draft:     { bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
   Submitted: { bg: 'var(--blue-soft)', color: 'var(--blue)' },
-  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--success-text)' },
-}
+  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--success-text)' } }
 
 // Stage labels for jobsite dropdown
 const JOB_STATUS_STYLE = {
@@ -56,8 +51,7 @@ const JOB_STATUS_STYLE = {
   'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
   'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--success-text)' },
   'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--error-dark)' },
-  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--purple)' },
-}
+  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--purple)' } }
 
 // Derive unique customer names from all PROJECTS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()
@@ -99,8 +93,7 @@ const EMPTY_P1 = {
   fall_protection:      false,
   jsa_data:             null,
   manlift_data:         null,
-  fall_protection_data: null,
-}
+  fall_protection_data: null }
 
 const EMPTY_P2 = {
   hours_worked: '',
@@ -109,8 +102,7 @@ const EMPTY_P2 = {
   miles_driven: '',
   drive_time:   '',
   other_tasks:  '',
-  signed:       false,
-}
+  signed:       false }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function fmtDate(d) {
@@ -606,8 +598,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             className="dfl-card-icon"
             style={{
               background: isDraft ? 'var(--warning-tint-80)' : bc.bgInactive,
-              color:      isDraft ? 'var(--warning-text)' : bc.bgActive,
-            }}
+              color:      isDraft ? 'var(--warning-text)' : bc.bgActive }}
           >
             {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
           </div>
@@ -637,8 +628,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
                 color: 'var(--black)',
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.18s',
-                flexShrink: 0,
-              }}
+                flexShrink: 0 }}
             />
           )}
         </div>
@@ -1235,15 +1225,13 @@ const STEPS = [
         prefill={{
           supervisorName: form.supervisor_name,
           date:           form.report_date,
-          customerSite:   form.customer_site,
-        }}
+          customerSite:   form.customer_site }}
         onComplete={(key, values) => {
           set(key, true)
           const DATA_KEY_MAP = {
             jsa_uploaded:      'jsa_data',
             manlift_checklist: 'manlift_data',
-            fall_protection:   'fall_protection_data',
-          }
+            fall_protection:   'fall_protection_data' }
           if (DATA_KEY_MAP[key]) set(DATA_KEY_MAP[key], values)
           setSafetyOpen(null)
         }}
@@ -1609,8 +1597,7 @@ export default function DailyFieldLog() {
       fall_protection:      form.fall_protection,
       jsa_data:             form.jsa_data             || null,
       manlift_data:         form.manlift_data         || null,
-      fall_protection_data: form.fall_protection_data || null,
-    }
+      fall_protection_data: form.fall_protection_data || null }
     const { data, error } = await db
       .from('daily_field_logs')
       .insert(payload)
@@ -1623,8 +1610,7 @@ export default function DailyFieldLog() {
         action:      'created',
         label:       `Started Daily Field Log`,
         entity_type: 'daily_field_log',
-        entity_id:   data.id,
-      })
+        entity_id:   data.id })
     }
     setFormMode(null)
   }
@@ -1643,8 +1629,7 @@ export default function DailyFieldLog() {
       other_tasks:  form.other_tasks,
       signed:       form.signed,
       submitted_at: new Date().toISOString(),
-      finalized_at: new Date().toISOString(),
-    }
+      finalized_at: new Date().toISOString() }
 
     // First update the DB record
     await db.from('daily_field_logs').update(updates).eq('id', closeoutId)
@@ -1668,8 +1653,7 @@ export default function DailyFieldLog() {
       action:      'submitted',
       label:       `Submitted Daily Field Log`,
       entity_type: 'daily_field_log',
-      entity_id:   closeoutId,
-    })
+      entity_id:   closeoutId })
     setSavingPdf(false)
     setFormMode(null)
     setCloseoutId(null)
@@ -1760,7 +1744,7 @@ export default function DailyFieldLog() {
                   ))}
                   {hasMore && (
                     <button onClick={loadMore} disabled={loadingMore}
-                      style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                      style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none' }}>
                       {loadingMore ? 'Loading…' : 'Load more'}
                     </button>
                   )}
@@ -1816,7 +1800,7 @@ export default function DailyFieldLog() {
                 ))}
                 {hasMore && (
                   <button onClick={loadMore} disabled={loadingMore}
-                    style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                    style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none' }}>
                     {loadingMore ? 'Loading…' : 'Load more'}
                   </button>
                 )}
