@@ -13,7 +13,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
   const bc = BRANCH_COLORS[branch]
   if (!forms.length) return null
   return (
-    <div className="card" style={{ display:'flex', flexDirection:'column' }}>
+    <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
       <div className="card-header" style={{ background: bc.bgActive }}>
         <span className="card-title">
           <span className="card-dot" style={{ background:'rgba(255,255,255,0.5)' }} />

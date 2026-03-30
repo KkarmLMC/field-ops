@@ -69,7 +69,7 @@ function MgmtRow({ p, navigate }) {
 
   return (
     <div
-      className="dash-job-row"
+      className="page-content fade-in"
       style={{ alignItems: 'flex-start', paddingTop: 10, paddingBottom: 10 }}
       onClick={() => navigate(`/installations/${p.id}`)}
     >

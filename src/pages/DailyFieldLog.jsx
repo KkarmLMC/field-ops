@@ -172,7 +172,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
   const openDropdown = () => { updatePos(); setOpen(true) }
 
   return (
-    <div className="dfl-typeahead" ref={ref}>
+    <div className="page-content fade-in" ref={ref}>
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
         <input

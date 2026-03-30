@@ -38,7 +38,7 @@ function InspectionRow({ job, navigate }) {
   const sc  = STAGE_CFG[job.stage] || STAGE_CFG.scheduled
   const Icon = TYPE_ICON[job.type] || MagnifyingGlass
   return (
-    <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
+    <div className="page-content fade-in" onClick={() => navigate(`/installations/${job.id}`)}>
       <div className="dash-job-icon" style={{ background: sc.bg }}>
         <Icon size={16} style={{ color: sc.color }} />
       </div>

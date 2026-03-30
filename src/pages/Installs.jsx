@@ -54,7 +54,7 @@ function KanbanCard({ job, onClick }) {
   const isFailed = job.stage === 'failed'
 
   return (
-    <div className="kanban-card" onClick={onClick}>
+    <div className="page-content fade-in" onClick={onClick}>
       {/* Top row: type chip + priority dot */}
       <div className="kanban-card-top">
         <span className="kanban-card-type-chip">
