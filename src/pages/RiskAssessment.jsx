@@ -15,7 +15,7 @@ const S = {
   cardHead: {
     padding: '0.625rem 0.875rem', background: 'var(--navy)',
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
-    color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '0.08em' },
+    color: 'var(--white)', textTransform: 'uppercase', letterSpacing: '0.08em' },
   cardBody: { padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' },
   label: {
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',

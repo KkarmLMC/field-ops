@@ -321,8 +321,8 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
           />
         </div>
         <div style={{ display:'flex', gap:'var(--gap-xs)' }}>
-          <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color:'rgba(255,255,255,0.6)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size={13}/></button>
-          <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color:'rgba(255,255,255,0.6)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size={13}/></button>
+          <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color: 'var(--white)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size={13}/></button>
+          <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color: 'var(--white)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size={13}/></button>
           <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size={13}/></button>
         </div>
       </div>

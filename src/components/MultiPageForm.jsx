@@ -121,7 +121,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
             {section.title}
           </div>
           {section.description && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--mar-xs)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 'var(--mar-xs)' }}>
               {section.description}
             </div>
           )}

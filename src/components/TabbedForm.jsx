@@ -116,7 +116,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
-          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--mar-xs)' }}>{current.description}</div>}
+          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 'var(--mar-xs)' }}>{current.description}</div>}
         </div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-xl)' }}>
           {current.fields.map(field => (

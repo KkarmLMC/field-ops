@@ -178,7 +178,7 @@ export default function StockView() {
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
-              <div key={i} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
+              <div key={i} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--white)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
           </div>
 

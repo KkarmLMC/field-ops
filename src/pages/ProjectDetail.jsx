@@ -390,7 +390,7 @@ export default function ProjectDetail() {
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <CurrencyDollar size={16} style={{ color: 'rgba(255,255,255,0.7)' }} />
+                <CurrencyDollar size={16} style={{ color: 'var(--white)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (

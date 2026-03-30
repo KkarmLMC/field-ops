@@ -137,7 +137,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           <div>
             <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: '#fff' }}>{warehouse.name}</div>
             {(warehouse.city || warehouse.state) && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 2 }}>
                 {[warehouse.city, warehouse.state].filter(Boolean).join(', ')}
               </div>
             )}
@@ -149,7 +149,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning)' }}>{lowStockItems} low stock</span>
           </div>
         ) : (
-          <CaretRight size={16} style={{ color: 'rgba(255,255,255,0.4)' }} />
+          <CaretRight size={16} style={{ color: 'var(--white)' }} />
         )}
       </button>
 

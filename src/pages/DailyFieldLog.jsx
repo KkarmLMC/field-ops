@@ -1275,7 +1275,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Close Out Day</div>
             {entry && (
-              <div style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.65)', marginTop: '0.125rem' }}>
+              <div style={{ fontSize: '0.6875rem', color: 'var(--white)', marginTop: '0.125rem' }}>
                 {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
               </div>
             )}

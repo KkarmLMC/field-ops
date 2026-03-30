@@ -112,7 +112,7 @@ function SignatureModal({ onSave, onClose }) {
         {/* Header */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--pad-l)', borderBottom:'1px solid var(--border-l)', background:'var(--navy)' }}>
           <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
-          <button type="button" onClick={onClose} style={{ color:'rgba(255,255,255,0.7)', padding:'var(--pad-xs)' }}>
+          <button type="button" onClick={onClose} style={{ color: 'var(--white)', padding:'var(--pad-xs)' }}>
             <X size={20} />
           </button>
         </div>
@@ -661,7 +661,7 @@ function Section({ section, values, onChange, errors, readOnly, defaultOpen=true
       <button type="button" onClick={()=>setOpen(o=>!o)}
         style={{ width:'100%', padding:'var(--pad-m) var(--pad-l)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
         <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>
-        <CaretDown size={14} style={{ color:'rgba(255,255,255,0.7)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
+        <CaretDown size={14} style={{ color: 'var(--white)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && (
         <div style={{ padding: 'var(--pad-l)', display:'flex', flexDirection:'column', gap:'var(--gap-l)' }}>
