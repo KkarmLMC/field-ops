@@ -111,15 +111,10 @@ export default function Expenses() {
   return (
     <div className="page-content fade-in">
 
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-xl)', gap: 'var(--gap-m)' }}>
-        <div>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
-          <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, lineHeight: 1.1 }}>Expenses</div>
-        </div>
+      <PageHeader eyebrow="FIELD" title="Expenses" action={
         <div style={{ position: 'relative' }}>
           <button onClick={() => setShowNewMenu(m => !m)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
             <Plus size={15} /> New
           </button>
           {showNewMenu && (
@@ -128,14 +123,14 @@ export default function Expenses() {
                 <button key={`${div}-${type}`}
                   onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
+                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
                 </button>
               ))}
             </div>
           )}
         </div>
-      </div>
+      } />
 
       {/* Pending alert */}
       {submitted > 0 && (

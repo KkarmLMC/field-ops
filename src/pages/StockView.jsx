@@ -95,12 +95,7 @@ export default function StockView() {
   return (
     <div className="page-content fade-in">
 
-      {/* Header */}
-      <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, lineHeight: 1.1 }}>Stock Lookup</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>Check parts availability across all warehouses</div>
-      </div>
+      <PageHeader eyebrow="FIELD" title="Stock Lookup" subtitle="Check parts availability across all warehouses" />
 
       {/* Warehouse selector — horizontal scroll */}
       <div style={{ display: 'flex', gap: 'var(--gap-s)', overflowX: 'auto', scrollbarWidth: 'none', marginBottom: 'var(--mar-l)', paddingBottom: 2 }}>
