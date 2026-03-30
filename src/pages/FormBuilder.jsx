@@ -137,14 +137,14 @@ function DragGhost({ label, pos, visible }) {
       zIndex: 9999,
       background: 'var(--navy)',
       color: '#fff',
-      padding: 'var(--sp-2) var(--sp-4)',
+      padding: 'var(--pad-s) var(--pad-l)',
       borderRadius: 'var(--r-m)',
       fontSize: 'var(--text-sm)',
       fontWeight: 600,
       boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--sp-2)',
+      gap: 'var(--gap-s)',
       maxWidth: '16rem',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -176,17 +176,17 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
           background: 'var(--white)',
           border: '1px solid var(--border-l)',
           borderRadius: 'var(--r-m)',
-          marginBottom: 'var(--sp-2)',
+          marginBottom: 'var(--mar-s)',
           overflow: 'hidden',
           opacity: isDragging ? 0.35 : 1,
           transition: 'opacity 0.15s',
         }}
       >
         {/* Collapsed header */}
-        <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)' }}>
           <div
             {...dragHandleProps}
-            style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--sp-2)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none', WebkitUserSelect:'none' }}
+            style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--pad-s)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none', WebkitUserSelect:'none' }}
             title="Hold and drag to reorder"
           >
             <DotsSixVertical size={18} weight="bold" />
@@ -199,42 +199,42 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
               {field.type}{field.required?' · required':''}
             </div>
           </div>
-          <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--sp-1)' }}>
+          <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--pad-xs)' }}>
             <PencilSimple size={14}/>
           </button>
-          <button type="button" onClick={()=>onDelete(index)} style={{ color:'var(--red)', padding:'var(--sp-1)' }}>
+          <button type="button" onClick={()=>onDelete(index)} style={{ color:'var(--red)', padding:'var(--pad-xs)' }}>
             <Trash size={14}/>
           </button>
         </div>
 
         {/* Expanded editor */}
         {expanded && (
-          <div style={{ padding:'var(--sp-3)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--sp-3)' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
+          <div style={{ padding: 'var(--pad-m)', background:'var(--surface-raised)', borderTop:'1px solid var(--border-l)', display:'flex', flexDirection:'column', gap:'var(--gap-m)' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--gap-m)' }}>
               <div style={{ gridColumn:'1 / -1' }}>
-                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--sp-1)' }}>Label *</label>
+                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--mar-xs)' }}>Label *</label>
                 <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label" style={{ width:'100%' }}/>
               </div>
               <div>
-                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--sp-1)' }}>Type</label>
+                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--mar-xs)' }}>Type</label>
                 <select value={field.type||'text'} onChange={e=>onChange(index,{...field, type:e.target.value})} style={{ width:'100%' }}>
                   {FIELD_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
                 </select>
               </div>
               <div style={{ display:'flex', flexDirection:'column', justifyContent:'flex-end' }}>
-                <label style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', cursor:'pointer' }}>
+                <label style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', cursor:'pointer' }}>
                   <input type="checkbox" checked={!!field.required} onChange={e=>onChange(index,{...field,required:e.target.checked})} />
                   <span style={{ fontSize:'var(--text-sm)', color:'var(--black)' }}>Required</span>
                 </label>
               </div>
             </div>
             <div>
-              <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--sp-1)' }}>Hint / Help text</label>
+              <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--mar-xs)' }}>Hint / Help text</label>
               <input value={field.hint||''} onChange={e=>onChange(index,{...field,hint:e.target.value})} placeholder="Optional helper text shown below the label" style={{ width:'100%' }}/>
             </div>
             {needsOptions && (
               <div>
-                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--sp-1)' }}>Options (one per line)</label>
+                <label style={{ fontSize:'var(--text-xs)', fontWeight:600, color:'var(--black)', display:'block', marginBottom:'var(--mar-xs)' }}>Options (one per line)</label>
                 <textarea
                   value={(field.options||[]).join('\n')}
                   onChange={e=>onChange(index,{...field, options: e.target.value.split('\n').filter(Boolean)})}
@@ -269,21 +269,21 @@ function TypePickerSheet({ onPick, onClose }) {
       <div style={{
         position:'fixed', left:0, right:0, bottom:0, zIndex:201,
         background:'var(--white)', borderRadius:'var(--r-xl) var(--r-xl) 0 0',
-        padding:'var(--sp-4)', maxHeight:'75vh', overflowY:'auto',
+        padding: 'var(--pad-l)', maxHeight:'75vh', overflowY:'auto',
         boxShadow:'0 -4px 32px rgba(0,0,0,0.15)',
       }}>
         {/* Handle */}
-        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius:99, margin:'0 auto var(--sp-4)' }} />
-        <div style={{ fontSize:'var(--text-md)', fontWeight:700, marginBottom:'var(--sp-4)' }}>Choose Field Type</div>
+        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius:99, margin:'0 auto var(--mar-l)' }} />
+        <div style={{ fontSize:'var(--text-md)', fontWeight:700, marginBottom:'var(--mar-l)' }}>Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
-          <div key={group.label} style={{ marginBottom:'var(--sp-4)' }}>
-            <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--black)', marginBottom:'var(--sp-2)' }}>
+          <div key={group.label} style={{ marginBottom: 'var(--mar-l)' }}>
+            <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--black)', marginBottom:'var(--mar-s)' }}>
               {group.label}
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--sp-2)' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 10rem), 1fr))', gap:'var(--gap-s)' }}>
               {group.types.map(type => (
                 <button key={type} type="button" onClick={() => onPick(type)}
-                  style={{ padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)', background:'var(--surface-raised)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
+                  style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border:'1px solid var(--border-l)', background:'var(--surface-raised)', textAlign:'left', fontSize:'var(--text-sm)', color:'var(--black)', fontWeight:500, transition:'all var(--ease-fast)' }}
                   onMouseEnter={e => { e.currentTarget.style.background='var(--navy)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.borderColor='var(--navy)' }}
                   onMouseLeave={e => { e.currentTarget.style.background='var(--surface-raised)'; e.currentTarget.style.color='var(--black)'; e.currentTarget.style.borderColor='var(--border-l)' }}
                 >
@@ -319,18 +319,18 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
     useDragReorder(section.fields || [], (reordered) => onChange(sectionIdx, { ...section, fields: reordered }))
 
   return (
-    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--sp-4)', overflow:'hidden' }}>
+    <div style={{ background:'var(--surface-raised)', borderRadius:'var(--r-xl)', marginBottom:'var(--mar-l)', overflow:'hidden' }}>
       {/* Section header */}
-      <div style={{ background:'var(--navy)', padding:'var(--sp-3) var(--sp-4)', display:'flex', alignItems:'center', gap:'var(--sp-3)' }}>
+      <div style={{ background:'var(--navy)', padding:'var(--pad-m) var(--pad-l)', display:'flex', alignItems:'center', gap:'var(--gap-m)' }}>
         <div style={{ flex:1 }}>
           <input
             value={section.title||''}
             onChange={e=>onChange(sectionIdx,{...section,title:e.target.value})}
             placeholder="Section title"
-            style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'var(--r-s)', color:'#fff', fontWeight:700, fontSize:'var(--text-md)', padding:'var(--sp-1) var(--sp-2)', width:'100%' }}
+            style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'var(--r-s)', color:'#fff', fontWeight:700, fontSize:'var(--text-md)', padding:'var(--pad-xs) var(--pad-s)', width:'100%' }}
           />
         </div>
-        <div style={{ display:'flex', gap:'var(--sp-1)' }}>
+        <div style={{ display:'flex', gap:'var(--gap-xs)' }}>
           <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color:'rgba(255,255,255,0.6)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size={13}/></button>
           <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color:'rgba(255,255,255,0.6)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size={13}/></button>
           <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size={13}/></button>
@@ -339,7 +339,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
 
       {/* Fields — touch + mouse draggable */}
       <div
-        style={{ padding:'var(--sp-3)' }}
+        style={{ padding: 'var(--pad-m)' }}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
@@ -361,7 +361,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
           </div>
         ))}
         <button type="button" onClick={() => setShowTypePicker(true)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-s)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', marginTop:section.fields?.length?'var(--sp-2)':0 }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', marginTop:section.fields?.length?'var(--mar-s)':0 }}>
           <Plus size={13}/> Add Field
         </button>
       </div>
@@ -406,26 +406,26 @@ function FormEditor({ form, onSave, onCancel }) {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-4)' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-l)' }}>
         <div>
-          <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--black)', marginBottom:'var(--sp-1)' }}>{form.ref || form.category}</div>
+          <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--black)', marginBottom:'var(--mar-xs)' }}>{form.ref || form.category}</div>
           <div style={{ fontSize:'var(--text-lg)', fontWeight:700 }}>{form.title}</div>
         </div>
-        <div style={{ display:'flex', gap:'var(--sp-2)' }}>
-          <button type="button" onClick={onCancel} style={{ padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
+        <div style={{ display:'flex', gap:'var(--gap-s)' }}>
+          <button type="button" onClick={onCancel} style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
-            style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-2) var(--sp-4)', borderRadius:'var(--r-s)', background:saved?'var(--success)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', background:saved?'var(--success)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
             {saving ? <><SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size={13}/> Saved!</> : <><FloppyDisk size={13}/> Save Changes</>}
           </button>
         </div>
       </div>
 
-      {error && <div style={{ padding:'var(--sp-3)', marginBottom:'var(--sp-3)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>{error}</div>}
+      {error && <div style={{ padding: 'var(--pad-m)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', border:'1px solid var(--red)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>{error}</div>}
 
       {/* Form mode selector */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)', padding:'var(--sp-3) var(--sp-4)', background:'var(--surface-raised)', borderRadius:'var(--r-l)', border:'1px solid var(--border-l)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)', padding: 'var(--pad-m) var(--pad-l)', background:'var(--surface-raised)', borderRadius:'var(--r-l)', border:'1px solid var(--border-l)' }}>
         <span style={{ fontSize:'var(--text-xs)', fontWeight:700, color:'var(--black)', flexShrink:0 }}>Form Mode</span>
-        <div style={{ display:'flex', gap:'var(--sp-2)', flex:1 }}>
+        <div style={{ display:'flex', gap:'var(--gap-s)', flex:1 }}>
           {[
             { value:'scroll', label:'Scroll' },
             { value:'tabbed', label:'Tabbed' },
@@ -433,7 +433,7 @@ function FormEditor({ form, onSave, onCancel }) {
           ].map(opt => (
             <button key={opt.value} type="button" onClick={() => setFormMode(opt.value)}
               style={{
-                flex:1, padding:'var(--sp-2)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', fontWeight:600,
+                flex:1, padding:'0.5rem', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', fontWeight:600,
                 border:`1px solid ${formMode===opt.value?'var(--navy)':'var(--border-l)'}`,
                 background: formMode===opt.value?'var(--navy)':'transparent',
                 color: formMode===opt.value?'#fff':'var(--text-3)',
@@ -454,14 +454,14 @@ function FormEditor({ form, onSave, onCancel }) {
             next.splice(i + 1, 0, { title:'New Section', fields:[] })
             setSections(next)
           }}
-            style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-2) var(--sp-3)', borderRadius:'var(--r-m)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-xs)', marginBottom:'var(--sp-3)', background:'none' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-xs)', marginBottom:'var(--mar-m)', background:'none' }}>
             <Plus size={11}/> Add Section Below
           </button>
         </div>
       ))}
 
       <button type="button" onClick={addSection}
-        style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)', padding:'var(--sp-3)', borderRadius:'var(--r-l)', border:'2px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-md)', marginBottom:'var(--sp-8)' }}>
+        style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-m)', borderRadius:'var(--r-l)', border:'2px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-md)', marginBottom:'var(--mar-xxl)' }}>
         <Plus size={16}/> Add Section at End
       </button>
     </div>
@@ -511,21 +511,21 @@ export default function FormBuilder() {
         ) : forms.length === 0 ? (
           <div className="empty"><div className="empty-desc">No forms found in database.</div></div>
         ) : forms.map(form => (
-          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', padding:'0.875rem var(--sp-4)', borderBottom:'1px solid var(--border-l)' }}>
+          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', padding: '0.875rem var(--pad-l)', borderBottom:'1px solid var(--border-l)' }}>
             <div style={{ flex:1, minWidth:0 }}>
               <div className="project-name">{form.title}</div>
               <div className="project-meta">
                 {form.short} · {form.sections?.length || 0} sections · {(form.sections||[]).reduce((n,s)=>n+(s.fields?.length||0),0)} fields
-                {form.branch && <span style={{ marginLeft:'var(--sp-2)', padding:'0 var(--sp-2)', borderRadius:'var(--r-full)', background:'var(--navy-tint-80)', fontSize:'var(--blackxs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
+                {form.branch && <span style={{ marginLeft: 'var(--mar-s)', padding: '0 var(--pad-s)', borderRadius:'var(--r-full)', background:'var(--navy-tint-80)', fontSize:'var(--blackxs)', fontFamily:'var(--mono)' }}>{form.branch}</span>}
               </div>
             </div>
-            <div style={{ display:'flex', gap:'var(--sp-2)', flexShrink:0 }}>
+            <div style={{ display:'flex', gap:'var(--gap-s)', flexShrink:0 }}>
               <button onClick={()=>navigate(`/forms/${form.slug}`)}
-                style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-xs)', color:'var(--black)' }}>
+                style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', border:'1px solid var(--border-l)', fontSize:'var(--text-xs)', color:'var(--black)' }}>
                 <Eye size={12}/> Preview
               </button>
               <button onClick={()=>setEditing(form)}
-                style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', padding:'var(--sp-1) var(--sp-3)', borderRadius:'var(--r-s)', background:'var(--navy)', color:'#fff', fontSize:'var(--text-xs)' }}>
+                style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', background:'var(--navy)', color:'#fff', fontSize:'var(--text-xs)' }}>
                 <PencilSimple size={12}/> Edit
               </button>
             </div>

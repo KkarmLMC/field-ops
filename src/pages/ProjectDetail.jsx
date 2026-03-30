@@ -401,8 +401,8 @@ export default function ProjectDetail() {
         {jobCost && (
           <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
             {/* Header */}
-            <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+            <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
                 <CurrencyDollar size={15} style={{ color: 'rgba(255,255,255,0.7)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
@@ -420,7 +420,7 @@ export default function ProjectDetail() {
                 { label: 'Miles Driven',   value: jobCost.totalMiles.toLocaleString() },
                 { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
               ].map(s => (
-                <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--sp-3) var(--sp-4)' }}>
+                <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--pad-m) var(--pad-l)' }}>
                   <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--black)' }}>{s.value}</div>
                   <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
                 </div>
@@ -428,15 +428,15 @@ export default function ProjectDetail() {
             </div>
 
             {/* Cost breakdown */}
-            <div style={{ padding: 'var(--sp-3) var(--sp-4)' }}>
+            <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
               {[
                 { label: 'Materials',     value: jobCost.materialsTotal,  color: '#1D4ED8' },
                 { label: 'Installation',  value: jobCost.installTotal,    color: '#7C3AED' },
                 { label: 'Field Expenses',value: jobCost.expenseTotal,    color: '#D97706' },
                 { label: 'Advances Issued',value: jobCost.advanceTotal,   color: '#64748B' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
-                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-2) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
                     <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>{r.label}</span>
                   </div>
@@ -454,7 +454,7 @@ export default function ProjectDetail() {
               const marginPct = ((margin / project.contract_value) * 100).toFixed(1)
               const isPositive = margin >= 0
               return (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--sp-3) var(--sp-4)', background: isPositive ? '#F0FDF4' : '#FEF2F2', borderTop: '2px solid var(--border-l)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)', background: isPositive ? '#F0FDF4' : '#FEF2F2', borderTop: '2px solid var(--border-l)' }}>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? '#15803D' : '#B91C1C' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
@@ -472,7 +472,7 @@ export default function ProjectDetail() {
 
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) var(--sp-4)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)' }}>
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', border: 'none', background: 'none', cursor: 'pointer', borderTop: '1px solid var(--border-l)' }}>
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>

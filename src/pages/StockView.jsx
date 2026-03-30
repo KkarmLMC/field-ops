@@ -25,7 +25,7 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
   return (
     <button onClick={onClick} style={{
       flexShrink: 0,
-      padding: 'var(--sp-3) var(--sp-4)',
+      padding: 'var(--pad-m) var(--pad-l)',
       borderRadius: 'var(--r-xl)',
       border: `1px solid ${active ? 'var(--navy)' : 'var(--border-l)'}`,
       background: active ? 'var(--navy)' : 'var(--surface-raised)',
@@ -38,7 +38,7 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       <div style={{ fontSize: 'var(--text-xs)', color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-3)' }}>
         {warehouse.city}, {warehouse.state}
       </div>
-      <div style={{ display: 'flex', gap: 'var(--sp-2)', marginTop: 4 }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-s)', marginTop: 4 }}>
         {outCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCA5A5' : '#B91C1C' }}>{outCount} out</span>}
         {lowCount > 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? '#FCD34D' : '#C2410C' }}>{lowCount} low</span>}
         {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-3)' }}>All OK</span>}
@@ -97,14 +97,14 @@ export default function StockView() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ marginBottom: 'var(--sp-5)' }}>
+      <div style={{ marginBottom: 'var(--mar-xl)' }}>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
         <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, lineHeight: 1.1 }}>Stock Lookup</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>Check parts availability across all warehouses</div>
       </div>
 
       {/* Warehouse selector — horizontal scroll */}
-      <div style={{ display: 'flex', gap: 'var(--sp-2)', overflowX: 'auto', scrollbarWidth: 'none', marginBottom: 'var(--sp-4)', paddingBottom: 2 }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-s)', overflowX: 'auto', scrollbarWidth: 'none', marginBottom: 'var(--mar-l)', paddingBottom: 2 }}>
         {warehouses.map(w => (
           <WarehouseTab
             key={w.id}
@@ -117,9 +117,9 @@ export default function StockView() {
       </div>
 
       {/* Quick actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-4)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <ArrowsLeftRight size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
@@ -128,7 +128,7 @@ export default function StockView() {
         </button>
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
@@ -138,7 +138,7 @@ export default function StockView() {
       </div>
 
       {/* Search + filter */}
-      <div style={{ position: 'relative', marginBottom: 'var(--sp-3)' }}>
+      <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
         <MagnifyingGlass size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input
           value={search}
@@ -154,10 +154,10 @@ export default function StockView() {
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: 'var(--sp-2)', marginBottom: 'var(--sp-4)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All Parts'], ['low','Low Stock'], ['out','Out of Stock']].map(([val, lbl]) => (
           <button key={val} onClick={() => setFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--sp-1) var(--sp-3)', borderRadius: 'var(--r-full)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'transparent', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-full)', border: `1px solid ${filter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: filter === val ? 'var(--navy)' : 'transparent', color: filter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
@@ -168,17 +168,17 @@ export default function StockView() {
 
       {/* Parts list */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Package size={36} style={{ color: 'var(--text-3)', marginBottom: 'var(--sp-3)' }} />
+          <Package size={36} style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
           <div className="empty-title">{search ? 'No parts found' : 'No stock data'}</div>
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>
       ) : (
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}>
           {/* Column headers */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-4)', background: 'var(--navy)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
               <div key={i} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
@@ -189,8 +189,8 @@ export default function StockView() {
             const isLow = l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level
             return (
               <div key={l.id} style={{
-                display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--sp-2)',
-                padding: 'var(--sp-3) var(--sp-4)',
+                display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: '0.5rem',
+                padding: 'var(--pad-m) var(--pad-l)',
                 borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-l)' : 'none',
                 alignItems: 'center',
                 background: isOut ? '#FFF5F5' : isLow ? '#FFFBEB' : 'transparent',
@@ -217,13 +217,13 @@ export default function StockView() {
 
       {/* Transfer CTA at bottom when viewing a warehouse with issues */}
       {(filtered.some(l => l.quantity_on_hand === 0 || (l.min_level && l.quantity_on_hand <= l.min_level))) && (
-        <div style={{ marginTop: 'var(--sp-4)', background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--sp-3)' }}>
+        <div style={{ marginTop: 'var(--mar-l)', background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-m)' }}>
           <div>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Need parts restocked?</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>Submit a transfer request to move stock from another warehouse.</div>
           </div>
           <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
             Request <ArrowRight size={13} />
           </button>
         </div>

@@ -21,7 +21,7 @@ import { FormField } from './FormEngine.jsx'
 // ─── Per-field label (mirrors FormEngine FieldLabel) ─────────────────────────
 function FieldLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--sp-2)' }}>
+    <div style={{ marginBottom: 'var(--mar-s)' }}>
       <div style={{
         fontSize: 'var(--text-sm)',
         fontWeight: 600,
@@ -29,7 +29,7 @@ function FieldLabel({ field, error }) {
         lineHeight: 1.4,
       }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)' }}>*</span>}
+        {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)' }}>*</span>}
       </div>
       {field.hint && (
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>
@@ -85,8 +85,8 @@ function SectionView({ section, values, onChange, errors, onBack }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 'var(--sp-3)',
-        marginBottom: 'var(--sp-4)',
+        gap: 'var(--gap-m)',
+        marginBottom: 'var(--mar-l)',
       }}>
         <button
           type="button"
@@ -117,18 +117,18 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         background: 'var(--surface-raised)',
         borderRadius: 'var(--r-xl)',
         overflow: 'hidden',
-        marginBottom: 'var(--sp-4)',
+        marginBottom: 'var(--mar-l)',
       }}>
         {/* Navy section header */}
         <div style={{
           background: 'var(--navy)',
-          padding: 'var(--sp-4)',
+          padding: 'var(--pad-l)',
         }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>
             {section.title}
           </div>
           {section.description && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--sp-1)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--mar-xs)' }}>
               {section.description}
             </div>
           )}
@@ -136,10 +136,10 @@ function SectionView({ section, values, onChange, errors, onBack }) {
 
         {/* Fields */}
         <div style={{
-          padding: 'var(--sp-4)',
+          padding: 'var(--pad-l)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--sp-5)',
+          gap: 'var(--gap-xl)',
         }}>
           {section.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
@@ -161,7 +161,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         onClick={onBack}
         style={{
           width: '100%',
-          padding: 'var(--sp-3)',
+          padding: 'var(--pad-m)',
           borderRadius: 'var(--r-m)',
           border: '1px solid var(--navy)',
           background: 'var(--navy)',
@@ -172,9 +172,9 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'var(--sp-2)',
+          gap: 'var(--gap-s)',
           cursor: 'pointer',
-          marginBottom: 'var(--sp-8)',
+          marginBottom: 'var(--mar-xxl)',
         }}
       >
         <CheckCircle size={16} />
@@ -257,8 +257,8 @@ export default function MultiPageForm({
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 'var(--sp-4)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--sp-1)' }}>
+      <div style={{ marginBottom: 'var(--mar-l)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--mar-xs)' }}>
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
@@ -278,7 +278,7 @@ export default function MultiPageForm({
         background: 'var(--surface-raised)',
         borderRadius: 'var(--r-xl)',
         overflow: 'hidden',
-        marginBottom: 'var(--sp-4)',
+        marginBottom: 'var(--mar-l)',
       }}>
         {sections.map((section, idx) => {
           const complete  = isSectionComplete(section, values)
@@ -295,8 +295,8 @@ export default function MultiPageForm({
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--sp-3)',
-                padding: 'var(--sp-4)',
+                gap: 'var(--gap-m)',
+                padding: 'var(--pad-l)',
                 background: complete ? 'rgba(22,163,74,0.04)' : 'transparent',
                 border: 'none',
                 borderBottom: isLast ? 'none' : '1px solid var(--border-l)',
@@ -329,7 +329,7 @@ export default function MultiPageForm({
                 }}>
                   {section.title}
                   {hasRequired && !complete && (
-                    <span style={{ color: 'var(--red)', marginLeft: 'var(--sp-1)', fontSize: 'var(--text-xs)' }}>*</span>
+                    <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)', fontSize: 'var(--text-xs)' }}>*</span>
                   )}
                 </div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
@@ -346,8 +346,8 @@ export default function MultiPageForm({
       {/* Error / incomplete notice */}
       {submitErr && (
         <div style={{
-          padding: 'var(--sp-3) var(--sp-4)',
-          marginBottom: 'var(--sp-3)',
+          padding: 'var(--pad-m) var(--pad-l)',
+          marginBottom: 'var(--mar-m)',
           background: 'var(--red-soft)',
           border: '1px solid var(--red)',
           borderRadius: 'var(--r-m)',
@@ -359,8 +359,8 @@ export default function MultiPageForm({
       )}
       {!allComplete && (
         <div style={{
-          padding: 'var(--sp-3) var(--sp-4)',
-          marginBottom: 'var(--sp-3)',
+          padding: 'var(--pad-m) var(--pad-l)',
+          marginBottom: 'var(--mar-m)',
           background: 'var(--surface-raised)',
           border: '1px solid var(--border-l)',
           borderRadius: 'var(--r-m)',
@@ -379,7 +379,7 @@ export default function MultiPageForm({
         disabled={submitting || !allComplete}
         style={{
           width: '100%',
-          padding: 'var(--sp-3)',
+          padding: 'var(--pad-m)',
           borderRadius: 'var(--r-m)',
           border: `1px solid ${!allComplete || submitting ? 'var(--border-l)' : 'var(--red)'}`,
           background: !allComplete || submitting ? 'var(--hover)' : 'var(--red)',
@@ -390,9 +390,9 @@ export default function MultiPageForm({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'var(--sp-2)',
+          gap: 'var(--gap-s)',
           cursor: !allComplete || submitting ? 'default' : 'pointer',
-          marginBottom: 'var(--sp-8)',
+          marginBottom: 'var(--mar-xxl)',
           transition: 'all var(--ease-fast)',
         }}
       >

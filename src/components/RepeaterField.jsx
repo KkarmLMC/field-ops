@@ -24,7 +24,7 @@ import { FormField } from './FormEngine.jsx'
 // ─── Sub-field label ──────────────────────────────────────────────────────────
 function SubLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--sp-1)' }}>
+    <div style={{ marginBottom: 'var(--mar-xs)' }}>
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4 }}>
         {field.label}
         {field.required && <span style={{ color: 'var(--red)', marginLeft: 4 }}>*</span>}
@@ -61,8 +61,8 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--sp-3)',
-      padding: 'var(--sp-3) var(--sp-4)',
+      gap: 'var(--gap-m)',
+      padding: 'var(--pad-m) var(--pad-l)',
       borderBottom: '1px solid var(--border-l)',
       background: 'var(--white)',
     }}>
@@ -141,14 +141,14 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
         {/* Sheet header */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: 'var(--sp-4)',
+          padding: 'var(--pad-l)',
           borderBottom: '1px solid var(--border-l)',
           flexShrink: 0,
         }}>
           <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--black)' }}>
             {title}
           </div>
-          <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
+          <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
             <button type="button" onClick={onClose} style={{
               width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)',
               border: '1px solid var(--border-l)', background: 'var(--surface-raised)',
@@ -157,10 +157,10 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
               <X size={16} />
             </button>
             <button type="button" onClick={handleSave} style={{
-              height: '2.25rem', padding: '0 var(--sp-4)', borderRadius: 'var(--r-l)',
+              height: '2.25rem', padding: '0 1rem', borderRadius: 'var(--r-l)',
               border: '1px solid var(--navy)', background: 'var(--navy)',
               color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700,
-              display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer',
             }}>
               <CheckCircle size={14} /> Save
             </button>
@@ -170,9 +170,9 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
         {/* Scrollable fields */}
         <div style={{
           flex: 1, overflowY: 'auto',
-          padding: 'var(--sp-4)',
-          display: 'flex', flexDirection: 'column', gap: 'var(--sp-5)',
-          paddingBottom: 'calc(var(--sp-4) + env(safe-area-inset-bottom))',
+          padding: 'var(--pad-l)',
+          display: 'flex', flexDirection: 'column', gap: '1.25rem',
+          paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))',
         }}>
           {subFields.map(f => (
             <div key={f.id}>
@@ -226,7 +226,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
           border: '1px solid var(--border-l)',
           borderRadius: 'var(--r-l)',
           overflow: 'hidden',
-          marginBottom: 'var(--sp-3)',
+          marginBottom: 'var(--mar-m)',
         }}>
           {entries.map((entry, i) => (
             <EntryRow
@@ -244,11 +244,11 @@ export default function RepeaterField({ field, value, onChange, error }) {
       {/* Empty state */}
       {entries.length === 0 && (
         <div style={{
-          padding: 'var(--sp-5)',
+          padding: 'var(--pad-xl)',
           textAlign: 'center',
           border: '1px dashed var(--border-l)',
           borderRadius: 'var(--r-l)',
-          marginBottom: 'var(--sp-3)',
+          marginBottom: 'var(--mar-m)',
           color: 'var(--text-3)',
           fontSize: 'var(--text-sm)',
         }}>
@@ -258,8 +258,8 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Add Entry button */}
       <button type="button" onClick={openAdd} style={{
-        display: 'flex', alignItems: 'center', gap: 'var(--sp-2)',
-        padding: 'var(--sp-2) var(--sp-4)',
+        display: 'flex', alignItems: 'center', gap: '0.5rem',
+        padding: 'var(--pad-s) var(--pad-l)',
         borderRadius: 'var(--r-m)',
         border: '1px solid var(--navy)',
         background: 'transparent',
@@ -273,7 +273,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Error message */}
       {error && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 'var(--sp-1)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 'var(--mar-xs)' }}>
           {error}
         </div>
       )}

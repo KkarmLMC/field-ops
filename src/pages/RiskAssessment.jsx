@@ -12,20 +12,20 @@ import { BRANCH_COLORS } from '../config/branches.js'
 const S = {
   card: {
     background: 'var(--white)', border: '1px solid var(--border)',
-    borderRadius: 'var(--r-l)', marginBottom: 'var(--sp-3)', overflow: 'hidden',
+    borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden',
   },
   cardHead: {
     padding: '0.625rem 0.875rem', background: 'var(--navy)',
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
     color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '0.08em',
   },
-  cardBody: { padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' },
+  cardBody: { padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' },
   label: {
     fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
     color: 'var(--black)', textTransform: 'uppercase', letterSpacing: '0.1em',
   },
   row: {
-    display: 'flex', alignItems: 'center', gap: 'var(--sp-3)',
+    display: 'flex', alignItems: 'center', gap: '0.75rem',
     padding: '0.75rem 0.875rem', borderBottom: '1px solid var(--border)',
   },
 }
@@ -76,7 +76,7 @@ const calcNc = (c1,c2,c3,c4,c5,c6) => 1.5e-3 / (c1*c2*c3*c4*c5*c6)
 // ─── Shared sub-components ────────────────────────────────────────────────────
 function FieldLabel({ label, hint }) {
   return (
-    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'var(--sp-1)' }}>
+    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'var(--mar-xs)' }}>
       <label style={S.label}>{label}</label>
       {hint && <span style={{ fontSize:'var(--text-xs)', color:'var(--text-3)' }}>{hint}</span>}
     </div>
@@ -96,7 +96,7 @@ function ResultBadge({ result, ratio }) {
   const req = result === 'required'
   return (
     <span style={{
-      display:'inline-flex', alignItems:'center', gap:'var(--sp-1)',
+      display:'inline-flex', alignItems:'center', gap:'0.25rem',
       padding:'0.1875rem 0.625rem', borderRadius:'var(--r-s)',
       fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
       letterSpacing:'0.05em', textTransform:'uppercase',
@@ -188,8 +188,8 @@ function NewAssessmentForm({ onSave, onCancel }) {
   return (
     <div className="page-content fade-in">
       {/* Back header */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-3)', marginBottom:'var(--sp-4)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--sp-1)', color:'var(--black)', fontSize:'var(--text-md)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', color:'var(--black)', fontSize:'var(--text-md)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
@@ -206,7 +206,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <FieldLabel label="Address" />
           <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="Street address" style={{ width:'100%' }} />
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--sp-3)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--gap-m)' }}>
           <div>
             <FieldLabel label="Technician" />
             <input value={form.techName} onChange={e=>set('techName',e.target.value)} placeholder="Your name" style={{ width:'100%' }} />
@@ -223,7 +223,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Dimensions */}
       <CardSection title="Structure Dimensions">
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--sp-3)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--gap-m)' }}>
           {[['lengthFt','Length (ft)'],['widthFt','Width (ft)'],['heightFt','Height (ft)']].map(([k,l]) => (
             <div key={k}>
               <FieldLabel label={l} />
@@ -235,13 +235,13 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Flash density */}
       <CardSection title="Lightning Ground Flash Density (Ng)">
-        <div style={{ display:'flex', gap:'var(--sp-2)', alignItems:'flex-end' }}>
+        <div style={{ display:'flex', gap:'var(--gap-s)', alignItems:'flex-end' }}>
           <div style={{ flex:1 }}>
             <FieldLabel label="Flashes / km² / year" hint="From NOAA Keraunic map" />
             <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" style={{ width:'100%' }} />
           </div>
           <button onClick={handleGPS} disabled={locating} style={{
-            display:'flex', alignItems:'center', gap:'var(--sp-2)',
+            display:'flex', alignItems:'center', gap:'0.5rem',
             padding:'0.5rem 0.75rem', borderRadius:'var(--r-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--blue)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)',
@@ -279,14 +279,14 @@ function NewAssessmentForm({ onSave, onCancel }) {
       {!result && (
         <button onClick={calculate} disabled={!allFilled} style={{
           width:'100%', padding:'0.75rem', borderRadius:'var(--r-m)',
-          marginBottom:'var(--sp-3)',
+          marginBottom: 'var(--mar-m)',
           background: allFilled ? 'var(--red)' : 'var(--bg)',
           color:       allFilled ? '#fff'       : 'var(--text-3)',
           fontFamily:'var(--mono)', fontSize:'var(--text-sm)', fontWeight:600,
           letterSpacing:'0.06em', textTransform:'uppercase',
           border:`1px solid ${allFilled ? 'var(--red)' : 'var(--border)'}`,
           transition:'all var(--ease-fast)',
-          display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
+          display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
         }}>
           <ChartBar size={14} /> Calculate Risk Score
         </button>
@@ -297,10 +297,10 @@ function NewAssessmentForm({ onSave, onCancel }) {
         <div style={{
           background: result.required ? 'var(--red-soft)'  : 'var(--success-soft)',
           border:`1px solid ${result.required ? 'var(--red)' : 'var(--success)'}`,
-          borderRadius:'var(--r-l)', padding:'var(--sp-4)', marginBottom:'var(--sp-3)',
+          borderRadius:'var(--r-l)', padding:'1rem', marginBottom: 'var(--mar-m)',
         }}>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--sp-3)' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'var(--sp-2)' }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-m)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
               {result.required
                 ? <Warning size={20} style={{ color:'var(--red)' }} />
                 : <CheckCircle size={20} style={{ color:'var(--success)' }} />
@@ -312,33 +312,33 @@ function NewAssessmentForm({ onSave, onCancel }) {
             <button onClick={()=>setResult(null)} style={{ color:'var(--text-3)' }}><X size={16} /></button>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--sp-2)', marginBottom:'var(--sp-3)' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
             {[
               { label:'Nd (Strikes/yr)',    val: result.Nd.toExponential(2)    },
               { label:'Nc (Tolerable)',     val: result.Nc.toExponential(2)    },
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
               <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--r-s)', padding:'0.5rem 0.625rem' }}>
-                <div style={{ ...S.label, fontSize:'var(--blackxs)', marginBottom:'var(--sp-1)' }}>{label}</div>
+                <div style={{ ...S.label, fontSize:'var(--blackxs)', marginBottom:'var(--mar-xs)' }}>{label}</div>
                 <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--black)' }}>{val}</div>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize:'var(--text-sm)', color:'var(--black)', marginBottom:'var(--sp-3)', lineHeight:1.5 }}>
+          <p style={{ fontSize:'var(--text-sm)', color:'var(--black)', marginBottom:'var(--mar-m)', lineHeight:1.5 }}>
             {result.required
               ? `Nd/Nc = ${result.ratio.toFixed(3)} ≥ 1.0 — Expected strikes exceed tolerable risk. LPS recommended per NFPA 780.`
               : `Nd/Nc = ${result.ratio.toFixed(3)} < 1.0 — Within tolerable risk. LPS is optional but may still be advisable.`
             }
           </p>
 
-          <div style={{ display:'flex', gap:'var(--sp-2)' }}>
+          <div style={{ display:'flex', gap:'var(--gap-s)' }}>
             <button onClick={handleSave} disabled={saving} style={{
               flex:1, padding:'0.625rem', borderRadius:'var(--r-s)',
               background:'var(--red)', color:'#fff',
               fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
               letterSpacing:'0.06em', textTransform:'uppercase',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--sp-2)',
+              display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
             }}>
               {saving ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
@@ -372,13 +372,13 @@ function AssessmentRow({ a }) {
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
-        <div style={{ fontSize:'var(--text-sm)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:'var(--sp-1)' }}>
+        <div style={{ fontSize:'var(--text-sm)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:'var(--gap-xs)' }}>
           <MapPin size={10} />{a.address}
         </div>
       </div>
       <div style={{ textAlign:'right', flexShrink:0 }}>
         <ResultBadge result={a.result} ratio={a.ratio} />
-        <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', marginTop:'var(--sp-1)', fontFamily:'var(--mono)' }}>
+        <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', marginTop:'var(--mar-xs)', fontFamily:'var(--mono)' }}>
           {a.date} · {a.tech}
         </div>
       </div>

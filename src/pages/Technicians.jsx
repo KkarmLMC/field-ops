@@ -70,7 +70,7 @@ export default function Technicians() {
               {/* Assigned jobs */}
               {techJobs.length > 0 && (
                 <div style={{ padding: '8px 14px 10px' }}>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', marginBottom: 'var(--sp-1)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', marginBottom: 'var(--mar-xs)' }}>
                     Assigned Jobs ({techJobs.length})
                   </div>
                   {techJobs.map(job => (

@@ -91,13 +91,13 @@ export default function PartRequest() {
   }
 
   if (saved) return (
-    <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--sp-4)', textAlign: 'center' }}>
+    <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--gap-l)', textAlign: 'center' }}>
       <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
       <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Request Submitted</div>
       <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 280 }}>
         Your part request is pending management review in Mission Control. You'll be notified once it's approved.
       </div>
-      <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 'var(--sp-2)' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-m)', marginTop: 'var(--mar-s)' }}>
         <button onClick={() => navigate('/stock')} className="btn btn-secondary">Back to Stock</button>
         <button onClick={() => { setSaved(false); setItems([{ part_id: '', quantity: 1, notes: '' }]); setProject(null); setForm(f => ({ ...f, justification: '' })) }}
           className="btn btn-primary">New Request</button>
@@ -105,12 +105,12 @@ export default function PartRequest() {
     </div>
   )
 
-  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
 
   return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--sp-5)' }}>
-        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+      <div style={{ marginBottom: 'var(--mar-xl)' }}>
+        <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
           <ArrowLeft size={14} /> Back to Stock
         </button>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>FIELD</div>
@@ -119,11 +119,11 @@ export default function PartRequest() {
       </div>
 
       {/* Job details */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
-        <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
         </div>
-        <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+        <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
           <ProjectPicker
             value={project}
             onChange={setProject}
@@ -150,15 +150,15 @@ export default function PartRequest() {
       </div>
 
       {/* Parts */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
-        <div style={{ background: 'var(--navy)', padding: 'var(--sp-3) var(--sp-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
           <span style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
-        <div style={{ padding: 'var(--sp-3)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
+        <div style={{ padding: 'var(--pad-m)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {items.map((item, idx) => (
-            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)', border: '1px solid var(--border-l)' }}>
-              <div style={{ display: 'flex', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)' }}>
+            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', border: '1px solid var(--border-l)' }}>
+              <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
                 <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} style={{ flex: 1 }}>
                   <option value="">— Select part —</option>
                   {parts.map(p => <option key={p.id} value={p.id}>{p.name}{p.sku ? ` (${p.sku})` : ''}</option>)}
@@ -175,7 +175,7 @@ export default function PartRequest() {
                 placeholder="Note (optional)" style={{ fontSize: 'var(--text-xs)' }} />
             </div>
           ))}
-          <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2)', borderRadius: 'var(--r-l)', border: '1px dashed var(--border-l)', background: 'none', color: 'var(--text-3)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
+          <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: '1px dashed var(--border-l)', background: 'none', color: 'var(--text-3)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
             <Plus size={14} /> Add Part
           </button>
         </div>
@@ -183,17 +183,17 @@ export default function PartRequest() {
 
       {/* Error */}
       {error && (
-        <div style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--sp-4)' }}>
+        <div style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
           {error}
         </div>
       )}
 
       {/* Submit */}
       <button onClick={handleSubmit} disabled={saving}
-        style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-xl)', border: 'none', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
         {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
       </button>
-      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
         This request goes to Mission Control for management review before any parts are pulled.
       </div>
     </div>

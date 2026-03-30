@@ -945,11 +945,11 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
         {/* Body */}
         <div className="dfl-form-body" style={{ overflowY: 'auto', flex: 1 }}>
           {loading ? (
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--sp-8)' }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--pad-xxl)' }}>
               <div className="spinner" />
             </div>
           ) : (
-            <div style={{ padding: 'var(--sp-4)' }}>
+            <div style={{ padding: 'var(--pad-l)' }}>
               <FormEngine
                 schema={schema}
                 values={values}
@@ -1760,7 +1760,7 @@ export default function DailyFieldLog() {
                   ))}
                   {hasMore && (
                     <button onClick={loadMore} disabled={loadingMore}
-                      style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                      style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
                       {loadingMore ? 'Loading…' : 'Load more'}
                     </button>
                   )}
@@ -1772,7 +1772,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* New Daily Log button */}
-      <div style={{ display: 'flex', gap: 'var(--gap-s)', width: '100%', marginBottom: 'var(--sp-2)', overflow: 'hidden', boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-s)', width: '100%', marginBottom: 'var(--mar-s)', overflow: 'hidden', boxSizing: 'border-box' }}>
         <button
           className="btn btn-primary"
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
@@ -1795,7 +1795,7 @@ export default function DailyFieldLog() {
 
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
-        <div className="dash-card" style={{ marginTop: 'var(--sp-2)' }}>
+        <div className="dash-card" style={{ marginTop: 'var(--mar-s)' }}>
           <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
             <span className="dash-card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <Clock size={14} />
@@ -1816,7 +1816,7 @@ export default function DailyFieldLog() {
                 ))}
                 {hasMore && (
                   <button onClick={loadMore} disabled={loadingMore}
-                    style={{ width:'100%', padding:'var(--sp-3)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
+                    style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none', border:'none', borderTop:'1px solid var(--border-l)' }}>
                     {loadingMore ? 'Loading…' : 'Load more'}
                   </button>
                 )}

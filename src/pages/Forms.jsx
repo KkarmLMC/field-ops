@@ -30,8 +30,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
               <button
                 onClick={() => hasChildren ? onToggle(isExpanded ? null : form.slug) : onStart(form.slug)}
                 style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
-                  display:'flex', alignItems:'center', gap:'var(--sp-3)',
-                  padding:'0.75rem var(--sp-4)', borderBottom:'1px solid var(--border-l)',
+                  display:'flex', alignItems:'center', gap:'0.75rem',
+                  padding: '0.75rem var(--pad-l)', borderBottom:'1px solid var(--border-l)',
                   transition:'background var(--ease-fast)',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
@@ -54,8 +54,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                       key={sub.slug}
                       onClick={() => onStart(sub.slug)}
                       style={{ width:'100%', textAlign:'left', background:'none', border:'none', cursor:'pointer',
-                        display:'flex', alignItems:'center', gap:'var(--sp-2)',
-                        padding:'0.625rem var(--sp-4) 0.625rem 2.75rem',
+                        display:'flex', alignItems:'center', gap:'0.5rem',
+                        padding: '0.625rem var(--pad-l) 0.625rem 2.75rem',
                         borderBottom:'1px solid var(--border-l)',
                         transition:'background var(--ease-fast)',
                       }}

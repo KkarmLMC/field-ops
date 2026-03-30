@@ -188,7 +188,7 @@ export default function Sidebar({ collapsed, onToggle }) {
         {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-2) 0.625rem var(--sp-1)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-s) 0.625rem var(--pad-xs)' }}>
               <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--success)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
@@ -196,7 +196,7 @@ export default function Sidebar({ collapsed, onToggle }) {
               </div>
             </div>
           )}
-          {collapsed && <div style={{ height: 'var(--sp-1)' }} />}
+          {collapsed && <div style={{ height: '0.25rem' }} />}
 
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>
