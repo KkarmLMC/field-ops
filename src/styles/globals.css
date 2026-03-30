@@ -1068,7 +1068,9 @@ textarea { resize: vertical; }
   width: 100%;
   box-sizing: border-box;
   min-height: 100%;
+  padding-bottom: calc(var(--content-pad) + 4.5rem);
 }
+
 
 /* Standard vertical column layout for page content sections */
 .page-stack {
@@ -1242,7 +1244,7 @@ textarea { resize: vertical; }
 .badge--review     { background: var(--error-soft);   color: var(--red); }
 .badge--customer   { background: var(--purple-soft);  color: var(--purple); }
 .badge--signed     { background: var(--success-soft); color: var(--success); }
-.badge--complete   { background: var(--success-soft); color: #047857; }
+.badge--complete   { background: var(--success-soft); color: var(--success-dark); }
 .badge--hold       { background: var(--bg);           color: var(--text-3); }
 .badge--failed     { background: var(--error-soft);   color: var(--red); }
 .badge--pending    { background: var(--warning-soft); color: var(--warning-text); }
@@ -1255,11 +1257,11 @@ textarea { resize: vertical; }
 .badge-review     { background: var(--error-soft);   color: var(--red); }
 .badge-customer   { background: var(--purple-soft);  color: var(--purple); }
 .badge-signed     { background: var(--success-soft); color: var(--success); }
-.badge-complete   { background: var(--success-soft); color: #047857; }
+.badge-complete   { background: var(--success-soft); color: var(--success-dark); }
 .badge-hold       { background: var(--bg);           color: var(--text-3); }
 .badge-cancelled  { background: var(--bg);           color: var(--text-3); }
 .badge-active     { background: var(--orange-soft);  color: var(--orange); }
-.badge-completed  { background: var(--success-soft); color: #047857; }
+.badge-completed  { background: var(--success-soft); color: var(--success-dark); }
 .badge-failed     { background: var(--error-soft);   color: var(--red); }
 .badge-pending    { background: var(--warning-soft); color: var(--warning-text); }
 
@@ -1292,7 +1294,7 @@ textarea { resize: vertical; }
 .btn--navy:active { background: var(--navy-dark); }
 
 .btn--black   { background: #000000;     color: white; }
-.btn--black:active { background: #1a1a1a; transform: scale(0.98); }
+.btn--black:active { background: var(--black); transform: scale(0.98); }
 
 .btn--secondary { background: var(--white); color: var(--black); border: 1px solid var(--border-l); }
 .btn--secondary:active { background: var(--hover); }
@@ -1314,7 +1316,7 @@ textarea { resize: vertical; }
 .btn-navy      { background: var(--navy);  color: white; }
 .btn-navy:active { background: var(--navy-dark); }
 .btn-black     { background: #000000; color: white; }
-.btn-black:active { background: #1a1a1a; transform: scale(0.98); }
+.btn-black:active { background: var(--black); transform: scale(0.98); }
 
 /* =============================================================================
    9d. INPUTS & FORMS (page-level form patterns)
@@ -2397,7 +2399,7 @@ textarea { resize: vertical; }
   height: 2rem;
   border-radius: 50%;
   flex-shrink: 0;
-  background: #E5E7EB;
+  background: var(--border);
   color: var(--black);
   display: flex;
   align-items: center;
@@ -2436,7 +2438,7 @@ textarea { resize: vertical; }
 .dfl-photo-btn:hover     { border-color: var(--text-3); color: var(--black); }
 .dfl-photo-btn.uploaded  { border-color: var(--success); color: var(--success); background: var(--success-soft); }
 
-.dfl-sig-wrap    { border: 1px solid var(--border-l); border-radius: var(--r-m); overflow: hidden; background: #FAFAFA; }
+.dfl-sig-wrap    { border: 1px solid var(--border-l); border-radius: var(--r-m); overflow: hidden; background: var(--bg); }
 .dfl-sig-canvas  { display: block; width: 100%; height: 7.5rem; cursor: crosshair; touch-action: none; }
 .dfl-sig-actions { display: flex; align-items: center; justify-content: space-between; padding: 0.375rem 0.625rem; border-top: 1px solid var(--border-l); background: var(--white); }
 .dfl-sig-hint    { font-size: var(--text-xs); color: var(--text-3); }
@@ -2562,7 +2564,7 @@ textarea { resize: vertical; }
 .dfl-typeahead-item.selected { background: var(--success-soft); color: var(--success-text); }
 .dfl-typeahead-empty         { padding: 0.75rem 0.875rem; font-size: var(--text-sm); color: var(--text-3); border: 1px dashed var(--border-l); border-radius: var(--r-m); margin-top: var(--mar-xs); }
 
-.dfl-tech-avatar-sm { width: 1.5rem; height: 1.5rem; border-radius: 50%; flex-shrink: 0; background: #E5E7EB; color: var(--black); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xs); font-weight: 700; letter-spacing: 0.03em; }
+.dfl-tech-avatar-sm { width: 1.5rem; height: 1.5rem; border-radius: 50%; flex-shrink: 0; background: var(--border); color: var(--black); display: flex; align-items: center; justify-content: center; font-size: var(--text-2xs); font-weight: 700; letter-spacing: 0.03em; }
 .dfl-multi-list       { display: flex; flex-direction: column; gap: 0.375rem; }
 .dfl-crew-row         { display: flex; align-items: center; gap: 0.375rem; }
 .dfl-multi-list-remove { flex-shrink: 0; width: 1.75rem; height: 1.75rem; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-3); transition: color var(--ease-fast); border-radius: var(--r-xs); }
@@ -3244,7 +3246,8 @@ textarea { resize: vertical; }
 
 .bottom-nav {
   display: none; /* desktop: hidden */
-}
+padding-bottom: calc(var(--pad-s) + env(safe-area-inset-bottom, 0px));
+  }
 
 @media (max-width: 767px) {
   .bottom-nav {
@@ -3257,12 +3260,15 @@ textarea { resize: vertical; }
     z-index: 150;
     /* Contain the fade overlays */
     overflow: hidden;
+  padding-bottom: calc(var(--pad-s) + env(safe-area-inset-bottom, 0px));
   }
 
   /* Page content clears the bar */
     .page-content {
     padding: var(--pad-l) var(--pad-m) calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--pad-l));
-  }
+    padding-bottom: calc(var(--content-pad) + 4.5rem);
+}
+
 }
 
 /* ── Scrollable track ────────────────────────────────────────────────────────── */
@@ -3415,7 +3421,9 @@ textarea { resize: vertical; }
   /* Sub-nav height is ~2.75rem — always add this when sub-nav could appear */
   .has-sub-nav   .page-content {
     padding: var(--pad-l) var(--pad-m) calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--pad-l));
-  }
+    padding-bottom: calc(var(--content-pad) + 4.5rem);
+}
+
 }
 
 /* ── Tab item ────────────────────────────────────────────────────────────────── */

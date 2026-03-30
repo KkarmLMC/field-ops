@@ -126,7 +126,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
 
       {/* Sheet */}
       <div style={{
-        position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 300,
+        position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 300,
         background: 'var(--white)',
         borderRadius: 'var(--r-xl) var(--r-xl) 0 0',
         maxHeight: '90vh',

@@ -411,8 +411,8 @@ function VoiceNoteField({ value, onChange, readOnly }) {
 
         {/* Progress / waveform bar + timer */}
         <div style={{ flex:1, minWidth:0 }}>
-          <div style={{ height:'0.375rem', background:'var(--border-l)', borderRadius:99, overflow:'hidden', marginBottom:'var(--mar-xs)' }}>
-            <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--red)':'var(--navy)', borderRadius:99, transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
+          <div style={{ height:'0.375rem', background:'var(--border-l)', borderRadius: 'var(--r-s)', overflow:'hidden', marginBottom:'var(--mar-xs)' }}>
+            <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--red)':'var(--navy)', borderRadius: 'var(--r-s)', transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
           </div>
           <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--mono)', color:'var(--text-3)', display:'flex', justifyContent:'space-between' }}>
             <span style={{ color: state==='recording'?'var(--red)':'var(--text-3)' }}>
@@ -533,7 +533,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
               style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)',
                 borderRadius:'var(--r-s)',
                 background: checked?'rgba(4,36,92,0.07)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
-              <span style={{ width:'1rem', height:'1rem', borderRadius:3, border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
+              <span style={{ width:'1rem', height:'1rem', borderRadius: 'var(--r-xs)', border:`2px solid ${checked?'var(--navy)':'var(--border-l)'}`,
                 background: checked?'var(--navy)':'transparent', display:'flex', alignItems:'center', justifyContent:'center',
                 flexShrink:0, fontSize:'var(--text-2xs)', color:'#fff', fontWeight:700 }}>{checked?'✓':''}</span>
               <span style={{ fontSize:'var(--text-sm)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>

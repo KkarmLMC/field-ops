@@ -259,11 +259,11 @@ function TypePickerSheet({ onPick, onClose }) {
       <div onClick={onClose} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.4)', zIndex:200 }} />
       {/* Sheet */}
       <div style={{
-        position:'fixed', left:0, right:0, bottom:0, zIndex:201,
+        position:'fixed', left:0, right:0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex:201,
         background:'var(--white)', borderRadius:'var(--r-xl) var(--r-xl) 0 0',
         padding: 'var(--pad-l)', maxHeight:'75vh', overflowY:'auto' }}>
         {/* Handle */}
-        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius:99, margin:'0 auto var(--mar-l)' }} />
+        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-l)', borderRadius: 'var(--r-s)', margin:'0 auto var(--mar-l)' }} />
         <div style={{ fontSize:'var(--text-md)', fontWeight:700, marginBottom:'var(--mar-l)' }}>Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
           <div key={group.label} style={{ marginBottom: 'var(--mar-l)' }}>

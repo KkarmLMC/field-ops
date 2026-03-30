@@ -138,7 +138,7 @@ export default function Inspections() {
                 onClick={() => setStageFilter(active && key !== 'all' ? 'all' : key)}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 5,
-                  padding: '4px 10px', borderRadius: 20, cursor: 'pointer',
+                  padding: '4px 10px', borderRadius: 'var(--r-m)', cursor: 'pointer',
                   border: active ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
                   background: active ? cfg.bg : 'var(--white)',
                   color: active ? cfg.color : 'var(--black)',
@@ -149,7 +149,7 @@ export default function Inspections() {
                 <span style={{
                   background: active ? cfg.color : 'var(--border)',
                   color: active ? '#fff' : 'var(--black)',
-                  borderRadius: 10, padding: '0 5px',
+                  borderRadius: 'var(--r-m)', padding: '0 5px',
                   fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
               </button>
             )

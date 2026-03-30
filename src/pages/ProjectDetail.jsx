@@ -81,7 +81,7 @@ function StagePipeline({ stage }) {
                   height: isCurrent ? 14 : 10,
                   borderRadius: '50%',
                   background: isCurrent ? cfg.color : isDone ? 'var(--success)' : 'var(--border)',
-                  border: isCurrent ? `3px solid ${cfg.bg}` : 'none',
+                  border: 'none',
                   transition: 'all 0.2s',
                   flexShrink: 0 }} />
                 <span style={{
@@ -95,7 +95,7 @@ function StagePipeline({ stage }) {
                 <div style={{
                   width: 24, height: 2, margin: '0 4px', marginBottom: 14,
                   background: isDone ? 'var(--success)' : 'var(--border)',
-                  borderRadius: 1, flexShrink: 0 }} />
+                  borderRadius: 'var(--r-xs)', flexShrink: 0 }} />
               )}
             </div>
           )
@@ -106,7 +106,7 @@ function StagePipeline({ stage }) {
           <span style={{
             fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
             background: STAGE_CFG[stage]?.bg || 'var(--white)',
-            padding: '3px 10px', borderRadius: 20 }}>
+            padding: '3px 10px', borderRadius: 'var(--r-m)' }}>
             {STAGE_CFG[stage]?.label || stage}
           </span>
         </div>
@@ -213,7 +213,7 @@ export default function ProjectDetail() {
                 fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                 color: stageCfg.color, background: stageCfg.bg,
                 border: `1px solid ${stageCfg.color}44`,
-                padding: '3px 10px', borderRadius: 20 }}>
+                padding: '3px 10px', borderRadius: 'var(--r-m)' }}>
                 {stageCfg.label || project.stage}
               </div>
             </div>
@@ -241,10 +241,10 @@ export default function ProjectDetail() {
                   {project.progress}%
                 </span>
               </div>
-              <div style={{ height: 5, borderRadius: 3, background: 'var(--border-l)', overflow: 'hidden' }}>
+              <div style={{ height: 5, borderRadius: 'var(--r-xs)', background: 'var(--border-l)', overflow: 'hidden' }}>
                 <div style={{
                   height: '100%', width: `${project.progress}%`,
-                  background: stageCfg.color || 'var(--orange)', borderRadius: 3,
+                  background: stageCfg.color || 'var(--orange)', borderRadius: 'var(--r-xs)',
                   transition: 'width 0.4s ease' }} />
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function ProjectDetail() {
           {cfCfg && (
             <div style={{
               margin: '0 14px 14px',
-              padding: '8px 12px', borderRadius: 8,
+              padding: '8px 12px', borderRadius: 'var(--r-m)',
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: cfCfg.color }}>
@@ -495,7 +495,7 @@ export default function ProjectDetail() {
                     fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
                     color: sCfg.color || 'var(--text-3)',
                     background: sCfg.bg || 'var(--white)',
-                    padding: '3px 8px', borderRadius: 20,
+                    padding: '3px 8px', borderRadius: 'var(--r-m)',
                     border: `1px solid ${sCfg.color || 'var(--border)'}33` }}>
                     {s.status || 'Draft'}
                   </span>

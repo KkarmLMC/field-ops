@@ -51,9 +51,9 @@ function StagePill({ stageKey, count, active, onClick }) {
     <button
       onClick={onClick}
       style={{
-        flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 10,
+        flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 'var(--r-m)',
         background: active ? cfg.bg : 'var(--white)',
-        border: `1px solid ${active ? cfg.color + '55' : 'var(--border)'}`,
+        border: none,
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
       <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
@@ -95,7 +95,7 @@ function MgmtRow({ p, navigate }) {
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
               fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-              background: 'var(--blue)', color: '#fff', padding: '2px 5px', borderRadius: 3,
+              background: 'var(--blue)', color: '#fff', padding: '2px 5px', borderRadius: 'var(--r-xs)',
               flexShrink: 0 }}>
               Review
             </span>
@@ -161,7 +161,7 @@ function FieldRow({ p, navigate }) {
           {p.nfpa_class && (
             <span style={{
               marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
-              background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 3 }}>
+              background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 'var(--r-xs)' }}>
               NFPA {p.nfpa_class}
             </span>
           )}
@@ -381,7 +381,7 @@ export default function Installations() {
               <span className="dash-card-meta">{filtered.length}</span>
               <button
                 style={{
-                  background: 'rgba(255,255,255,0.15)', borderRadius: 6,
+                  background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
                   padding: '3px 7px', cursor: 'pointer', display: 'flex', alignItems: 'center',
                   color: 'inherit' }}
                 onClick={() => setSearchOpen(o => !o)}
@@ -391,7 +391,7 @@ export default function Installations() {
               {stageFilter !== 'all' && (
                 <button
                   style={{
-                    background: 'rgba(255,255,255,0.15)', borderRadius: 6,
+                    background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
                     padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600,
                     color: 'inherit', letterSpacing: '0.02em' }}
                   onClick={() => setStageFilter('all')}

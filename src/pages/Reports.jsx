@@ -53,8 +53,8 @@ function TypePill({ typeKey, count, active, onClick }) {
       onClick={onClick}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
-        padding: '4px 10px', borderRadius: 20, cursor: 'pointer',
-        border: active ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
+        padding: '4px 10px', borderRadius: 'var(--r-m)', cursor: 'pointer',
+        border: 'none',
         background: active ? cfg.bg : 'var(--white)',
         color: active ? cfg.color : 'var(--black)',
         fontSize: 'var(--text-sm)', fontWeight: active ? 600 : 500,
@@ -65,7 +65,7 @@ function TypePill({ typeKey, count, active, onClick }) {
       <span style={{
         background: active ? cfg.color : 'var(--border)',
         color: active ? '#fff' : 'var(--black)',
-        borderRadius: 10, padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
+        borderRadius: 'var(--r-m)', padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
     </button>
   )
 }
@@ -100,7 +100,7 @@ function ReportRow({ r }) {
 
       {/* Status badge */}
       <span style={{
-        fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 6, flexShrink: 0,
+        fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 'var(--r-s)', flexShrink: 0,
         background: status.bg, color: status.color, whiteSpace: 'nowrap' }}>
         {status.label}
       </span>
@@ -108,7 +108,7 @@ function ReportRow({ r }) {
       {/* View button */}
       <button style={{
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-        padding: '5px 10px', borderRadius: 6,
+        padding: '5px 10px', borderRadius: 'var(--r-s)',
         background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
         <Eye size={12} />
         View
@@ -210,9 +210,9 @@ export default function Reports() {
             onClick={() => setActiveStatus(activeStatus === key ? null : key)}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
-              padding: '3px 9px', borderRadius: 20, cursor: 'pointer',
+              padding: '3px 9px', borderRadius: 'var(--r-m)', cursor: 'pointer',
               fontSize: 'var(--text-xs)', fontWeight: activeStatus === key ? 600 : 500,
-              border: activeStatus === key ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
+              border: 'none',
               background: activeStatus === key ? cfg.bg : 'var(--white)',
               color: activeStatus === key ? cfg.color : 'var(--text-3)',
               transition: 'all 0.15s' }}
@@ -221,7 +221,7 @@ export default function Reports() {
             <span style={{
               background: activeStatus === key ? cfg.color : 'var(--border)',
               color: activeStatus === key ? '#fff' : 'var(--black)',
-              borderRadius: 10, padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
+              borderRadius: 'var(--r-m)', padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
           </button>
         ))}
       </div>
