@@ -205,7 +205,7 @@ export default function ProjectDetail() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <TypeIcon size={14} style={{ color: stageCfg.color }} />
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: stageCfg.color }}>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
               </div>

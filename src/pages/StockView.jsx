@@ -121,7 +121,7 @@ export default function StockView() {
           <ArrowsLeftRight size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
-            <div style={{ fontSize: 'var(--text-xs)', opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
+            <div style={{ fontSize: 'var(--text-sm)', opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
           </div>
         </button>
 

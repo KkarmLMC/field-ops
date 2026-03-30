@@ -105,7 +105,7 @@ export default function ExpenseDetail() {
             <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.description}</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>
                   {l.days > 0 && `${l.days} days`}{l.nights > 0 && ` · ${l.nights} nights`}{l.miles > 0 && ` · ${l.miles} mi`}
                   {l.rate > 0 && ` @ $${l.rate}`}
                 </div>
@@ -128,11 +128,11 @@ export default function ExpenseDetail() {
             {lines.map(l => (
               <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', borderBottom: '1px solid var(--border-l)', minWidth: 800, alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>{l.vendor_description || '—'}</div>
-                  {l.line_date && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
+                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.vendor_description || '—'}</div>
+                  {l.line_date && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
                 </div>
                 {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
-                  <div key={f} style={{ textAlign: 'right', fontSize: 'var(--text-xs)', color: l[f] > 0 ? 'var(--black)' : 'var(--text-3)', fontWeight: l[f] > 0 ? 600 : 400 }}>
+                  <div key={f} style={{ textAlign: 'right', fontSize: 'var(--text-sm)', color: l[f] > 0 ? 'var(--black)' : 'var(--text-3)', fontWeight: l[f] > 0 ? 600 : 400 }}>
                     {l[f] > 0 ? `$${Number(l[f]).toFixed(2)}` : '—'}
                   </div>
                 ))}
@@ -146,7 +146,7 @@ export default function ExpenseDetail() {
       {!isAdvance && mileage.length > 0 && (
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--white)' }}>Mileage Log</span>
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--white)' }}>Mileage Log</span>
             <span style={{ fontSize: 'var(--text-base)', fontWeight: 700, color: 'var(--white)' }}>Miles</span>
           </div>
           {mileage.map(m => (
