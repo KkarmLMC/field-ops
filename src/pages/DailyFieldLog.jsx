@@ -39,19 +39,19 @@ const SAFETY_FORMS = [
 ]
 
 const STATUS_STYLE = {
-  Draft:     { bg: 'var(--warning-tint-80)', color: 'var(--black)' },
-  Submitted: { bg: 'var(--blue-soft)', color: 'var(--black)' },
-  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--black)' } }
+  Draft:     { bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
+  Submitted: { bg: 'var(--blue-soft)', color: 'var(--blue)' },
+  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--success-text)' } }
 
 // Stage labels for jobsite dropdown
 const JOB_STATUS_STYLE = {
-  'in-progress':    { label: 'Active',         bg: 'var(--warning-tint-80)', color: 'var(--black)' },
+  'in-progress':    { label: 'Active',         bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
   'scheduled':      { label: 'Scheduled',      bg: 'var(--purple-tint-60)', color: 'var(--purple-shade-20)' },
-  'pending-review': { label: 'Pending Review', bg: 'var(--blue-tint-80)', color: 'var(--black)' },
-  'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--black)' },
-  'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--black)' },
-  'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--black)' },
-  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--black)' } }
+  'pending-review': { label: 'Pending Review', bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-40)' },
+  'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
+  'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--success-text)' },
+  'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--error-dark)' },
+  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--purple)' } }
 
 // Derive unique customer names from all PROJECTS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()
@@ -199,7 +199,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
             >
               <Buildings size={12} style={{ flexShrink: 0, opacity: 0.5 }} />
               {name}
-              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: 'var(--black)' }} />}
+              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: 'var(--success-text)' }} />}
             </li>
           ))}
         </ul>
@@ -293,7 +293,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                 >
                   <MapPin size={13} style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
                   <span style={{ flex: 1 }}>{job.name}</span>
-                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />}
+                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
                 </div>
               )
             })
@@ -365,7 +365,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span style={{ flex: 1 }}>{tech.name}</span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
-              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />}
+              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -473,7 +473,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               onMouseDown={() => select(opt)}
             >
               <span style={{ flex: 1, fontFamily: 'var(--mono)', fontSize: '0.875rem' }}>{opt.label}</span>
-              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />}
+              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -661,7 +661,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {isDraft && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint">
-            <Warning size={11} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />
+            <Warning size={11} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
             Complete end-of-day close-out to submit this log
           </div>
           <button
@@ -678,8 +678,8 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {/* Submitted: View PDF Submission */}
       {!isDraft && entry.pdf_url && (
         <div className="dfl-closeout-row">
-          <div className="dfl-closeout-hint" style={{ color: 'var(--black)' }}>
-            <SealCheck size={11} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />
+          <div className="dfl-closeout-hint" style={{ color: 'var(--success-text)' }}>
+            <SealCheck size={11} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />
             Log finalized and stored
           </div>
           <a
@@ -805,7 +805,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-pf-row">
           <span className="fr-pf-label">
             {field.label}
-            {field.required && <span style={{ color: 'var(--black)', marginLeft: 2 }}>*</span>}
+            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
           </span>
           <div className="fr-pf-buttons">
             <button type="button" className={`fr-pf-btn fr-pf-pass ${pf.result === 'pass' ? 'active' : ''}`} onClick={() => onChange({ ...pf, result: pf.result === 'pass' ? null : 'pass' })}>Pass</button>
@@ -822,7 +822,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-ok-row">
           <span className="fr-ok-label">
             {field.label}
-            {field.required && <span style={{ color: 'var(--black)', marginLeft: 2 }}>*</span>}
+            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
           </span>
           <div className="fr-ok-buttons">
             {[['ok','OK'],['notok','Not OK'],['na','N/A']].map(([k, lbl]) => (
@@ -1144,7 +1144,7 @@ const STEPS = [
                 <div key={key} className={`dfl-safety-form-item ${form[key] ? 'completed' : ''}`}>
                   <div className="dfl-safety-form-icon">
                     {form[key]
-                      ? <CheckCircle size={18} weight="fill" style={{ color: 'var(--black)' }} />
+                      ? <CheckCircle size={18} weight="fill" style={{ color: 'var(--success-text)' }} />
                       : <HardHat size={18} weight="bold" style={{ color: 'var(--grey-base)' }} />
                     }
                   </div>

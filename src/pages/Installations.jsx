@@ -11,13 +11,13 @@ import { BRANCH_COLORS } from '../config/branches.js'
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
-  'awarded':        { label: 'Awarded',        short: 'Awarded',   color: 'var(--black)', bg: 'var(--purple-soft)' },
+  'awarded':        { label: 'Awarded',        short: 'Awarded',   color: 'var(--purple)', bg: 'var(--purple-soft)' },
   'scheduled':      { label: 'Scheduled',      short: 'Upcoming',  color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-  'in-progress':    { label: 'In Progress',    short: 'Active',    color: 'var(--black)', bg: 'var(--warning-soft)' },
-  'pending-review': { label: 'Pending Review', short: 'In Review', color: 'var(--black)', bg: 'var(--blue-soft)' },
-  'complete':       { label: 'Complete',       short: 'Complete',  color: 'var(--black)', bg: 'var(--success-soft)' },
-  'postponed':      { label: 'Postponed',      short: 'Postponed', color: 'var(--black)', bg: 'var(--orange-soft)' },
-  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--black)', bg: 'var(--error-soft)' } }
+  'in-progress':    { label: 'In Progress',    short: 'Active',    color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  'pending-review': { label: 'Pending Review', short: 'In Review', color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  'complete':       { label: 'Complete',       short: 'Complete',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
+  'postponed':      { label: 'Postponed',      short: 'Postponed', color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)' },
+  'failed':         { label: 'Failed',         short: 'Failed',    color: 'var(--error-alt)', bg: 'var(--error-soft)' } }
 
 // ─── Type icons ───────────────────────────────────────────────────────────────
 const TYPE_ICON = {

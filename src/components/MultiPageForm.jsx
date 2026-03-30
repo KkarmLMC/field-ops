@@ -296,9 +296,9 @@ export default function MultiPageForm({
               {/* Status icon */}
               <div style={{ flexShrink: 0 }}>
                 {complete ? (
-                  <CheckCircle size={22} weight="fill" style={{ color: 'var(--black)' }} />
+                  <CheckCircle size={22} weight="fill" style={{ color: 'var(--success)' }} />
                 ) : started ? (
-                  <Warning size={22} weight="fill" style={{ color: 'var(--black)' }} />
+                  <Warning size={22} weight="fill" style={{ color: 'var(--amber, #D97706)' }} />
                 ) : (
                   <Circle size={22} style={{ color: 'var(--border-l)' }} />
                 )}
@@ -332,7 +332,7 @@ export default function MultiPageForm({
         <div style={{
           padding: 'var(--pad-m) var(--pad-l)',
           marginBottom: 'var(--mar-m)',
-          background: 'var(--bg)',
+          background: 'var(--red-soft)',
           borderRadius: 'var(--r-m)',
           fontSize: 'var(--text-sm)',
           color: 'var(--red)' }}>

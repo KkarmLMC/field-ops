@@ -10,22 +10,22 @@ import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/m
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
-  'awarded':        { label: 'Awarded',        color: 'var(--black)', bg: 'var(--purple-soft)', order: 0 },
+  'awarded':        { label: 'Awarded',        color: 'var(--purple)', bg: 'var(--purple-soft)', order: 0 },
   'scheduled':      { label: 'Scheduled',      color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)', order: 1 },
-  'in-progress':    { label: 'In Progress',    color: 'var(--black)', bg: 'var(--warning-soft)', order: 2 },
-  'pending-review': { label: 'Pending Review', color: 'var(--black)', bg: 'var(--blue-soft)', order: 3 },
-  'complete':       { label: 'Complete',       color: 'var(--black)', bg: 'var(--success-soft)', order: 4 },
-  'postponed':      { label: 'Postponed',      color: 'var(--black)', bg: 'var(--orange-soft)', order: 5 },
-  'failed':         { label: 'Failed',         color: 'var(--black)', bg: 'var(--error-soft)', order: 6 } }
+  'in-progress':    { label: 'In Progress',    color: 'var(--warning)', bg: 'var(--warning-soft)', order: 2 },
+  'pending-review': { label: 'Pending Review', color: 'var(--blue)', bg: 'var(--blue-soft)', order: 3 },
+  'complete':       { label: 'Complete',       color: 'var(--success-text)', bg: 'var(--success-soft)', order: 4 },
+  'postponed':      { label: 'Postponed',      color: 'var(--orange-shade-20)', bg: 'var(--orange-soft)', order: 5 },
+  'failed':         { label: 'Failed',         color: 'var(--error-alt)', bg: 'var(--error-soft)', order: 6 } }
 
 const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
   'draft':           { label: 'Draft',           color: 'var(--grey-base)', bg: 'var(--white)' },
-  'submitted':       { label: 'Needs Review',     color: 'var(--black)', bg: 'var(--blue-soft)' },
-  'under-review':    { label: 'Under Review',     color: 'var(--black)', bg: 'var(--warning-soft)' },
-  'customer-signoff':{ label: 'Customer Sign-off',color: 'var(--black)', bg: 'var(--purple-soft)' },
-  'complete':        { label: 'Approved',         color: 'var(--black)', bg: 'var(--success-soft)' } }
+  'submitted':       { label: 'Needs Review',     color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  'under-review':    { label: 'Under Review',     color: 'var(--warning)', bg: 'var(--warning-soft)' },
+  'customer-signoff':{ label: 'Customer Sign-off',color: 'var(--purple)', bg: 'var(--purple-soft)' },
+  'complete':        { label: 'Approved',         color: 'var(--success-text)', bg: 'var(--success-soft)' } }
 
 const TYPE_ICON = {
   installation:  Lightning,
@@ -415,9 +415,9 @@ export default function ProjectDetail() {
             {/* Cost breakdown */}
             <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
               {[
-                { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--black)' },
-                { label: 'Installation',  value: jobCost.installTotal,    color: 'var(--black)' },
-                { label: 'Field Expenses',value: jobCost.expenseTotal,    color: 'var(--black)' },
+                { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--blue)' },
+                { label: 'Installation',  value: jobCost.installTotal,    color: 'var(--purple)' },
+                { label: 'Field Expenses',value: jobCost.expenseTotal,    color: 'var(--warning)' },
                 { label: 'Advances Issued',value: jobCost.advanceTotal,   color: 'var(--grey-base)' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
