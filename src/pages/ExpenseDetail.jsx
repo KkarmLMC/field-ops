@@ -104,7 +104,7 @@ export default function ExpenseDetail() {
 
       {/* Advance lines */}
       {isAdvance && advanceLines.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Description</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Total</span>
@@ -126,7 +126,7 @@ export default function ExpenseDetail() {
 
       {/* Expense line items */}
       {!isAdvance && lines.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
@@ -152,7 +152,7 @@ export default function ExpenseDetail() {
 
       {/* Mileage log */}
       {!isAdvance && mileage.length > 0 && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Mileage Log</span>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Miles</span>
@@ -167,7 +167,7 @@ export default function ExpenseDetail() {
       )}
 
       {/* Totals */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
         {!isAdvance && (
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
@@ -191,7 +191,7 @@ export default function ExpenseDetail() {
       </div>
 
       {report.notes && (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>

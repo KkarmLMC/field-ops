@@ -174,7 +174,8 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
       <div
         style={{
           background: 'var(--white)',
-          border: '1px solid var(--border-l)',
+          border: 'none',
+          boxShadow: 'var(--shadow-s)',
           borderRadius: 'var(--r-m)',
           marginBottom: 'var(--mar-s)',
           overflow: 'hidden',

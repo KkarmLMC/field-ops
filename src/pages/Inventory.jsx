@@ -109,7 +109,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
 function StatTile({ label, value, color = 'var(--black)' }) {
   return (
-    <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m) var(--pad-l)' }}>
+    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m) var(--pad-l)' }}>
       <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
       <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4, fontWeight: 600 }}>{label}</div>
     </div>
@@ -127,7 +127,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
   return (
     <div style={{
-      background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden',
+      background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden',
       border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-l)',
     }}>
       {/* Header — clickable, goes to warehouse detail */}
@@ -163,7 +163,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           { label: 'Low Stock', value: lowStockItems, Icon: WarningCircle, color: lowStockItems > 0 ? 'var(--orange-shade-20)' : 'var(--text-3)' },
           { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? 'var(--blue)' : 'var(--text-3)' },
         ].map(s => (
-          <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--pad-m) var(--pad-l)' }}>
+          <div key={s.label} style={{ background: 'var(--white)', padding: 'var(--pad-m) var(--pad-l)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
               <s.Icon size={13} />
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>{s.label}</span>
@@ -296,7 +296,7 @@ export default function Inventory() {
           {editMode ? (
             <>
               <button onClick={() => setEditMode(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <X size={14} /> Cancel
               </button>
               <button onClick={saveOrder} disabled={saving}
@@ -307,11 +307,11 @@ export default function Inventory() {
           ) : (
             <>
               <button onClick={() => setEditMode(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <PencilSimple size={14} /> Edit
               </button>
               <button onClick={() => navigate('/warehouse-hq/transfer')}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                 <ArrowsLeftRight size={14} /> Transfer
               </button>
               <button onClick={() => setShowAdd(true)}
@@ -338,7 +338,7 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
@@ -427,7 +427,7 @@ export default function Inventory() {
               onDragOver={e => e.preventDefault()}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
-                background: 'var(--surface-raised)', borderRadius: 'var(--r-m)',
+                background: 'var(--white)', borderRadius: 'var(--r-m)',
                 border: '1px solid var(--border-l)', padding: '1rem',
                 cursor: 'grab', userSelect: 'none',
                 transition: 'box-shadow 0.15s ease',

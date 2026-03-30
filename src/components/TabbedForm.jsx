@@ -116,7 +116,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       </div>
 
       {/* Section */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
           {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.65)', marginTop: 'var(--mar-xs)' }}>{current.description}</div>}
@@ -143,7 +143,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
         {!isFirst && (
           <button type="button" onClick={back} style={{
             flex: 1, padding: '0.75rem', borderRadius: 'var(--r-m)',
-            border: '1px solid var(--border-l)', background: 'var(--surface-raised)',
+            border: '1px solid var(--border-l)', background: 'var(--white)',
             color: 'var(--black)', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer',
           }}>

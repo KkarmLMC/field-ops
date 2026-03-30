@@ -190,7 +190,7 @@ export default function Expenses() {
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

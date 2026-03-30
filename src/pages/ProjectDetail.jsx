@@ -399,7 +399,7 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', border: '1px solid var(--border-l)' }}>
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
@@ -420,7 +420,7 @@ export default function ProjectDetail() {
                 { label: 'Miles Driven',   value: jobCost.totalMiles.toLocaleString() },
                 { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
               ].map(s => (
-                <div key={s.label} style={{ background: 'var(--surface-raised)', padding: 'var(--pad-m) var(--pad-l)' }}>
+                <div key={s.label} style={{ background: 'var(--white)', padding: 'var(--pad-m) var(--pad-l)' }}>
                   <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--black)' }}>{s.value}</div>
                   <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
                 </div>

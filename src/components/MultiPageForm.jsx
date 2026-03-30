@@ -96,7 +96,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
             height: '2.25rem',
             borderRadius: 'var(--r-l)',
             border: '1px solid var(--border-l)',
-            background: 'var(--surface-raised)',
+            background: 'var(--white)',
             color: 'var(--black)',
             display: 'flex',
             alignItems: 'center',
@@ -114,7 +114,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
 
       {/* Section card */}
       <div style={{
-        background: 'var(--surface-raised)',
+        background: 'var(--white)',
         borderRadius: 'var(--r-m)',
         overflow: 'hidden',
         marginBottom: 'var(--mar-l)',
@@ -275,7 +275,7 @@ export default function MultiPageForm({
 
       {/* Section list */}
       <div style={{
-        background: 'var(--surface-raised)',
+        background: 'var(--white)',
         borderRadius: 'var(--r-m)',
         overflow: 'hidden',
         marginBottom: 'var(--mar-l)',
@@ -361,7 +361,7 @@ export default function MultiPageForm({
         <div style={{
           padding: 'var(--pad-m) var(--pad-l)',
           marginBottom: 'var(--mar-m)',
-          background: 'var(--surface-raised)',
+          background: 'var(--white)',
           border: '1px solid var(--border-l)',
           borderRadius: 'var(--r-m)',
           fontSize: 'var(--text-xs)',

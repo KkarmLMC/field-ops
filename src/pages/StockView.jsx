@@ -128,7 +128,7 @@ export default function StockView() {
         </button>
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <Package size={16} />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
@@ -176,7 +176,7 @@ export default function StockView() {
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
             {['Part', 'Stock', ''].map((h, i) => (
@@ -217,7 +217,7 @@ export default function StockView() {
 
       {/* Transfer CTA at bottom when viewing a warehouse with issues */}
       {(filtered.some(l => l.quantity_on_hand === 0 || (l.min_level && l.quantity_on_hand <= l.min_level))) && (
-        <div style={{ marginTop: 'var(--mar-l)', background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-m)' }}>
+        <div style={{ marginTop: 'var(--mar-l)', background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-m)' }}>
           <div>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Need parts restocked?</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>Submit a transfer request to move stock from another warehouse.</div>

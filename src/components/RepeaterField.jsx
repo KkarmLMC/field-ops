@@ -89,11 +89,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
 
       {/* Edit + Delete */}
       <button type="button" onClick={onEdit}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <PencilSimple size={14} />
       </button>
       <button type="button" onClick={onDelete}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
         <Trash size={14} />
       </button>
     </div>
@@ -151,7 +151,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
           <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
             <button type="button" onClick={onClose} style={{
               width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)',
-              border: '1px solid var(--border-l)', background: 'var(--surface-raised)',
+              border: '1px solid var(--border-l)', background: 'var(--white)',
               color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
             }}>
               <X size={16} />

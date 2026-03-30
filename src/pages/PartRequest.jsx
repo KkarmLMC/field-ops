@@ -119,7 +119,7 @@ export default function PartRequest() {
       </div>
 
       {/* Job details */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
         </div>
@@ -150,7 +150,7 @@ export default function PartRequest() {
       </div>
 
       {/* Parts */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
           <span style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--mono)' }}>{items.length} line{items.length !== 1 ? 's' : ''}</span>
