@@ -3,9 +3,13 @@ import {
   Plus, MapPin, X, CheckCircle,
   Warning, ArrowLeft, Crosshair, SpinnerGap, ChartBar } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
 import BranchTabs from '../components/BranchTabs'
 import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
+
+const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
@@ -110,6 +114,7 @@ const EMPTY = {
   c1:'', c2:'', c3:'', c4:'', c5:'', c6:'' }
 
 function NewAssessmentForm({ onSave, onCancel }) {
+  const { user } = useAuth()
   const [form,     setForm]     = useState(EMPTY)
   const [locating, setLocating] = useState(false)
   const [result,   setResult]   = useState(null)
@@ -161,6 +166,13 @@ function NewAssessmentForm({ onSave, onCancel }) {
       result:        result.required ? 'required' : 'not-required',
       form_data:     form }
     const { data, error } = await db.from('risk_assessments').insert(row).select().single()
+    if (!error && data) {
+      logActivity(db, user?.id, APP_SOURCE, {
+        category: 'risk_assessment', action: 'created',
+        label: `Risk Assessment: ${form.siteName || 'Unnamed'} — ${result.required ? 'LP Required' : 'Not Required'}`,
+        entity_type: 'risk_assessment', entity_id: data.id,
+        meta: { site: form.siteName, result: row.result, ratio: result.ratio, nd: result.Nd, nc: result.Nc } })
+    }
     setSaving(false)
     onSave({
       id:       data?.id || `ra-${Date.now()}`,

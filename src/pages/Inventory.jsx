@@ -406,6 +406,12 @@ export default function Inventory() {
       {/* Warehouse cards / drag list */}
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+      ) : warehouses.length === 0 ? (
+        <div className="empty" style={{ padding: 'var(--pad-xxl)' }}>
+          <Buildings size={32} style={{ color: 'var(--text-3)' }} />
+          <div className="empty-title">No warehouses yet</div>
+          <div className="empty-desc">Add your first warehouse to start tracking inventory.</div>
+        </div>
       ) : editMode ? (
         /* Edit mode: vertical drag list */
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
