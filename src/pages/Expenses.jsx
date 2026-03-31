@@ -5,7 +5,6 @@ import {
   CaretRight, CheckCircle, Clock, PaperPlaneTilt, X,
   MagnifyingGlass, Buildings } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import PageHeader from '../components/ui/PageHeader'
 
 const STATUS = {
   draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
@@ -111,26 +110,25 @@ export default function Expenses() {
   return (
     <div className="page-content fade-in">
 
-      <PageHeader eyebrow="FIELD" title="Expenses" action={
-        <div style={{ position: 'relative' }}>
-          <button onClick={() => setShowNewMenu(m => !m)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Plus size="0.9375rem" /> New
-          </button>
-          {showNewMenu && (
-            <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', borderRadius: 'var(--r-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
-              {[['LM','advance'], ['LM','expense'], ['Bolt','advance'], ['Bolt','expense']].map(([div, type]) => (
-                <button key={`${div}-${type}`}
-                  onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      } />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--mar-m)', position: 'relative' }}>
+        <button onClick={() => setShowNewMenu(m => !m)}
+          className="btn btn-navy"
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+          <Plus size="0.9375rem" /> New
+        </button>
+        {showNewMenu && (
+          <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', borderRadius: 'var(--r-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
+            {[['LM','advance'], ['LM','expense'], ['Bolt','advance'], ['Bolt','expense']].map(([div, type]) => (
+              <button key={`${div}-${type}`}
+                onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
+                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Pending alert */}
       {submitted > 0 && (

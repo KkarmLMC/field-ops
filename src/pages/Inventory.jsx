@@ -5,7 +5,6 @@ import {
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
   DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import PageHeader from '../components/ui/PageHeader'
 
 // ─── Shared label ─────────────────────────────────────────────────────────────
 function Label({ children }) {
@@ -285,37 +284,35 @@ export default function Inventory() {
   return (
     <div className="page-content fade-in">
 
-      <PageHeader eyebrow="WAREHOUSE HQ" title="Warehouse HQ" action={
-        <div style={{ display: 'flex', gap: 'var(--gap-s)', flexWrap: 'wrap' }}>
-          {editMode ? (
-            <>
-              <button onClick={() => setEditMode(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <X size="0.875rem" /> Cancel
-              </button>
-              <button onClick={saveOrder} disabled={saving}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <Check size="0.875rem" /> {saving ? 'Saving…' : 'Save Order'}
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => setEditMode(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <PencilSimple size="0.875rem" /> Edit
-              </button>
-              <button onClick={() => navigate('/warehouse-hq/transfer')}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <ArrowsLeftRight size="0.875rem" /> Transfer
-              </button>
-              <button onClick={() => setShowAdd(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <Plus size="0.875rem" /> Add Warehouse
-              </button>
-            </>
-          )}
-        </div>
-      } />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--gap-s)', flexWrap: 'wrap', marginBottom: 'var(--mar-m)' }}>
+        {editMode ? (
+          <>
+            <button onClick={() => setEditMode(false)}
+              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+              <X size="0.875rem" /> Cancel
+            </button>
+            <button onClick={saveOrder} disabled={saving}
+              className="btn btn-navy">
+              <Check size="0.875rem" /> {saving ? 'Saving…' : 'Save Order'}
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => setEditMode(true)}
+              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+              <PencilSimple size="0.875rem" /> Edit
+            </button>
+            <button onClick={() => navigate('/warehouse-hq/transfer')}
+              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+              <ArrowsLeftRight size="0.875rem" /> Transfer
+            </button>
+            <button onClick={() => setShowAdd(true)}
+              className="btn btn-navy">
+              <Plus size="0.875rem" /> Add Warehouse
+            </button>
+          </>
+        )}
+      </div>
 
       {/* Edit mode hint */}
       {editMode && (

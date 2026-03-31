@@ -5,7 +5,6 @@ import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 import ProjectPicker from '../components/ProjectPicker.jsx'
-import PageHeader from '../components/ui/PageHeader'
 
 export default function PartRequest() {
   const navigate = useNavigate()
@@ -110,7 +109,6 @@ export default function PartRequest() {
       <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
         <ArrowLeft size="0.875rem" /> Back to Stock
       </button>
-      <PageHeader eyebrow="FIELD" title="Part Request" subtitle="Pending management review before fulfillment" />
 
       {/* Job details */}
       <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>

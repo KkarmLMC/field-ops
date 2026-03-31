@@ -4,7 +4,6 @@ import {
   MagnifyingGlass, X, ArrowsLeftRight, Package,
   Buildings, WarningCircle, ArrowRight, Clock } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
-import PageHeader from '../components/ui/PageHeader'
 
 // ─── Stock chip ───────────────────────────────────────────────────────────────
 function StockBadge({ qty, min }) {
@@ -95,7 +94,6 @@ export default function StockView() {
   return (
     <div className="page-content fade-in">
 
-      <PageHeader eyebrow="FIELD" title="Stock Lookup" subtitle="Check parts availability across all warehouses" />
 
       {/* Warehouse selector — horizontal scroll */}
       <div style={{ display: 'flex', gap: 'var(--gap-s)', overflowX: 'auto', scrollbarWidth: 'none', marginBottom: 'var(--mar-l)', paddingBottom: 2 }}>
