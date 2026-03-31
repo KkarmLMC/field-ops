@@ -4,7 +4,7 @@ import {
   MapPin, Buildings, CalendarBlank, Shield, FileText, User,
   Phone, Briefcase, Lightning, MagnifyingGlass, Wrench, ClipboardText,
   CheckCircle, Warning, Clock, CaretRight, Plus, CurrencyDollar,
-  TrendUp, Receipt, ArrowRight } from '@phosphor-icons/react'
+  TrendUp, Receipt, ArrowRight, NotePencil, SealCheck } from '@phosphor-icons/react'
 import { db } from '../lib/supabase'
 import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/mockData.js'
 import { projectStage, approvalStatus } from '../lib/statusColors.js'
@@ -292,7 +292,7 @@ export default function ProjectDetail() {
         {/* ── Lead technician ───────────────────────────────────────────────── */}
         <div className="card">
           <div className="list-card__header">
-            <span className="list-card__title">Lead Technician</span>
+            <span className="list-card__title"><User size={14} /> Lead Technician</span>
           </div>
           <div style={{ padding: '10px 14px 14px' }}>
             {tech ? (
@@ -350,7 +350,7 @@ export default function ProjectDetail() {
         {project.notes && (
           <div className="card">
             <div className="list-card__header">
-              <span className="list-card__title">Notes</span>
+              <span className="list-card__title"><NotePencil size={14} /> Notes</span>
             </div>
             <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>
               {project.notes}
@@ -363,7 +363,7 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="list-card__header">
               <span className="list-card__title">
-                Daily Field Reports
+                <ClipboardText size={14} /> Daily Field Reports
               </span>
               <span className="list-card__meta">{reports.length} reports</span>
             </div>
@@ -475,7 +475,7 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="list-card__header">
               <span className="list-card__title">
-                Completion Forms
+                <SealCheck size={14} /> Completion Forms
               </span>
               <span className="list-card__meta">{submissions.length} forms</span>
             </div>

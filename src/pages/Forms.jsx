@@ -15,7 +15,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
   return (
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
       <div className="list-card__header" style={{ background: bc.bgActive }}>
-        <span className="list-card__title">
+        <span className="list-card__title"><ClipboardText size={14} /> 
           {category.label}
         </span>
       </div>
