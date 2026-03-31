@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Ruler, Seal, ClipboardText, HardHat, Buildings, CheckCircle } from '@phosphor-icons/react'
+import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Ruler, Seal, ClipboardText, Users, Buildings, CheckCircle } from '@phosphor-icons/react'
 import BranchTabs from '../components/BranchTabs'
 import { PROJECTS, TECHNICIANS, STATS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
@@ -46,7 +46,7 @@ export default function Dashboard() {
       <div className="nav-card-grid">
         {[
           { Icon: Lightning,     label: 'Installs',       sub: `${activeJobs.length} active`,       path: '/installations/installs' },
-          { Icon: HardHat,       label: 'Technicians',    sub: `${techsInField} in field`,          path: '/technicians' },
+          { Icon: Users,       label: 'Technicians',    sub: `${techsInField} in field`,          path: '/technicians' },
           { Icon: ClipboardText, label: 'Field Reports',  sub: `${STATS.reportsThisMonth} this mo`, path: '/reports' },
           { Icon: Buildings,     label: 'Installations',  sub: `${branchJobs.length} total`,        path: '/installations' },
         ].map(a => (
