@@ -119,8 +119,8 @@ function SafetyDot({ ok, label }) {
       title={label}
     >
       {ok
-        ? <CheckCircle size={9} weight="fill" />
-        : <Warning size={9} weight="fill" />
+        ? <CheckCircle size="0.5625rem" weight="fill" />
+        : <Warning size="0.5625rem" weight="fill" />
       }
     </span>
   )
@@ -173,7 +173,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
   return (
     <div className="page-content fade-in" ref={ref}>
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
-        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+        <MagnifyingGlass size="0.8125rem" className="dfl-typeahead-icon" />
         <input
           className="dfl-input dfl-typeahead-input"
           placeholder="Search customers…"
@@ -184,7 +184,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
         />
         {query && (
           <button className="dfl-typeahead-clear" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
-            <X size={11} />
+            <X size="0.6875rem" />
           </button>
         )}
       </div>
@@ -196,9 +196,9 @@ function CustomerTypeahead({ value, onChange, branch }) {
               className={`dfl-typeahead-item ${name === value ? 'selected' : ''}`}
               onMouseDown={() => select(name)}
             >
-              <Buildings size={12} style={{ flexShrink: 0, opacity: 0.5 }} />
+              <Buildings size="0.75rem" style={{ flexShrink: 0, opacity: 0.5 }} />
               {name}
-              {name === value && <CheckCircle size={12} weight="fill" style={{ marginLeft: 'auto', color: 'var(--success-text)' }} />}
+              {name === value && <CheckCircle size="0.75rem" weight="fill" style={{ marginLeft: 'auto', color: 'var(--success-text)' }} />}
             </li>
           ))}
         </ul>
@@ -269,7 +269,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
           </span>
         )}
         <CaretDown
-          size={13}
+          size="0.8125rem"
           className={`dfl-jobsite-caret ${open ? 'open' : ''}`}
           style={{ opacity: customerLocked ? 1 : 0.35 }}
         />
@@ -290,9 +290,9 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   className={`dfl-jobsite-item ${isActive ? 'selected' : ''}`}
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
-                  <MapPin size={13} style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
+                  <MapPin size="0.8125rem" style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
                   <span style={{ flex: 1 }}>{job.name}</span>
-                  {isActive && <CheckCircle size={13} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+                  {isActive && <CheckCircle size="0.8125rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
                 </div>
               )
             })
@@ -338,7 +338,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
   return (
     <div className="dfl-typeahead" ref={ref}>
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
-        <MagnifyingGlass size={13} className="dfl-typeahead-icon" />
+        <MagnifyingGlass size="0.8125rem" className="dfl-typeahead-icon" />
         <input
           className="dfl-input dfl-typeahead-input"
           placeholder={placeholder}
@@ -349,7 +349,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
         />
         {(query || showRemove) && (
           <button className="dfl-typeahead-clear" type="button" onClick={handleClear}>
-            <X size={11} />
+            <X size="0.6875rem" />
           </button>
         )}
       </div>
@@ -364,7 +364,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span style={{ flex: 1 }}>{tech.name}</span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
-              {value === tech.name && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+              {value === tech.name && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -410,7 +410,7 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
           </div>
           {/* + on last row, invisible spacer on others — keeps all inputs the same width */}
           {idx === rows.length - 1
-            ? <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another"><Plus size={14} /></button>
+            ? <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another"><Plus size="0.875rem" /></button>
             : <div style={{ width: '1.75rem', flexShrink: 0 }} />
           }
         </div>
@@ -459,7 +459,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
         />
         {query && (
           <button className="dfl-typeahead-clear" type="button" onClick={() => { setQuery(''); onChange(''); setOpen(false) }}>
-            <X size={11} />
+            <X size="0.6875rem" />
           </button>
         )}
       </div>
@@ -472,7 +472,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               onMouseDown={() => select(opt)}
             >
               <span style={{ flex: 1, fontFamily: 'var(--mono)', fontSize: '0.875rem' }}>{opt.label}</span>
-              {value === opt.value && <CheckCircle size={12} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+              {value === opt.value && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -537,8 +537,8 @@ function GpsCoordinateField({ value, onChange }) {
           disabled={status === 'loading'}
         >
           {status === 'loading'
-            ? <SpinnerGap size={14} style={{ animation: 'spin 0.8s linear infinite' }} />
-            : <Crosshair size={14} weight={status === 'success' ? 'fill' : 'bold'} />
+            ? <SpinnerGap size="0.875rem" style={{ animation: 'spin 0.8s linear infinite' }} />
+            : <Crosshair size="0.875rem" weight={status === 'success' ? 'fill' : 'bold'} />
           }
           <span>{status === 'loading' ? 'Locating…' : 'Get Location'}</span>
         </button>
@@ -546,13 +546,13 @@ function GpsCoordinateField({ value, onChange }) {
 
       {status === 'success' && accuracy !== null && (
         <div className="dfl-gps-feedback dfl-gps-feedback--ok">
-          <CheckCircle size={11} weight="fill" />
+          <CheckCircle size="0.6875rem" weight="fill" />
           GPS locked · ±{accuracy}m accuracy
         </div>
       )}
       {status === 'error' && (
         <div className="dfl-gps-feedback dfl-gps-feedback--err">
-          <Warning size={11} weight="fill" />
+          <Warning size="0.6875rem" weight="fill" />
           {errorMsg}
         </div>
       )}
@@ -575,12 +575,12 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {isDraft && (
         <div className="dfl-entry-parts">
           <span className="dfl-part-pill dfl-part-pill--done">
-            <CheckCircle size={10} weight="fill" />
+            <CheckCircle size="0.625rem" weight="fill" />
             Morning Check-In Complete
           </span>
           <span className="dfl-part-sep">→</span>
           <span className="dfl-part-pill dfl-part-pill--pending">
-            <Clock size={10} />
+            <Clock size="0.625rem" />
             Close-Out Pending
           </span>
         </div>
@@ -599,7 +599,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
               background: isDraft ? 'var(--warning-tint-80)' : bc.bgInactive,
               color:      isDraft ? 'var(--warning-text)' : bc.bgActive }}
           >
-            {isDraft ? <Clock size={15} weight="bold" /> : <FileText size={15} weight="bold" />}
+            {isDraft ? <Clock size="0.9375rem" weight="bold" /> : <FileText size="0.9375rem" weight="bold" />}
           </div>
           <div style={{ minWidth: 0 }}>
             <div className="dfl-card-title">{entry.customer || entry.customer_site}</div>
@@ -622,7 +622,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
           </span>
           {!isDraft && (
             <CaretDown
-              size={14}
+              size="0.875rem"
               style={{
                 color: 'var(--black)',
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -650,7 +650,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             className="dfl-crew-preview"
             style={{ marginLeft: 'auto' }}
           >
-            <User size={10} />
+            <User size="0.625rem" />
             {(entry.crew_on_site || []).length + (entry.supervisor_name ? 1 : 0)} on site
           </span>
         )}
@@ -660,7 +660,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {isDraft && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint">
-            <Warning size={11} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+            <Warning size="0.6875rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
             Complete end-of-day close-out to submit this log
           </div>
           <button
@@ -669,7 +669,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             onClick={() => onCloseOut(entry.id)}
           >
             Close Out Day
-            <ArrowRight size={13} />
+            <ArrowRight size="0.8125rem" />
           </button>
         </div>
       )}
@@ -678,7 +678,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {!isDraft && entry.pdf_url && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint" style={{ color: 'var(--success-text)' }}>
-            <SealCheck size={11} weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />
+            <SealCheck size="0.6875rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />
             Log finalized and stored
           </div>
           <a
@@ -688,7 +688,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FileText size={13} />
+            <FileText size="0.8125rem" />
             View Submission
           </a>
         </div>
@@ -700,7 +700,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
           <div className="dfl-detail-grid">
 
             <div className="dfl-detail-item">
-              <span className="dfl-detail-label"><User size={11} /> Crew on Site</span>
+              <span className="dfl-detail-label"><User size="0.6875rem" /> Crew on Site</span>
               <span className="dfl-detail-value">
                 {entry.supervisor_name
                   ? [entry.supervisor_name, ...(entry.crew_on_site || [])].join(', ')
@@ -710,12 +710,12 @@ function EntryCard({ entry, bc, onCloseOut }) {
             </div>
 
             <div className="dfl-detail-item">
-              <span className="dfl-detail-label"><Crosshair size={11} /> GPS Coordinates</span>
+              <span className="dfl-detail-label"><Crosshair size="0.6875rem" /> GPS Coordinates</span>
               <span className="dfl-detail-value dfl-gps">{entry.gps_location || '—'}</span>
             </div>
 
             <div className="dfl-detail-item">
-              <span className="dfl-detail-label"><Truck size={11} /> Travel</span>
+              <span className="dfl-detail-label"><Truck size="0.6875rem" /> Travel</span>
               <span className="dfl-detail-value">
                 {entry.miles_driven ? `${entry.miles_driven} mi` : '—'}
                 {entry.drive_time ? ` · ${fmtHours(entry.drive_time)}` : ''}
@@ -723,7 +723,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             </div>
 
             <div className="dfl-detail-item">
-              <span className="dfl-detail-label"><HardHat size={11} /> Safety Docs</span>
+              <span className="dfl-detail-label"><HardHat size="0.6875rem" /> Safety Docs</span>
               <div className="dfl-safety-badges">
                 <span className={`dfl-safety-badge ${entry.jsa_uploaded      ? 'ok' : 'missing'}`}>
                   {entry.jsa_uploaded      ? '✓' : '✗'} JSA
@@ -739,7 +739,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
 
             {entry.other_tasks && (
               <div className="dfl-detail-item dfl-detail-full">
-                <span className="dfl-detail-label"><ClipboardText size={11} /> Notes</span>
+                <span className="dfl-detail-label"><ClipboardText size="0.6875rem" /> Notes</span>
                 <span className="dfl-detail-value">{entry.other_tasks}</span>
               </div>
             )}
@@ -749,12 +749,12 @@ function EntryCard({ entry, bc, onCloseOut }) {
           <div className="dfl-signoff-row">
             {entry.signed ? (
               <div className="dfl-signed-badge">
-                <CheckCircle size={12} weight="fill" />
+                <CheckCircle size="0.75rem" weight="fill" />
                 Signed off — {entry.supervisor_name}
               </div>
             ) : (
               <div className="dfl-unsigned-badge">
-                <Warning size={12} weight="fill" />
+                <Warning size="0.75rem" weight="fill" />
                 Awaiting supervisor sign-off
               </div>
             )}
@@ -928,7 +928,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
             <div className="dfl-form-part-label">{schema?.ref || ''}</div>
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{schema?.title || ''}</div>
           </div>
-          <button className="dfl-form-close" onClick={onBack}><X size={16} /></button>
+          <button className="dfl-form-close" onClick={onBack}><X size="1rem" /></button>
         </div>
 
         {/* Body */}
@@ -956,7 +956,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
             style={{ background: 'var(--success-text)' }}
             onClick={() => onComplete(formKey, values)}
           >
-            <CheckCircle size={14} weight="fill" />
+            <CheckCircle size="0.875rem" weight="fill" />
             Complete Form
           </button>
         </div>
@@ -975,9 +975,9 @@ function Part1Form({ onClose, onSave, bc, branch }) {
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
 const STEPS = [
-    { label: 'Job Info', icon: <FileText size={12} /> },
-    { label: 'Crew',     icon: <User size={12} /> },
-    { label: 'Safety',   icon: <HardHat size={12} /> },
+    { label: 'Job Info', icon: <FileText size="0.75rem" /> },
+    { label: 'Crew',     icon: <User size="0.75rem" /> },
+    { label: 'Safety',   icon: <HardHat size="0.75rem" /> },
   ]
 
   const safetyCount = SAFETY_FORMS.filter(f => form[f.key]).length
@@ -1015,7 +1015,7 @@ const STEPS = [
             <div className="dfl-form-part-label">Part 1 of 2 · Before Work Begins</div>
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Morning Check-In</div>
           </div>
-          <button className="dfl-form-close" onClick={onClose}><X size={16} /></button>
+          <button className="dfl-form-close" onClick={onClose}><X size="1rem" /></button>
         </div>
 
         {/* Step tabs */}
@@ -1026,7 +1026,7 @@ const STEPS = [
               className={`dfl-form-step ${step === i ? 'active' : ''} ${i < step ? 'done' : ''}`}
               onClick={() => setStep(i)}
             >
-              {i < step ? <CheckCircle size={11} weight="fill" /> : s.icon}
+              {i < step ? <CheckCircle size="0.6875rem" weight="fill" /> : s.icon}
               <span>{s.label}</span>
             </button>
           ))}
@@ -1042,7 +1042,7 @@ const STEPS = [
               {/* Customer — typeahead autocomplete */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Buildings size={12} style={{ marginRight: '0.25rem' }} />
+                  <Buildings size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   Customer <span className="dfl-req">*</span>
                 </label>
                 <CustomerTypeahead
@@ -1055,7 +1055,7 @@ const STEPS = [
               {/* Jobsite — dropdown from Kanban */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <MapPin size={12} style={{ marginRight: '0.25rem' }} />
+                  <MapPin size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   Jobsite <span className="dfl-req">*</span>
                 </label>
                 <JobsiteSelect
@@ -1078,7 +1078,7 @@ const STEPS = [
 
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Crosshair size={12} style={{ marginRight: '0.25rem' }} />
+                  <Crosshair size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   GPS Coordinates <span className="dfl-req">*</span>
                 </label>
                 <GpsCoordinateField
@@ -1096,7 +1096,7 @@ const STEPS = [
               {/* Supervisor — single typeahead */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <User size={12} style={{ marginRight: '0.25rem' }} />
+                  <User size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   Supervisor Onsite <span className="dfl-req">*</span>
                 </label>
                 <div className="dfl-crew-row">
@@ -1119,7 +1119,7 @@ const STEPS = [
               {/* Installers Onsite — multi typeahead with chips */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Users size={12} style={{ marginRight: '0.25rem' }} />
+                  <Users size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   Installers Onsite
                 </label>
                 <TechMultiTypeahead
@@ -1143,8 +1143,8 @@ const STEPS = [
                 <div key={key} className={`dfl-safety-form-item ${form[key] ? 'completed' : ''}`}>
                   <div className="dfl-safety-form-icon">
                     {form[key]
-                      ? <CheckCircle size={18} weight="fill" style={{ color: 'var(--success-text)' }} />
-                      : <HardHat size={18} weight="bold" style={{ color: 'var(--grey-base)' }} />
+                      ? <CheckCircle size="1.125rem" weight="fill" style={{ color: 'var(--success-text)' }} />
+                      : <HardHat size="1.125rem" weight="bold" style={{ color: 'var(--grey-base)' }} />
                     }
                   </div>
                   <div className="dfl-safety-form-info">
@@ -1152,7 +1152,7 @@ const STEPS = [
                     <div className="dfl-safety-form-desc">{desc}</div>
                     {form[key] && (
                       <div className="dfl-safety-form-completed-label">
-                        <CheckCircle size={10} weight="fill" /> Completed
+                        <CheckCircle size="0.625rem" weight="fill" /> Completed
                       </div>
                     )}
                   </div>
@@ -1161,21 +1161,21 @@ const STEPS = [
                     onClick={() => setSafetyOpen(key)}
                   >
                     {form[key]
-                      ? <><ArrowsClockwise size={12} /> Redo</>
-                      : <>Fill Out Form <ArrowRight size={12} /></>
+                      ? <><ArrowsClockwise size="0.75rem" /> Redo</>
+                      : <>Fill Out Form <ArrowRight size="0.75rem" /></>
                     }
                   </button>
                 </div>
               ))}
               {safetyCount < SAFETY_FORMS.length && (
                 <div className="dfl-safety-warning">
-                  <Warning size={13} weight="fill" />
+                  <Warning size="0.8125rem" weight="fill" />
                   {SAFETY_FORMS.length - safetyCount} of {SAFETY_FORMS.length} safety forms still required
                 </div>
               )}
               {safetyCount === SAFETY_FORMS.length && (
                 <div className="dfl-safety-all-done">
-                  <CheckCircle size={13} weight="fill" />
+                  <CheckCircle size="0.8125rem" weight="fill" />
                   All safety documentation complete — ready to start work
                 </div>
               )}
@@ -1199,7 +1199,7 @@ const STEPS = [
               onClick={() => setStep(s => s + 1)}
               disabled={step === 0 && !form.customer.trim()}
             >
-              Next <ArrowRight size={13} />
+              Next <ArrowRight size="0.8125rem" />
             </button>
           ) : (
             <button
@@ -1208,7 +1208,7 @@ const STEPS = [
               onClick={() => canSave && onSave(form)}
               disabled={!canSave}
             >
-              <CheckCircle size={14} weight="fill" />
+              <CheckCircle size="0.875rem" weight="fill" />
               Save &amp; Start Work
             </button>
           )}
@@ -1257,9 +1257,9 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
   }
 
   const STEPS = [
-    { label: 'Work Summary', icon: <ClipboardText size={12} /> },
-    { label: 'Travel',       icon: <Truck size={12} /> },
-    { label: 'Sign Off',     icon: <Signature size={12} /> },
+    { label: 'Work Summary', icon: <ClipboardText size="0.75rem" /> },
+    { label: 'Travel',       icon: <Truck size="0.75rem" /> },
+    { label: 'Sign Off',     icon: <Signature size="0.75rem" /> },
   ]
 
   const canSubmit = form.hours_worked && form.work_types.length > 0 && form.signed
@@ -1279,7 +1279,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               </div>
             )}
           </div>
-          <button className="dfl-form-close" onClick={onClose}><X size={16} /></button>
+          <button className="dfl-form-close" onClick={onClose}><X size="1rem" /></button>
         </div>
 
         {/* Step tabs */}
@@ -1290,7 +1290,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               className={`dfl-form-step ${step === i ? 'active' : ''} ${i < step ? 'done' : ''}`}
               onClick={() => setStep(i)}
             >
-              {i < step ? <CheckCircle size={11} weight="fill" /> : s.icon}
+              {i < step ? <CheckCircle size="0.6875rem" weight="fill" /> : s.icon}
               <span>{s.label}</span>
             </button>
           ))}
@@ -1318,7 +1318,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
                       className={`dfl-type-chip ${form.work_types.includes(t) ? 'active' : ''}`}
                       onClick={() => toggleWorkType(t)}
                     >
-                      {form.work_types.includes(t) && <CheckCircle size={11} weight="fill" />}
+                      {form.work_types.includes(t) && <CheckCircle size="0.6875rem" weight="fill" />}
                       {t}
                     </button>
                   ))}
@@ -1340,7 +1340,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
           {step === 1 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
-                <label className="dfl-label"><Truck size={12} style={{ marginRight: '0.25rem' }} />Miles Driven <span className="dfl-req">*</span></label>
+                <label className="dfl-label"><Truck size="0.75rem" style={{ marginRight: '0.25rem' }} />Miles Driven <span className="dfl-req">*</span></label>
                 <input
                   className="dfl-input"
                   type="number"
@@ -1376,21 +1376,21 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-section">
               <div className="dfl-signoff-context">
                 <div className="dfl-signoff-context-row">
-                  <span className="dfl-detail-label"><FileText size={11} /> Site</span>
+                  <span className="dfl-detail-label"><FileText size="0.6875rem" /> Site</span>
                   <span>{entry?.customer_site || entry?.customer || '—'}</span>
                 </div>
                 <div className="dfl-signoff-context-row">
-                  <span className="dfl-detail-label"><Clock size={11} /> Date</span>
+                  <span className="dfl-detail-label"><Clock size="0.6875rem" /> Date</span>
                   <span>{fmtDate(entry?.report_date) || '—'}</span>
                 </div>
                 <div className="dfl-signoff-context-row">
-                  <span className="dfl-detail-label"><User size={11} /> Supervisor</span>
+                  <span className="dfl-detail-label"><User size="0.6875rem" /> Supervisor</span>
                   <span>{entry?.supervisor_name || entry?.submitted_by || '—'}</span>
                 </div>
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Pencil size={12} style={{ marginRight: '0.25rem' }} />
+                  <Pencil size="0.75rem" style={{ marginRight: '0.25rem' }} />
                   Supervisor Signature <span className="dfl-req">*</span>
                 </label>
                 <SignaturePad
@@ -1401,7 +1401,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               </div>
               {!canSubmit && (
                 <div className="dfl-safety-warning">
-                  <Warning size={13} weight="fill" />
+                  <Warning size="0.8125rem" weight="fill" />
                   {!form.hours_worked ? 'Total time onsite required · ' : ''}
                   {form.work_types.length === 0 ? 'Select at least one work type · ' : ''}
                   {!form.signed ? 'Supervisor signature required' : ''}
@@ -1426,7 +1426,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               style={{ background: bc.bgActive }}
               onClick={() => setStep(s => s + 1)}
             >
-              Next <ArrowRight size={13} />
+              Next <ArrowRight size="0.8125rem" />
             </button>
           ) : (
             <button
@@ -1435,7 +1435,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               onClick={() => canSubmit && onSubmit(form)}
               disabled={!canSubmit}
             >
-              <SealCheck size={14} weight="fill" />
+              <SealCheck size="0.875rem" weight="fill" />
               Complete &amp; Submit
             </button>
           )}
@@ -1684,10 +1684,10 @@ export default function DailyFieldLog() {
           {/* Summary strip */}
           <div className="dfl-summary-strip">
             {[
-              { label: 'Total Entries',      value: reports.length,   icon: <FileText size={15} weight="bold" /> },
-              { label: 'Hours Logged',       value: `${totalHours}h`, icon: <Clock size={15} weight="bold" /> },
-              { label: 'Reviewed',           value: reviewedCount,    icon: <CheckCircle size={15} weight="bold" /> },
-              { label: 'Drafts In Progress', value: draftCount,       icon: <ArrowsClockwise size={15} weight="bold" />, alert: draftCount > 0 },
+              { label: 'Total Entries',      value: reports.length,   icon: <FileText size="0.9375rem" weight="bold" /> },
+              { label: 'Hours Logged',       value: `${totalHours}h`, icon: <Clock size="0.9375rem" weight="bold" /> },
+              { label: 'Reviewed',           value: reviewedCount,    icon: <CheckCircle size="0.9375rem" weight="bold" /> },
+              { label: 'Drafts In Progress', value: draftCount,       icon: <ArrowsClockwise size="0.9375rem" weight="bold" />, alert: draftCount > 0 },
             ].map(s => (
               <div
                 key={s.label}
@@ -1710,7 +1710,7 @@ export default function DailyFieldLog() {
           {/* Draft entries callout */}
           {draftCount > 0 && (
             <div className="dfl-draft-callout" style={{ borderLeftColor: bc.bgActive }}>
-              <ArrowsClockwise size={14} weight="bold" style={{ color: bc.bgActive, flexShrink: 0 }} />
+              <ArrowsClockwise size="0.875rem" weight="bold" style={{ color: bc.bgActive, flexShrink: 0 }} />
               <span>
                 <strong>{draftCount} log{draftCount !== 1 ? 's' : ''} in progress</strong>
                 {' '}— morning check-in saved. Complete the end-of-day close-out when work is done.
@@ -1725,7 +1725,7 @@ export default function DailyFieldLog() {
               style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
             >
               <span className="list-card__title">
-                <Clock size={14} />
+                <Clock size="0.875rem" />
                 Field Log Entries
               </span>
               <span className="list-card__meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
@@ -1733,7 +1733,7 @@ export default function DailyFieldLog() {
             <div>
               {reports.length === 0 ? (
                 <div className="dfl-empty-state">
-                  <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <FileText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
                   <div>No log entries for this branch</div>
                 </div>
               ) : (
@@ -1761,7 +1761,7 @@ export default function DailyFieldLog() {
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
           onClick={() => setFormMode('part1')}
         >
-          <Plus size={14} weight="bold" />
+          <Plus size="0.875rem" weight="bold" />
           New Daily Field Log
         </button>
         {draftCount > 0 && (
@@ -1770,7 +1770,7 @@ export default function DailyFieldLog() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => openCloseOut(reports.find(r => r.status === 'Draft')?.id)}
           >
-            <ArrowsClockwise size={14} weight="bold" />
+            <ArrowsClockwise size="0.875rem" weight="bold" />
             Close Out Day ({draftCount})
           </button>
         )}
@@ -1781,7 +1781,7 @@ export default function DailyFieldLog() {
         <div className="card list-card" style={{ marginTop: 'var(--mar-s)' }}>
           <div className="list-card__header" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
             <span className="list-card__title">
-              <Clock size={14} />
+              <Clock size="0.875rem" />
               My Log Entries
             </span>
             <span className="list-card__meta">{entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}</span>
@@ -1789,7 +1789,7 @@ export default function DailyFieldLog() {
           <div>
             {entries.length === 0 ? (
               <div className="dfl-empty-state">
-                <FileText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                <FileText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
                 <div>No log entries yet — start one above</div>
               </div>
             ) : (
@@ -1832,7 +1832,7 @@ export default function DailyFieldLog() {
       {/* PDF saving overlay */}
       {savingPdf && (
         <div className="dfl-pdf-overlay">
-          <SpinnerGap size={28} weight="bold" className="dfl-spin" />
+          <SpinnerGap size="1.75rem" weight="bold" className="dfl-spin" />
           <span>Finalizing report &amp; generating PDF…</span>
         </div>
       )}

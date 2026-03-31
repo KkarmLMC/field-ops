@@ -51,7 +51,7 @@ function InfoRow({ icon: Icon, label, value }) {
   if (!value) return null
   return (
     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-      <Icon size={14} style={{ color: 'var(--text-3)', marginTop: 1, flexShrink: 0 }} />
+      <Icon size="0.875rem" style={{ color: 'var(--text-3)', marginTop: 1, flexShrink: 0 }} />
       <div>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
         <div style={{ fontSize: 'var(--text-md)', color: 'var(--black)' }}>{value}</div>
@@ -203,7 +203,7 @@ export default function ProjectDetail() {
             {/* Type + stage */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <TypeIcon size={14} style={{ color: stageCfg.color }} />
+                <TypeIcon size="0.875rem" style={{ color: stageCfg.color }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
@@ -291,7 +291,7 @@ export default function ProjectDetail() {
         {/* ── Lead technician ───────────────────────────────────────────────── */}
         <div className="card">
           <div className="list-card__header">
-            <span className="list-card__title"><User size={14} /> Lead Technician</span>
+            <span className="list-card__title"><User size="0.875rem" /> Lead Technician</span>
           </div>
           <div style={{ padding: '10px 14px 14px' }}>
             {tech ? (
@@ -329,7 +329,7 @@ export default function ProjectDetail() {
               style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
               onClick={() => navigate(`/daily-field-log?project=${project.id}`)}
             >
-              <Plus size={16} weight="bold" />
+              <Plus size="1rem" weight="bold" />
               Start Daily Log
             </button>
             {project.stage === 'in-progress' && !cfStatus && (
@@ -338,7 +338,7 @@ export default function ProjectDetail() {
                 style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
                 onClick={() => navigate(`/forms?project=${project.id}`)}
               >
-                <FileText size={14} />
+                <FileText size="0.875rem" />
                 Completion Form
               </button>
             )}
@@ -349,7 +349,7 @@ export default function ProjectDetail() {
         {project.notes && (
           <div className="card">
             <div className="list-card__header">
-              <span className="list-card__title"><NotePencil size={14} /> Notes</span>
+              <span className="list-card__title"><NotePencil size="0.875rem" /> Notes</span>
             </div>
             <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>
               {project.notes}
@@ -362,7 +362,7 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="list-card__header">
               <span className="list-card__title">
-                <ClipboardText size={14} /> Daily Field Reports
+                <ClipboardText size="0.875rem" /> Daily Field Reports
               </span>
               <span className="list-card__meta">{reports.length} reports</span>
             </div>
@@ -389,7 +389,7 @@ export default function ProjectDetail() {
             {/* Header */}
             <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <CurrencyDollar size={16} style={{ color: 'var(--white)' }} />
+                <CurrencyDollar size="1rem" style={{ color: 'var(--white)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
@@ -463,7 +463,7 @@ export default function ProjectDetail() {
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--navy)' }}>
-                View Expenses <CaretRight size={12} />
+                View Expenses <CaretRight size="0.75rem" />
               </div>
             </button>
           </div>
@@ -474,7 +474,7 @@ export default function ProjectDetail() {
           <div className="card">
             <div className="list-card__header">
               <span className="list-card__title">
-                <SealCheck size={14} /> Completion Forms
+                <SealCheck size="0.875rem" /> Completion Forms
               </span>
               <span className="list-card__meta">{submissions.length} forms</span>
             </div>

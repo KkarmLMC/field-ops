@@ -60,7 +60,7 @@ function TypePill({ typeKey, count, active, onClick }) {
         fontSize: 'var(--text-sm)', fontWeight: active ? 600 : 500,
         transition: 'all 0.15s' }}
     >
-      {Icon && <Icon size={12} weight={active ? 'bold' : 'regular'} />}
+      {Icon && <Icon size="0.75rem" weight={active ? 'bold' : 'regular'} />}
       {cfg.label}
       <span style={{
         background: active ? cfg.color : 'var(--border)',
@@ -81,7 +81,7 @@ function ReportRow({ r }) {
       display: 'flex', alignItems: 'center', gap: 12,
       padding: '10px 16px', borderBottom: '1px solid var(--border-l)' }}>
       {/* Type icon badge */}
-      <Icon size={15} weight="bold" style={{ color: type.color }} />
+      <Icon size="0.9375rem" weight="bold" style={{ color: type.color }} />
 
       {/* Main info */}
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -110,7 +110,7 @@ function ReportRow({ r }) {
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
         padding: '5px 10px', borderRadius: 'var(--r-s)',
         background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
-        <Eye size={12} />
+        <Eye size="0.75rem" />
         View
       </button>
     </div>
@@ -166,10 +166,10 @@ export default function Reports() {
       {/* Summary stat tiles */}
       <div className="dfl-summary-strip">
         {[
-          { label: 'Total Submitted',   value: branchReports.length,                icon: <ClipboardText size={15} weight="bold" /> },
-          { label: 'Under Review',      value: statusCounts['under-review'],         icon: <Clock size={15} weight="bold" />,    alert: statusCounts['under-review'] > 0 },
-          { label: 'Awaiting Sign-off', value: statusCounts['customer-signoff'],     icon: <Warning size={15} weight="bold" />,  alert: statusCounts['customer-signoff'] > 0 },
-          { label: 'Complete',          value: statusCounts.complete,                icon: <CheckCircle size={15} weight="bold" /> },
+          { label: 'Total Submitted',   value: branchReports.length,                icon: <ClipboardText size="0.9375rem" weight="bold" /> },
+          { label: 'Under Review',      value: statusCounts['under-review'],         icon: <Clock size="0.9375rem" weight="bold" />,    alert: statusCounts['under-review'] > 0 },
+          { label: 'Awaiting Sign-off', value: statusCounts['customer-signoff'],     icon: <Warning size="0.9375rem" weight="bold" />,  alert: statusCounts['customer-signoff'] > 0 },
+          { label: 'Complete',          value: statusCounts.complete,                icon: <CheckCircle size="0.9375rem" weight="bold" /> },
         ].map(s => (
           <div
             key={s.label}
@@ -233,7 +233,7 @@ export default function Reports() {
           style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
         >
           <span className="list-card__title">
-            <ClipboardText size={14} />
+            <ClipboardText size="0.875rem" />
             Submitted Forms
           </span>
           <span className="list-card__meta">{filtered.length} record{filtered.length !== 1 ? 's' : ''}</span>
@@ -241,7 +241,7 @@ export default function Reports() {
 
         {filtered.length === 0 ? (
           <div className="dfl-empty-state">
-            <ClipboardText size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+            <ClipboardText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
             <div>No submitted forms match these filters</div>
           </div>
         ) : (

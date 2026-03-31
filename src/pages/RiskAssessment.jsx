@@ -100,7 +100,7 @@ function ResultBadge({ result, ratio }) {
       letterSpacing:'0.05em', textTransform:'uppercase',
       background: req ? 'var(--red-soft)' : 'var(--success-soft)',
       color:       req ? 'var(--red)'     : 'var(--success)' }}>
-      {req ? <Warning size={11} /> : <CheckCircle size={11} />}
+      {req ? <Warning size="0.6875rem" /> : <CheckCircle size="0.6875rem" />}
       {req ? 'LPS Required' : 'LPS Optional'}
       {ratio != null && ` · ${ratio.toFixed(2)}`}
     </span>
@@ -192,7 +192,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
       {/* Back header */}
       <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', color:'var(--black)', fontSize:'var(--text-md)' }}>
-          <ArrowLeft size={14} /> Back
+          <ArrowLeft size="0.875rem" /> Back
         </button>
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
         <span style={{ ...S.label }}>NFPA 780 Annex L</span>
@@ -247,7 +247,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             padding:'0.5rem 0.75rem', borderRadius:'var(--r-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--blue)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
-            {locating ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size={13} />}
+            {locating ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size="0.8125rem" />}
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
         </div>
@@ -288,7 +288,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           border:`1px solid ${allFilled ? 'var(--red)' : 'var(--border)'}`,
           transition:'all var(--ease-fast)',
           display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
-          <ChartBar size={14} /> Calculate Risk Score
+          <ChartBar size="0.875rem" /> Calculate Risk Score
         </button>
       )}
 
@@ -301,14 +301,14 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-m)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
               {result.required
-                ? <Warning size={20} style={{ color:'var(--red)' }} />
-                : <CheckCircle size={20} style={{ color:'var(--success)' }} />
+                ? <Warning size="1.25rem" style={{ color:'var(--red)' }} />
+                : <CheckCircle size="1.25rem" style={{ color:'var(--success)' }} />
               }
               <span style={{ fontFamily:'var(--font)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--red)' : 'var(--success)' }}>
                 {result.required ? 'LPS Required' : 'LPS Not Required'}
               </span>
             </div>
-            <button onClick={()=>setResult(null)} style={{ color:'var(--text-3)' }}><X size={16} /></button>
+            <button onClick={()=>setResult(null)} style={{ color:'var(--text-3)' }}><X size="1rem" /></button>
           </div>
 
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
@@ -338,7 +338,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
               letterSpacing:'0.06em', textTransform:'uppercase',
               display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
-              {saving ? <SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }} /> : null}
+              {saving ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
             <button onClick={()=>setResult(null)} style={{
@@ -362,14 +362,14 @@ function AssessmentRow({ a }) {
         width:'2.25rem', height:'2.25rem', borderRadius:'var(--r-m)', flexShrink:0,
         background: req ? 'var(--red-soft)' : 'var(--success-soft)',
         display:'flex', alignItems:'center', justifyContent:'center' }}>
-        {req ? <Warning size={16} style={{ color:'var(--red)' }} /> : <CheckCircle size={16} style={{ color:'var(--success)' }} />}
+        {req ? <Warning size="1rem" style={{ color:'var(--red)' }} /> : <CheckCircle size="1rem" style={{ color:'var(--success)' }} />}
       </div>
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
         <div style={{ fontSize:'var(--text-sm)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:'var(--gap-xs)' }}>
-          <MapPin size={10} />{a.address}
+          <MapPin size="0.625rem" />{a.address}
         </div>
       </div>
       <div style={{ textAlign:'right', flexShrink:0 }}>
@@ -443,9 +443,9 @@ export default function RiskAssessment() {
         {/* Summary stat tiles */}
         <div className="dfl-summary-strip">
           {[
-            { label: 'Total',        value: branchAssess.length, icon: <ChartBar size={15} weight="bold" /> },
-            { label: 'LPS Required', value: required,            icon: <Warning size={15} weight="bold" />,    alert: required > 0 },
-            { label: 'LPS Optional', value: optional,            icon: <CheckCircle size={15} weight="bold" /> },
+            { label: 'Total',        value: branchAssess.length, icon: <ChartBar size="0.9375rem" weight="bold" /> },
+            { label: 'LPS Required', value: required,            icon: <Warning size="0.9375rem" weight="bold" />,    alert: required > 0 },
+            { label: 'LPS Optional', value: optional,            icon: <CheckCircle size="0.9375rem" weight="bold" /> },
           ].map(s => (
             <div
               key={s.label}
@@ -472,7 +472,7 @@ export default function RiskAssessment() {
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
           >
             <span className="list-card__title">
-              <ChartBar size={14} />
+              <ChartBar size="0.875rem" />
               Site Assessments
             </span>
             <span className="list-card__meta">{branchAssess.length} record{branchAssess.length !== 1 ? 's' : ''}</span>
@@ -481,7 +481,7 @@ export default function RiskAssessment() {
             ? <div className="dfl-empty-state">Loading…</div>
             : branchAssess.length === 0
               ? <div className="dfl-empty-state">
-                  <ChartBar size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <ChartBar size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
                   <div>No assessments for this branch yet</div>
                 </div>
               : branchAssess.map(a => <AssessmentRow key={a.id} a={a} />)
@@ -502,7 +502,7 @@ export default function RiskAssessment() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => setView('new')}
           >
-            <Plus size={14} weight="bold" />
+            <Plus size="0.875rem" weight="bold" />
             New Assessment
           </button>
         </div>

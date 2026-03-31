@@ -192,7 +192,7 @@ export default function ExpenseDetail() {
       {flow?.next && (
         <button onClick={advance} disabled={advancing}
           style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
-          {advancing ? 'Processing…' : <><ArrowRight size={18} /> {flow.label}</>}
+          {advancing ? 'Processing…' : <><ArrowRight size="1.125rem" /> {flow.label}</>}
         </button>
       )}
     </div>

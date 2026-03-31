@@ -87,11 +87,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
       {/* Edit + Delete */}
       <button type="button" onClick={onEdit}
         style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-        <PencilSimple size={14} />
+        <PencilSimple size="0.875rem" />
       </button>
       <button type="button" onClick={onDelete}
         style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-        <Trash size={14} />
+        <Trash size="0.875rem" />
       </button>
     </div>
   )
@@ -145,14 +145,14 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
             <button type="button" onClick={onClose} style={{
               width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)', background: 'var(--white)',
               color: 'var(--black)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <X size={16} />
+              <X size="1rem" />
             </button>
             <button type="button" onClick={handleSave} style={{
               height: '2.25rem', padding: '0 1rem', borderRadius: 'var(--r-l)',
               background: 'var(--navy)',
               color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700,
               display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
-              <CheckCircle size={14} /> Save
+              <CheckCircle size="0.875rem" /> Save
             </button>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
         fontSize: 'var(--text-sm)', fontWeight: 700,
         cursor: 'pointer',
         transition: 'all var(--ease-fast)' }}>
-        <Plus size={15} /> Add Entry
+        <Plus size="0.9375rem" /> Add Entry
       </button>
 
       {/* Error message */}

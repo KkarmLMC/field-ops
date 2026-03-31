@@ -80,10 +80,10 @@ function MgmtRow({ p, navigate }) {
       {/* Icon */}
       <div className="dash-job-icon" style={{ marginTop: 1 }}>
         {p.stage === 'complete'
-          ? <CheckCircle size={15} />
+          ? <CheckCircle size="0.9375rem" />
           : p.stage === 'pending-review'
-            ? <Warning size={15} />
-            : <Icon size={15} />
+            ? <Warning size="0.9375rem" />
+            : <Icon size="0.9375rem" />
         }
       </div>
 
@@ -148,7 +148,7 @@ function FieldRow({ p, navigate }) {
       padding: '12px 14px', borderBottom: '1px solid var(--border-l)',
       display: 'flex', gap: 12, alignItems: 'center' }}>
       {/* Left: icon */}
-      <Icon size={16} style={{ color: cfg.color }} />
+      <Icon size="1rem" style={{ color: cfg.color }} />
 
       {/* Middle: info */}
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -186,7 +186,7 @@ function FieldRow({ p, navigate }) {
           style={{ fontSize: 'var(--text-sm)', padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
-          <ClipboardText size={14} /> DFL
+          <ClipboardText size="0.875rem" /> DFL
         </button>
         <button
           className="btn btn-black"
@@ -224,7 +224,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
       onClick={() => navigate(`/installations/${p.id}`)}
     >
       <div className="dash-job-icon">
-        <Icon size={15} />
+        <Icon size="0.9375rem" />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--black)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -242,7 +242,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
           </div>
         )}
       </div>
-      <ArrowRight size={12} style={{ color: 'var(--black)', flexShrink: 0 }} />
+      <ArrowRight size="0.75rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
     </div>
   )
 }
@@ -333,36 +333,36 @@ export default function Installations() {
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
-            <div className="nav-card__icon"><SquaresFour size={18} /></div>
+            <div className="nav-card__icon"><SquaresFour size="1.125rem" /></div>
             <div className="nav-card__text">
               <div className="nav-card__label">Project Pipeline</div>
               <div className="nav-card__sub">{stageCounts['in-progress'] || 0} active</div>
             </div>
-            <ArrowRight size={14} className="nav-card__arrow" />
+            <ArrowRight size="0.875rem" className="nav-card__arrow" />
           </button>
           <button
             className="card nav-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
-            <div className="nav-card__icon"><BookOpen size={18} /></div>
+            <div className="nav-card__icon"><BookOpen size="1.125rem" /></div>
             <div className="nav-card__text">
               <div className="nav-card__label">Field Logs</div>
               <div className="nav-card__sub">Daily activity</div>
             </div>
-            <ArrowRight size={14} className="nav-card__arrow" />
+            <ArrowRight size="0.875rem" className="nav-card__arrow" />
           </button>
           <button
             className="card nav-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
-            <div className="nav-card__icon"><FileText size={18} /></div>
+            <div className="nav-card__icon"><FileText size="1.125rem" /></div>
             <div className="nav-card__text">
               <div className="nav-card__label">Field Reports</div>
               <div className="nav-card__sub">Submitted forms</div>
             </div>
-            <ArrowRight size={14} className="nav-card__arrow" />
+            <ArrowRight size="0.875rem" className="nav-card__arrow" />
           </button>
         </div>
 
@@ -370,7 +370,7 @@ export default function Installations() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Buildings size={14} />
+              <Buildings size="0.875rem" />
               {stageFilter !== 'all'
                 ? `${STAGE_CFG[stageFilter]?.label || stageFilter} Projects`
                 : 'All Projects'
@@ -385,7 +385,7 @@ export default function Installations() {
                   color: 'inherit' }}
                 onClick={() => setSearchOpen(o => !o)}
               >
-                <MagnifyingGlass size={13} />
+                <MagnifyingGlass size="0.8125rem" />
               </button>
               {stageFilter !== 'all' && (
                 <button
@@ -406,7 +406,7 @@ export default function Installations() {
             <div style={{
               padding: '8px 14px', borderBottom: '1px solid var(--border-l)',
               display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)' }}>
-              <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              <MagnifyingGlass size="0.875rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
               <input
                 autoFocus
                 value={search}
@@ -451,7 +451,7 @@ export default function Installations() {
           <div className="card list-card" style={{ margin: 0 }}>
             <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
               <span className="list-card__title">
-                <Clock size={12} />
+                <Clock size="0.75rem" />
                 Upcoming
               </span>
               <span className="list-card__meta">{upcomingProjects.length}</span>
@@ -483,7 +483,7 @@ export default function Installations() {
           <div className="card list-card" style={{ margin: 0 }}>
             <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
               <span className="list-card__title">
-                <Warning size={12} />
+                <Warning size="0.75rem" />
                 In Review
               </span>
               <span className="list-card__meta">{pendingReviewProjects.length}</span>
@@ -509,12 +509,12 @@ export default function Installations() {
               onClick={() => navigate(a.path)}
               style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             >
-              <div className="nav-card__icon"><a.Icon size={18} /></div>
+              <div className="nav-card__icon"><a.Icon size="1.125rem" /></div>
               <div className="nav-card__text">
                 <div className="nav-card__label">{a.label}</div>
                 <div className="nav-card__sub">{a.sub}</div>
               </div>
-              <ArrowRight size={14} className="nav-card__arrow" />
+              <ArrowRight size="0.875rem" className="nav-card__arrow" />
             </button>
           ))}
         </div>

@@ -142,7 +142,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             flex: 1, padding: '0.75rem', borderRadius: 'var(--r-m)', background: 'var(--white)',
             color: 'var(--black)', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-            <ArrowLeft size={16} /> Back
+            <ArrowLeft size="1rem" /> Back
           </button>
         )}
         {!isLast ? (
@@ -151,7 +151,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             background: 'var(--navy)',
             color: '#fff', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-            Next <ArrowRight size={16} />
+            Next <ArrowRight size="1rem" />
           </button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} style={{
@@ -162,7 +162,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
             cursor: submitting ? 'default' : 'pointer' }}>
-            {submitting ? <><SpinnerGap size={14} style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</> : <><CheckCircle size={14} /> Submit Form</>}
+            {submitting ? <><SpinnerGap size="0.875rem" style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</> : <><CheckCircle size="0.875rem" /> Submit Form</>}
           </button>
         )}
       </div>

@@ -104,7 +104,7 @@ function MobileHeader() {
     <div className="mobile-header">
       {meta.parent ? (
         <button className="mobile-header-btn" onClick={() => navigate(meta.parent)}>
-          <ArrowLeft size={18} />
+          <ArrowLeft size="1.125rem" />
         </button>
       ) : (
         /* Spacer so title stays centered when there's no back button */
@@ -139,7 +139,7 @@ function DesktopTopBar() {
             onMouseEnter={e => e.currentTarget.style.color = 'var(--black)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-3)'}
           >
-            <ArrowLeft size={13} />
+            <ArrowLeft size="0.8125rem" />
             Back
           </button>
         )}

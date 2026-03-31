@@ -57,7 +57,7 @@ function KanbanCard({ job, onClick }) {
       {/* Top row: type chip + priority dot */}
       <div className="kanban-card-top">
         <span className="kanban-card-type-chip">
-          <Icon size={11} weight="bold" />
+          <Icon size="0.6875rem" weight="bold" />
           {TYPE_LABEL[job.type] || job.type}
         </span>
         <span
@@ -122,7 +122,7 @@ function KanbanColumn({ col, jobs, bc, onCardClick }) {
           transition: 'background 0.2s ease' }}
       >
         <div className="kanban-col-head-left">
-          <Icon size={15} weight="bold" style={{ color: bc.textActive, flexShrink: 0 }} />
+          <Icon size="0.9375rem" weight="bold" style={{ color: bc.textActive, flexShrink: 0 }} />
           <span className="kanban-col-label" style={{ color: bc.textActive }}>{label}</span>
         </div>
         <span

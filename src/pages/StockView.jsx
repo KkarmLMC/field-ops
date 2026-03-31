@@ -114,7 +114,7 @@ export default function StockView() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
-          <ArrowsLeftRight size={16} />
+          <ArrowsLeftRight size="1rem" />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
             <div style={{ fontSize: 'var(--text-sm)', opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
@@ -123,7 +123,7 @@ export default function StockView() {
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
-          <Package size={16} />
+          <Package size="1rem" />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 400, color: 'var(--text-3)' }}>Submit for approval</div>
@@ -133,7 +133,7 @@ export default function StockView() {
 
       {/* Search + filter */}
       <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+        <MagnifyingGlass size="0.9375rem" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -143,7 +143,7 @@ export default function StockView() {
         {search && (
           <button onClick={() => setSearch('')}
             style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}>
-            <X size={14} />
+            <X size="0.875rem" />
           </button>
         )}
       </div>
@@ -165,7 +165,7 @@ export default function StockView() {
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Package size={36} style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
+          <Package size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
           <div className="empty-title">{search ? 'No parts found' : 'No stock data'}</div>
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>
@@ -217,7 +217,7 @@ export default function StockView() {
           </div>
           <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
-            Request <ArrowRight size={13} />
+            Request <ArrowRight size="0.8125rem" />
           </button>
         </div>
       )}

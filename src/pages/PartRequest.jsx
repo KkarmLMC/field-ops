@@ -90,7 +90,7 @@ export default function PartRequest() {
 
   if (saved) return (
     <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--gap-l)', textAlign: 'center' }}>
-      <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+      <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--success)' }} />
       <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Request Submitted</div>
       <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 280 }}>
         Your part request is pending management review in Mission Control. You'll be notified once it's approved.
@@ -108,7 +108,7 @@ export default function PartRequest() {
   return (
     <div className="page-content fade-in">
       <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-        <ArrowLeft size={14} /> Back to Stock
+        <ArrowLeft size="0.875rem" /> Back to Stock
       </button>
       <PageHeader eyebrow="FIELD" title="Part Request" subtitle="Pending management review before fulfillment" />
 
@@ -161,7 +161,7 @@ export default function PartRequest() {
                   style={{ width: 64, textAlign: 'center' }} />
                 {items.length > 1 && (
                   <button onClick={() => removeItem(idx)} style={{ background: 'none', cursor: 'pointer', color: 'var(--error)', padding: '0 4px', display: 'flex', alignItems: 'center' }}>
-                    <Trash size={15} />
+                    <Trash size="0.9375rem" />
                   </button>
                 )}
               </div>
@@ -170,7 +170,7 @@ export default function PartRequest() {
             </div>
           ))}
           <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: '1px dashed var(--border-l)', background: 'none', color: 'var(--text-3)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
-            <Plus size={14} /> Add Part
+            <Plus size="0.875rem" /> Add Part
           </button>
         </div>
       </div>

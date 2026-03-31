@@ -15,7 +15,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
   return (
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
       <div className="list-card__header" style={{ background: bc.bgActive }}>
-        <span className="list-card__title"><ClipboardText size={14} /> 
+        <span className="list-card__title"><ClipboardText size="0.875rem" /> 
           {category.label}
         </span>
       </div>
@@ -40,8 +40,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                   {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
                 {hasChildren
-                  ? <CaretDown size={12} style={{ color:'var(--black)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
-                  : <CaretRight size={12} style={{ color:'var(--black)', flexShrink:0 }} />
+                  ? <CaretDown size="0.75rem" style={{ color:'var(--black)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
+                  : <CaretRight size="0.75rem" style={{ color:'var(--black)', flexShrink:0 }} />
                 }
               </button>
               {hasChildren && isExpanded && (
@@ -63,7 +63,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                         <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--black)' }}>{sub.title}</span>
                         {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
                       </div>
-                      <CaretRight size={10} style={{ color:'var(--text-4)', flexShrink:0 }} />
+                      <CaretRight size="0.625rem" style={{ color:'var(--text-4)', flexShrink:0 }} />
                     </button>
                   ))}
                 </div>
@@ -140,7 +140,7 @@ export default function Forms() {
           <div className="loading"><div className="spinner" /></div>
         ) : visibleCategories.length === 0 ? (
           <div className="empty">
-            <ClipboardText size={32} style={{ color: 'var(--text-3)' }} />
+            <ClipboardText size="2rem" style={{ color: 'var(--text-3)' }} />
             <div className="empty-title">No forms available</div>
             <div className="empty-desc">No report forms are configured for this branch yet.</div>
           </div>

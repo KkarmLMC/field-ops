@@ -38,7 +38,7 @@ export default function TabBar() {
               transition: 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center' }}><tab.Icon size={18} weight={active ? 'fill' : 'regular'} /></span>
+              justifyContent: 'center' }}><tab.Icon size="1.125rem" weight={active ? 'fill' : 'regular'} /></span>
             <span className="tab-btn-label" style={{
               color: active ? 'var(--red)' : 'var(--text-3)',
               fontWeight: active ? 700 : 500,

@@ -121,7 +121,7 @@ export default function BottomNav() {
             >
               <div className="bottom-nav__indicator" />
               <div className="bottom-nav__icon">
-                <item.Icon size={22} weight={active ? 'fill' : 'regular'} />
+                <item.Icon size="1.375rem" weight={active ? 'fill' : 'regular'} />
               </div>
               <span className="bottom-nav__label">{item.label}</span>
             </button>

@@ -146,7 +146,7 @@ function DragGhost({ label, pos, visible }) {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis' }}>
-      <DotsSixVertical size={14} weight="bold" style={{ flexShrink: 0, opacity: 0.7 }} />
+      <DotsSixVertical size="0.875rem" weight="bold" style={{ flexShrink: 0, opacity: 0.7 }} />
       {label}
     </div>
   )
@@ -181,7 +181,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
             style={{ color:'var(--text-3)', cursor:'grab', padding:'var(--pad-s)', flexShrink:0, display:'flex', alignItems:'center', touchAction:'none', userSelect:'none', WebkitUserSelect:'none' }}
             title="Hold and drag to reorder"
           >
-            <DotsSixVertical size={18} weight="bold" />
+            <DotsSixVertical size="1.125rem" weight="bold" />
           </div>
           <div style={{ flex:1, minWidth:0 }}>
             <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
@@ -192,10 +192,10 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
             </div>
           </div>
           <button type="button" onClick={()=>setExpanded(e=>!e)} style={{ color:'var(--text-3)', padding:'var(--pad-xs)' }}>
-            <PencilSimple size={14}/>
+            <PencilSimple size="0.875rem"/>
           </button>
           <button type="button" onClick={()=>onDelete(index)} style={{ color:'var(--red)', padding:'var(--pad-xs)' }}>
-            <Trash size={14}/>
+            <Trash size="0.875rem"/>
           </button>
         </div>
 
@@ -321,9 +321,9 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
           />
         </div>
         <div style={{ display:'flex', gap:'var(--gap-xs)' }}>
-          <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color: 'var(--white)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size={13}/></button>
-          <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color: 'var(--white)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size={13}/></button>
-          <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size={13}/></button>
+          <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color: 'var(--white)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size="0.8125rem"/></button>
+          <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color: 'var(--white)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size="0.8125rem"/></button>
+          <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size="0.8125rem"/></button>
         </div>
       </div>
 
@@ -351,7 +351,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
         ))}
         <button type="button" onClick={() => setShowTypePicker(true)}
           style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', marginTop:section.fields?.length?'var(--mar-s)':0 }}>
-          <Plus size={13}/> Add Field
+          <Plus size="0.8125rem"/> Add Field
         </button>
       </div>
 
@@ -404,7 +404,7 @@ function FormEditor({ form, onSave, onCancel }) {
           <button type="button" onClick={onCancel} style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', fontSize:'var(--text-sm)', color:'var(--black)' }}>Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
             style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-s)', background:saved?'var(--success)':saving?'var(--hover)':'var(--navy)', color:saved||!saving?'#fff':'var(--text-3)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
-            {saving ? <><SpinnerGap size={13} style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size={13}/> Saved!</> : <><FloppyDisk size={13}/> Save Changes</>}
+            {saving ? <><SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size="0.8125rem"/> Saved!</> : <><FloppyDisk size="0.8125rem"/> Save Changes</>}
           </button>
         </div>
       </div>
@@ -442,14 +442,14 @@ function FormEditor({ form, onSave, onCancel }) {
             setSections(next)
           }}
             style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-m)', border:'1px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-xs)', marginBottom:'var(--mar-m)', background:'none' }}>
-            <Plus size={11}/> Add Section Below
+            <Plus size="0.6875rem"/> Add Section Below
           </button>
         </div>
       ))}
 
       <button type="button" onClick={addSection}
         style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-m)', borderRadius:'var(--r-l)', border:'2px dashed var(--border-l)', width:'100%', justifyContent:'center', color:'var(--text-3)', fontSize:'var(--text-md)', marginBottom:'var(--mar-xxl)' }}>
-        <Plus size={16}/> Add Section at End
+        <Plus size="1rem"/> Add Section at End
       </button>
     </div>
   )
@@ -490,7 +490,7 @@ export default function FormBuilder() {
     <div className="page-content fade-in">
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><PencilSimple size={14} /> Form Builder</span>
+          <span className="list-card__title"><PencilSimple size="0.875rem" /> Form Builder</span>
         </div>
 
         {loading ? (
@@ -509,11 +509,11 @@ export default function FormBuilder() {
             <div style={{ display:'flex', gap:'var(--gap-s)', flexShrink:0 }}>
               <button onClick={()=>navigate(`/forms/${form.slug}`)}
                 style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', color:'var(--black)' }}>
-                <Eye size={12}/> Preview
+                <Eye size="0.75rem"/> Preview
               </button>
               <button onClick={()=>setEditing(form)}
                 style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', background:'var(--navy)', color:'#fff', fontSize:'var(--text-xs)' }}>
-                <PencilSimple size={12}/> Edit
+                <PencilSimple size="0.75rem"/> Edit
               </button>
             </div>
           </div>

@@ -116,7 +116,7 @@ export default function FormPage() {
   if (success) {
     return (
       <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--pad-xxl) var(--pad-xxl)', textAlign:'center' }}>
-        <CheckCircle size={52} style={{ color: success.offline ? 'var(--warning)' : 'var(--success)', marginBottom:'var(--mar-m)' }} />
+        <CheckCircle size="3.25rem" style={{ color: success.offline ? 'var(--warning)' : 'var(--success)', marginBottom:'var(--mar-m)' }} />
         <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--mar-s)' }}>
           {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>
@@ -150,7 +150,7 @@ export default function FormPage() {
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
           style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', color:'var(--black)', background: 'var(--white)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
-          <PencilSimple size={12} /> Edit Form
+          <PencilSimple size="0.75rem" /> Edit Form
         </button>
       </div>
 
@@ -205,8 +205,8 @@ export default function FormPage() {
             display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
             transition:'all var(--ease-fast)' }}>
             {submitting
-              ? <><SpinnerGap size={14} style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
-              : <><CheckCircle size={14} /> Submit Form</>
+              ? <><SpinnerGap size="0.875rem" style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
+              : <><CheckCircle size="0.875rem" /> Submit Form</>
             }
           </button>
         </>

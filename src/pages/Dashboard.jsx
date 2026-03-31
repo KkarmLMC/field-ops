@@ -56,12 +56,12 @@ export default function Dashboard() {
             className="card nav-card"
             onClick={() => navigate(a.path)}
           >
-            <div className="nav-card__icon"><a.Icon size={18} /></div>
+            <div className="nav-card__icon"><a.Icon size="1.125rem" /></div>
             <div className="nav-card__text">
               <div className="nav-card__label">{a.label}</div>
               <div className="nav-card__sub">{a.sub}</div>
             </div>
-            <ArrowRight size={14} className="nav-card__arrow" />
+            <ArrowRight size="0.875rem" className="nav-card__arrow" />
           </button>
         ))}
       </div>
@@ -73,7 +73,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Clock size={16} />
+              <Clock size="1rem" />
               Today's Schedule
             </span>
             <span className="list-card__meta">{todayStr}</span>
@@ -90,11 +90,11 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Lightning size={16} />
+              <Lightning size="1rem" />
               Active Jobs
             </span>
             <button className="list-card__action" onClick={() => navigate('/installations/installs')}>
-              View all <CaretRight size={11} />
+              View all <CaretRight size="0.6875rem" />
             </button>
           </div>
           <div className="list-card__body">
@@ -109,7 +109,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Warning size={16} />
+              <Warning size="1rem" />
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
@@ -128,7 +128,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Lightning size={16} />
+              <Lightning size="1rem" />
               Upcoming
             </span>
           </div>
@@ -161,7 +161,7 @@ function JobRow({ job, navigate }) {
   return (
     <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
       <div className="dash-job-icon">
-        {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
+        {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size="1rem" /> })()}
       </div>
       <div className="dash-job-info">
         <div className="dash-job-name">{job.name}</div>

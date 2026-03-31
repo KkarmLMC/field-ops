@@ -41,7 +41,7 @@ function InspectionRow({ job, navigate }) {
   return (
     <div className="page-content fade-in" onClick={() => navigate(`/installations/${job.id}`)}>
       <div className="dash-job-icon" style={{ background: sc.bg }}>
-        <Icon size={16} style={{ color: sc.color }} />
+        <Icon size="1rem" style={{ color: sc.color }} />
       </div>
       <div className="dash-job-info">
         <div className="dash-job-name">{job.name}</div>
@@ -103,10 +103,10 @@ export default function Inspections() {
         {/* Summary stat tiles */}
         <div className="dfl-summary-strip">
           {[
-            { label: 'Active',    value: stageCounts['in-progress'], icon: <Clock size={15} weight="bold" />,        alert: stageCounts['in-progress'] > 0 },
-            { label: 'Scheduled', value: stageCounts.scheduled,      icon: <CalendarBlank size={15} weight="bold" /> },
-            { label: 'Complete',  value: stageCounts.complete,        icon: <CheckCircle size={15} weight="bold" />   },
-            { label: 'Failed',    value: stageCounts.failed,          icon: <Warning size={15} weight="bold" />,      alert: stageCounts.failed > 0 },
+            { label: 'Active',    value: stageCounts['in-progress'], icon: <Clock size="0.9375rem" weight="bold" />,        alert: stageCounts['in-progress'] > 0 },
+            { label: 'Scheduled', value: stageCounts.scheduled,      icon: <CalendarBlank size="0.9375rem" weight="bold" /> },
+            { label: 'Complete',  value: stageCounts.complete,        icon: <CheckCircle size="0.9375rem" weight="bold" />   },
+            { label: 'Failed',    value: stageCounts.failed,          icon: <Warning size="0.9375rem" weight="bold" />,      alert: stageCounts.failed > 0 },
           ].map(s => (
             <div
               key={s.label}
@@ -161,7 +161,7 @@ export default function Inspections() {
             style={{ marginLeft: 'auto' }}
             onClick={() => { if (!searchOpen) setSearchOpen(true) }}
           >
-            <span className="list-search-icon"><MagnifyingGlass size={15} /></span>
+            <span className="list-search-icon"><MagnifyingGlass size="0.9375rem" /></span>
             <input
               placeholder="Search inspections…"
               value={search}
@@ -182,7 +182,7 @@ export default function Inspections() {
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
           >
             <span className="list-card__title">
-              <MagnifyingGlass size={14} />
+              <MagnifyingGlass size="0.875rem" />
               Inspections
             </span>
             <span className="list-card__meta">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</span>
@@ -190,7 +190,7 @@ export default function Inspections() {
           <div>
             {filtered.length === 0 ? (
               <div className="dfl-empty-state">
-                <MagnifyingGlass size={28} weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                <MagnifyingGlass size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
                 <div>No inspections match these filters</div>
               </div>
             ) : (
@@ -208,7 +208,7 @@ export default function Inspections() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => navigate('/daily-field-log')}
           >
-            <Plus size={14} weight="bold" />
+            <Plus size="0.875rem" weight="bold" />
             New Field Log
           </button>
           <button
@@ -216,7 +216,7 @@ export default function Inspections() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => navigate('/forms/jsa')}
           >
-            <Plus size={14} weight="bold" />
+            <Plus size="0.875rem" weight="bold" />
             New JSA
           </button>
         </div>

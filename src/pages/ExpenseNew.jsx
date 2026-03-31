@@ -215,7 +215,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size="0.875rem" />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
@@ -224,7 +224,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
-          <ArrowRight size={15} /> Submit Request
+          <ArrowRight size="0.9375rem" /> Submit Request
         </button>
       </div>
     </>
@@ -314,7 +314,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         </div>
         <button onClick={addLine}
           style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-s)' }}>
-          <Plus size={12} /> Add row
+          <Plus size="0.75rem" /> Add row
         </button>
         {/* Subtotal */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
@@ -335,7 +335,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         ))}
         <button onClick={addMile}
           style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-xs)' }}>
-          <Plus size={12} /> Add entry
+          <Plus size="0.75rem" /> Add entry
         </button>
         <div style={{ marginTop: 'var(--mar-m)', paddingTop: 'var(--pad-s)', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
@@ -376,7 +376,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size={14} />{error}</div>}
+      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size="0.875rem" />{error}</div>}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
         <button onClick={() => handleSave(false)} disabled={saving}
@@ -385,7 +385,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         </button>
         <button onClick={() => handleSave(true)} disabled={saving || !employee}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
-          <ArrowRight size={15} /> Submit Report
+          <ArrowRight size="0.9375rem" /> Submit Report
         </button>
       </div>
     </>

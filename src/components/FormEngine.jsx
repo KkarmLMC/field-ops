@@ -113,7 +113,7 @@ function SignatureModal({ onSave, onClose }) {
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--pad-l)', borderBottom:'1px solid var(--border-l)', background:'var(--navy)' }}>
           <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
           <button type="button" onClick={onClose} style={{ color: 'var(--white)', padding:'var(--pad-xs)' }}>
-            <X size={20} />
+            <X size="1.25rem" />
           </button>
         </div>
 
@@ -139,11 +139,11 @@ function SignatureModal({ onSave, onClose }) {
         <div style={{ display:'flex', gap:'var(--gap-m)', padding: 'var(--pad-l)', marginTop:'var(--mar-l)', background:'var(--white)' }}>
           <button type="button" onClick={clear}
             style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-l)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--black)', background: 'var(--white)' }}>
-            <ArrowCounterClockwise size={14}/> Clear
+            <ArrowCounterClockwise size="0.875rem"/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
             style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--gap-s)', padding: 'var(--pad-m)', borderRadius:'var(--r-m)', background: hasStrokes ? 'var(--navy)' : 'var(--hover)', color: hasStrokes ? '#fff' : 'var(--text-3)', fontSize:'var(--text-md)', fontWeight:600, transition:'all var(--ease-fast)' }}>
-            <CheckCircle size={16} weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
+            <CheckCircle size="1rem" weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
           </button>
         </div>
       </div>
@@ -181,7 +181,7 @@ export function SigPad({ value, onChange, readOnly }) {
         <div style={{ borderRadius:'var(--r-m)', overflow:'hidden' }}>
           <div style={{ padding: 'var(--pad-s) var(--pad-m)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--white)', borderBottom:'1px solid var(--border-l)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
-              <CheckCircle size={14} weight="fill" style={{ color:'var(--success)', flexShrink:0 }} />
+              <CheckCircle size="0.875rem" weight="fill" style={{ color:'var(--success)', flexShrink:0 }} />
               <span style={{ fontSize:'var(--text-xs)', color:'var(--black)', fontFamily:'var(--mono)' }}>
                 {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
               </span>
@@ -189,11 +189,11 @@ export function SigPad({ value, onChange, readOnly }) {
             <div style={{ display:'flex', gap:'var(--gap-s)' }}>
               <button type="button" onClick={() => setModalOpen(true)}
                 style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:4 }}>
-                <PencilSimple size={12}/> Re-sign
+                <PencilSimple size="0.75rem"/> Re-sign
               </button>
               <button type="button" onClick={() => onChange(null)}
                 style={{ fontSize:'var(--text-xs)', color:'var(--red)', display:'flex', alignItems:'center', gap:4 }}>
-                <Trash size={12}/> Clear
+                <Trash size="0.75rem"/> Clear
               </button>
             </div>
           </div>
@@ -208,7 +208,7 @@ export function SigPad({ value, onChange, readOnly }) {
           onMouseEnter={e => { e.currentTarget.style.borderColor='var(--navy)'; e.currentTarget.style.color='var(--navy)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-l)'; e.currentTarget.style.color='var(--text-3)' }}
         >
-          <PencilSimple size={16}/> Tap to Sign
+          <PencilSimple size="1rem"/> Tap to Sign
         </button>
       )}
 
@@ -243,7 +243,7 @@ function GpsField({ value, onChange, readOnly }) {
       <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder="lat, lng" style={{ flex:1 }} />
       <button type="button" onClick={capture} disabled={loading}
         style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background:'var(--navy)', color:'#fff', fontSize:'var(--text-xs)', fontFamily:'var(--mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
-        <MapPin size={12} /> {loading ? 'Getting…' : 'Get GPS'}
+        <MapPin size="0.75rem" /> {loading ? 'Getting…' : 'Get GPS'}
       </button>
       {error && <span style={{ color:'var(--red)', fontSize:'var(--text-xs)' }}>{error}</span>}
     </div>
@@ -283,7 +283,7 @@ function PhotoField({ value, onChange, readOnly }) {
           <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" onChange={handleFiles} style={{ display:'none' }} />
           <button type="button" onClick={()=>fileRef.current.click()}
             style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background: 'var(--white)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
-            <Camera size={14} /> Add Photo
+            <Camera size="0.875rem" /> Add Photo
           </button>
         </>
       )}
@@ -395,17 +395,17 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {state === 'recording' ? (
           <button type="button" onClick={stopRecording}
             style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
-            <Stop size={16} weight="fill" />
+            <Stop size="1rem" weight="fill" />
           </button>
         ) : hasRecording ? (
           <button type="button" onClick={playPause}
             style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--navy)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-            {state === 'playing' ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
+            {state === 'playing' ? <Pause size="1rem" weight="fill" /> : <Play size="1rem" weight="fill" />}
           </button>
         ) : (
           <button type="button" onClick={startRecording}
             style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--r-xxl)', background:'var(--red)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-            <Microphone size={16} weight="fill" />
+            <Microphone size="1rem" weight="fill" />
           </button>
         )}
 
@@ -427,7 +427,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {hasRecording && state !== 'recording' && (
           <button type="button" onClick={discard} title="Discard and re-record"
             style={{ color:'var(--text-3)', padding:'var(--pad-xs)', flexShrink:0 }}>
-            <ArrowCounterClockwise size={16} />
+            <ArrowCounterClockwise size="1rem" />
           </button>
         )}
       </div>
@@ -619,7 +619,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
               style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius:'var(--r-s)', background:checked?'rgba(4,36,92,0.06)':'var(--white)', textAlign:'left', transition:'all var(--ease-fast)' }}>
-              {checked ? <CheckSquare size={16} style={{ color:'var(--navy)', flexShrink:0 }} /> : <Square size={16} style={{ color:'var(--text-3)', flexShrink:0 }} />}
+              {checked ? <CheckSquare size="1rem" style={{ color:'var(--navy)', flexShrink:0 }} /> : <Square size="1rem" style={{ color:'var(--text-3)', flexShrink:0 }} />}
               <span style={{ fontSize:'var(--text-md)', color:checked?'var(--black)':'var(--black)' }}>{opt}</span>
             </button>
           )
@@ -661,7 +661,7 @@ function Section({ section, values, onChange, errors, readOnly, defaultOpen=true
       <button type="button" onClick={()=>setOpen(o=>!o)}
         style={{ width:'100%', padding:'var(--pad-m) var(--pad-l)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--navy)' }}>
         <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>
-        <CaretDown size={14} style={{ color: 'var(--white)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
+        <CaretDown size="0.875rem" style={{ color: 'var(--white)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && (
         <div style={{ padding: 'var(--pad-l)', display:'flex', flexDirection:'column', gap:'var(--gap-l)' }}>

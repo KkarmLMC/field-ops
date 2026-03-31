@@ -92,7 +92,7 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
               title={collapsed ? child.label : undefined}
               style={{ marginBottom: 1 }}
             >
-              <child.Icon size={14} style={{ flexShrink: 0 }} />
+              <child.Icon size="0.875rem" style={{ flexShrink: 0 }} />
               {!collapsed && <span className="sidebar-item-label">{child.label}</span>}
             </button>
           )
@@ -115,7 +115,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         onClick={() => goTo(item.path)}
         title={collapsed ? item.label : undefined}
       >
-        <item.Icon size={17} style={{ flexShrink: 0 }} />
+        <item.Icon size="1.0625rem" style={{ flexShrink: 0 }} />
         {!collapsed && <span className="sidebar-item-label">{item.label}</span>}
 
         {/* Collapsed mode: active dot */}
@@ -193,14 +193,14 @@ export default function Sidebar({ collapsed, onToggle }) {
 
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>
-            <User size={17} style={{ flexShrink: 0 }} />
+            <User size="1.0625rem" style={{ flexShrink: 0 }} />
             {!collapsed && <span className="sidebar-item-label">View Profile</span>}
           </button>
 
           {/* Sign out */}
           <button onClick={handleSignOut} className="sidebar-item" title={collapsed ? 'Sign Out' : undefined}
             >
-            <SignOut size={17} style={{ flexShrink: 0 }} />
+            <SignOut size="1.0625rem" style={{ flexShrink: 0 }} />
             {!collapsed && <span className="sidebar-item-label">Sign Out</span>}
           </button>
 
@@ -210,8 +210,8 @@ export default function Sidebar({ collapsed, onToggle }) {
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed
-              ? <ArrowLineRight size={17} style={{ flexShrink: 0 }} />
-              : <ArrowLineLeft  size={17} style={{ flexShrink: 0 }} />
+              ? <ArrowLineRight size="1.0625rem" style={{ flexShrink: 0 }} />
+              : <ArrowLineLeft  size="1.0625rem" style={{ flexShrink: 0 }} />
             }
             {!collapsed && <span className="sidebar-item-label">Collapse</span>}
           </button>

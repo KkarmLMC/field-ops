@@ -18,9 +18,9 @@ export default function Technicians() {
         {/* Summary stat tiles */}
         <div className="dfl-summary-strip">
           {[
-            { label: 'Total Techs', value: TECHNICIANS.length, icon: <Users size={15} weight="bold" /> },
-            { label: 'In Field',    value: inField,             icon: <HardHat size={15} weight="bold" />, alert: inField > 0 },
-            { label: 'Active',      value: active,              icon: <Users size={15} weight="bold" /> },
+            { label: 'Total Techs', value: TECHNICIANS.length, icon: <Users size="0.9375rem" weight="bold" /> },
+            { label: 'In Field',    value: inField,             icon: <HardHat size="0.9375rem" weight="bold" />, alert: inField > 0 },
+            { label: 'Active',      value: active,              icon: <Users size="0.9375rem" weight="bold" /> },
           ].map(s => (
             <div
               key={s.label}
@@ -101,7 +101,7 @@ export default function Technicians() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => navigate('/daily-field-log')}
           >
-            <BookOpen size={14} weight="bold" />
+            <BookOpen size="0.875rem" weight="bold" />
             New Field Log
           </button>
           <button
@@ -109,7 +109,7 @@ export default function Technicians() {
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
             onClick={() => navigate('/forms/jsa')}
           >
-            <HardHat size={14} weight="bold" />
+            <HardHat size="0.875rem" weight="bold" />
             New JSA
           </button>
         </div>

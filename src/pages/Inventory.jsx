@@ -46,7 +46,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-l)' }}>
             <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Add Warehouse</div>
             <button onClick={onClose} style={{ background: 'var(--hover)', borderRadius: 'var(--r-xxl)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <X size={14} style={{ color: 'var(--black)' }} />
+              <X size="0.875rem" style={{ color: 'var(--black)' }} />
             </button>
           </div>
         </div>
@@ -99,7 +99,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
         <div style={{ padding: 'var(--pad-l) var(--pad-xl)', paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
           <button onClick={handleSave} disabled={saving || !form.name.trim()}
             style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
-            {saving ? 'Creating…' : <><Check size={15} /> Create Warehouse</>}
+            {saving ? 'Creating…' : <><Check size="0.9375rem" /> Create Warehouse</>}
           </button>
         </div>
       </div>
@@ -133,7 +133,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       <button onClick={onPress} style={{ background: 'var(--navy)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
           <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-l)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Buildings size={20} style={{ color: '#fff' }} />
+            <Buildings size="1.25rem" style={{ color: '#fff' }} />
           </div>
           <div>
             <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: '#fff' }}>{warehouse.name}</div>
@@ -146,11 +146,11 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
         </div>
         {hasAlerts ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--warning-soft)', borderRadius: 'var(--r-xxl)', padding: '3px 10px' }}>
-            <WarningCircle size={13} weight="fill" style={{ color: 'var(--warning)' }} />
+            <WarningCircle size="0.8125rem" weight="fill" style={{ color: 'var(--warning)' }} />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning)' }}>{lowStockItems} low stock</span>
           </div>
         ) : (
-          <CaretRight size={16} style={{ color: 'var(--white)' }} />
+          <CaretRight size="1rem" style={{ color: 'var(--white)' }} />
         )}
       </button>
 
@@ -164,7 +164,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
         ].map(s => (
           <div key={s.label} style={{ background: 'var(--white)', padding: 'var(--pad-m) var(--pad-l)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
-              <s.Icon size={13} />
+              <s.Icon size="0.8125rem" />
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>{s.label}</span>
             </div>
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.value}</div>
@@ -176,7 +176,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       {totalValue > 0 && (
         <div style={{ padding: 'var(--pad-m) var(--pad-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-3)' }}>
-            <CurrencyDollar size={14} />
+            <CurrencyDollar size="0.875rem" />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
           </div>
           <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--success-text)' }}>
@@ -206,11 +206,11 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)' }}>
         <button onClick={onViewParts}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
-          <Package size={13} /> View Parts
+          <Package size="0.8125rem" /> View Parts
         </button>
         <button onClick={onTransfer}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'transparent', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
-          <ArrowsLeftRight size={13} /> Transfer
+          <ArrowsLeftRight size="0.8125rem" /> Transfer
         </button>
       </div>
     </div>
@@ -291,26 +291,26 @@ export default function Inventory() {
             <>
               <button onClick={() => setEditMode(false)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <X size={14} /> Cancel
+                <X size="0.875rem" /> Cancel
               </button>
               <button onClick={saveOrder} disabled={saving}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <Check size={14} /> {saving ? 'Saving…' : 'Save Order'}
+                <Check size="0.875rem" /> {saving ? 'Saving…' : 'Save Order'}
               </button>
             </>
           ) : (
             <>
               <button onClick={() => setEditMode(true)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <PencilSimple size={14} /> Edit
+                <PencilSimple size="0.875rem" /> Edit
               </button>
               <button onClick={() => navigate('/warehouse-hq/transfer')}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <ArrowsLeftRight size={14} /> Transfer
+                <ArrowsLeftRight size="0.875rem" /> Transfer
               </button>
               <button onClick={() => setShowAdd(true)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                <Plus size={14} /> Add Warehouse
+                <Plus size="0.875rem" /> Add Warehouse
               </button>
             </>
           )}
@@ -320,7 +320,7 @@ export default function Inventory() {
       {/* Edit mode hint */}
       {editMode && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--blue-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-sm)', color: 'var(--blue)' }}>
-          <DotsSixVertical size={16} />
+          <DotsSixVertical size="1rem" />
           Drag the handles to reorder warehouses, then tap Save Order.
         </div>
       )}
@@ -337,7 +337,7 @@ export default function Inventory() {
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <Receipt size={15} style={{ color: 'var(--navy)' }} />
+                <Receipt size="0.9375rem" style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
                   <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
@@ -345,7 +345,7 @@ export default function Inventory() {
                   </span>
                 )}
               </div>
-              <CaretRight size={13} style={{ color: 'var(--black)' }} />
+              <CaretRight size="0.8125rem" style={{ color: 'var(--black)' }} />
             </button>
 
             {/* Stat row */}
@@ -408,7 +408,7 @@ export default function Inventory() {
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : warehouses.length === 0 ? (
         <div className="empty" style={{ padding: 'var(--pad-xxl)' }}>
-          <Buildings size={32} style={{ color: 'var(--text-3)' }} />
+          <Buildings size="2rem" style={{ color: 'var(--text-3)' }} />
           <div className="empty-title">No warehouses yet</div>
           <div className="empty-desc">Add your first warehouse to start tracking inventory.</div>
         </div>
@@ -428,12 +428,12 @@ export default function Inventory() {
                 background: 'var(--white)', borderRadius: 'var(--r-m)', padding: '1rem',
                 cursor: 'grab', userSelect: 'none' }}
             >
-              <DotsSixVertical size={22} style={{ color: 'var(--black)', flexShrink: 0 }} />
+              <DotsSixVertical size="1.375rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
               <div style={{
                 width: '2.5rem', height: '2.5rem', borderRadius: 'var(--r-l)',
                 background: 'var(--navy)', display: 'flex', alignItems: 'center',
                 justifyContent: 'center', flexShrink: 0 }}>
-                <Buildings size={18} style={{ color: '#fff' }} />
+                <Buildings size="1.125rem" style={{ color: '#fff' }} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 'var(--text-md)', fontWeight: 700 }}>{wh.name}</div>

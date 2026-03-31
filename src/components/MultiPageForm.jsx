@@ -100,7 +100,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
             cursor: 'pointer',
             flexShrink: 0 }}
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size="1rem" />
         </button>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', fontWeight: 500 }}>
           Back to sections
@@ -167,7 +167,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           cursor: 'pointer',
           marginBottom: 'var(--mar-xxl)' }}
       >
-        <CheckCircle size={16} />
+        <CheckCircle size="1rem" />
         Done — Back to Sections
       </button>
     </div>
@@ -296,11 +296,11 @@ export default function MultiPageForm({
               {/* Status icon */}
               <div style={{ flexShrink: 0 }}>
                 {complete ? (
-                  <CheckCircle size={22} weight="fill" style={{ color: 'var(--success)' }} />
+                  <CheckCircle size="1.375rem" weight="fill" style={{ color: 'var(--success)' }} />
                 ) : started ? (
-                  <Warning size={22} weight="fill" style={{ color: 'var(--amber, #D97706)' }} />
+                  <Warning size="1.375rem" weight="fill" style={{ color: 'var(--amber, #D97706)' }} />
                 ) : (
-                  <Circle size={22} style={{ color: 'var(--border-l)' }} />
+                  <Circle size="1.375rem" style={{ color: 'var(--border-l)' }} />
                 )}
               </div>
 
@@ -321,7 +321,7 @@ export default function MultiPageForm({
                 </div>
               </div>
 
-              <CaretRight size={16} style={{ color: 'var(--black)', flexShrink: 0 }} />
+              <CaretRight size="1rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
             </button>
           )
         })}
@@ -376,8 +376,8 @@ export default function MultiPageForm({
           transition: 'all var(--ease-fast)' }}
       >
         {submitting
-          ? <><SpinnerGap size={14} style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</>
-          : <><CheckCircle size={14} /> Submit Form</>
+          ? <><SpinnerGap size="0.875rem" style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</>
+          : <><CheckCircle size="0.875rem" /> Submit Form</>
         }
       </button>
     </div>

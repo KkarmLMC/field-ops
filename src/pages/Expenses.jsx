@@ -62,7 +62,7 @@ function ReportCard({ report, project, onClick }) {
             ${Number(report.grand_total).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         )}
-        <CaretRight size={13} style={{ color: 'var(--black)', marginTop: 2 }} />
+        <CaretRight size="0.8125rem" style={{ color: 'var(--black)', marginTop: 2 }} />
       </div>
     </button>
   )
@@ -115,7 +115,7 @@ export default function Expenses() {
         <div style={{ position: 'relative' }}>
           <button onClick={() => setShowNewMenu(m => !m)}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            <Plus size={15} /> New
+            <Plus size="0.9375rem" /> New
           </button>
           {showNewMenu && (
             <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', borderRadius: 'var(--r-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
@@ -135,7 +135,7 @@ export default function Expenses() {
       {/* Pending alert */}
       {submitted > 0 && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
-          <Clock size={18} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+          <Clock size="1.125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-shade-20)' }}>${totalPending.toLocaleString('en-US', { minimumFractionDigits: 2 })} pending</div>
@@ -158,10 +158,10 @@ export default function Expenses() {
 
       {/* Type filter + search */}
       <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search employee or project…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size={13} /></button>}
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size="0.8125rem" /></button>}
       </div>
       <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
@@ -177,7 +177,7 @@ export default function Expenses() {
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Receipt size={36} style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
+          <Receipt size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
           <div className="empty-title">No reports found</div>
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
