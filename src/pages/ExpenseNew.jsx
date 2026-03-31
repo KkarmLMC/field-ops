@@ -206,7 +206,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       {/* Total */}
       <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-l)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>Total Requested</span>
-        <span style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
+        <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
       </div>
 
       {/* Notes */}
@@ -453,7 +453,7 @@ export default function ExpenseNew() {
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>New {typeLabel}</div>
+        <div style={{ fontSize: 'var(--text-md)', fontWeight: 800 }}>New {typeLabel}</div>
       </div>
 
       {isAdvance

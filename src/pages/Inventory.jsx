@@ -109,7 +109,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 function StatTile({ label, value, color = 'var(--black)' }) {
   return (
     <div style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m) var(--pad-l)' }}>
-      <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
       <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4, fontWeight: 600 }}>{label}</div>
     </div>
   )
