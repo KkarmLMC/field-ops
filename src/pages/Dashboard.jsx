@@ -4,6 +4,7 @@ import { Warning, Lightning, CaretRight, Clock, ArrowRight, MagnifyingGlass, Rul
 import BranchTabs from '../components/BranchTabs'
 import { PROJECTS, TECHNICIANS, STATS } from '../data/mockData.js'
 import { BRANCH_COLORS } from '../config/branches.js'
+import { projectStage } from '../lib/statusColors.js'
 
 function getTechName(id) {
   return TECHNICIANS.find(t => t.id === id)?.name ?? '—'
@@ -156,9 +157,10 @@ function EmptyState({ message }) {
 }
 
 function JobRow({ job, navigate }) {
+  const stage = projectStage(job.stage)
   return (
     <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
-      <div className="dash-job-icon" style={{ background: 'var(--surface-raised)' }}>
+      <div className="dash-job-icon">
         {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
@@ -176,8 +178,8 @@ function JobRow({ job, navigate }) {
           )}
         </div>
       </div>
-      <div className="dash-status-pill" style={{ background: 'var(--surface-raised)', color: 'var(--text-2)' }}>
-        {job.stage}
+      <div className="dash-status-pill" style={{ background: stage.bg, color: stage.color }}>
+        {stage.label}
       </div>
     </div>
   )
