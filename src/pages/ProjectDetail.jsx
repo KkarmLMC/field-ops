@@ -125,43 +125,60 @@ export default function ProjectDetail() {
   const [jobCost, setJobCost]         = useState(null)
 
   useEffect(() => {
+    let cancelled = false
     async function load() {
       try {
-        const [{ data: p }, { data: r }, { data: s }] = await Promise.all([
-          db.from('projects').select('*').eq('id', id).single(),
-          db.from('daily_field_logs').select('*').eq('project_id', id).order('report_date', { ascending: false }).range(0, 24),
-          db.from('form_submissions').select('*').eq('project_id', id).order('created_at', { ascending: false }).range(0, 24),
+        // Try Supabase first with a 5s timeout to prevent infinite spinner
+        const timeout = ms => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
+        const [{ data: p }, { data: r }, { data: s }] = await Promise.race([
+          Promise.all([
+            db.from('projects').select('*').eq('id', id).maybeSingle(),
+            db.from('daily_field_logs').select('*').eq('project_id', id).order('report_date', { ascending: false }).range(0, 24),
+            db.from('form_submissions').select('*').eq('project_id', id).order('created_at', { ascending: false }).range(0, 24),
+          ]),
+          timeout(5000),
         ])
-        setProject(p || PROJECTS.find(x => x.id === id) || null)
+        if (cancelled) return
+        const proj = p || PROJECTS.find(x => x.id === id) || null
+        setProject(proj)
         setReports(r?.length ? r : (MOCK_REPORTS || []).filter(x => x.project_id === id))
         setSubmissions(s?.length ? s : (MOCK_SUBMISSIONS || []).filter(x => x.project_id === id))
 
-        // Job cost data
-        const [{ data: expenses }, { data: soData }] = await Promise.all([
-          db.from('expense_reports').select('type, grand_total, status').eq('project_id', id),
-          db.from('sales_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', p?.job_number || ''),
-        ])
-        const logs = r || []
-        setJobCost({
-          totalHours:    logs.reduce((s, l) => s + (parseFloat(l.hours_worked) || 0), 0),
-          totalMiles:    logs.reduce((s, l) => s + (parseFloat(l.miles_driven) || 0), 0),
-          totalDriveTime:logs.reduce((s, l) => s + (parseFloat(l.drive_time)   || 0), 0),
-          crewDays:      logs.length,
-          avgCrew:       logs.length ? Math.round(logs.reduce((s, l) => s + (l.crew_on_site?.length || 0), 0) / logs.length) : 0,
-          expenseTotal:  (expenses || []).filter(e => e.type === 'expense').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
-          advanceTotal:  (expenses || []).filter(e => e.type === 'advance').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
-          expenseCount:  (expenses || []).length,
-          soTotal:       (soData || []).reduce((s, so) => s + (parseFloat(so.grand_total) || 0), 0),
-          materialsTotal:(soData || []).reduce((s, so) => s + (parseFloat(so.materials_total) || 0), 0),
-          installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0) })
+        // Job cost data (non-blocking — don't let this block the page)
+        try {
+          const [{ data: expenses }, { data: soData }] = await Promise.race([
+            Promise.all([
+              db.from('expense_reports').select('type, grand_total, status').eq('project_id', id),
+              db.from('sales_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', proj?.job_number || ''),
+            ]),
+            timeout(5000),
+          ])
+          if (cancelled) return
+          const logs = r || []
+          setJobCost({
+            totalHours:    logs.reduce((s, l) => s + (parseFloat(l.hours_worked) || 0), 0),
+            totalMiles:    logs.reduce((s, l) => s + (parseFloat(l.miles_driven) || 0), 0),
+            totalDriveTime:logs.reduce((s, l) => s + (parseFloat(l.drive_time)   || 0), 0),
+            crewDays:      logs.length,
+            avgCrew:       logs.length ? Math.round(logs.reduce((s, l) => s + (l.crew_on_site?.length || 0), 0) / logs.length) : 0,
+            expenseTotal:  (expenses || []).filter(e => e.type === 'expense').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
+            advanceTotal:  (expenses || []).filter(e => e.type === 'advance').reduce((s, e) => s + (parseFloat(e.grand_total) || 0), 0),
+            expenseCount:  (expenses || []).length,
+            soTotal:       (soData || []).reduce((s, so) => s + (parseFloat(so.grand_total) || 0), 0),
+            materialsTotal:(soData || []).reduce((s, so) => s + (parseFloat(so.materials_total) || 0), 0),
+            installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0) })
+        } catch { /* job cost is optional — page still renders */ }
       } catch {
+        if (cancelled) return
         setProject(PROJECTS.find(x => x.id === id) || null)
         setReports((MOCK_REPORTS || []).filter(x => x.project_id === id))
         setSubmissions((MOCK_SUBMISSIONS || []).filter(x => x.project_id === id))
+      } finally {
+        if (!cancelled) setLoading(false)
       }
-      setLoading(false)
     }
     load()
+    return () => { cancelled = true }
   }, [id])
 
   if (loading) return (
