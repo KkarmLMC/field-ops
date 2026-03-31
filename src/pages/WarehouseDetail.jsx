@@ -433,7 +433,7 @@ export default function WarehouseDetail() {
                 </button>
               )
             })}
-          </div>
+          </Card>
         )
       })()}
 
@@ -471,7 +471,7 @@ export default function WarehouseDetail() {
             ))}
           </div>
         )}
-      </div>
+      </Card>
 
       {/* Edit warehouse sheet */}
       {showEdit && (

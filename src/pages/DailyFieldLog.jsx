@@ -51,6 +51,7 @@ const JOB_STATUS_STYLE = {
   'postponed':      { label: 'Postponed',      bg: 'var(--state-warning-soft)', color: 'var(--state-warning-text)' },
   'complete':       { label: 'Completed',      bg: 'var(--state-success-soft)', color: 'var(--state-success-text)' },
   'failed':         { label: 'Failed',         bg: 'var(--state-error-soft)', color: 'var(--state-error-text)' },
+}
 
 // Derive unique customer names from all PROJECTS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()

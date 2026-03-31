@@ -201,7 +201,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           <ArrowsLeftRight size="0.8125rem" /> Transfer
         </Button>
       </div>
-    </Card>
+    </div>
   )
 }
 
