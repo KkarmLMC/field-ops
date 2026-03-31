@@ -1906,12 +1906,13 @@ textarea { resize: vertical; }
   cursor: pointer;
   transition: opacity var(--ease-fast);
   text-align: left;
+  color: var(--black);
 }
 
 .nav-card:hover     { opacity: 0.85; }
 .nav-card__icon     { font-size: 1.25rem; flex-shrink: 0; color: var(--black); }
 .nav-card__text     { flex: 1; min-width: 0; }
-.nav-card__label    { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-1); }
+.nav-card__label    { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--black); }
 .nav-card__sub      { font-size: var(--text-xs); color: var(--text-3); margin-top: 0.0625rem; }
 .nav-card__arrow    { color: var(--black); opacity: 0.5; flex-shrink: 0; }
 
