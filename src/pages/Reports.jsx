@@ -227,16 +227,16 @@ export default function Reports() {
       </div>
 
       {/* Archive list */}
-      <div className="card dash-card" style={{ marginTop: 4 }}>
+      <div className="card list-card" style={{ marginTop: 4 }}>
         <div
-          className="card-header"
+          className="list-card__header"
           style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
         >
-          <span className="card-title">
+          <span className="list-card__title">
             <ClipboardText size={14} />
             Submitted Forms
           </span>
-          <span className="card-header__meta">{filtered.length} record{filtered.length !== 1 ? 's' : ''}</span>
+          <span className="list-card__meta">{filtered.length} record{filtered.length !== 1 ? 's' : ''}</span>
         </div>
 
         {filtered.length === 0 ? (

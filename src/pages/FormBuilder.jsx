@@ -489,8 +489,8 @@ export default function FormBuilder() {
   return (
     <div className="page-content fade-in">
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Form Builder</span>
+        <div className="list-card__header">
+          <span className="list-card__title">Form Builder</span>
         </div>
 
         {loading ? (

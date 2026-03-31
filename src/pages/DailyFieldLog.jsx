@@ -1720,16 +1720,16 @@ export default function DailyFieldLog() {
           )}
 
           {/* Entries list */}
-          <div className="card dash-card">
+          <div className="card list-card">
             <div
-              className="card-header"
+              className="list-card__header"
               style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
             >
-              <span className="card-title">
+              <span className="list-card__title">
                 <Clock size={14} />
                 Field Log Entries
               </span>
-              <span className="card-header__meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
+              <span className="list-card__meta">{reports.length} entr{reports.length !== 1 ? 'ies' : 'y'}</span>
             </div>
             <div>
               {reports.length === 0 ? (
@@ -1779,13 +1779,13 @@ export default function DailyFieldLog() {
 
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
-        <div className="card dash-card" style={{ marginTop: 'var(--mar-s)' }}>
-          <div className="card-header" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
-            <span className="card-title">
+        <div className="card list-card" style={{ marginTop: 'var(--mar-s)' }}>
+          <div className="list-card__header" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
+            <span className="list-card__title">
               <Clock size={14} />
               My Log Entries
             </span>
-            <span className="card-header__meta">{entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}</span>
+            <span className="list-card__meta">{entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}</span>
           </div>
           <div>
             {entries.length === 0 ? (

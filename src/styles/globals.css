@@ -1163,7 +1163,11 @@ textarea { resize: vertical; }
   overflow: hidden;
   margin-bottom: var(--mar-m);
 }
-.card-header {
+
+/* ── List Card ── navy-header card with item rows ─────────────────────────── */
+.list-card { margin-bottom: 0; display: flex; flex-direction: column; }
+
+.list-card__header {
   padding: var(--pad-m) var(--pad-l);
   background: var(--navy);
   display: flex;
@@ -1172,7 +1176,7 @@ textarea { resize: vertical; }
   gap: var(--gap-m);
   flex-shrink: 0;
 }
-.card-title {
+.list-card__title {
   display: flex;
   align-items: center;
   gap: var(--gap-s);
@@ -1181,8 +1185,8 @@ textarea { resize: vertical; }
   color: var(--white);
   min-width: 0;
 }
-.card-title svg { color: var(--white); flex-shrink: 0; }
-.card-header__meta {
+.list-card__title svg { color: var(--white); flex-shrink: 0; }
+.list-card__meta {
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
@@ -1193,7 +1197,7 @@ textarea { resize: vertical; }
   white-space: nowrap;
   opacity: 0.8;
 }
-.card-header__action {
+.list-card__action {
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
@@ -1210,9 +1214,8 @@ textarea { resize: vertical; }
   opacity: 0.85;
   transition: opacity var(--ease-fast);
 }
-.card-header__action:hover { opacity: 1; }
-
-.card-body { padding: 0; }
+.list-card__action:hover { opacity: 1; }
+.list-card__body { padding: 0; }
 
 /* Section header inside cards */
 .section-header {
@@ -1886,15 +1889,15 @@ textarea { resize: vertical; }
   margin-top: 0.1875rem;
 }
 
-/* ── Dashboard nav tiles ─────────────────────────────────────────────────────── */
+/* ── Stat Card ── quick-link nav tiles ─────────────────────────────────────── */
 
-.dash-tiles {
+.stat-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.125rem), 1fr));
   gap: var(--gap-s);
 }
 
-.dash-tile {
+.stat-card {
   display: flex;
   align-items: center;
   gap: 0.625rem;
@@ -1905,12 +1908,12 @@ textarea { resize: vertical; }
   text-align: left;
 }
 
-.dash-tile:hover { opacity: 0.85; }
-.dash-tile-icon  { font-size: 1.25rem; flex-shrink: 0; color: var(--black); }
-.dash-tile-text  { flex: 1; min-width: 0; }
-.dash-tile-label { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-1); }
-.dash-tile-sub   { font-size: var(--text-xs); color: var(--text-3); margin-top: 0.0625rem; }
-.dash-tile-arrow { color: var(--black); opacity: 0.5; flex-shrink: 0; }
+.stat-card:hover     { opacity: 0.85; }
+.stat-card__icon     { font-size: 1.25rem; flex-shrink: 0; color: var(--black); }
+.stat-card__text     { flex: 1; min-width: 0; }
+.stat-card__label    { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-1); }
+.stat-card__sub      { font-size: var(--text-xs); color: var(--text-3); margin-top: 0.0625rem; }
+.stat-card__arrow    { color: var(--black); opacity: 0.5; flex-shrink: 0; }
 
 /* ── Dashboard card grid ─────────────────────────────────────────────────────── */
 
@@ -1920,12 +1923,7 @@ textarea { resize: vertical; }
   gap: var(--gap-l);
 }
 
-.dash-card {
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: column;
-}
-.dash-card .card-body {
+.dash-grid .list-card__body {
   flex: 1;
   min-height: clamp(13.75rem, 25vh, 20rem);
   display: flex;

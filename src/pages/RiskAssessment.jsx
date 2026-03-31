@@ -466,16 +466,16 @@ export default function RiskAssessment() {
         </div>
 
         {/* Assessments list */}
-        <div className="card dash-card">
+        <div className="card list-card">
           <div
-            className="card-header"
+            className="list-card__header"
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
           >
-            <span className="card-title">
+            <span className="list-card__title">
               <ChartBar size={14} />
               Site Assessments
             </span>
-            <span className="card-header__meta">{branchAssess.length} record{branchAssess.length !== 1 ? 's' : ''}</span>
+            <span className="list-card__meta">{branchAssess.length} record{branchAssess.length !== 1 ? 's' : ''}</span>
           </div>
           {loading
             ? <div className="dfl-empty-state">Loading…</div>

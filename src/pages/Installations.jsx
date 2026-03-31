@@ -328,49 +328,49 @@ export default function Installations() {
         </div>
 
         {/* Quick nav tiles */}
-        <div className="dash-tiles">
+        <div className="stat-card-grid">
           <button
-            className="card dash-tile"
+            className="card stat-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
-            <div className="dash-tile-icon"><SquaresFour size={18} /></div>
-            <div className="dash-tile-text">
-              <div className="dash-tile-label">Project Pipeline</div>
-              <div className="dash-tile-sub">{stageCounts['in-progress'] || 0} active</div>
+            <div className="stat-card__icon"><SquaresFour size={18} /></div>
+            <div className="stat-card__text">
+              <div className="stat-card__label">Project Pipeline</div>
+              <div className="stat-card__sub">{stageCounts['in-progress'] || 0} active</div>
             </div>
-            <ArrowRight size={14} className="dash-tile-arrow" />
+            <ArrowRight size={14} className="stat-card__arrow" />
           </button>
           <button
-            className="card dash-tile"
+            className="card stat-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
-            <div className="dash-tile-icon"><BookOpen size={18} /></div>
-            <div className="dash-tile-text">
-              <div className="dash-tile-label">Field Logs</div>
-              <div className="dash-tile-sub">Daily activity</div>
+            <div className="stat-card__icon"><BookOpen size={18} /></div>
+            <div className="stat-card__text">
+              <div className="stat-card__label">Field Logs</div>
+              <div className="stat-card__sub">Daily activity</div>
             </div>
-            <ArrowRight size={14} className="dash-tile-arrow" />
+            <ArrowRight size={14} className="stat-card__arrow" />
           </button>
           <button
-            className="card dash-tile"
+            className="card stat-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
-            <div className="dash-tile-icon"><FileText size={18} /></div>
-            <div className="dash-tile-text">
-              <div className="dash-tile-label">Field Reports</div>
-              <div className="dash-tile-sub">Submitted forms</div>
+            <div className="stat-card__icon"><FileText size={18} /></div>
+            <div className="stat-card__text">
+              <div className="stat-card__label">Field Reports</div>
+              <div className="stat-card__sub">Submitted forms</div>
             </div>
-            <ArrowRight size={14} className="dash-tile-arrow" />
+            <ArrowRight size={14} className="stat-card__arrow" />
           </button>
         </div>
 
         {/* All Projects list */}
-        <div className="card dash-card">
-          <div className="card-header" style={headStyle}>
-            <span className="card-title">
+        <div className="card list-card">
+          <div className="list-card__header" style={headStyle}>
+            <span className="list-card__title">
               <Buildings size={14} />
               {stageFilter !== 'all'
                 ? `${STAGE_CFG[stageFilter]?.label || stageFilter} Projects`
@@ -378,7 +378,7 @@ export default function Installations() {
               }
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="card-header__meta">{filtered.length}</span>
+              <span className="list-card__meta">{filtered.length}</span>
               <button
                 style={{
                   background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
@@ -449,13 +449,13 @@ export default function Installations() {
         {/* Pipeline 3-card grid */}
         <div className="field-pipeline-grid">
           {/* Upcoming */}
-          <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="card-title">
+          <div className="card list-card" style={{ margin: 0 }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="list-card__title">
                 <Clock size={12} />
                 Upcoming
               </span>
-              <span className="card-header__meta">{upcomingProjects.length}</span>
+              <span className="list-card__meta">{upcomingProjects.length}</span>
             </div>
             {upcomingProjects.length === 0 ? (
               <EmptyState message="None" />
@@ -465,13 +465,13 @@ export default function Installations() {
           </div>
 
           {/* Active */}
-          <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="card-title">
+          <div className="card list-card" style={{ margin: 0 }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="list-card__title">
                 <span className="live-dot" />
                 Active
               </span>
-              <span className="card-header__meta">{activeProjects.length}</span>
+              <span className="list-card__meta">{activeProjects.length}</span>
             </div>
             {activeProjects.length === 0 ? (
               <EmptyState message="None" />
@@ -481,13 +481,13 @@ export default function Installations() {
           </div>
 
           {/* Pending Review */}
-          <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="card-title">
+          <div className="card list-card" style={{ margin: 0 }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="list-card__title">
                 <Warning size={12} />
                 In Review
               </span>
-              <span className="card-header__meta">{pendingReviewProjects.length}</span>
+              <span className="list-card__meta">{pendingReviewProjects.length}</span>
             </div>
             {pendingReviewProjects.length === 0 ? (
               <EmptyState message="None" />
@@ -498,7 +498,7 @@ export default function Installations() {
         </div>
 
         {/* Field quick actions */}
-        <div className="dash-tiles">
+        <div className="stat-card-grid">
           {[
             { Icon: ClipboardText, label: 'Daily Log',    sub: 'Log today\'s work',   path: '/daily-field-log' },
             { Icon: BookOpen,      label: 'JSA',          sub: 'Safety analysis',      path: '/forms/jsa'       },
@@ -506,16 +506,16 @@ export default function Installations() {
           ].map(a => (
             <button
               key={a.path}
-              className="card dash-tile"
+              className="card stat-card"
               onClick={() => navigate(a.path)}
               style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             >
-              <div className="dash-tile-icon"><a.Icon size={18} /></div>
-              <div className="dash-tile-text">
-                <div className="dash-tile-label">{a.label}</div>
-                <div className="dash-tile-sub">{a.sub}</div>
+              <div className="stat-card__icon"><a.Icon size={18} /></div>
+              <div className="stat-card__text">
+                <div className="stat-card__label">{a.label}</div>
+                <div className="stat-card__sub">{a.sub}</div>
               </div>
-              <ArrowRight size={14} className="dash-tile-arrow" />
+              <ArrowRight size={14} className="stat-card__arrow" />
             </button>
           ))}
         </div>

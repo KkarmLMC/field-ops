@@ -275,8 +275,8 @@ export default function ProjectDetail() {
 
         {/* ── Project details ───────────────────────────────────────────────── */}
         <div className="card">
-          <div className="card-header">
-            <span className="card-title">Project Details</span>
+          <div className="list-card__header">
+            <span className="list-card__title">Project Details</span>
           </div>
           <div style={{ padding: '10px 14px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
             <InfoRow icon={MapPin}        label="Address"       value={[project.address, project.city, project.state].filter(Boolean).join(', ')} />
@@ -291,8 +291,8 @@ export default function ProjectDetail() {
 
         {/* ── Lead technician ───────────────────────────────────────────────── */}
         <div className="card">
-          <div className="card-header">
-            <span className="card-title">Lead Technician</span>
+          <div className="list-card__header">
+            <span className="list-card__title">Lead Technician</span>
           </div>
           <div style={{ padding: '10px 14px 14px' }}>
             {tech ? (
@@ -349,8 +349,8 @@ export default function ProjectDetail() {
         {/* ── Notes ────────────────────────────────────────────────────────── */}
         {project.notes && (
           <div className="card">
-            <div className="card-header">
-              <span className="card-title">Notes</span>
+            <div className="list-card__header">
+              <span className="list-card__title">Notes</span>
             </div>
             <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>
               {project.notes}
@@ -361,11 +361,11 @@ export default function ProjectDetail() {
         {/* ── Daily Field Reports ───────────────────────────────────────────── */}
         {reports.length > 0 && (
           <div className="card">
-            <div className="card-header">
-              <span className="card-title">
+            <div className="list-card__header">
+              <span className="list-card__title">
                 Daily Field Reports
               </span>
-              <span className="card-header__meta">{reports.length} reports</span>
+              <span className="list-card__meta">{reports.length} reports</span>
             </div>
             {reports.map(r => (
               <div key={r.id} className="project-item">
@@ -394,7 +394,7 @@ export default function ProjectDetail() {
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
-                <span className="card-header__meta">
+                <span className="list-card__meta">
                   Contract: ${Number(project.contract_value).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                 </span>
               )}
@@ -473,11 +473,11 @@ export default function ProjectDetail() {
         {/* ── Completion forms ──────────────────────────────────────────────── */}
         {submissions.length > 0 && (
           <div className="card">
-            <div className="card-header">
-              <span className="card-title">
+            <div className="list-card__header">
+              <span className="list-card__title">
                 Completion Forms
               </span>
-              <span className="card-header__meta">{submissions.length} forms</span>
+              <span className="list-card__meta">{submissions.length} forms</span>
             </div>
             {submissions.map(s => {
               const sCfg = COMPLETION_FORM_CFG[s.status?.toLowerCase().replace(' ', '-')] || {}

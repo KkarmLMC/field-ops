@@ -14,8 +14,8 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
   if (!forms.length) return null
   return (
     <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
-      <div className="card-header" style={{ background: bc.bgActive }}>
-        <span className="card-title">
+      <div className="list-card__header" style={{ background: bc.bgActive }}>
+        <span className="list-card__title">
           {category.label}
         </span>
       </div>
