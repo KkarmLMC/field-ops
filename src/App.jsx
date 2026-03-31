@@ -8,7 +8,7 @@ import PageSubNav    from './components/PageSubNav'
 import { lazy, Suspense } from 'react'
 import { useAuth } from './lib/useAuth.jsx'
 
-// ─── Lazy-loaded page chunks — each route downloads only when first visited ───
+// ─── Lazy-loaded page chunks ─────────────────────────────────────────────────
 const Login         = lazy(() => import('./pages/Login'))
 const Dashboard     = lazy(() => import('./pages/Dashboard'))
 const Installs      = lazy(() => import('./pages/Installs'))
@@ -40,7 +40,7 @@ const AddEditPart    = lazy(() => import('./pages/AddEditPart'))
 const InventoryTransfer = lazy(() => import('./pages/InventoryTransfer'))
 const Profile           = lazy(() => import('./pages/Profile'))
 
-// ─── Route metadata ────────────────────────────────────────────────────────────
+// ─── Route metadata ──────────────────────────────────────────────────────────
 const PAGE_META = {
   '/dashboard':              { title: 'Field Overview',   parent: null },
   '/installations':          { title: 'Installations',    parent: null },
@@ -54,7 +54,7 @@ const PAGE_META = {
   '/warehouse-hq/iq':        { title: 'Warehouse IQ',      parent: '/warehouse-hq' },
   '/warehouse-hq/overview':  { title: 'Warehouse Overview', parent: '/warehouse-hq' },
   '/warehouse-hq/catalog':   { title: 'Parts Catalog',     parent: '/warehouse-hq' },
-  '/sales-orders': { title: 'Sales Orders', parent: null } }
+  '/sales-orders':           { title: 'Sales Orders',      parent: null } }
 
 function getPageMeta(pathname) {
   if (pathname === '/installations/pipeline')
@@ -70,9 +70,8 @@ function getPageMeta(pathname) {
     const labels = { 'site-survey': 'Site Survey', installation: 'Installation', inspection: 'Inspection' }
     return { title: labels[fid] || 'Form', sub: 'NFPA 780', parent: '/installations' }
   }
-  if (/^\/forms\/[^/]+$/.test(pathname)) {
+  if (/^\/forms\/[^/]+$/.test(pathname))
     return { title: 'Report Form', parent: '/forms' }
-  }
   if (pathname === '/warehouse-hq/add-part')
     return { title: 'New Part', parent: '/warehouse-hq' }
   if (pathname === '/warehouse-hq/transfer')
@@ -85,16 +84,16 @@ function getPageMeta(pathname) {
     return { title: 'New Sales Order', parent: '/sales-orders' }
   if (/^\/sales-orders\/[^/]+$/.test(pathname))
     return { title: 'Sales Order', parent: '/sales-orders' }
-  if (/^\/ warehouse-hq\/warehouse\/[^/]+$/.test(pathname))
+  if (/^\/warehouse-hq\/warehouse\/[^/]+$/.test(pathname))
     return { title: 'Warehouse', parent: '/warehouse-hq' }
-  if (/^\/ warehouse-hq\/part\/[^/]+\/edit$/.test(pathname))
+  if (/^\/warehouse-hq\/part\/[^/]+\/edit$/.test(pathname))
     return { title: 'Edit Part', parent: '/warehouse-hq' }
-  if (/^\/ warehouse-hq\/part\/[^/]+$/.test(pathname))
+  if (/^\/warehouse-hq\/part\/[^/]+$/.test(pathname))
     return { title: 'Part Detail', parent: '/warehouse-hq' }
   return PAGE_META[pathname] || { title: 'Field Ops', parent: null }
 }
 
-// ─── Mobile top bar ────────────────────────────────────────────────────────────
+// ─── Mobile header ───────────────────────────────────────────────────────────
 function MobileHeader() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -106,12 +105,9 @@ function MobileHeader() {
         <button className="mobile-header-btn" onClick={() => navigate(meta.parent)}>
           <ArrowLeft size="1.125rem" />
         </button>
-      ) : (
-        /* Spacer so title stays centered when there's no back button */
-        <div style={{ width: '2.125rem', flexShrink: 0 }} />
-      )}
-      <div className="mobile-header-title" style={{ textAlign: 'center' }}>
-        {meta.sub && <div style={{ fontSize: '0.5625rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{meta.sub}</div>}
+      ) : <div className="mobile-header__spacer" />}
+      <div className="mobile-header-title">
+        {meta.sub && <div className="mobile-header__sub">{meta.sub}</div>}
         {meta.title}
       </div>
       <SyncBadge compact />
@@ -119,33 +115,28 @@ function MobileHeader() {
   )
 }
 
-// ─── Desktop top bar ───────────────────────────────────────────────────────────
+// ─── Desktop top bar ─────────────────────────────────────────────────────────
 function DesktopTopBar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { signOut } = useAuth()
   const meta = getPageMeta(location.pathname)
 
-  const handleSignOut = async () => {
-    await signOut()
-    navigate('/login')
-  }
+  const handleSignOut = async () => { await signOut(); navigate('/login') }
 
   return (
     <div className="page-header">
       <div className="page-header__actions">
         {meta.parent && (
-          <button onClick={() => navigate(meta.parent)}
-            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-            <ArrowLeft size="1.125rem" color="var(--white)" />
+          <button className="page-header__icon-btn" onClick={() => navigate(meta.parent)}>
+            <ArrowLeft size="1.125rem" color="var(--color-white)" />
           </button>
         )}
         <div className="page-header__title">{meta.title}</div>
       </div>
       <div className="page-header__actions">
         <SyncBadge />
-        <button onClick={handleSignOut}
-          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+        <button className="page-header__icon-btn" onClick={handleSignOut}>
           <SignOut size="1rem" color="rgba(255,255,255,0.7)" />
         </button>
       </div>
@@ -153,7 +144,7 @@ function DesktopTopBar() {
   )
 }
 
-// ─── Page transition ───────────────────────────────────────────────────────────
+// ─── Page transition ─────────────────────────────────────────────────────────
 const TOP_TABS = [
   '/dashboard', '/installations', '/inspections',
   '/daily-field-log', '/forms', '/technicians',
@@ -189,39 +180,18 @@ function PageTransition({ children }) {
   }, [location.pathname])
 
   return (
-    <div ref={containerRef} style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div ref={containerRef} className="page-transition">
       {children}
     </div>
   )
 }
 
-// ─── Root ──────────────────────────────────────────────────────────────────────
-// ─── Auth guard ───────────────────────────────────────────────────────────────
-function RequireAuth({ children }) {
-  const { session, loading, profile } = useAuth()
-  const location = useLocation()
-
-  if (loading) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
-      <div className="spinner" />
-    </div>
-  )
-
-  if (!session) return <Navigate to="/login" state={{ from: location }} replace />
-
-  return children
-}
-
+// ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [collapsed, setCollapsed] = useState(false)
   const { session, loading, profile } = useAuth()
 
-  // Show login page without shell
-  if (loading) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
-      <div className="spinner" />
-    </div>
-  )
+  if (loading) return <div className="spinner-page"><div className="spinner" /></div>
 
   if (!session) return (
     <Suspense fallback={null}>
@@ -232,8 +202,6 @@ export default function App() {
     </Suspense>
   )
 
-  // PIN guard — loading covers both session + profile loading
-  // When we reach here, profile is fully loaded. If no pin_hash → force setup
   if (session && !profile?.pin_hash) return (
     <Suspense fallback={null}>
       <Routes>
@@ -245,35 +213,25 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar
-        collapsed={collapsed}
-        onToggle={() => setCollapsed(c => !c)}
-      />
+      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
       <div className="main-area">
         <MobileHeader />
         <DesktopTopBar />
         <PageTransition>
-          <Suspense fallback={<div className="page-content" style={{ display:'flex',alignItems:'center',justifyContent:'center',minHeight:'60vh' }}><div className="spinner"/></div>}>
+          <Suspense fallback={<div className="page-content spinner-content"><div className="spinner" /></div>}>
           <Routes>
             <Route path="/"                                                    element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard"                                           element={<Dashboard />} />
-
-            {/* Installations */}
             <Route path="/installations"                                       element={<Installations />} />
             <Route path="/installations/pipeline"                              element={<Installs />} />
             <Route path="/installations/field-logs"                            element={<DailyFieldLog />} />
             <Route path="/installations/:id"                                   element={<ProjectDetail />} />
-
-            {/* Legacy redirects */}
             <Route path="/installations/installs"                              element={<Navigate to="/installations/pipeline" replace />} />
             <Route path="/installations/installs/:jobId"                       element={<Navigate to="/installations" replace />} />
-
-            {/* Legacy redirects */}
             <Route path="/projects"                                            element={<Navigate to="/installations" replace />} />
             <Route path="/projects/:id"                                        element={<Navigate to="/installations" replace />} />
             <Route path="/jobs"                                                element={<Navigate to="/installations/installs" replace />} />
             <Route path="/jobs/:jobId"                                         element={<Navigate to="/installations/installs" replace />} />
-
             <Route path="/inspections"                                         element={<Inspections />} />
             <Route path="/daily-field-log"                                     element={<DailyFieldLog />} />
             <Route path="/installations/field-reports"                        element={<Reports />} />
@@ -283,24 +241,24 @@ export default function App() {
             <Route path="/forms/:formType"                                     element={<FormPage />} />
             <Route path="/technicians"                                         element={<Technicians />} />
             <Route path="/risk-assessment"                                     element={<RiskAssessment />} />
-            <Route path="/warehouse-hq"                                           element={<Inventory />} />
-            <Route path="/warehouse-hq/iq"                                    element={<WarehouseIQ />} />
-            <Route path="/warehouse-hq/inventory"                                 element={<InventoryStock />} />
-            <Route path="/warehouse-hq/catalog"                                   element={<PartsCatalog />} />
-            <Route path="/stock"                                              element={<StockView />} />
-            <Route path="/stock/request"                                        element={<PartRequest />} />
+            <Route path="/warehouse-hq"                                        element={<Inventory />} />
+            <Route path="/warehouse-hq/iq"                                     element={<WarehouseIQ />} />
+            <Route path="/warehouse-hq/inventory"                              element={<InventoryStock />} />
+            <Route path="/warehouse-hq/catalog"                                element={<PartsCatalog />} />
+            <Route path="/stock"                                               element={<StockView />} />
+            <Route path="/stock/request"                                       element={<PartRequest />} />
             <Route path="/expenses"                                            element={<Expenses />} />
             <Route path="/expenses/new"                                        element={<ExpenseNew />} />
-            <Route path="/expenses/:id"                                         element={<ExpenseDetail />} />
-            <Route path="/sales-orders"                           element={<PurchaseOrders />} />
-            <Route path="/sales-orders/new"                       element={<PONew />} />
-            <Route path="/sales-orders/:id"                       element={<PODetail />} />
-            <Route path="/warehouse-hq/warehouse/:id"                             element={<WarehouseDetail />} />
-            <Route path="/warehouse-hq/add-part"                                  element={<AddEditPart />} />
-            <Route path="/warehouse-hq/transfer"                                  element={<InventoryTransfer />} />
-            <Route path="/warehouse-hq/part/:id"                                  element={<PartDetail />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/warehouse-hq/part/:id/edit"                             element={<AddEditPart />} />
+            <Route path="/expenses/:id"                                        element={<ExpenseDetail />} />
+            <Route path="/sales-orders"                                        element={<PurchaseOrders />} />
+            <Route path="/sales-orders/new"                                    element={<PONew />} />
+            <Route path="/sales-orders/:id"                                    element={<PODetail />} />
+            <Route path="/warehouse-hq/warehouse/:id"                          element={<WarehouseDetail />} />
+            <Route path="/warehouse-hq/add-part"                               element={<AddEditPart />} />
+            <Route path="/warehouse-hq/transfer"                               element={<InventoryTransfer />} />
+            <Route path="/warehouse-hq/part/:id"                               element={<PartDetail />} />
+            <Route path="/profile"                                             element={<Profile />} />
+            <Route path="/warehouse-hq/part/:id/edit"                          element={<AddEditPart />} />
             <Route path="*"                                                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
           </Suspense>
