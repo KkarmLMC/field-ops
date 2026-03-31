@@ -1235,7 +1235,7 @@ textarea { resize: vertical; }
 .list-card { margin-bottom: 0; display: flex; flex-direction: column; }
 
 .list-card__header {
-  padding: var(--pad-m) var(--pad-l);
+  padding: var(--pad-l) var(--pad-l);
   background: var(--navy);
   display: flex;
   align-items: center;
@@ -1247,7 +1247,7 @@ textarea { resize: vertical; }
 .list-card__title {
   display: flex;
   align-items: center;
-  gap: var(--gap-xs);
+  gap: var(--gap-s);
   font-size: var(--text-sm);
   font-weight: var(--fw-bold);
   color: var(--white);
@@ -2011,7 +2011,7 @@ textarea { resize: vertical; }
 .dash-job-row {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: var(--gap-s);
   padding: 0.875rem var(--pad-l);
   cursor: pointer;
   border-bottom: 1px solid var(--grey-tint-80);
