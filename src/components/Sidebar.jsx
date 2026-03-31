@@ -49,7 +49,7 @@ function Clock() {
     return () => clearInterval(i)
   }, [])
   return (
-    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
+    <span className="sidebar-clock__text">
       {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
       {' · '}
       {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -181,10 +181,10 @@ export default function Sidebar({ collapsed, onToggle }) {
         {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-s) 0.625rem var(--pad-xs)' }}>
+            <div className="sidebar-footer-header">
               <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--success)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
+              <div className="sidebar-clock">
+                <div className="sidebar-clock__dot" />
                 <Clock />
               </div>
             </div>

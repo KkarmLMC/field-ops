@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   User, Lock, Eye, EyeSlash, CheckCircle, Shield,
   ArrowLeft, Warning, PencilSimple, SignOut,
   Buildings, AppWindow, Trash, IdentificationCard } from '@phosphor-icons/react'
+import { Button, IconButton, Card, Badge, Surface, Spinner, PageHeader, SearchInput, EmptyState, FilterPills, ActionButton, StatusBadge } from '../components/ui'
 import { db } from '../lib/supabase.js'
 import { logActivity } from '../lib/logActivity.js'
 
@@ -64,16 +65,14 @@ function PinPad({ onComplete }) {
 // ─── Role badge ───────────────────────────────────────────────────────────────
 function RoleBadge({ label, color = 'var(--navy)', bg = 'rgba(4,36,92,0.08)' }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-s)', background: bg, color, fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', textTransform: 'capitalize', letterSpacing: '0.02em' }}>
-      {label}
-    </span>
+    <Badge variant="secondary" label={label} />
   )
 }
 
 // ─── Section card ─────────────────────────────────────────────────────────────
 function Section({ icon: Icon, title, children, action }) {
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+    <Card>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', borderRadius: '0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
           {Icon && <Icon size="0.9375rem" />} {title}
@@ -81,7 +80,7 @@ function Section({ icon: Icon, title, children, action }) {
         {action}
       </div>
       <div style={{ padding: 'var(--pad-l)' }}>{children}</div>
-    </div>
+    </Card>
   )
 }
 
@@ -93,8 +92,6 @@ function Row({ label, children }) {
     </div>
   )
 }
-
-// ─── Main ─────────────────────────────────────────────────────────────────────
 
 // ─── Activity Log Component ───────────────────────────────────────────────────
 function ActivityLog({ userId }) {
@@ -139,14 +136,14 @@ function ActivityLog({ userId }) {
     parts: 'var(--success-dark)',       inventory: 'var(--success-dark)',   transfer: 'var(--warning-text)' }
 
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+    <Card>
       <div style={{ padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
         Activity Log
       </div>
       <div style={{ padding: 'var(--pad-s) 0' }}>
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}>
-            <div className="spinner" />
+            <Spinner />
           </div>
         ) : logs.length === 0 ? (
           <div style={{ padding: 'var(--pad-xxl)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>
@@ -192,7 +189,7 @@ function ActivityLog({ userId }) {
           </>
         )}
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -340,10 +337,9 @@ export default function Profile() {
       {/* ── Identity ── */}
       <Section icon={User} title="Identity"
         action={!editingName && (
-          <button onClick={() => setEditingName(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xs) var(--pad-m)', color: 'var(--white)', fontSize: 'var(--text-xs)', cursor: 'pointer', fontWeight: 'var(--fw-semibold)' }}>
+          <Button size="sm" variant="ghost" onClick={() => setEditingName(true)}>
             <PencilSimple size="0.75rem" /> Edit Name
-          </button>
+          </Button>
         )}>
 
         {editingName ? (
@@ -351,14 +347,12 @@ export default function Profile() {
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Full Name</label>
             <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
               <input value={nameVal} onChange={e => setNameVal(e.target.value)} autoFocus style={{ flex: 1 }} onKeyDown={e => e.key === 'Enter' && saveName()} />
-              <button onClick={saveName} disabled={nameSaving}
-                style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: 'var(--white)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+              <Button onClick={saveName} disabled={nameSaving}>
                 {nameSaving ? 'Saving…' : 'Save'}
-              </button>
-              <button onClick={() => { setEditingName(false); setNameVal(profile?.full_name || '') }}
-                style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'transparent', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+              </Button>
+              <Button variant="secondary" onClick={() => { setEditingName(false); setNameVal(profile?.full_name || '') }}>
                 Cancel
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
@@ -389,13 +383,13 @@ export default function Profile() {
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>App Role</div>
-          <RoleBadge label={profile?.role || 'user'} color={roleStyle.color} bg={roleStyle.bg} />
+          <Badge label={profile?.role || 'user'} variant="secondary" />
         </div>
 
         {profile?.pipeline_role && pipelineStyle && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>Pipeline Role</div>
-            <RoleBadge label={profile.pipeline_role.replace('_', ' ')} color={pipelineStyle.color} bg={pipelineStyle.bg} />
+            <Badge label={profile.pipeline_role.replace('_', ' ')} variant="secondary" />
           </div>
         )}
 
@@ -404,10 +398,7 @@ export default function Profile() {
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', marginBottom: 8 }}>App Access</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-xs)' }}>
               {profile.app_access.map(app => (
-                <span key={app} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 'var(--r-s)', background: 'var(--hover)', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)' }}>
-                  <AppWindow size="0.75rem" />
-                  {appLabels[app] || app}
-                </span>
+                <Badge key={app} label={appLabels[app] || app} variant="secondary" />
               ))}
             </div>
           </div>
@@ -421,10 +412,9 @@ export default function Profile() {
       {/* ── PIN ── */}
       <Section icon={Lock} title={hasPin ? 'Login PIN' : 'Set Up PIN'}
         action={pinSection !== 'idle' && (
-          <button onClick={() => { setPinSection('idle'); setPinError(''); setNewPin('') }}
-            style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xs) var(--pad-s)', color: 'var(--white)', fontSize: 'var(--text-xs)', cursor: 'pointer' }}>
+          <Button size="sm" variant="ghost" onClick={() => { setPinSection('idle'); setPinError(''); setNewPin('') }}>
             Cancel
-          </button>
+          </Button>
         )}>
 
         {pinSection === 'idle' ? (
@@ -438,17 +428,15 @@ export default function Profile() {
                     : 'Set a PIN to log in faster — no password needed'}
                 </div>
               </div>
-              <button onClick={() => setPinSection(hasPin ? 'verify-old' : 'enter-new')}
-                style={{ padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: 'var(--white)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              <Button onClick={() => setPinSection(hasPin ? 'verify-old' : 'enter-new')}>
                 {hasPin ? 'Change PIN' : 'Set PIN'}
-              </button>
+              </Button>
             </div>
 
             {hasPin && (
-              <button onClick={removePin} disabled={removingPin}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', background: 'none', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', cursor: 'pointer', padding: 0 }}>
+              <Button variant="danger" size="sm" onClick={removePin} disabled={removingPin}>
                 <Trash size="0.8125rem" /> {removingPin ? 'Removing…' : 'Remove PIN'}
-              </button>
+              </Button>
             )}
           </div>
         ) : (
@@ -469,10 +457,9 @@ export default function Profile() {
       {/* ── Password & Email ── */}
       <Section icon={Lock} title="Password & Email"
         action={!showPwForm && (
-          <button onClick={() => setShowPwForm(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xs) var(--pad-m)', color: 'var(--white)', fontSize: 'var(--text-xs)', cursor: 'pointer', fontWeight: 'var(--fw-semibold)' }}>
+          <Button size="sm" variant="ghost" onClick={() => setShowPwForm(true)}>
             <PencilSimple size="0.75rem" /> Change
-          </button>
+          </Button>
         )}>
 
         {showPwForm ? (
@@ -492,14 +479,12 @@ export default function Profile() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
-              <button onClick={() => { setShowPwForm(false); setNewPw(''); setNewEmail('') }}
-                style={{ flex: 1, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)' }}>
+              <Button variant="secondary" onClick={() => { setShowPwForm(false); setNewPw(''); setNewEmail('') }} style={{ flex: 1 }}>
                 Cancel
-              </button>
-              <button onClick={savePassword} disabled={pwSaving}
-                style={{ flex: 2, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: 'var(--white)', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
+              </Button>
+              <Button onClick={savePassword} disabled={pwSaving} style={{ flex: 2 }}>
                 {pwSaving ? 'Saving…' : 'Update Password'}
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
@@ -510,15 +495,14 @@ export default function Profile() {
       </Section>
 
       {/* ── Sign out ── */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-xxl)' }}>
+      <Card>
         <div style={{ padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>Session</div>
         <div style={{ padding: 'var(--pad-l)' }}>
-          <button onClick={() => { signOut(); navigate('/login', { replace: true }) }}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', background: 'none', color: 'var(--error-alt)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: 'pointer', padding: 0 }}>
+          <Button variant="danger" onClick={() => { signOut(); navigate('/login', { replace: true }) }}>
             <SignOut size="1rem" /> Sign Out of this app
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
     </div>
   )

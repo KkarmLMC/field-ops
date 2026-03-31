@@ -4,6 +4,7 @@ import {
   Plus, Trash, MagnifyingGlass, X, CaretDown, CaretRight,
   DotsSixVertical, Buildings, Package, Wrench, Check,
   ArrowRight, Warning } from '@phosphor-icons/react'
+import { Button, Card, SearchInput, ActionButton } from '../components/ui'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -208,7 +209,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
   }
 
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+    <Card style={{ marginBottom: 'var(--mar-l)' }}>
       {/* Section header */}
       <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
         <button onClick={() => setExpanded(e => !e)}
@@ -270,7 +271,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
           </button>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -284,7 +285,7 @@ function LaborSection({ items, onUpdate }) {
   const removeItem = (key) => onUpdate(items.filter(i => i._key !== key))
 
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+    <Card style={{ marginBottom: 'var(--mar-l)' }}>
       <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
         <button onClick={() => setExpanded(e => !e)}
           style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'var(--white)', display: 'flex' }}>
@@ -325,7 +326,7 @@ function LaborSection({ items, onUpdate }) {
           </button>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -533,7 +534,7 @@ export default function PONew() {
       </div>
 
       {/* Customer info */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+      <Card style={{ marginBottom: 'var(--mar-l)' }}>
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Customer</div>
 
         <div style={{ marginBottom: 'var(--mar-m)' }}>
@@ -556,10 +557,10 @@ export default function PONew() {
           <div><Label>Phone</Label><input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
           <div><Label>Email</Label><input value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} placeholder="name@company.com" style={{ width: '100%' }} /></div>
         </div>
-      </div>
+      </Card>
 
       {/* Project info */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+      <Card style={{ marginBottom: 'var(--mar-l)' }}>
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Project Details</div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
@@ -602,7 +603,7 @@ export default function PONew() {
           </select>
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>New line items will default to this warehouse. You can change per line.</div>
         </div>
-      </div>
+      </Card>
 
       {/* Scope sections */}
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Line Items</div>
@@ -627,10 +628,10 @@ export default function PONew() {
       <LaborSection items={laborItems} onUpdate={setLaborItems} />
 
       {/* Notes */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+      <Card style={{ marginBottom: 'var(--mar-l)' }}>
         <Label>Notes</Label>
         <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
-      </div>
+      </Card>
 
       {/* Running total */}
       <TotalsBar sections={sections} laborItems={laborItems} />
@@ -645,14 +646,12 @@ export default function PONew() {
 
       {/* Save actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-        <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        <Button variant="secondary" onClick={() => handleSave(false)} disabled={saving}>
           {saving ? 'Saving…' : 'Save as Draft'}
-        </button>
-        <button onClick={() => handleSave(true)} disabled={saving}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        </Button>
+        <Button onClick={() => handleSave(true)} disabled={saving}>
           {saving ? 'Saving…' : <><ArrowRight size="0.9375rem" /> Save & Submit</>}
-        </button>
+        </Button>
       </div>
     </div>
   )

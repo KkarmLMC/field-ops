@@ -5,20 +5,14 @@ import {
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight,
   PencilSimple, MapPin, Phone, Envelope, ClipboardText,
   CaretDown, MagnifyingGlass, X, Check, Receipt } from '@phosphor-icons/react'
+import { Card, Button, Badge } from '../components/ui'
 import { db } from '../lib/supabase.js'
 import { soStatus } from '../lib/statusColors.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 
-// ─── Shared label component ───────────────────────────────────────────────────
-function Label({ children }) {
-  return (
-    <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>
-      {children}
-    </label>
-  )
-}
+
 
 // ─── Edit Warehouse Sheet ─────────────────────────────────────────────────────
 function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
@@ -57,87 +51,83 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
 
   return (
     <>
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 299, background: 'rgba(0,0,0,0.5)', animation: 'anim-fade-in 0.15s ease' }} />
-      <div style={{
-        position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 300,
-        background: 'var(--white)', borderRadius: 'var(--r-xl) var(--r-xl) 0 0',
-        maxHeight: '92vh', display: 'flex', flexDirection: 'column',
-        animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
+      <div onClick={onClose} className="sheet-overlay" />
+      <div className="sheet">
         {/* Sheet header */}
-        <div style={{ padding: 'var(--pad-l) var(--pad-xl) 0', flexShrink: 0 }}>
-          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', margin: '0 auto var(--mar-m)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-l)' }}>
-            <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Edit Warehouse</div>
-            <button onClick={onClose} style={{ background: 'var(--hover)', borderRadius: 'var(--r-xxl)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <X size="0.875rem" style={{ color: 'var(--black)' }} />
+        <div className="sheet__header">
+          <div className="sheet__handle" />
+          <div className="sheet__header-row">
+            <div className="sheet__title">Edit Warehouse</div>
+            <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <X size="0.875rem" style={{ color: 'var(--text-primary)' }} />
             </button>
           </div>
         </div>
 
         {/* Scrollable fields */}
-        <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--pad-xl) var(--pad-s)' }}>
+        <div className="sheet__body">
 
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <Label>Warehouse Name *</Label>
+          <div className="form-group">
+            <label className="form-label">Warehouse Name *</label>
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Lightning Master Warehouse" style={{ width: '100%' }} />
           </div>
 
-          <div style={{ margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>Location</div>
+          <div className="section-divider">
+            <div className="section-heading">Location</div>
           </div>
 
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <Label>Street Address</Label>
+          <div className="form-group">
+            <label className="form-label">Street Address</label>
             <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 90px', gap: 'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
+          <div className="form-grid-3">
             <div>
-              <Label>City</Label>
+              <label className="form-label">City</label>
               <input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" style={{ width: '100%' }} />
             </div>
             <div>
-              <Label>State</Label>
+              <label className="form-label">State</label>
               <input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" style={{ width: '100%' }} />
             </div>
             <div>
-              <Label>ZIP</Label>
+              <label className="form-label">ZIP</label>
               <input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} />
             </div>
           </div>
 
-          <div style={{ margin: 'var(--mar-m) 0', paddingTop: 'var(--pad-m)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>Contact</div>
+          <div className="section-divider">
+            <div className="section-heading">Contact</div>
           </div>
 
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <Label>Contact Name</Label>
+          <div className="form-group">
+            <label className="form-label">Contact Name</label>
             <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
+          <div className="form-grid-2">
             <div>
-              <Label>Phone</Label>
+              <label className="form-label">Phone</label>
               <input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} />
             </div>
             <div>
-              <Label>Email</Label>
+              <label className="form-label">Email</label>
               <input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} />
             </div>
           </div>
 
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <Label>Notes</Label>
+          <div className="form-group">
+            <label className="form-label">Notes</label>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes about this warehouse…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
           </div>
 
-          {error && <div style={{ color: 'var(--error-dark)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-m)', padding: 'var(--pad-s) var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-m)' }}>{error}</div>}
+          {error && <div className="form-error">{error}</div>}
         </div>
 
         {/* Footer */}
-        <div style={{ padding: 'var(--pad-l) var(--pad-xl)', paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
+        <div className="sheet__footer">
           <button onClick={handleSave} disabled={saving || !form.name.trim()}
-            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+            style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: !form.name.trim() ? 'var(--surface-hover)' : 'var(--brand-primary)', color: !form.name.trim() ? 'var(--text-muted)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
             {saving ? 'Saving…' : <><Check size="0.9375rem" /> Save Changes</>}
           </button>
         </div>
@@ -146,20 +136,7 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
   )
 }
 
-// ─── Stat card ────────────────────────────────────────────────────────────────
-function StatCard({ label, value, Icon, color = 'var(--black)', bg = 'var(--hover)' }) {
-  return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-l)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
-        <div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--r-m)', background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Icon size="0.875rem" style={{ color }} />
-        </div>
-        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)' }}>{label}</span>
-      </div>
-      <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color }}>{value}</div>
-    </div>
-  )
-}
+
 
 // ─── Part row in the stock list ───────────────────────────────────────────────
 function StockRow({ level, onPress }) {
@@ -280,16 +257,16 @@ export default function WarehouseDetail() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xl)', marginBottom: 'var(--mar-xl)', color: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-            <div style={{ width: '3rem', height: '3rem', borderRadius: 'var(--r-m)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <div className="wh-header">
+        <div className="wh-header__top">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)' }}>
+            <div className="wh-header__icon">
               <Buildings size="1.375rem" style={{ color: '#fff' }} />
             </div>
             <div>
-              <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, lineHeight: 1.1 }}>{warehouse.name}</div>
+              <div className="wh-header__name">{warehouse.name}</div>
               {(warehouse.city || warehouse.state) && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--white)', marginTop: 4, fontSize: 'var(--text-xs)' }}>
+                <div className="wh-header__loc">
                   <MapPin size="0.75rem" />
                   {[warehouse.city, warehouse.state].filter(Boolean).join(', ')}
                 </div>
@@ -297,76 +274,74 @@ export default function WarehouseDetail() {
             </div>
           </div>
           <button onClick={() => setShowEdit(true)}
-            style={{ width: '2.25rem', height: '2.25rem', borderRadius: 'var(--r-l)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            style={{ width: '2.25rem', height: '2.25rem', borderRadius: 'var(--radius-l)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
             <PencilSimple size="0.9375rem" />
           </button>
         </div>
 
         {/* Contact info */}
         {(warehouse.contact_name || warehouse.contact_phone || warehouse.contact_email || warehouse.address) && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4,  paddingTop: 'var(--pad-m)', marginTop: 'var(--mar-s)' }}>
+          <div className="wh-header__contact">
             {warehouse.address && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', fontSize: 'var(--text-xs)', color: 'var(--white)' }}>
+              <div className="wh-header__contact-row">
                 <MapPin size="0.75rem" />
                 {warehouse.address}{warehouse.zip ? `, ${warehouse.zip}` : ''}
               </div>
             )}
             {warehouse.contact_name && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)' }}>Contact: {warehouse.contact_name}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-inverse)' }}>Contact: {warehouse.contact_name}</div>
             )}
             {warehouse.contact_phone && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', fontSize: 'var(--text-xs)', color: 'var(--white)' }}>
+              <div className="wh-header__contact-row">
                 <Phone size="0.75rem" /> {warehouse.contact_phone}
               </div>
             )}
             {warehouse.contact_email && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', fontSize: 'var(--text-xs)', color: 'var(--white)' }}>
+              <div className="wh-header__contact-row">
                 <Envelope size="0.75rem" /> {warehouse.contact_email}
               </div>
             )}
             {warehouse.notes && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', fontStyle: 'italic', marginTop: 2 }}>{warehouse.notes}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-inverse)', fontStyle: 'italic', marginTop: 2 }}>{warehouse.notes}</div>
             )}
           </div>
         )}
       </div>
 
       {/* Stats grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
-        <StatCard label="SKUs In Stock" value={totalSkus.toLocaleString()} Icon={Package} color="var(--navy)" bg="var(--blue-soft)" />
-        <StatCard label="Total Units" value={totalUnits.toLocaleString()} Icon={TrendUp} color="var(--black)" bg="var(--hover)" />
-        <StatCard label="Low Stock" value={lowStock.length} Icon={WarningCircle} color={lowStock.length > 0 ? 'var(--orange-shade-20)' : 'var(--text-3)'} bg={lowStock.length > 0 ? 'var(--orange-soft)' : 'var(--hover)'} />
-        <StatCard label="On Order" value={totalOnOrder.toLocaleString()} Icon={Truck} color={totalOnOrder > 0 ? 'var(--blue)' : 'var(--text-3)'} bg={totalOnOrder > 0 ? 'var(--blue-soft)' : 'var(--hover)'} />
+      <div className="stats-grid-2">
+        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--state-info-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>SKUs In Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalSkus.toLocaleString()}</div></Card>
+        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Total Units</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalUnits.toLocaleString()}</div></Card>
+        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
+        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
       </div>
 
       {/* Value */}
       {totalValue > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', color: 'var(--text-3)' }}>
+        <div className="value-card">
+          <div className="value-card__label">
             <CurrencyDollar size="1rem" />
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>Est. Inventory Value</span>
           </div>
-          <span style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: 'var(--success-text)' }}>
+          <span className="value-card__amount">
             ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
           </span>
         </div>
       )}
 
       {/* Actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xl)' }}>
-        <button onClick={() => navigate(`/warehouse-hq/transfer?from=${id}`)}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+      <div className="action-grid-2">
+        <Button onClick={() => navigate(`/warehouse-hq/transfer?from=${id}`)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
           <ArrowsLeftRight size="0.9375rem" /> Transfer
-        </button>
-        <button onClick={() => navigate('/warehouse-hq/add-part')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        </Button>
+        <Button variant="primary" onClick={() => navigate('/warehouse-hq/add-part')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
           <Plus size="0.9375rem" /> Add Part
-        </button>
+        </Button>
       </div>
 
       {/* Stock section */}
-      <div style={{ marginBottom: 'var(--mar-s)' }}>
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>
+      <div style={{ marginBottom: 'var(--space-s)' }}>
+        <div className="stock-section__title">
           Stock ({levels.length} parts)
         </div>
 
@@ -395,9 +370,9 @@ export default function WarehouseDetail() {
         </div>
 
         {/* Stock list */}
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-xl)' }}>
+        <Card>
           {filtered.length === 0 ? (
-            <div style={{ padding: 'var(--pad-xxl)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>
+            <div style={{ padding: 'var(--space-xl)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
               No parts match filters
             </div>
           ) : filtered.map(level => (
@@ -407,23 +382,23 @@ export default function WarehouseDetail() {
               onPress={() => navigate(`/warehouse-hq/part/${level.parts?.id}`)}
             />
           ))}
-        </div>
+        </Card>
       </div>
 
       {/* Sales Orders for this warehouse */}
       {warehousePOs.length > 0 && (() => {
         return (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <Receipt size="1rem" style={{ color: 'var(--navy)' }} />
+          <Card>
+            <div className="so-list-header">
+              <div className="so-list-header__left">
+                <Receipt size="1rem" style={{ color: 'var(--brand-primary)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
-                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--hover)', padding: '2px 8px', borderRadius: 'var(--r-s)', fontWeight: 600 }}>
+                <span className="so-list-header__count">
                   {warehousePOs.length}
                 </span>
               </div>
               <button onClick={() => navigate('/sales-orders')}
-                style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--navy)', background: 'none', cursor: 'pointer', padding: 0 }}>
+                className="so-list-header__link">
                 View all
               </button>
             </div>
@@ -432,7 +407,7 @@ export default function WarehouseDetail() {
               return (
                 <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
-                  <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0, background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>
+                  <div className={`division-badge division-badge--${po.division === 'Bolt' ? 'bolt' : 'lm'}`}>
                     {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -463,26 +438,23 @@ export default function WarehouseDetail() {
       })()}
 
       {/* Transaction history (collapsed by default) */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <Card>
         <button onClick={loadTransactions}
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-            <ClipboardText size="1rem" style={{ color: 'var(--black)' }} />
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>Transaction History</span>
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 0, background: 'none', cursor: 'pointer', marginBottom: showTx ? 'var(--space-m)' : 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+            <ClipboardText size="1rem" style={{ color: 'var(--text-primary)' }} />
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Transaction History</span>
           </div>
-          <CaretDown size="0.875rem" style={{ color: 'var(--black)', transform: showTx ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          <CaretDown size="0.875rem" style={{ color: 'var(--text-primary)', transform: showTx ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
         </button>
         {showTx && (
           <div >
             {transactions.length === 0 ? (
-              <div style={{ padding: 'var(--pad-xl)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>No transactions yet</div>
+              <div style={{ padding: 'var(--space-xl)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>No transactions yet</div>
             ) : transactions.map(tx => (
-              <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-                <div style={{
-                  width: '2rem', height: '2rem', borderRadius: 'var(--r-xxl)', flexShrink: 0,
-                  background: tx.quantity_delta > 0 ? 'var(--success-soft)' : 'var(--error-soft)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: tx.quantity_delta > 0 ? 'var(--success-text)' : 'var(--error-dark)' }}>
+              <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                <div className={`tx-icon tx-icon--${tx.quantity_delta > 0 ? 'positive' : 'negative'}`}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: tx.quantity_delta > 0 ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {tx.quantity_delta > 0 ? '+' : ''}{tx.quantity_delta}
                   </span>
                 </div>

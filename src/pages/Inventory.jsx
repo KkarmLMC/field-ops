@@ -4,6 +4,7 @@ import {
   Buildings, Package, WarningCircle, ArrowsLeftRight,
   Plus, TrendUp, CurrencyDollar, Truck, CaretRight, X, Check,
   DotsSixVertical, PencilSimple, Receipt, CaretRight as ChevRight } from '@phosphor-icons/react'
+import { Button, Card, StatCard, Spinner, EmptyState, Badge } from '../components/ui'
 import { db } from '../lib/supabase.js'
 
 // ─── Shared label ─────────────────────────────────────────────────────────────
@@ -96,22 +97,12 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
         {/* Footer */}
         <div style={{ padding: 'var(--pad-l) var(--pad-xl)', paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
-          <button onClick={handleSave} disabled={saving || !form.name.trim()}
-            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: !form.name.trim() ? 'var(--hover)' : 'var(--navy)', color: !form.name.trim() ? 'var(--text-3)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+          <Button onClick={handleSave} disabled={saving || !form.name.trim()} style={{ width: '100%' }}>
             {saving ? 'Creating…' : <><Check size="0.9375rem" /> Create Warehouse</>}
-          </button>
+          </Button>
         </div>
       </div>
     </>
-  )
-}
-
-function StatTile({ label, value, color = 'var(--black)' }) {
-  return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m) var(--pad-l)' }}>
-      <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
-      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4, fontWeight: 600 }}>{label}</div>
-    </div>
   )
 }
 
@@ -203,16 +194,14 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)' }}>
-        <button onClick={onViewParts}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
+        <Button onClick={onViewParts} size="sm">
           <Package size="0.8125rem" /> View Parts
-        </button>
-        <button onClick={onTransfer}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-m)', background: 'transparent', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer' }}>
+        </Button>
+        <Button onClick={onTransfer} size="sm" variant="secondary">
           <ArrowsLeftRight size="0.8125rem" /> Transfer
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -287,29 +276,24 @@ export default function Inventory() {
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--gap-s)', flexWrap: 'wrap', marginBottom: 'var(--mar-m)' }}>
         {editMode ? (
           <>
-            <button onClick={() => setEditMode(false)}
-              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+            <Button variant="secondary" onClick={() => setEditMode(false)}>
               <X size="0.875rem" /> Cancel
-            </button>
-            <button onClick={saveOrder} disabled={saving}
-              className="btn btn-navy">
+            </Button>
+            <Button onClick={saveOrder} disabled={saving}>
               <Check size="0.875rem" /> {saving ? 'Saving…' : 'Save Order'}
-            </button>
+            </Button>
           </>
         ) : (
           <>
-            <button onClick={() => setEditMode(true)}
-              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+            <Button variant="secondary" onClick={() => setEditMode(true)}>
               <PencilSimple size="0.875rem" /> Edit
-            </button>
-            <button onClick={() => navigate('/warehouse-hq/transfer')}
-              className="btn" style={{ background: 'var(--white)', color: 'var(--black)' }}>
+            </Button>
+            <Button variant="secondary" onClick={() => navigate('/warehouse-hq/transfer')}>
               <ArrowsLeftRight size="0.875rem" /> Transfer
-            </button>
-            <button onClick={() => setShowAdd(true)}
-              className="btn btn-navy">
+            </Button>
+            <Button onClick={() => setShowAdd(true)}>
               <Plus size="0.875rem" /> Add Warehouse
-            </button>
+            </Button>
           </>
         )}
       </div>
@@ -329,7 +313,7 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-xl)', overflow: 'hidden' }}>
+          <Card style={{ marginBottom: 'var(--mar-xl)' }}>
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-l)' }}>
@@ -337,9 +321,7 @@ export default function Inventory() {
                 <Receipt size="0.9375rem" style={{ color: 'var(--navy)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
                 {submitted.length > 0 && (
-                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)', background: 'var(--warning-soft)', color: 'var(--warning)' }}>
-                    {submitted.length} need review
-                  </span>
+                  <Badge label={`${submitted.length} need review`} variant="warning" />
                 )}
               </div>
               <CaretRight size="0.8125rem" style={{ color: 'var(--black)' }} />
@@ -374,10 +356,7 @@ export default function Inventory() {
                   <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{po.project_name || po.so_number}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', flexShrink: 0 }}>
-                  <span style={{
-                    fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)',
-                    background: po.status === 'submitted' ? 'var(--warning-soft)' : 'var(--blue-soft)',
-                    color: po.status === 'submitted' ? 'var(--warning)' : 'var(--blue)' }}>{po.status}</span>
+                  <Badge label={po.status} variant={po.status === 'submitted' ? 'warning' : 'primary'} />
                   {po.grand_total > 0 && (
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>
                       ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
@@ -386,29 +365,29 @@ export default function Inventory() {
                 </div>
               </button>
             ))}
-          </div>
+          </Card>
         )
       })()}
 
       {/* Network-wide summary */}
       {!editMode && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-          <StatTile label="Unique SKUs" value={totalSkus.toLocaleString()} />
-          <StatTile label="Total Units" value={totalUnits.toLocaleString()} />
-          <StatTile label="Low Stock" value={totalLowStock} color={totalLowStock > 0 ? 'var(--orange-shade-20)' : 'var(--black)'} />
-          <StatTile label="On Order" value={totalOnOrder.toLocaleString()} color={totalOnOrder > 0 ? 'var(--blue)' : 'var(--black)'} />
+          <StatCard label="Unique SKUs" value={totalSkus.toLocaleString()} />
+          <StatCard label="Total Units" value={totalUnits.toLocaleString()} />
+          <StatCard label="Low Stock" value={totalLowStock} emphasis={totalLowStock > 0} />
+          <StatCard label="On Order" value={totalOnOrder.toLocaleString()} emphasis={totalOnOrder > 0} />
         </div>
       )}
 
       {/* Warehouse cards / drag list */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><Spinner /></div>
       ) : warehouses.length === 0 ? (
-        <div className="empty" style={{ padding: 'var(--pad-xxl)' }}>
-          <Buildings size="2rem" style={{ color: 'var(--text-3)' }} />
-          <div className="empty-title">No warehouses yet</div>
-          <div className="empty-desc">Add your first warehouse to start tracking inventory.</div>
-        </div>
+        <EmptyState
+          icon={<Buildings size="2rem" />}
+          title="No warehouses yet"
+          description="Add your first warehouse to start tracking inventory."
+        />
       ) : editMode ? (
         /* Edit mode: vertical drag list */
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>

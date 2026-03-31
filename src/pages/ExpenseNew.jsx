@@ -1,24 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Plus, Trash, ArrowRight, Warning, X } from '@phosphor-icons/react'
+import { Card, Button } from '../components/ui'
 import { db } from '../lib/supabase.js'
 
-function Label({ children, required }) {
-  return (
-    <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>
-      {children}{required && <span style={{ color: 'var(--error-dark)', marginLeft: 3 }}>*</span>}
-    </label>
-  )
-}
 
-function Card({ title, children }) {
-  return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-      {title && <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>{title}</div>}
-      {children}
-    </div>
-  )
-}
 
 // ─── Advance Request Form ─────────────────────────────────────────────────────
 function AdvanceForm({ division, projects, onSave, saving, error }) {
@@ -84,56 +70,56 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
   return (
     <>
       <Card title="Employee & Project">
-        <div style={{ ...row }}>
-          <Label required>Employee Name</Label>
+        <div className="form-group">
+          <label className="form-label">Employee Name <span style={{ color: 'var(--state-error-text)', marginLeft: 3 }}>*</span></label>
           <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
         </div>
-        <div style={{ ...grid2, ...row }}>
+        <div className="form-grid-2">
           <div>
-            <Label>Project</Label>
+            <label className="form-label">Project</label>
             <select value={projectId} onChange={e => setProjectId(e.target.value)} style={{ width: '100%' }}>
               <option value="">Select project…</option>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` (${p.job_number})` : ''}</option>)}
             </select>
           </div>
           <div>
-            <Label>Date Needed</Label>
+            <label className="form-label">Date Needed</label>
             <input type="date" value={dateNeeded} onChange={e => setDateNeeded(e.target.value)} style={{ width: '100%' }} />
           </div>
         </div>
-        <div>
-          <Label>Number of Travel Days</Label>
+        <div className="form-group">
+          <label className="form-label">Number of Travel Days</label>
           <input type="number" min="0" value={travelDays} onChange={e => setTravelDays(e.target.value)} style={{ width: '100%' }} />
         </div>
       </Card>
 
       <Card title="Per Diem">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'end', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600 }}>Description</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Persons</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Days</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'end', marginBottom: 'var(--space-s)' }}>
+          <div className="expense-line-header">Description</div>
+          <div className="expense-line-header">Persons</div>
+          <div className="expense-line-header">Days</div>
+          <div className="expense-line-header">Total</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Meals <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($68/day)</span></div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Meals <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($68/day)</span></div>
           <input type="number" min="0" value={meals.persons} onChange={e => setMeals(m => ({ ...m, persons: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${mealsTotal.toFixed(2)}</div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
+        <div className="expense-total-row">
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
         </div>
       </Card>
 
       <Card title="Travel Expenses">
         {/* Hotel */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Hotel <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($150/night)</span></div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Rooms</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Nights</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'right' }}>Total</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Hotel <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($150/night)</span></div>
+          <div className="expense-line-header">Rooms</div>
+          <div className="expense-line-header">Nights</div>
+          <div className="expense-line-header">Total</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-m)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div />
           <input type="number" min="0" value={hotel.rooms} onChange={e => setHotel(h => ({ ...h, rooms: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={hotel.nights} onChange={e => setHotel(h => ({ ...h, nights: +e.target.value }))} style={inputSm} />
@@ -198,34 +184,33 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${(o.days * o.rate).toFixed(2)}</div>
           </div>
         ))}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Travel Advance: ${travelTotal.toFixed(2)}</span>
+        <div className="expense-total-row">
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Travel Advance: ${travelTotal.toFixed(2)}</span>
         </div>
       </Card>
 
       {/* Total */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-l)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>Total Requested</span>
-        <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
+      <div className="expense-total-bar">
+        <span className="expense-total-bar__label">Total Requested</span>
+        <span className="expense-total-bar__value">${grandTotal.toFixed(2)}</span>
       </div>
 
       {/* Notes */}
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <Label>Notes</Label>
+      <div className="form-group">
+        <label className="form-label">Notes</label>
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size="0.875rem" />{error}</div>}
+      {error && <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}><Warning size="0.875rem" />{error}</div>}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-        <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+      <div className="action-grid-2">
+        <Button onClick={() => handleSave(false)} disabled={saving}>
           {saving ? 'Saving…' : 'Save Draft'}
-        </button>
-        <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        </Button>
+        <Button variant="primary" onClick={() => handleSave(true)} disabled={saving || !employee}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
           <ArrowRight size="0.9375rem" /> Submit Request
-        </button>
+        </Button>
       </div>
     </>
   )
@@ -273,20 +258,20 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
   return (
     <>
       <Card title="Employee & Project">
-        <div style={{ marginBottom: 'var(--mar-m)' }}>
-          <Label required>Employee Name</Label>
+        <div className="form-group">
+          <label className="form-label">Employee Name <span style={{ color: 'var(--state-error-text)', marginLeft: 3 }}>*</span></label>
           <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)' }}>
+        <div className="form-grid-2">
           <div>
-            <Label>Project</Label>
+            <label className="form-label">Project</label>
             <select value={projectId} onChange={e => setProjectId(e.target.value)} style={{ width: '100%' }}>
               <option value="">Select project…</option>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` (${p.job_number})` : ''}</option>)}
             </select>
           </div>
           <div>
-            <Label>Report Date</Label>
+            <label className="form-label">Report Date</label>
             <input type="date" value={reportDate} onChange={e => setReportDate(e.target.value)} style={{ width: '100%' }} />
           </div>
         </div>
@@ -296,14 +281,14 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         {/* Scrollable table */}
         <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           {/* Header */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
+          <div className="expense-line-table">
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
-              <div key={h} style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', textAlign: 'right', padding: '2px 0' }}>{h}</div>
+              <div key={h} className="expense-line-header">{h}</div>
             ))}
           </div>
           {/* Rows */}
           {lines.map(line => (
-            <div key={line._key} style={{ display: 'grid', gridTemplateColumns: 'minmax(100px,1.5fr) 70px 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, minWidth: 900, marginBottom: 4 }}>
+            <div key={line._key} className="expense-line-table">
               <input value={line.vendor} onChange={e => updateLine(line._key, 'vendor', e.target.value)} placeholder="Vendor…" style={{ fontSize: 'var(--text-xs)', width: '100%' }} />
               {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
                 <input key={f} type="number" min="0" step="0.01" value={line[f]} onChange={e => updateLine(line._key, f, e.target.value)} style={{ fontSize: 'var(--text-xs)', width: '100%', textAlign: 'right' }} />
@@ -313,80 +298,79 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           ))}
         </div>
         <button onClick={addLine}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-s)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-s)' }}>
           <Plus size="0.75rem" /> Add row
         </button>
         {/* Subtotal */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--mar-m)', marginTop: 'var(--pad-s)' }}>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Subtotal: ${subtotal.toFixed(2)}</span>
+        <div className="expense-total-row">
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Subtotal: ${subtotal.toFixed(2)}</span>
         </div>
       </Card>
 
       <Card title="Mileage Log">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>DATE</div>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textAlign: 'right' }}>MILES</div>
+        <div className="mileage-grid">
+          <div className="expense-line-header">DATE</div>
+          <div className="expense-line-header">MILES</div>
         </div>
         {mileage.map(m => (
-          <div key={m._key} style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
+          <div key={m._key} className="mileage-grid">
             <input type="date" value={m.date} onChange={e => updateMile(m._key, 'date', e.target.value)} style={{ width: '100%', fontSize: 'var(--text-xs)' }} />
             <input type="number" min="0" value={m.miles} onChange={e => updateMile(m._key, 'miles', e.target.value)} style={{ width: '100%', fontSize: 'var(--text-xs)', textAlign: 'right' }} />
           </div>
         ))}
         <button onClick={addMile}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-xs)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-2xs)' }}>
           <Plus size="0.75rem" /> Add entry
         </button>
-        <div style={{ marginTop: 'var(--mar-m)', paddingTop: 'var(--pad-s)', display: 'flex', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>Mileage: ${mileageTotal.toFixed(2)}</span>
+        <div style={{ marginTop: 'var(--space-m)', paddingTop: 'var(--space-s)', display: 'flex', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Mileage: ${mileageTotal.toFixed(2)}</span>
         </div>
       </Card>
 
       {/* Totals */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <Card>
         {[
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (
-          <div key={lbl} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>{lbl}</span>
+          <div key={lbl} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{lbl}</span>
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${val.toFixed(2)}</span>
           </div>
         ))}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Less Cash Advance</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>$</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Less Cash Advance</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>$</span>
             <input type="number" min="0" step="0.01" value={lessAdvance} onChange={e => setLessAdvance(e.target.value)}
               style={{ width: 80, textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 700 }} />
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Mileage Reimbursement</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Mileage Reimbursement</span>
           <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${mileageTotal.toFixed(2)}</span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-l)', background: 'var(--navy)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l) 0', background: 'var(--brand-primary)', marginLeft: -24, marginRight: -24, marginBottom: -24, paddingLeft: 24, paddingRight: 24 }}>
           <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Total</span>
           <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
         </div>
-      </div>
+      </Card>
 
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <Label>Notes</Label>
+      <div className="form-group">
+        <label className="form-label">Notes</label>
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}><Warning size="0.875rem" />{error}</div>}
+      {error && <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}><Warning size="0.875rem" />{error}</div>}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-        <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+      <div className="action-grid-2">
+        <Button onClick={() => handleSave(false)} disabled={saving}>
           {saving ? 'Saving…' : 'Save Draft'}
-        </button>
-        <button onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        </Button>
+        <Button variant="primary" onClick={() => handleSave(true)} disabled={saving || !employee}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
           <ArrowRight size="0.9375rem" /> Submit Report
-        </button>
+        </Button>
       </div>
     </>
   )
@@ -449,8 +433,8 @@ export default function ExpenseNew() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>
+      <div style={{ marginBottom: 'var(--space-xl)' }}>
+        <div className="section-heading">
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>
         <div style={{ fontSize: 'var(--text-md)', fontWeight: 800 }}>New {typeLabel}</div>
