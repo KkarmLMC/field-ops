@@ -988,7 +988,8 @@ textarea { resize: vertical; }
 
 /* ── Desktop top bar ─────────────────────────────────────────────────────────── */
 
-.desktop-topbar {
+/* ── Page Header ── navy title bar shown on desktop ────────────────────────── */
+.page-header {
   display: none;
   align-items: center;
   justify-content: space-between;
@@ -997,16 +998,22 @@ textarea { resize: vertical; }
   flex-shrink: 0;
   background: var(--navy);
 }
-.desktop-topbar__title {
+.page-header__title {
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
   color: var(--white);
   letter-spacing: -0.02em;
 }
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+}
 
 @media (min-width: 768px) {
-  .desktop-topbar { display: flex; }
+  .page-header { display: flex; }
 }
+
 
 /* ── Mobile bottom tab bar ───────────────────────────────────────────────────── */
 
