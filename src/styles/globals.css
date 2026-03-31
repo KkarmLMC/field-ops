@@ -1968,8 +1968,11 @@ textarea { resize: vertical; }
 
 .nav-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.125rem), 1fr));
+  grid-template-columns: var(--grid-cols-2);
   gap: var(--gap-s);
+}
+@container content (min-width: 640px) {
+  .nav-card-grid { grid-template-columns: var(--grid-cols-4); }
 }
 
 .nav-card {
