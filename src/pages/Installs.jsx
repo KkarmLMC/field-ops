@@ -31,7 +31,7 @@ const KANBAN_COLS = [
   { id: 'scheduled',      label: 'Upcoming',               Icon: CalendarBlank, accent: 'var(--purple-tint-20)', stages: ['scheduled']                      },
   { id: 'in-progress',    label: 'Active',                 Icon: HardHat,       accent: 'var(--warning)', stages: ['in-progress']                    },
   { id: 'pending-review', label: 'Pending Review',         Icon: Clipboard,     accent: 'var(--blue-tint-40)', stages: ['pending-review']                 },
-  { id: 'complete',       label: 'Completed',              Icon: CheckCircle,   accent: 'var(--success)', stages: ['complete']                       },
+  { id: 'complete',       label: 'Completed',              Icon: CheckCircle,   accent: 'var(--state-success)', stages: ['complete']                       },
   { id: 'postponed',      label: 'Postponed',              Icon: PauseCircle,   accent: 'var(--orange-tint-20)', stages: ['postponed', 'failed']            },
 ]
 
@@ -168,7 +168,7 @@ export default function Installs() {
       <div className="page-stack">
 
       {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
-      <SectionDivider title="Project Pipeline" label="Management Overview" accent="var(--navy)" />
+      <SectionDivider title="Project Pipeline" label="Management Overview" accent="var(--brand-primary)" />
 
       {/* Branch selector */}
       <BranchTabs

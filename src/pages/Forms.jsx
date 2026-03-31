@@ -29,9 +29,9 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 onClick={() => hasChildren ? onToggle(isExpanded ? null : form.slug) : onStart(form.slug)}
                 style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
                   display:'flex', alignItems:'center', gap:'0.75rem',
-                  padding: '0.75rem var(--pad-l)', borderBottom:'1px solid var(--border-l)',
+                  padding: '0.75rem var(--space-l)', borderBottom:'1px solid var(--border-default)',
                   transition:'background var(--ease-fast)' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
                 <div style={{ width:8, height:8, borderRadius:'50%', background: form.color || bc.bgActive, flexShrink:0 }} />
@@ -40,27 +40,27 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                   {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
                 {hasChildren
-                  ? <CaretDown size="0.75rem" style={{ color:'var(--black)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
-                  : <CaretRight size="0.75rem" style={{ color:'var(--black)', flexShrink:0 }} />
+                  ? <CaretDown size="0.75rem" style={{ color:'var(--text-primary)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
+                  : <CaretRight size="0.75rem" style={{ color:'var(--text-primary)', flexShrink:0 }} />
                 }
               </button>
               {hasChildren && isExpanded && (
-                <div style={{ background:'var(--white)' }}>
+                <div style={{ background:'var(--surface-base)' }}>
                   {(children[form.slug] || []).map(sub => (
                     <button
                       key={sub.slug}
                       onClick={() => onStart(sub.slug)}
                       style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
                         display:'flex', alignItems:'center', gap:'0.5rem',
-                        padding: '0.625rem var(--pad-l) 0.625rem 2.75rem',
-                        borderBottom:'1px solid var(--border-l)',
+                        padding: '0.625rem var(--space-l) 0.625rem 2.75rem',
+                        borderBottom:'1px solid var(--border-default)',
                         transition:'background var(--ease-fast)' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'var(--hover)'}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >
-                      <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-3)', flexShrink:0 }} />
+                      <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-muted)', flexShrink:0 }} />
                       <div style={{ flex:1, minWidth:0 }}>
-                        <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--black)' }}>{sub.title}</span>
+                        <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--text-primary)' }}>{sub.title}</span>
                         {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
                       </div>
                       <CaretRight size="0.625rem" style={{ color:'var(--text-4)', flexShrink:0 }} />
@@ -133,14 +133,14 @@ export default function Forms() {
   return (
     <div className="page-content fade-in">
       <div className="page-stack">
-        <SectionDivider title="Report Forms" label="Field Overview" accent="var(--navy)" />
+        <SectionDivider title="Report Forms" label="Field Overview" accent="var(--brand-primary)" />
         <BranchTabs active={branch} onChange={setBranch} />
 
         {loading ? (
           <div className="loading"><div className="spinner" /></div>
         ) : visibleCategories.length === 0 ? (
           <div className="empty">
-            <ClipboardText size="2rem" style={{ color: 'var(--text-3)' }} />
+            <ClipboardText size="2rem" style={{ color: 'var(--text-muted)' }} />
             <div className="empty-title">No forms available</div>
             <div className="empty-desc">No report forms are configured for this branch yet.</div>
           </div>

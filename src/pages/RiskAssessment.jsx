@@ -14,16 +14,16 @@ const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase
 // ─── Shared section styles using CSS tokens ────────────────────────────────────
 const S = {
   card: {
-    background: 'var(--white)',
-    borderRadius: 'var(--r-l)', marginBottom: '0.75rem', overflow: 'hidden' },
+    background: 'var(--surface-base)',
+    borderRadius: 'var(--radius-l)', marginBottom: '0.75rem', overflow: 'hidden' },
   cardHead: {
-    padding: '0.625rem 0.875rem', background: 'var(--navy)',
-    fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
-    color: 'var(--white)', textTransform: 'uppercase', letterSpacing: '0.08em' },
+    padding: '0.625rem 0.875rem', background: 'var(--brand-primary)',
+    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
+    color: 'var(--surface-base)', textTransform: 'uppercase', letterSpacing: '0.08em' },
   cardBody: { padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' },
   label: {
-    fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)',
-    color: 'var(--black)', textTransform: 'uppercase', letterSpacing: '0.1em' },
+    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
+    color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.1em' },
   row: {
     display: 'flex', alignItems: 'center', gap: '0.75rem',
     padding: '0.75rem 0.875rem', borderBottom: '1px solid var(--border)' } }
@@ -74,9 +74,9 @@ const calcNc = (c1,c2,c3,c4,c5,c6) => 1.5e-3 / (c1*c2*c3*c4*c5*c6)
 // ─── Shared sub-components ────────────────────────────────────────────────────
 function FieldLabel({ label, hint }) {
   return (
-    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'var(--mar-xs)' }}>
+    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'var(--space-xs)' }}>
       <label style={S.label}>{label}</label>
-      {hint && <span style={{ fontSize:'var(--text-xs)', color:'var(--text-3)' }}>{hint}</span>}
+      {hint && <span style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>{hint}</span>}
     </div>
   )
 }
@@ -95,11 +95,11 @@ function ResultBadge({ result, ratio }) {
   return (
     <span style={{
       display:'inline-flex', alignItems:'center', gap:'0.25rem',
-      padding:'0.1875rem 0.625rem', borderRadius:'var(--r-s)',
-      fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
+      padding:'0.1875rem 0.625rem', borderRadius:'var(--radius-s)',
+      fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight:600,
       letterSpacing:'0.05em', textTransform:'uppercase',
-      background: req ? 'var(--red-soft)' : 'var(--success-soft)',
-      color:       req ? 'var(--red)'     : 'var(--success)' }}>
+      background: req ? 'var(--red-soft)' : 'var(--state-success-soft)',
+      color:       req ? 'var(--state-error)'     : 'var(--state-success)' }}>
       {req ? <Warning size="0.6875rem" /> : <CheckCircle size="0.6875rem" />}
       {req ? 'LPS Required' : 'LPS Optional'}
       {ratio != null && ` · ${ratio.toFixed(2)}`}
@@ -190,8 +190,8 @@ function NewAssessmentForm({ onSave, onCancel }) {
   return (
     <div className="page-content fade-in">
       {/* Back header */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', color:'var(--black)', fontSize:'var(--text-md)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', marginBottom: 'var(--space-l)' }}>
+        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', color:'var(--text-primary)', fontSize:'var(--text-md)' }}>
           <ArrowLeft size="0.875rem" /> Back
         </button>
         <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
@@ -208,7 +208,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <FieldLabel label="Address" />
           <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="Street address" style={{ width:'100%' }} />
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--gap-m)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--space-m)' }}>
           <div>
             <FieldLabel label="Technician" />
             <input value={form.techName} onChange={e=>set('techName',e.target.value)} placeholder="Your name" style={{ width:'100%' }} />
@@ -225,7 +225,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Dimensions */}
       <CardSection title="Structure Dimensions">
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--gap-m)' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--space-m)' }}>
           {[['lengthFt','Length (ft)'],['widthFt','Width (ft)'],['heightFt','Height (ft)']].map(([k,l]) => (
             <div key={k}>
               <FieldLabel label={l} />
@@ -237,21 +237,21 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Flash density */}
       <CardSection title="Lightning Ground Flash Density (Ng)">
-        <div style={{ display:'flex', gap:'var(--gap-s)', alignItems:'flex-end' }}>
+        <div style={{ display:'flex', gap:'var(--space-s)', alignItems:'flex-end' }}>
           <div style={{ flex:1 }}>
             <FieldLabel label="Flashes / km² / year" hint="From NOAA Keraunic map" />
             <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" style={{ width:'100%' }} />
           </div>
           <button onClick={handleGPS} disabled={locating} style={{
             display:'flex', alignItems:'center', gap:'0.5rem',
-            padding:'0.5rem 0.75rem', borderRadius:'var(--r-s)',
-            background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--blue)', whiteSpace:'nowrap',
+            padding:'0.5rem 0.75rem', borderRadius:'var(--radius-s)',
+            background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--state-info)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
             {locating ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size="0.8125rem" />}
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
         </div>
-        <p style={{ fontSize:'var(--text-sm)', color:'var(--text-3)', lineHeight:1.5, margin:0 }}>
+        <p style={{ fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:1.5, margin:0 }}>
           Typical: Florida 6–9 · Gulf Coast 4–7 · Southeast 3–5 · Northeast 1–3 · Texas 3–6
         </p>
       </CardSection>
@@ -279,13 +279,13 @@ function NewAssessmentForm({ onSave, onCancel }) {
       {/* Calculate */}
       {!result && (
         <button onClick={calculate} disabled={!allFilled} style={{
-          width:'100%', padding:'0.75rem', borderRadius:'var(--r-m)',
-          marginBottom: 'var(--mar-m)',
-          background: allFilled ? 'var(--red)' : 'var(--bg)',
-          color:       allFilled ? '#fff'       : 'var(--text-3)',
-          fontFamily:'var(--mono)', fontSize:'var(--text-sm)', fontWeight:600,
+          width:'100%', padding:'0.75rem', borderRadius:'var(--radius-m)',
+          marginBottom: 'var(--space-m)',
+          background: allFilled ? 'var(--state-error)' : 'var(--bg)',
+          color:       allFilled ? '#fff'       : 'var(--text-muted)',
+          fontFamily:'var(--font-mono)', fontSize:'var(--text-sm)', fontWeight:600,
           letterSpacing:'0.06em', textTransform:'uppercase',
-          border:`1px solid ${allFilled ? 'var(--red)' : 'var(--border)'}`,
+          border:`1px solid ${allFilled ? 'var(--state-error)' : 'var(--border)'}`,
           transition:'all var(--ease-fast)',
           display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
           <ChartBar size="0.875rem" /> Calculate Risk Score
@@ -295,55 +295,55 @@ function NewAssessmentForm({ onSave, onCancel }) {
       {/* Result */}
       {result && (
         <div style={{
-          background: result.required ? 'var(--red-soft)'  : 'var(--success-soft)',
-          border:`1px solid ${result.required ? 'var(--red)' : 'var(--success)'}`,
-          borderRadius:'var(--r-l)', padding:'1rem', marginBottom: 'var(--mar-m)' }}>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-m)' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'var(--gap-s)' }}>
+          background: result.required ? 'var(--red-soft)'  : 'var(--state-success-soft)',
+          border:`1px solid ${result.required ? 'var(--state-error)' : 'var(--state-success)'}`,
+          borderRadius:'var(--radius-l)', padding:'1rem', marginBottom: 'var(--space-m)' }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--space-m)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'var(--space-s)' }}>
               {result.required
-                ? <Warning size="1.25rem" style={{ color:'var(--red)' }} />
-                : <CheckCircle size="1.25rem" style={{ color:'var(--success)' }} />
+                ? <Warning size="1.25rem" style={{ color:'var(--state-error)' }} />
+                : <CheckCircle size="1.25rem" style={{ color:'var(--state-success)' }} />
               }
-              <span style={{ fontFamily:'var(--font)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--red)' : 'var(--success)' }}>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--state-error)' : 'var(--state-success)' }}>
                 {result.required ? 'LPS Required' : 'LPS Not Required'}
               </span>
             </div>
-            <button onClick={()=>setResult(null)} style={{ color:'var(--text-3)' }}><X size="1rem" /></button>
+            <button onClick={()=>setResult(null)} style={{ color:'var(--text-muted)' }}><X size="1rem" /></button>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--space-s)', marginBottom: 'var(--space-m)' }}>
             {[
               { label:'Nd (Strikes/yr)',    val: result.Nd.toExponential(2)    },
               { label:'Nc (Tolerable)',     val: result.Nc.toExponential(2)    },
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
-              <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--r-s)', padding:'0.5rem 0.625rem' }}>
-                <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--mar-xs)' }}>{label}</div>
-                <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--black)' }}>{val}</div>
+              <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--radius-s)', padding:'0.5rem 0.625rem' }}>
+                <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--space-xs)' }}>{label}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--text-primary)' }}>{val}</div>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize:'var(--text-sm)', color:'var(--black)', marginBottom:'var(--mar-m)', lineHeight:1.5 }}>
+          <p style={{ fontSize:'var(--text-sm)', color:'var(--text-primary)', marginBottom:'var(--space-m)', lineHeight:1.5 }}>
             {result.required
               ? `Nd/Nc = ${result.ratio.toFixed(3)} ≥ 1.0 — Expected strikes exceed tolerable risk. LPS recommended per NFPA 780.`
               : `Nd/Nc = ${result.ratio.toFixed(3)} < 1.0 — Within tolerable risk. LPS is optional but may still be advisable.`
             }
           </p>
 
-          <div style={{ display:'flex', gap:'var(--gap-s)' }}>
+          <div style={{ display:'flex', gap:'var(--space-s)' }}>
             <button onClick={handleSave} disabled={saving} style={{
-              flex:1, padding:'0.625rem', borderRadius:'var(--r-s)',
-              background:'var(--red)', color:'#fff',
-              fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
+              flex:1, padding:'0.625rem', borderRadius:'var(--radius-s)',
+              background:'var(--state-error)', color:'#fff',
+              fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight:600,
               letterSpacing:'0.06em', textTransform:'uppercase',
               display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
               {saving ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
             <button onClick={()=>setResult(null)} style={{
-              padding:'0.625rem 0.875rem', borderRadius:'var(--r-s)',
-              background:'var(--white)', fontFamily:'var(--mono)', fontSize:'var(--text-xs)', color:'var(--text-3)' }}>
+              padding:'0.625rem 0.875rem', borderRadius:'var(--radius-s)',
+              background:'var(--surface-base)', fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>
               Recalculate
             </button>
           </div>
@@ -359,22 +359,22 @@ function AssessmentRow({ a }) {
   return (
     <div style={{ ...S.row, cursor:'default' }}>
       <div style={{
-        width:'2.25rem', height:'2.25rem', borderRadius:'var(--r-m)', flexShrink:0,
-        background: req ? 'var(--red-soft)' : 'var(--success-soft)',
+        width:'2.25rem', height:'2.25rem', borderRadius:'var(--radius-m)', flexShrink:0,
+        background: req ? 'var(--red-soft)' : 'var(--state-success-soft)',
         display:'flex', alignItems:'center', justifyContent:'center' }}>
-        {req ? <Warning size="1rem" style={{ color:'var(--red)' }} /> : <CheckCircle size="1rem" style={{ color:'var(--success)' }} />}
+        {req ? <Warning size="1rem" style={{ color:'var(--state-error)' }} /> : <CheckCircle size="1rem" style={{ color:'var(--state-success)' }} />}
       </div>
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
-        <div style={{ fontSize:'var(--text-sm)', color:'var(--text-3)', display:'flex', alignItems:'center', gap:'var(--gap-xs)' }}>
+        <div style={{ fontSize:'var(--text-sm)', color:'var(--text-muted)', display:'flex', alignItems:'center', gap:'var(--space-xs)' }}>
           <MapPin size="0.625rem" />{a.address}
         </div>
       </div>
       <div style={{ textAlign:'right', flexShrink:0 }}>
         <ResultBadge result={a.result} ratio={a.ratio} />
-        <div style={{ fontSize:'var(--text-xs)', color:'var(--text-3)', marginTop:'var(--mar-xs)', fontFamily:'var(--mono)' }}>
+        <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', marginTop:'var(--space-xs)', fontFamily:'var(--font-mono)' }}>
           {a.date} · {a.tech}
         </div>
       </div>
@@ -431,7 +431,7 @@ export default function RiskAssessment() {
       <div className="page-stack">
 
         {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════ */}
-        <SectionDivider title="Risk Assessment" label="Management Overview" accent="var(--navy)" />
+        <SectionDivider title="Risk Assessment" label="Management Overview" accent="var(--brand-primary)" />
 
         <BranchTabs
           active={branch}
@@ -456,7 +456,7 @@ export default function RiskAssessment() {
                 {s.icon}
               </div>
               <div>
-                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-primary)' }}>
                   {s.value}
                 </div>
                 <div className="dfl-summary-label">{s.label}</div>
@@ -488,15 +488,15 @@ export default function RiskAssessment() {
           }
         </div>
 
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', lineHeight: 1.6, padding: '0.625rem 0.875rem', background: 'var(--white)', borderRadius: 'var(--r-m)', margin: 0 }}>
-          <span style={{ fontFamily: 'var(--mono)', color: 'var(--black)' }}>NFPA 780 Annex L · </span>
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 1.6, padding: '0.625rem 0.875rem', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>NFPA 780 Annex L · </span>
           Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
         </p>
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider title="Risk Assessment" label="Field Overview" accent="var(--navy)" />
+        <SectionDivider title="Risk Assessment" label="Field Overview" accent="var(--brand-primary)" />
 
-        <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+        <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

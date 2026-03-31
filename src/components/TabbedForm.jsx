@@ -12,15 +12,15 @@ import { FormField } from './FormEngine.jsx'
 
 function FieldLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--mar-s)' }}>
+    <div style={{ marginBottom: 'var(--space-s)' }}>
       <div style={{
         fontSize: 'var(--text-sm)', fontWeight: 600,
-        color: error ? 'var(--red)' : 'var(--black)', lineHeight: 1.4 }}>
+        color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)' }}>*</span>}
+        {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)' }}>*</span>}
       </div>
-      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
-      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 2 }}>{error}</div>}
+      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
+      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>{error}</div>}
     </div>
   )
 }
@@ -88,37 +88,37 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
   return (
     <div>
       {/* Progress */}
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--mar-s)' }}>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-3)' }}>
+      <div style={{ marginBottom: 'var(--space-l)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-s)' }}>
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-muted)' }}>
             Step {page + 1} of {total}
           </span>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{current.title}</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{current.title}</span>
         </div>
-        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', overflow: 'hidden' }}>
+        <div style={{ height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
           <div style={{
             height: '100%', width: `${((page + 1) / total) * 100}%`,
-            background: 'var(--navy)', borderRadius: 'var(--r-xxl)',
+            background: 'var(--brand-primary)', borderRadius: 'var(--radius-l)',
             transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)' }} />
         </div>
-        <div style={{ display: 'flex', gap: 'var(--gap-xs)', marginTop: 'var(--mar-s)', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--space-xs)', marginTop: 'var(--space-s)', justifyContent: 'center' }}>
           {sections.map((_, i) => (
             <div key={i} style={{
               width: i === page ? '1.5rem' : '0.4rem', height: '0.4rem',
-              borderRadius: 'var(--r-xxl)', flexShrink: 0,
-              background: i < page ? 'var(--navy)' : i === page ? 'var(--red)' : 'var(--border-l)',
+              borderRadius: 'var(--radius-l)', flexShrink: 0,
+              background: i < page ? 'var(--brand-primary)' : i === page ? 'var(--state-error)' : 'var(--border-subtle)',
               transition: 'all 0.2s ease' }} />
           ))}
         </div>
       </div>
 
       {/* Section */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-        <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+        <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
-          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 'var(--mar-xs)' }}>{current.description}</div>}
+          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>{current.description}</div>}
         </div>
-        <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-xl)' }}>
+        <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>
           {current.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
               <FieldLabel field={field} error={allErrors[field.id]} />
@@ -130,36 +130,36 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Errors */}
       {(submitErr || Object.keys(pageErrors).length > 0) && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background: 'var(--red-soft)', borderRadius: 'var(--r-m)', fontSize: 'var(--text-sm)', color: 'var(--red)' }}>
+        <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background: 'var(--red-soft)', borderRadius: 'var(--radius-m)', fontSize: 'var(--text-sm)', color: 'var(--state-error)' }}>
           {submitErr || 'Please fill in all required fields before continuing.'}
         </div>
       )}
 
       {/* Nav buttons */}
-      <div style={{ display: 'flex', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-m)', marginBottom: 'var(--space-2xl)' }}>
         {!isFirst && (
           <button type="button" onClick={back} style={{
-            flex: 1, padding: '0.75rem', borderRadius: 'var(--r-m)', background: 'var(--white)',
-            color: 'var(--black)', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 600,
+            flex: 1, padding: '0.75rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)',
+            color: 'var(--text-primary)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
             <ArrowLeft size="1rem" /> Back
           </button>
         )}
         {!isLast ? (
           <button type="button" onClick={advance} style={{
-            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--r-m)',
-            background: 'var(--navy)',
-            color: '#fff', fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
+            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--radius-m)',
+            background: 'var(--brand-primary)',
+            color: '#fff', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
             Next <ArrowRight size="1rem" />
           </button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} style={{
-            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--r-m)',
+            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--radius-m)',
             
-            background: submitting ? 'var(--hover)' : 'var(--red)',
-            color: submitting ? 'var(--text-3)' : '#fff',
-            fontFamily: 'var(--font)', fontSize: 'var(--text-sm)', fontWeight: 700,
+            background: submitting ? 'var(--surface-hover)' : 'var(--state-error)',
+            color: submitting ? 'var(--text-muted)' : '#fff',
+            fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
             cursor: submitting ? 'default' : 'pointer' }}>
             {submitting ? <><SpinnerGap size="0.875rem" style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</> : <><CheckCircle size="0.875rem" /> Submit Form</>}

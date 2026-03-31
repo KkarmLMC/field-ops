@@ -21,11 +21,11 @@ const STAGE_CFG = {
 const STAGE_PIPELINE = ['scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
-  'draft':           { label: 'Draft',            color: 'var(--grey-base)',     bg: 'var(--white)' },
-  'submitted':       { label: 'Needs Review',      color: 'var(--blue)',          bg: 'var(--blue-soft)' },
+  'draft':           { label: 'Draft',            color: 'var(--grey-base)',     bg: 'var(--surface-base)' },
+  'submitted':       { label: 'Needs Review',      color: 'var(--state-info)',          bg: 'var(--state-info-soft)' },
   'under-review':    { label: 'Under Review',      color: 'var(--warning)',       bg: 'var(--warning-soft)' },
   'customer-signoff':{ label: 'Customer Sign-off', color: 'var(--purple)',        bg: 'var(--purple-soft)' },
-  'complete':        { label: 'Approved',          color: 'var(--success-text)',  bg: 'var(--success-soft)' } }
+  'complete':        { label: 'Approved',          color: 'var(--state-success-text)',  bg: 'var(--state-success-soft)' } }
 
 const TYPE_ICON = {
   installation:  Lightning,
@@ -51,10 +51,10 @@ function InfoRow({ icon: Icon, label, value }) {
   if (!value) return null
   return (
     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-      <Icon size="0.875rem" style={{ color: 'var(--text-3)', marginTop: 1, flexShrink: 0 }} />
+      <Icon size="0.875rem" style={{ color: 'var(--text-muted)', marginTop: 1, flexShrink: 0 }} />
       <div>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
-        <div style={{ fontSize: 'var(--text-md)', color: 'var(--black)' }}>{value}</div>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
+        <div style={{ fontSize: 'var(--text-md)', color: 'var(--text-primary)' }}>{value}</div>
       </div>
     </div>
   )
@@ -79,13 +79,13 @@ function StagePipeline({ stage }) {
                   width:  isCurrent ? 14 : 10,
                   height: isCurrent ? 14 : 10,
                   borderRadius: '50%',
-                  background: isCurrent ? cfg.color : isDone ? 'var(--success)' : 'var(--border)',
+                  background: isCurrent ? cfg.color : isDone ? 'var(--state-success)' : 'var(--border)',
                   border: 'none',
                   transition: 'all 0.2s',
                   flexShrink: 0 }} />
                 <span style={{
                   fontSize: 'var(--text-2xs)', fontWeight: isCurrent ? 700 : 500,
-                  color: isCurrent ? cfg.color : isDone ? 'var(--success-text)' : 'var(--text-3)',
+                  color: isCurrent ? cfg.color : isDone ? 'var(--state-success-text)' : 'var(--text-muted)',
                   whiteSpace: 'nowrap' }}>
                   {cfg.label}
                 </span>
@@ -93,8 +93,8 @@ function StagePipeline({ stage }) {
               {i < STAGE_PIPELINE.length - 1 && (
                 <div style={{
                   width: 24, height: 2, margin: '0 4px', marginBottom: 14,
-                  background: isDone ? 'var(--success)' : 'var(--border)',
-                  borderRadius: 'var(--r-xs)', flexShrink: 0 }} />
+                  background: isDone ? 'var(--state-success)' : 'var(--border)',
+                  borderRadius: 'var(--radius-xs)', flexShrink: 0 }} />
               )}
             </div>
           )
@@ -103,9 +103,9 @@ function StagePipeline({ stage }) {
       {isOffPipeline && (
         <div style={{ marginTop: 8 }}>
           <span style={{
-            fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-3)',
-            background: STAGE_CFG[stage]?.bg || 'var(--white)',
-            padding: '3px 10px', borderRadius: 'var(--r-m)' }}>
+            fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-muted)',
+            background: STAGE_CFG[stage]?.bg || 'var(--surface-base)',
+            padding: '3px 10px', borderRadius: 'var(--radius-m)' }}>
             {STAGE_CFG[stage]?.label || stage}
           </span>
         </div>
@@ -208,13 +208,13 @@ export default function ProjectDetail() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
 
         {/* ── Header card ──────────────────────────────────────────────────── */}
         <div className="card">
           <div style={{
             padding: '14px 14px 12px',
-            background: stageCfg.bg || 'var(--white)',
+            background: stageCfg.bg || 'var(--surface-base)',
             borderRadius: '0.5rem 0.5rem 0 0',
             borderBottom: `2px solid ${stageCfg.color || 'var(--border)'}22` }}>
             {/* Type + stage */}
@@ -229,18 +229,18 @@ export default function ProjectDetail() {
                 fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                 color: stageCfg.color, background: stageCfg.bg,
                 border: `1px solid ${stageCfg.color}44`,
-                padding: '3px 10px', borderRadius: 'var(--r-m)' }}>
+                padding: '3px 10px', borderRadius: 'var(--radius-m)' }}>
                 {stageCfg.label || project.stage}
               </div>
             </div>
             {/* Project name */}
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--black)', lineHeight: 1.2, marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 4 }}>
               {project.name}
             </div>
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>
+            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
               {project.customer_account}
               {project.job_number && (
-                <span style={{ fontFamily: 'var(--mono)', marginLeft: 8 }}>{project.job_number}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', marginLeft: 8 }}>{project.job_number}</span>
               )}
             </div>
           </div>
@@ -252,15 +252,15 @@ export default function ProjectDetail() {
           {project.progress > 0 && (
             <div style={{ padding: '0 14px 14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 500 }}>Progress</span>
-                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: stageCfg.color, fontWeight: 700 }}>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 500 }}>Progress</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: stageCfg.color, fontWeight: 700 }}>
                   {project.progress}%
                 </span>
               </div>
-              <div style={{ height: 5, borderRadius: 'var(--r-xs)', background: 'var(--border-l)', overflow: 'hidden' }}>
+              <div style={{ height: 5, borderRadius: 'var(--radius-xs)', background: 'var(--border-subtle)', overflow: 'hidden' }}>
                 <div style={{
                   height: '100%', width: `${project.progress}%`,
-                  background: stageCfg.color || 'var(--orange)', borderRadius: 'var(--r-xs)',
+                  background: stageCfg.color || 'var(--state-warning-text)', borderRadius: 'var(--radius-xs)',
                   transition: 'width 0.4s ease' }} />
               </div>
             </div>
@@ -270,7 +270,7 @@ export default function ProjectDetail() {
           {cfCfg && (
             <div style={{
               margin: '0 14px 14px',
-              padding: '8px 12px', borderRadius: 'var(--r-m)',
+              padding: '8px 12px', borderRadius: 'var(--radius-m)',
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: cfCfg.color }}>
@@ -315,15 +315,15 @@ export default function ProjectDetail() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{
                   width: '2.5rem', height: '2.5rem', borderRadius: '0.5rem',
-                  background: tech.status === 'field' ? 'var(--orange-soft)' : 'var(--blue-soft)',
-                  color:      tech.status === 'field' ? 'var(--orange)' : 'var(--blue)',
+                  background: tech.status === 'field' ? 'var(--state-warning-soft)' : 'var(--state-info-soft)',
+                  color:      tech.status === 'field' ? 'var(--state-warning-text)' : 'var(--state-info)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
+                  fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
-                  <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
                     {tech.license}
                     {tech.phone && ` · ${tech.phone}`}
                   </div>
@@ -333,14 +333,14 @@ export default function ProjectDetail() {
                 </span>
               </div>
             ) : (
-              <div style={{ color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>Unassigned</div>
+              <div style={{ color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>Unassigned</div>
             )}
           </div>
         </div>
 
         {/* ── Field actions ─────────────────────────────────────────────────── */}
         {(project.stage === 'in-progress' || project.stage === 'scheduled') && (
-          <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+          <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
             <button
               className="btn btn-primary"
               style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
@@ -368,7 +368,7 @@ export default function ProjectDetail() {
             <div className="list-card__header">
               <span className="list-card__title"><NotePencil size="0.875rem" /> Notes</span>
             </div>
-            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>
+            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>
               {project.notes}
             </div>
           </div>
@@ -402,11 +402,11 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden' }}>
             {/* Header */}
-            <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                <CurrencyDollar size="1rem" style={{ color: 'var(--white)' }} />
+            <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+                <CurrencyDollar size="1rem" style={{ color: 'var(--surface-base)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
@@ -417,31 +417,31 @@ export default function ProjectDetail() {
             </div>
 
             {/* Field stats row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1px', background: 'var(--border-l)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1px', background: 'var(--border-subtle)' }}>
               {[
                 { label: 'Hours On-Site',  value: `${jobCost.totalHours}h` },
                 { label: 'Miles Driven',   value: jobCost.totalMiles.toLocaleString() },
                 { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
               ].map(s => (
-                <div key={s.label} style={{ background: 'var(--white)', padding: 'var(--pad-m) var(--pad-l)' }}>
-                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--black)' }}>{s.value}</div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
+                <div key={s.label} style={{ background: 'var(--surface-base)', padding: 'var(--space-m) var(--space-l)' }}>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
                 </div>
               ))}
             </div>
 
             {/* Cost breakdown */}
-            <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
+            <div style={{ padding: 'var(--space-m) var(--space-l)' }}>
               {[
-                { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--blue)' },
+                { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--state-info)' },
                 { label: 'Installation',  value: jobCost.installTotal,    color: 'var(--purple)' },
                 { label: 'Field Expenses',value: jobCost.expenseTotal,    color: 'var(--warning)' },
                 { label: 'Advances Issued',value: jobCost.advanceTotal,   color: 'var(--grey-base)' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
-                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>{r.label}</span>
+                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{r.label}</span>
                   </div>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                     ${r.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -457,15 +457,15 @@ export default function ProjectDetail() {
               const marginPct = ((margin / project.contract_value) * 100).toFixed(1)
               const isPositive = margin >= 0
               return (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)', background: isPositive ? 'var(--success-soft)' : 'var(--error-soft)', borderTop: '2px solid var(--border-l)' }}>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? 'var(--success-text)' : 'var(--error-dark)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)', background: isPositive ? 'var(--state-success-soft)' : 'var(--state-error-soft)', borderTop: '2px solid var(--border-default)' }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? 'var(--success-text)' : 'var(--error-dark)' }}>
+                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                       ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? 'var(--success-text)' : 'var(--error-alt)', fontWeight: 600 }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? 'var(--state-success-text)' : 'var(--error-alt)', fontWeight: 600 }}>
                       {isPositive ? '+' : '-'}{Math.abs(marginPct)}%
                     </div>
                   </div>
@@ -475,11 +475,11 @@ export default function ProjectDetail() {
 
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer' }}>
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)' }}>
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer' }}>
+              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--navy)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--brand-primary)' }}>
                 View Expenses <CaretRight size="0.75rem" />
               </div>
             </button>
@@ -507,9 +507,9 @@ export default function ProjectDetail() {
                   </div>
                   <span style={{
                     fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
-                    color: sCfg.color || 'var(--text-3)',
-                    background: sCfg.bg || 'var(--white)',
-                    padding: '3px 8px', borderRadius: 'var(--r-m)',
+                    color: sCfg.color || 'var(--text-muted)',
+                    background: sCfg.bg || 'var(--surface-base)',
+                    padding: '3px 8px', borderRadius: 'var(--radius-m)',
                     border: `1px solid ${sCfg.color || 'var(--border)'}33` }}>
                     {s.status || 'Draft'}
                   </span>

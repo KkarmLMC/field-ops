@@ -27,24 +27,24 @@ function PinPad({ onComplete }) {
   }
   const del = () => setDigits(d => d.slice(0, -1))
   const btnStyle = {
-    height: 60, borderRadius: 'var(--r-m)',
-    background: 'var(--white)',
+    height: 60, borderRadius: 'var(--radius-m)',
+    background: 'var(--surface-base)',
     fontSize: 'var(--text-md)', fontWeight: 'var(--fw-bold)',
-    cursor: 'pointer', fontFamily: 'var(--font)',
+    cursor: 'pointer', fontFamily: 'var(--font-body)',
     transition: 'all 0.12s', WebkitTapHighlightColor: 'transparent' }
-  const hoverOn  = e => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--navy)' }
-  const hoverOff = e => { e.currentTarget.style.background = 'var(--white)'; e.currentTarget.style.color = ''; e.currentTarget.style.borderColor = 'var(--border-l)' }
+  const hoverOn  = e => { e.currentTarget.style.background = 'var(--brand-primary)'; e.currentTarget.style.color = 'var(--surface-base)'; e.currentTarget.style.borderColor = 'var(--brand-primary)' }
+  const hoverOff = e => { e.currentTarget.style.background = 'var(--surface-base)'; e.currentTarget.style.color = ''; e.currentTarget.style.borderColor = 'var(--border-subtle)' }
   const pressOn  = e => { e.currentTarget.style.background = 'var(--navy-dark)'; e.currentTarget.style.transform = 'scale(0.97)' }
-  const pressOff = e => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.transform = 'scale(1)' }
+  const pressOff = e => { e.currentTarget.style.background = 'var(--brand-primary)'; e.currentTarget.style.transform = 'scale(1)' }
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 'var(--mar-xl)' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 'var(--space-xl)' }}>
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--navy)' : 'var(--border-l)', transition: 'background 0.1s' }} />
+          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--gap-m)', maxWidth: 260, margin: '0 auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-m)', maxWidth: 260, margin: '0 auto' }}>
         {[1,2,3,4,5,6,7,8,9].map(n => (
           <button key={n} onClick={() => press(String(n))} style={btnStyle}
             onMouseEnter={hoverOn} onMouseLeave={hoverOff} onMouseDown={pressOn} onMouseUp={pressOff}
@@ -63,7 +63,7 @@ function PinPad({ onComplete }) {
 }
 
 // ─── Role badge ───────────────────────────────────────────────────────────────
-function RoleBadge({ label, color = 'var(--navy)', bg = 'rgba(4,36,92,0.08)' }) {
+function RoleBadge({ label, color = 'var(--brand-primary)', bg = 'rgba(4,36,92,0.08)' }) {
   return (
     <Badge variant="secondary" label={label} />
   )
@@ -73,22 +73,22 @@ function RoleBadge({ label, color = 'var(--navy)', bg = 'rgba(4,36,92,0.08)' }) 
 function Section({ icon: Icon, title, children, action }) {
   return (
     <Card>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', borderRadius: '0' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', borderRadius: '0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', color: 'var(--surface-base)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
           {Icon && <Icon size="0.9375rem" />} {title}
         </div>
         {action}
       </div>
-      <div style={{ padding: 'var(--pad-l)' }}>{children}</div>
+      <div style={{ padding: 'var(--space-l)' }}>{children}</div>
     </Card>
   )
 }
 
 function Row({ label, children }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>{label}</div>
-      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--black)', textAlign: 'right' }}>{children}</div>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>{label}</div>
+      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)', textAlign: 'right' }}>{children}</div>
     </div>
   )
 }
@@ -131,22 +131,22 @@ function ActivityLog({ userId }) {
   const APP_LABELS = { field_ops: 'Field Ops', warehouse_iq: 'Warehouse IQ', mission_control: 'Mission Control' }
 
   const CATEGORY_COLOR = {
-    sales_order: 'var(--blue)', fulfillment: 'var(--purple)', shipment: 'var(--blue-shade-20)',
+    sales_order: 'var(--state-info)', fulfillment: 'var(--purple)', shipment: 'var(--blue-shade-20)',
     import: 'var(--warning-text)',      profile: 'var(--grey-shade-20)',     auth: 'var(--grey-base)',
     parts: 'var(--success-dark)',       inventory: 'var(--success-dark)',   transfer: 'var(--warning-text)' }
 
   return (
     <Card>
-      <div style={{ padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
+      <div style={{ padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', color: 'var(--surface-base)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
         Activity Log
       </div>
-      <div style={{ padding: 'var(--pad-s) 0' }}>
+      <div style={{ padding: 'var(--space-s) 0' }}>
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}>
             <Spinner />
           </div>
         ) : logs.length === 0 ? (
-          <div style={{ padding: 'var(--pad-xxl)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>
+          <div style={{ padding: 'var(--space-2xl)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
             No activity recorded yet
           </div>
         ) : (
@@ -154,35 +154,35 @@ function ActivityLog({ userId }) {
             {logs.map((log, i) => (
               <div key={log.id} style={{
                 display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
-                padding: 'var(--pad-m) var(--pad-l)',
-                borderBottom: i < logs.length - 1 ? '1px solid var(--border-l)' : 'none' }}>
+                padding: 'var(--space-m) var(--space-l)',
+                borderBottom: i < logs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                 {/* Category dot */}
                 <div style={{
-                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--mar-xs)',
-                  background: CATEGORY_COLOR[log.category] || 'var(--text-3)' }} />
+                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--space-xs)',
+                  background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', fontWeight: 'var(--fw-medium)', lineHeight: 1.4 }}>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 1.4 }}>
                     {log.label}
                   </div>
-                  <div style={{ display: 'flex', gap: 'var(--gap-s)', marginTop: 3, flexWrap: 'wrap', alignItems: 'center' }}>
-                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{fmtTime(log.created_at)}</span>
-                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>·</span>
+                  <div style={{ display: 'flex', gap: 'var(--space-s)', marginTop: 3, flexWrap: 'wrap', alignItems: 'center' }}>
+                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{fmtTime(log.created_at)}</span>
+                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>·</span>
                     <span style={{
                       fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
-                      color: CATEGORY_COLOR[log.category] || 'var(--text-3)' }}>{APP_LABELS[log.app] || log.app}</span>
+                      color: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }}>{APP_LABELS[log.app] || log.app}</span>
                   </div>
                 </div>
               </div>
             ))}
             {/* Pagination */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--pad-m) var(--pad-l)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)' }}>
               <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-                style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: page === 0 ? 'var(--text-3)' : 'var(--navy)', background: 'none', cursor: page === 0 ? 'default' : 'pointer', padding: 0 }}>
+                style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: page === 0 ? 'var(--text-muted)' : 'var(--brand-primary)', background: 'none', cursor: page === 0 ? 'default' : 'pointer', padding: 0 }}>
                 ← Previous
               </button>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Page {page + 1}</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>Page {page + 1}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={logs.length < PER_PAGE}
-                style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: logs.length < PER_PAGE ? 'var(--text-3)' : 'var(--navy)', background: 'none', cursor: logs.length < PER_PAGE ? 'default' : 'pointer', padding: 0 }}>
+                style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: logs.length < PER_PAGE ? 'var(--text-muted)' : 'var(--brand-primary)', background: 'none', cursor: logs.length < PER_PAGE ? 'default' : 'pointer', padding: 0 }}>
                 Next →
               </button>
             </div>
@@ -281,14 +281,14 @@ export default function Profile() {
     'confirm-new': 'Confirm your PIN' }
 
   const roleColors = {
-    admin:   { color: 'var(--error-shade-40)', bg: 'var(--error-soft)' },
-    manager: { color: 'var(--blue)', bg: 'var(--blue-soft)' },
-    user:    { color: 'var(--success-dark)', bg: 'var(--success-soft)' } }
+    admin:   { color: 'var(--error-shade-40)', bg: 'var(--state-error-soft)' },
+    manager: { color: 'var(--state-info)', bg: 'var(--state-info-soft)' },
+    user:    { color: 'var(--success-dark)', bg: 'var(--state-success-soft)' } }
   const roleStyle = roleColors[profile?.role] || roleColors.user
 
   const pipelineRoleColors = {
     warehouse_manager: { color: 'var(--purple-shade-20)', bg: 'var(--purple-soft)' },
-    fulfillment:       { color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
+    fulfillment:       { color: 'var(--blue-shade-40)', bg: 'var(--state-info-soft)' },
     shipping:          { color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' } }
   const pipelineStyle = pipelineRoleColors[profile?.pipeline_role] || null
 
@@ -304,32 +304,32 @@ export default function Profile() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ marginBottom: 'var(--mar-xxl)' }}>
+      <div style={{ marginBottom: 'var(--space-2xl)' }}>
         <button onClick={() => navigate(-1)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)', background: 'none', color: 'var(--text-muted)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--space-m)' }}>
           <ArrowLeft size="0.875rem" /> Back
         </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-l)' }}>
           {/* Avatar */}
-          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--white)', fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', flexShrink: 0 }}>
+          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--brand-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--surface-base)', fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', flexShrink: 0 }}>
             {initials}
           </div>
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', marginBottom: 'var(--mar-xs)' }}>ACCOUNT</div>
+            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>ACCOUNT</div>
             <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', lineHeight: 1.1 }}>{profile?.full_name || 'My Profile'}</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{user?.email}</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>{user?.email}</div>
           </div>
         </div>
       </div>
 
       {/* Flash messages */}
       {success && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--success-soft)', borderRadius: 'var(--r-l)', color: 'var(--success-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-success-soft)', borderRadius: 'var(--radius-l)', color: 'var(--state-success-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
           <CheckCircle size="0.9375rem" weight="fill" style={{ flexShrink: 0 }} /> {success}
         </div>
       )}
       {error && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-error-soft)', borderRadius: 'var(--radius-l)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
           <Warning size="0.9375rem" style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
@@ -343,9 +343,9 @@ export default function Profile() {
         )}>
 
         {editingName ? (
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>Full Name</label>
-            <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+          <div style={{ marginBottom: 'var(--space-m)' }}>
+            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>Full Name</label>
+            <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
               <input value={nameVal} onChange={e => setNameVal(e.target.value)} autoFocus style={{ flex: 1 }} onKeyDown={e => e.key === 'Enter' && saveName()} />
               <Button onClick={saveName} disabled={nameSaving}>
                 {nameSaving ? 'Saving…' : 'Save'}
@@ -363,16 +363,16 @@ export default function Profile() {
 
         {profile?.division && (
           <Row label="Division">
-            <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)' }}>
-              <Buildings size="0.8125rem" style={{ color: 'var(--black)' }} />
+            <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+              <Buildings size="0.8125rem" style={{ color: 'var(--text-primary)' }} />
               {profile.division}
             </span>
           </Row>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-xs)', borderBottom: '1px solid var(--border-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>Member Since</div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--black)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-xs)', borderBottom: '1px solid var(--border-default)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>Member Since</div>
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)' }}>
             {profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
           </div>
         </div>
@@ -381,22 +381,22 @@ export default function Profile() {
       {/* ── Access & Roles ── */}
       <Section icon={Shield} title="Access & Roles">
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>App Role</div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>App Role</div>
           <Badge label={profile?.role || 'user'} variant="secondary" />
         </div>
 
         {profile?.pipeline_role && pipelineStyle && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)' }}>Pipeline Role</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>Pipeline Role</div>
             <Badge label={profile.pipeline_role.replace('_', ' ')} variant="secondary" />
           </div>
         )}
 
         {profile?.app_access?.length > 0 && (
-          <div style={{ marginBottom: 'var(--mar-m)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', marginBottom: 8 }}>App Access</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-xs)' }}>
+          <div style={{ marginBottom: 'var(--space-m)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: 8 }}>App Access</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-xs)' }}>
               {profile.app_access.map(app => (
                 <Badge key={app} label={appLabels[app] || app} variant="secondary" />
               ))}
@@ -404,7 +404,7 @@ export default function Profile() {
           </div>
         )}
 
-        <div style={{ padding: 'var(--pad-m)', background: 'var(--hover)', borderRadius: 'var(--r-l)', fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.5 }}>
+        <div style={{ padding: 'var(--space-m)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
           Role assignments are managed by your administrator. Contact admin to request changes.
         </div>
       </Section>
@@ -419,10 +419,10 @@ export default function Profile() {
 
         {pinSection === 'idle' ? (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--pad-m)', marginBottom: 'var(--mar-m)', borderBottom: '1px solid var(--border-l)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)' }}>{hasPin ? '6-digit PIN is set ✓' : 'No PIN set'}</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
                   {hasPin
                     ? `Last set: ${profile?.pin_set_at ? new Date(profile.pin_set_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown'}`
                     : 'Set a PIN to log in faster — no password needed'}
@@ -441,10 +441,10 @@ export default function Profile() {
           </div>
         ) : (
           <div>
-            <div style={{ textAlign: 'center', marginBottom: 'var(--mar-l)' }}>
+            <div style={{ textAlign: 'center', marginBottom: 'var(--space-l)' }}>
               <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-bold)', marginBottom: 4 }}>{pinLabel[pinSection]}</div>
               {pinError && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-xs)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginTop: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-xs)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginTop: 8 }}>
                   <Warning size="0.875rem" /> {pinError}
                 </div>
               )}
@@ -463,22 +463,22 @@ export default function Profile() {
         )}>
 
         {showPwForm ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>New Email (optional)</label>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>New Email (optional)</label>
               <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="Leave blank to keep current" />
             </div>
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>New Password</label>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>New Password</label>
               <div style={{ position: 'relative' }}>
                 <input type={showPw ? 'text' : 'password'} value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Minimum 8 characters" style={{ paddingRight: 'var(--sp-10)' }} />
                 <button onClick={() => setShowPw(v => !v)}
-                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}>
+                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}>
                   {showPw ? <EyeSlash size="1rem" /> : <Eye size="1rem" />}
                 </button>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+            <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
               <Button variant="secondary" onClick={() => { setShowPwForm(false); setNewPw(''); setNewEmail('') }} style={{ flex: 1 }}>
                 Cancel
               </Button>
@@ -489,15 +489,15 @@ export default function Profile() {
           </div>
         ) : (
           <Row label="Password">
-            <span style={{ color: 'var(--text-3)' }}>••••••••</span>
+            <span style={{ color: 'var(--text-muted)' }}>••••••••</span>
           </Row>
         )}
       </Section>
 
       {/* ── Sign out ── */}
       <Card>
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>Session</div>
-        <div style={{ padding: 'var(--pad-l)' }}>
+        <div style={{ padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', color: 'var(--surface-base)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>Session</div>
+        <div style={{ padding: 'var(--space-l)' }}>
           <Button variant="danger" onClick={() => { signOut(); navigate('/login', { replace: true }) }}>
             <SignOut size="1rem" /> Sign Out of this app
           </Button>

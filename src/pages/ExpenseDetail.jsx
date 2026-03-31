@@ -8,7 +8,7 @@ import { approvalStatus } from '../lib/statusColors.js'
 
 const STATUS_FLOW = {
   draft:     { next: 'submitted', label: 'Submit',  bg: 'var(--warning)', color: '#fff' },
-  submitted: { next: 'approved',  label: 'Approve', bg: 'var(--success-text)', color: '#fff' },
+  submitted: { next: 'approved',  label: 'Approve', bg: 'var(--state-success-text)', color: '#fff' },
   approved:  { next: null },
   rejected:  { next: null } }
 
@@ -59,7 +59,7 @@ export default function ExpenseDetail() {
     setAdvancing(false)
   }
 
-  if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
   if (!report) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Report not found</div></div></div>
 
   const sc = approvalStatus(report.status)
@@ -71,41 +71,41 @@ export default function ExpenseDetail() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xl)', marginBottom: 'var(--mar-l)', color: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
+      <div style={{ background: 'var(--brand-primary)', borderRadius: 'var(--radius-m)', padding: 'var(--space-xl)', marginBottom: 'var(--space-l)', color: '#fff' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', fontWeight: 700, marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', fontWeight: 700, marginBottom: 4 }}>
               {report.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {isAdvance ? 'Advance Request' : 'Expense Report'}
             </div>
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>{report.employee_name}</div>
-            {project && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--white)', marginTop: 4 }}>{project.name}</div>}
+            {project && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--surface-base)', marginTop: 4 }}>{project.name}</div>}
           </div>
-          <span style={{ padding: '4px 12px', borderRadius: 'var(--r-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
+          <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}
           </span>
         </div>
-        <div style={{  paddingTop: 'var(--pad-m)', display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap' }}>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)' }}>
+        <div style={{  paddingTop: 'var(--space-m)', display: 'flex', gap: 'var(--space-l)', flexWrap: 'wrap' }}>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)' }}>
             {report.report_date ? new Date(report.report_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—'}
           </div>
           {isAdvance && report.travel_days > 0 && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)' }}>{report.travel_days} travel days</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)' }}>{report.travel_days} travel days</div>
           )}
         </div>
       </div>
 
       {/* Advance lines */}
       {isAdvance && advanceLines.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--white)' }}>Description</span>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--white)' }}>Total</span>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
+            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Description</span>
+            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Total</span>
           </div>
           {advanceLines.map(l => (
-            <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
+            <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.description}</div>
-                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
                   {l.days > 0 && `${l.days} days`}{l.nights > 0 && ` · ${l.nights} nights`}{l.miles > 0 && ` · ${l.miles} mi`}
                   {l.rate > 0 && ` @ $${l.rate}`}
                 </div>
@@ -118,21 +118,21 @@ export default function ExpenseDetail() {
 
       {/* Expense line items */}
       {!isAdvance && lines.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
           <div style={{ overflowX: 'auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)', minWidth: 800 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--white)', textAlign: 'right' }}>{h}</div>
+                <div key={h} style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             {lines.map(l => (
-              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--pad-s) var(--pad-l)', borderBottom: '1px solid var(--border-l)', minWidth: 800, alignItems: 'center' }}>
+              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.vendor_description || '—'}</div>
-                  {l.line_date && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
+                  {l.line_date && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
                 </div>
                 {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
-                  <div key={f} style={{ textAlign: 'right', fontSize: 'var(--text-sm)', color: l[f] > 0 ? 'var(--black)' : 'var(--text-3)', fontWeight: l[f] > 0 ? 600 : 400 }}>
+                  <div key={f} style={{ textAlign: 'right', fontSize: 'var(--text-sm)', color: l[f] > 0 ? 'var(--text-primary)' : 'var(--text-muted)', fontWeight: l[f] > 0 ? 600 : 400 }}>
                     {l[f] > 0 ? `$${Number(l[f]).toFixed(2)}` : '—'}
                   </div>
                 ))}
@@ -144,14 +144,14 @@ export default function ExpenseDetail() {
 
       {/* Mileage log */}
       {!isAdvance && mileage.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--white)' }}>Mileage Log</span>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--white)' }}>Miles</span>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--surface-base)' }}>Mileage Log</span>
+            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Miles</span>
           </div>
           {mileage.map(m => (
-            <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--pad-s) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>{m.entry_date ? new Date(m.entry_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</div>
+            <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{m.entry_date ? new Date(m.entry_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</div>
               <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>{m.miles}</div>
             </div>
           ))}
@@ -159,39 +159,39 @@ export default function ExpenseDetail() {
       )}
 
       {/* Totals */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
         {!isAdvance && (
           <>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Subtotal</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Subtotal</span>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${Number(report.subtotal || 0).toFixed(2)}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Less Cash Advance</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Less Cash Advance</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--state-error-text)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderBottom: '1px solid var(--border-l)' }}>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--black)' }}>Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${Number(report.mileage_total || 0).toFixed(2)}</span>
             </div>
           </>
         )}
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-l)', background: 'var(--navy)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l)', background: 'var(--brand-primary)' }}>
           <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>Total</span>
           <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>${Number(report.grand_total || 0).toFixed(2)}</span>
         </div>
       </div>
 
       {report.notes && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{report.notes}</div>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
+          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>
       )}
 
       {flow?.next && (
         <button onClick={advance} disabled={advancing}
-          style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)' }}>
+          style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-l)' }}>
           {advancing ? 'Processing…' : <><ArrowRight size="1.125rem" /> {flow.label}</>}
         </button>
       )}

@@ -7,10 +7,10 @@
  * header in one row.
  *
  * Usage:
- *   <SectionDivider title="Installations" label="Management Overview" accent="var(--navy)" />
+ *   <SectionDivider title="Installations" label="Management Overview" accent="var(--brand-primary)" />
  *   <SectionDivider label="Field" accent="var(--orange)" />
  */
-export default function SectionDivider({ label, title, accent = 'var(--text-3)' }) {
+export default function SectionDivider({ label, title, accent = 'var(--text-muted)' }) {
   return (
     <div className="section-divider">
       {title && (

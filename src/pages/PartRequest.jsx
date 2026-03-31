@@ -88,13 +88,13 @@ export default function PartRequest() {
   }
 
   if (saved) return (
-    <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--gap-l)', textAlign: 'center' }}>
-      <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--success)' }} />
+    <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--space-l)', textAlign: 'center' }}>
+      <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--state-success)' }} />
       <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Request Submitted</div>
-      <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 280 }}>
+      <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', maxWidth: 280 }}>
         Your part request is pending management review in Mission Control. You'll be notified once it's approved.
       </div>
-      <div style={{ display: 'flex', gap: 'var(--gap-m)', marginTop: 'var(--mar-s)' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-m)', marginTop: 'var(--space-s)' }}>
         <button onClick={() => navigate('/stock')} className="btn btn-secondary">Back to Stock</button>
         <button onClick={() => { setSaved(false); setItems([{ part_id: '', quantity: 1, notes: '' }]); setProject(null); setForm(f => ({ ...f, justification: '' })) }}
           className="btn btn-primary">New Request</button>
@@ -102,20 +102,20 @@ export default function PartRequest() {
     </div>
   )
 
-  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
 
   return (
     <div className="page-content fade-in">
-      <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+      <button onClick={() => navigate('/stock')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-muted)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--space-m)' }}>
         <ArrowLeft size="0.875rem" /> Back to Stock
       </button>
 
       {/* Job details */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-        <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+        <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
         </div>
-        <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
+        <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
           <ProjectPicker
             value={project}
             onChange={setProject}
@@ -123,7 +123,7 @@ export default function PartRequest() {
             required
           />
           <div>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
+            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>
               Fulfillment Warehouse <span style={{ color: 'var(--error)' }}>*</span>
             </label>
             <select value={form.warehouse_id} onChange={e => setForm(f => ({ ...f, warehouse_id: e.target.value }))}>
@@ -132,7 +132,7 @@ export default function PartRequest() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
+            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>
               Justification <span style={{ color: 'var(--error)' }}>*</span>
             </label>
             <textarea value={form.justification} onChange={e => setForm(f => ({ ...f, justification: e.target.value }))}
@@ -142,15 +142,15 @@ export default function PartRequest() {
       </div>
 
       {/* Parts */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-        <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+        <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
           <span className="list-card__meta">{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
-        <div style={{ padding: 'var(--pad-m)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
+        <div style={{ padding: 'var(--space-m)', display: 'flex', flexDirection: 'column', gap: 'var(--space-s)' }}>
           {items.map((item, idx) => (
-            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
-              <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
+            <div key={idx} style={{ background: '#fff', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
+              <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}>
                 <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} style={{ flex: 1 }}>
                   <option value="">— Select part —</option>
                   {parts.map(p => <option key={p.id} value={p.id}>{p.name}{p.sku ? ` (${p.sku})` : ''}</option>)}
@@ -167,7 +167,7 @@ export default function PartRequest() {
                 placeholder="Note (optional)" style={{ fontSize: 'var(--text-xs)' }} />
             </div>
           ))}
-          <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: '1px dashed var(--border-l)', background: 'none', color: 'var(--text-3)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
+          <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', padding: 'var(--space-s)', borderRadius: 'var(--radius-l)', border: '1px dashed var(--border-default)', background: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
             <Plus size="0.875rem" /> Add Part
           </button>
         </div>
@@ -175,17 +175,17 @@ export default function PartRequest() {
 
       {/* Error */}
       {error && (
-        <div style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--state-error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
           {error}
         </div>
       )}
 
       {/* Submit */}
       <button onClick={handleSubmit} disabled={saving}
-        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: saving ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: saving ? 'var(--text-muted)' : 'var(--brand-primary)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
         {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
       </button>
-      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
+      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center', marginTop: 'var(--space-s)' }}>
         This request goes to Mission Control for management review before any parts are pulled.
       </div>
     </div>

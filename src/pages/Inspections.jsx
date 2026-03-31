@@ -91,7 +91,7 @@ export default function Inspections() {
       <div className="page-stack">
 
         {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════ */}
-        <SectionDivider title="Inspections" label="Management Overview" accent="var(--navy)" />
+        <SectionDivider title="Inspections" label="Management Overview" accent="var(--brand-primary)" />
 
         <BranchTabs
           active={branch}
@@ -117,7 +117,7 @@ export default function Inspections() {
                 {s.icon}
               </div>
               <div>
-                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
+                <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-primary)' }}>
                   {s.value}
                 </div>
                 <div className="dfl-summary-label">{s.label}</div>
@@ -138,18 +138,18 @@ export default function Inspections() {
                 onClick={() => setStageFilter(active && key !== 'all' ? 'all' : key)}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 5,
-                  padding: '4px 10px', borderRadius: 'var(--r-m)', cursor: 'pointer',
+                  padding: '4px 10px', borderRadius: 'var(--radius-m)', cursor: 'pointer',
                   border: active ? `1.5px solid ${cfg.color}` : '1.5px solid var(--border)',
-                  background: active ? cfg.bg : 'var(--white)',
-                  color: active ? cfg.color : 'var(--black)',
+                  background: active ? cfg.bg : 'var(--surface-base)',
+                  color: active ? cfg.color : 'var(--text-primary)',
                   fontSize: 'var(--text-xs)', fontWeight: active ? 600 : 500,
                   transition: 'all 0.15s' }}
               >
                 {cfg.label}
                 <span style={{
                   background: active ? cfg.color : 'var(--border)',
-                  color: active ? '#fff' : 'var(--black)',
-                  borderRadius: 'var(--r-m)', padding: '0 5px',
+                  color: active ? '#fff' : 'var(--text-primary)',
+                  borderRadius: 'var(--radius-m)', padding: '0 5px',
                   fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
               </button>
             )
@@ -200,9 +200,9 @@ export default function Inspections() {
         </div>
 
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
-        <SectionDivider title="Inspections" label="Field Overview" accent="var(--navy)" />
+        <SectionDivider title="Inspections" label="Field Overview" accent="var(--brand-primary)" />
 
-        <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+        <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

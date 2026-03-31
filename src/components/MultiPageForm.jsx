@@ -20,22 +20,22 @@ import { FormField } from './FormEngine.jsx'
 // ─── Per-field label (mirrors FormEngine FieldLabel) ─────────────────────────
 function FieldLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--mar-s)' }}>
+    <div style={{ marginBottom: 'var(--space-s)' }}>
       <div style={{
         fontSize: 'var(--text-sm)',
         fontWeight: 600,
-        color: error ? 'var(--red)' : 'var(--black)',
+        color: error ? 'var(--state-error)' : 'var(--text-primary)',
         lineHeight: 1.4 }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)' }}>*</span>}
+        {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)' }}>*</span>}
       </div>
       {field.hint && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>
           {field.hint}
         </div>
       )}
       {error && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--red)', marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>
           {error}
         </div>
       )}
@@ -83,17 +83,17 @@ function SectionView({ section, values, onChange, errors, onBack }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 'var(--gap-m)',
-        marginBottom: 'var(--mar-l)' }}>
+        gap: 'var(--space-m)',
+        marginBottom: 'var(--space-l)' }}>
         <button
           type="button"
           onClick={onBack}
           style={{
             width: '2.25rem',
             height: '2.25rem',
-            borderRadius: 'var(--r-l)',
-            background: 'var(--white)',
-            color: 'var(--black)',
+            borderRadius: 'var(--radius-l)',
+            background: 'var(--surface-base)',
+            color: 'var(--text-primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -102,26 +102,26 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         >
           <ArrowLeft size="1rem" />
         </button>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', fontWeight: 500 }}>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', fontWeight: 500 }}>
           Back to sections
         </div>
       </div>
 
       {/* Section card */}
       <div style={{
-        background: 'var(--white)',
-        borderRadius: 'var(--r-m)',
+        background: 'var(--surface-base)',
+        borderRadius: 'var(--radius-m)',
         overflow: 'hidden',
-        marginBottom: 'var(--mar-l)' }}>
+        marginBottom: 'var(--space-l)' }}>
         {/* Navy section header */}
         <div style={{
-          background: 'var(--navy)',
-          padding: 'var(--pad-l)' }}>
+          background: 'var(--brand-primary)',
+          padding: 'var(--space-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>
             {section.title}
           </div>
           {section.description && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--white)', marginTop: 'var(--mar-xs)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>
               {section.description}
             </div>
           )}
@@ -129,10 +129,10 @@ function SectionView({ section, values, onChange, errors, onBack }) {
 
         {/* Fields */}
         <div style={{
-          padding: 'var(--pad-l)',
+          padding: 'var(--space-l)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--gap-xl)' }}>
+          gap: 'var(--space-xl)' }}>
           {section.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
               <FieldLabel field={field} error={allErrors[field.id]} />
@@ -153,19 +153,19 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         onClick={onBack}
         style={{
           width: '100%',
-          padding: 'var(--pad-m)',
-          borderRadius: 'var(--r-m)',
-          background: 'var(--navy)',
+          padding: 'var(--space-m)',
+          borderRadius: 'var(--radius-m)',
+          background: 'var(--brand-primary)',
           color: '#fff',
-          fontFamily: 'var(--font)',
+          fontFamily: 'var(--font-body)',
           fontSize: 'var(--text-sm)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'var(--gap-s)',
+          gap: 'var(--space-s)',
           cursor: 'pointer',
-          marginBottom: 'var(--mar-xxl)' }}
+          marginBottom: 'var(--space-2xl)' }}
       >
         <CheckCircle size="1rem" />
         Done — Back to Sections
@@ -246,27 +246,27 @@ export default function MultiPageForm({
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontWeight: 600, marginBottom: 'var(--mar-xs)' }}>
+      <div style={{ marginBottom: 'var(--space-l)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 600, marginBottom: 'var(--space-xs)' }}>
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
-        <div style={{ height: '0.25rem', background: 'var(--border-l)', borderRadius: 'var(--r-xxl)', overflow: 'hidden' }}>
+        <div style={{ height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${(sections.filter(s => isSectionComplete(s, values)).length / sections.length) * 100}%`,
-            background: allComplete ? 'var(--success)' : 'var(--navy)',
-            borderRadius: 'var(--r-xxl)',
+            background: allComplete ? 'var(--state-success)' : 'var(--brand-primary)',
+            borderRadius: 'var(--radius-l)',
             transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} />
         </div>
       </div>
 
       {/* Section list */}
       <div style={{
-        background: 'var(--white)',
-        borderRadius: 'var(--r-m)',
+        background: 'var(--surface-base)',
+        borderRadius: 'var(--radius-m)',
         overflow: 'hidden',
-        marginBottom: 'var(--mar-l)' }}>
+        marginBottom: 'var(--space-l)' }}>
         {sections.map((section, idx) => {
           const complete  = isSectionComplete(section, values)
           const started   = isSectionStarted(section, values)
@@ -282,25 +282,25 @@ export default function MultiPageForm({
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--gap-m)',
-                padding: 'var(--pad-l)',
+                gap: 'var(--space-m)',
+                padding: 'var(--space-l)',
                 background: complete ? 'rgba(22,163,74,0.04)' : 'transparent',
-                borderBottom: isLast ? 'none' : '1px solid var(--border-l)',
+                borderBottom: isLast ? 'none' : '1px solid var(--border-default)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'background var(--ease-fast)',
                 WebkitTapHighlightColor: 'transparent' }}
-              onTouchStart={e => e.currentTarget.style.background = 'var(--hover)'}
+              onTouchStart={e => e.currentTarget.style.background = 'var(--surface-hover)'}
               onTouchEnd={e => e.currentTarget.style.background = complete ? 'rgba(22,163,74,0.04)' : 'transparent'}
             >
               {/* Status icon */}
               <div style={{ flexShrink: 0 }}>
                 {complete ? (
-                  <CheckCircle size="1.375rem" weight="fill" style={{ color: 'var(--success)' }} />
+                  <CheckCircle size="1.375rem" weight="fill" style={{ color: 'var(--state-success)' }} />
                 ) : started ? (
                   <Warning size="1.375rem" weight="fill" style={{ color: 'var(--amber, #D97706)' }} />
                 ) : (
-                  <Circle size="1.375rem" style={{ color: 'var(--border-l)' }} />
+                  <Circle size="1.375rem" style={{ color: 'var(--border-subtle)' }} />
                 )}
               </div>
 
@@ -309,19 +309,19 @@ export default function MultiPageForm({
                 <div style={{
                   fontSize: 'var(--text-md)',
                   fontWeight: complete ? 600 : 500,
-                  color: complete ? 'var(--black)' : 'var(--black)',
+                  color: complete ? 'var(--text-primary)' : 'var(--text-primary)',
                   marginBottom: 2 }}>
                   {section.title}
                   {hasRequired && !complete && (
-                    <span style={{ color: 'var(--red)', marginLeft: 'var(--mar-xs)', fontSize: 'var(--text-xs)' }}>*</span>
+                    <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)', fontSize: 'var(--text-xs)' }}>*</span>
                   )}
                 </div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
                   {complete ? 'Complete' : started ? 'In progress' : `${section.fields.filter(f=>f.required).length} required fields`}
                 </div>
               </div>
 
-              <CaretRight size="1rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
+              <CaretRight size="1rem" style={{ color: 'var(--text-primary)', flexShrink: 0 }} />
             </button>
           )
         })}
@@ -330,23 +330,23 @@ export default function MultiPageForm({
       {/* Error / incomplete notice */}
       {submitErr && (
         <div style={{
-          padding: 'var(--pad-m) var(--pad-l)',
-          marginBottom: 'var(--mar-m)',
+          padding: 'var(--space-m) var(--space-l)',
+          marginBottom: 'var(--space-m)',
           background: 'var(--red-soft)',
-          borderRadius: 'var(--r-m)',
+          borderRadius: 'var(--radius-m)',
           fontSize: 'var(--text-sm)',
-          color: 'var(--red)' }}>
+          color: 'var(--state-error)' }}>
           {submitErr}
         </div>
       )}
       {!allComplete && (
         <div style={{
-          padding: 'var(--pad-m) var(--pad-l)',
-          marginBottom: 'var(--mar-m)',
-          background: 'var(--white)',
-          borderRadius: 'var(--r-m)',
+          padding: 'var(--space-m) var(--space-l)',
+          marginBottom: 'var(--space-m)',
+          background: 'var(--surface-base)',
+          borderRadius: 'var(--radius-m)',
           fontSize: 'var(--text-xs)',
-          color: 'var(--text-3)',
+          color: 'var(--text-muted)',
           textAlign: 'center' }}>
           Complete all required sections to submit
         </div>
@@ -359,20 +359,20 @@ export default function MultiPageForm({
         disabled={submitting || !allComplete}
         style={{
           width: '100%',
-          padding: 'var(--pad-m)',
-          borderRadius: 'var(--r-m)',
+          padding: 'var(--space-m)',
+          borderRadius: 'var(--radius-m)',
           
-          background: !allComplete || submitting ? 'var(--hover)' : 'var(--red)',
-          color: !allComplete || submitting ? 'var(--text-3)' : '#fff',
-          fontFamily: 'var(--font)',
+          background: !allComplete || submitting ? 'var(--surface-hover)' : 'var(--state-error)',
+          color: !allComplete || submitting ? 'var(--text-muted)' : '#fff',
+          fontFamily: 'var(--font-body)',
           fontSize: 'var(--text-sm)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'var(--gap-s)',
+          gap: 'var(--space-s)',
           cursor: !allComplete || submitting ? 'default' : 'pointer',
-          marginBottom: 'var(--mar-xxl)',
+          marginBottom: 'var(--space-2xl)',
           transition: 'all var(--ease-fast)' }}
       >
         {submitting

@@ -29,7 +29,7 @@ export default function TabBar() {
               top: 0, left: '50%',
               width: active ? 28 : 0,
               height: '0.125rem',
-              background: 'var(--red)',
+              background: 'var(--state-error)',
               borderRadius: '0 0 2px 2px',
               transform: 'translateX(-50%)',
               transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }} />
@@ -40,7 +40,7 @@ export default function TabBar() {
               alignItems: 'center',
               justifyContent: 'center' }}><tab.Icon size="1.125rem" weight={active ? 'fill' : 'regular'} /></span>
             <span className="tab-btn-label" style={{
-              color: active ? 'var(--red)' : 'var(--text-3)',
+              color: active ? 'var(--state-error)' : 'var(--text-muted)',
               fontWeight: active ? 700 : 500,
               transition: 'color 0.15s, font-weight 0.15s' }}>{tab.label}</span>
           </button>

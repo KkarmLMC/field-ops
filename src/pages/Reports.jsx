@@ -8,17 +8,17 @@ import SectionDivider from '../components/SectionDivider'
 import { BRANCH_COLORS } from '../config/branches.js'
 // ─── Form type config ──────────────────────────────────────────────────────────
 const FORM_TYPES = {
-  completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--orange)', bg: 'var(--orange-soft)' },
-  inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--blue-soft)' },
+  completion:    { label: 'Completion Form', Icon: Lightning,       color: 'var(--state-warning-text)', bg: 'var(--state-warning-soft)' },
+  inspection:    { label: 'Inspection',      Icon: MagnifyingGlass, color: 'var(--blue-tint-20)', bg: 'var(--state-info-soft)' },
   jsa:           { label: 'JSA',             Icon: HardHat,         color: 'var(--warning)', bg: 'var(--warning-tint-80)' },
   'site-survey': { label: 'Site Survey',     Icon: Ruler,           color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' } }
 
 // ─── Status config ─────────────────────────────────────────────────────────────
 const STATUS_CFG = {
-  submitted:          { label: 'Submitted',          color: 'var(--blue)', bg: 'var(--blue-soft)' },
+  submitted:          { label: 'Submitted',          color: 'var(--state-info)', bg: 'var(--state-info-soft)' },
   'under-review':     { label: 'Under Review',       color: 'var(--warning)', bg: 'var(--warning-soft)' },
   'customer-signoff': { label: 'Customer Sign-off',  color: 'var(--purple)', bg: 'var(--purple-soft)' },
-  complete:           { label: 'Complete',            color: 'var(--success-text)', bg: 'var(--success-soft)' } }
+  complete:           { label: 'Complete',            color: 'var(--state-success-text)', bg: 'var(--state-success-soft)' } }
 
 // ─── Mock data (swapped for Supabase when live) ────────────────────────────────
 const MOCK_FIELD_REPORTS = [
@@ -53,10 +53,10 @@ function TypePill({ typeKey, count, active, onClick }) {
       onClick={onClick}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
-        padding: '4px 10px', borderRadius: 'var(--r-m)', cursor: 'pointer',
+        padding: '4px 10px', borderRadius: 'var(--radius-m)', cursor: 'pointer',
         border: 'none',
-        background: active ? cfg.bg : 'var(--white)',
-        color: active ? cfg.color : 'var(--black)',
+        background: active ? cfg.bg : 'var(--surface-base)',
+        color: active ? cfg.color : 'var(--text-primary)',
         fontSize: 'var(--text-sm)', fontWeight: active ? 600 : 500,
         transition: 'all 0.15s' }}
     >
@@ -64,31 +64,31 @@ function TypePill({ typeKey, count, active, onClick }) {
       {cfg.label}
       <span style={{
         background: active ? cfg.color : 'var(--border)',
-        color: active ? '#fff' : 'var(--black)',
-        borderRadius: 'var(--r-m)', padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
+        color: active ? '#fff' : 'var(--text-primary)',
+        borderRadius: 'var(--radius-m)', padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
     </button>
   )
 }
 
 // ─── Report row ───────────────────────────────────────────────────────────────
 function ReportRow({ r }) {
-  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: 'var(--white)' }
-  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: 'var(--white)' }
+  const type   = FORM_TYPES[r.form_type]  || { label: r.form_type, Icon: FileText, color: 'var(--grey-base)', bg: 'var(--surface-base)' }
+  const status = STATUS_CFG[r.status]     || { label: r.status,    color: 'var(--grey-base)', bg: 'var(--surface-base)' }
   const { Icon } = type
 
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 12,
-      padding: '10px 16px', borderBottom: '1px solid var(--border-l)' }}>
+      padding: '10px 16px', borderBottom: '1px solid var(--border-default)' }}>
       {/* Type icon badge */}
       <Icon size="0.9375rem" weight="bold" style={{ color: type.color }} />
 
       {/* Main info */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {r.project_name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 4, fontWeight: 600, fontSize: 'var(--text-xs)' }}>{type.label}</span>
           <span>{r.job_number}</span>
           <span>·</span>
@@ -100,7 +100,7 @@ function ReportRow({ r }) {
 
       {/* Status badge */}
       <span style={{
-        fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 'var(--r-s)', flexShrink: 0,
+        fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 'var(--radius-s)', flexShrink: 0,
         background: status.bg, color: status.color, whiteSpace: 'nowrap' }}>
         {status.label}
       </span>
@@ -108,8 +108,8 @@ function ReportRow({ r }) {
       {/* View button */}
       <button style={{
         display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-        padding: '5px 10px', borderRadius: 'var(--r-s)',
-        background: 'var(--white)', color: 'var(--black)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        padding: '5px 10px', borderRadius: 'var(--radius-s)',
+        background: 'var(--surface-base)', color: 'var(--text-primary)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
         <Eye size="0.75rem" />
         View
       </button>
@@ -154,7 +154,7 @@ export default function Reports() {
       <div className="page-stack">
 
       {/* ══ MANAGEMENT OVERVIEW ═══════════════════════════════════════════════ */}
-      <SectionDivider title="Field Reports" label="Management Overview" accent="var(--navy)" />
+      <SectionDivider title="Field Reports" label="Management Overview" accent="var(--brand-primary)" />
 
       <BranchTabs
         active={branch}
@@ -180,7 +180,7 @@ export default function Reports() {
               {s.icon}
             </div>
             <div>
-              <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
+              <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-primary)' }}>
                 {s.value}
               </div>
               <div className="dfl-summary-label">{s.label}</div>
@@ -210,18 +210,18 @@ export default function Reports() {
             onClick={() => setActiveStatus(activeStatus === key ? null : key)}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
-              padding: '3px 9px', borderRadius: 'var(--r-m)', cursor: 'pointer',
+              padding: '3px 9px', borderRadius: 'var(--radius-m)', cursor: 'pointer',
               fontSize: 'var(--text-xs)', fontWeight: activeStatus === key ? 600 : 500,
               border: 'none',
-              background: activeStatus === key ? cfg.bg : 'var(--white)',
-              color: activeStatus === key ? cfg.color : 'var(--text-3)',
+              background: activeStatus === key ? cfg.bg : 'var(--surface-base)',
+              color: activeStatus === key ? cfg.color : 'var(--text-muted)',
               transition: 'all 0.15s' }}
           >
             {cfg.label}
             <span style={{
               background: activeStatus === key ? cfg.color : 'var(--border)',
-              color: activeStatus === key ? '#fff' : 'var(--black)',
-              borderRadius: 'var(--r-m)', padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
+              color: activeStatus === key ? '#fff' : 'var(--text-primary)',
+              borderRadius: 'var(--radius-m)', padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
           </button>
         ))}
       </div>

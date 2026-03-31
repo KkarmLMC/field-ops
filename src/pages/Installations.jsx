@@ -50,15 +50,15 @@ function StagePill({ stageKey, count, active, onClick }) {
     <button
       onClick={onClick}
       style={{
-        flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 'var(--r-m)',
-        background: active ? cfg.bg : 'var(--white)',
+        flexShrink: 0, minWidth: 68, padding: '8px 12px', borderRadius: 'var(--radius-m)',
+        background: active ? cfg.bg : 'var(--surface-base)',
         border: 'none',
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
-      <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
+      <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: active ? cfg.color : 'var(--text-primary)', fontFamily: 'var(--font-mono)', lineHeight: 1 }}>
         {count}
       </div>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--black)', marginTop: 3 }}>
+      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--text-primary)', marginTop: 3 }}>
         {cfg.short || cfg.label}
       </div>
     </button>
@@ -94,7 +94,7 @@ function MgmtRow({ p, navigate }) {
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
               fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-              background: 'var(--blue)', color: '#fff', padding: '2px 5px', borderRadius: 'var(--r-xs)',
+              background: 'var(--state-info)', color: '#fff', padding: '2px 5px', borderRadius: 'var(--radius-xs)',
               flexShrink: 0 }}>
               Review
             </span>
@@ -106,26 +106,26 @@ function MgmtRow({ p, navigate }) {
           {p.city}, {p.state}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: '0.625rem', color: 'var(--text-3)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--black)', fontWeight: 600 }}>
+          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-primary)', fontWeight: 600 }}>
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (
             <>
               <span className="dash-job-dot">·</span>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{fmtDate(p.scheduled_date)}</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{fmtDate(p.scheduled_date)}</span>
             </>
           )}
         </div>
         {/* Progress bar for in-progress */}
         {p.stage === 'in-progress' && p.progress > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 120 }}>
+            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 120 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>{p.progress}%</span>
           </div>
         )}
       </div>
@@ -145,22 +145,22 @@ function FieldRow({ p, navigate }) {
 
   return (
     <div style={{
-      padding: '12px 14px', borderBottom: '1px solid var(--border-l)',
+      padding: '12px 14px', borderBottom: '1px solid var(--border-default)',
       display: 'flex', gap: 12, alignItems: 'center' }}>
       {/* Left: icon */}
       <Icon size="1rem" style={{ color: cfg.color }} />
 
       {/* Middle: info */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--black)', marginBottom: 2 }}>
+        <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--text-primary)', marginBottom: 2 }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: 4 }}>
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
               marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
-              background: 'var(--navy)', color: '#fff', padding: '1px 5px', borderRadius: 'var(--r-xs)' }}>
+              background: 'var(--brand-primary)', color: '#fff', padding: '1px 5px', borderRadius: 'var(--radius-xs)' }}>
               NFPA {p.nfpa_class}
             </span>
           )}
@@ -168,13 +168,13 @@ function FieldRow({ p, navigate }) {
         {/* Progress */}
         {p.progress > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 140 }}>
+            <div style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 140 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
           </div>
         )}
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>
           Lead: {getTech(p.lead_tech_id)}
         </div>
       </div>
@@ -205,7 +205,7 @@ function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>
+      color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>
       {message}
     </div>
   )
@@ -219,7 +219,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
   return (
     <div
       style={{
-        padding: '10px 14px', borderBottom: '1px solid var(--border-l)',
+        padding: '10px 14px', borderBottom: '1px solid var(--border-default)',
         display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer' }}
       onClick={() => navigate(`/installations/${p.id}`)}
     >
@@ -227,22 +227,22 @@ function FieldMiniRow({ p, navigate, stageKey }) {
         <Icon size="0.9375rem" />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--black)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
           {getTech(p.lead_tech_id)}{p.scheduled_date ? ` · ${fmtDate(p.scheduled_date)}` : ''}
         </div>
         {stageKey === 'in-progress' && p.progress > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
-            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-l)', overflow: 'hidden', maxWidth: 80 }}>
+            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 80 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--mono)', color: cfg.color }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--font-mono)', color: cfg.color }}>{p.progress}%</span>
           </div>
         )}
       </div>
-      <ArrowRight size="0.75rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
+      <ArrowRight size="0.75rem" style={{ color: 'var(--text-primary)', flexShrink: 0 }} />
     </div>
   )
 }
@@ -294,7 +294,7 @@ export default function Installations() {
       <div className="page-stack">
 
         {/* ══ MANAGEMENT OVERVIEW ══════════════════════════════════════════════ */}
-        <SectionDivider title="Installations" label="Management Overview" accent="var(--navy)" />
+        <SectionDivider title="Installations" label="Management Overview" accent="var(--brand-primary)" />
 
         {/* Branch selector */}
         <BranchTabs
@@ -380,7 +380,7 @@ export default function Installations() {
               <span className="list-card__meta">{filtered.length}</span>
               <button
                 style={{
-                  background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
+                  background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)',
                   padding: '3px 7px', cursor: 'pointer', display: 'flex', alignItems: 'center',
                   color: 'inherit' }}
                 onClick={() => setSearchOpen(o => !o)}
@@ -390,7 +390,7 @@ export default function Installations() {
               {stageFilter !== 'all' && (
                 <button
                   style={{
-                    background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
+                    background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)',
                     padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600,
                     color: 'inherit', letterSpacing: '0.02em' }}
                   onClick={() => setStageFilter('all')}
@@ -404,9 +404,9 @@ export default function Installations() {
           {/* Search bar */}
           {searchOpen && (
             <div style={{
-              padding: '8px 14px', borderBottom: '1px solid var(--border-l)',
-              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)' }}>
-              <MagnifyingGlass size="0.875rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+              padding: '8px 14px', borderBottom: '1px solid var(--border-default)',
+              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-base)' }}>
+              <MagnifyingGlass size="0.875rem" style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
               <input
                 autoFocus
                 value={search}
@@ -414,11 +414,11 @@ export default function Installations() {
                 placeholder="Search projects, customers, job #…"
                 style={{
                   flex: 1, outline: 'none', background: 'none',
-                  fontFamily: 'var(--font)', fontSize: 'var(--text-md)', color: 'var(--black)' }}
+                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', color: 'var(--text-primary)' }}
               />
               {search && (
                 <button
-                  style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 2 }}
+                  style={{ background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 2 }}
                   onClick={() => setSearch('')}
                 >×</button>
               )}
@@ -435,7 +435,7 @@ export default function Installations() {
         </div>
 
         {/* ══ FIELD ════════════════════════════════════════════════════════════ */}
-        <SectionDivider title="Installations" label="Field Overview" accent="var(--navy)" />
+        <SectionDivider title="Installations" label="Field Overview" accent="var(--brand-primary)" />
 
         {/* Field branch selector */}
         <BranchTabs

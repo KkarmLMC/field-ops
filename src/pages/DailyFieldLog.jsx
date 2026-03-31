@@ -40,17 +40,17 @@ const SAFETY_FORMS = [
 
 const STATUS_STYLE = {
   Draft:     { bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
-  Submitted: { bg: 'var(--blue-soft)', color: 'var(--blue)' },
-  Reviewed:  { bg: 'var(--success-soft)', color: 'var(--success-text)' } }
+  Submitted: { bg: 'var(--state-info-soft)', color: 'var(--state-info)' },
+  Reviewed:  { bg: 'var(--state-success-soft)', color: 'var(--state-success-text)' } }
 
 // Stage labels for jobsite dropdown
 const JOB_STATUS_STYLE = {
   'in-progress':    { label: 'Active',         bg: 'var(--warning-tint-80)', color: 'var(--warning-text)' },
   'scheduled':      { label: 'Scheduled',      bg: 'var(--purple-tint-60)', color: 'var(--purple-shade-20)' },
   'pending-review': { label: 'Pending Review', bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-40)' },
-  'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
-  'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--success-text)' },
-  'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--error-dark)' },
+  'postponed':      { label: 'Postponed',      bg: 'var(--state-warning-soft)', color: 'var(--state-warning-text)' },
+  'complete':       { label: 'Completed',      bg: 'var(--state-success-soft)', color: 'var(--state-success-text)' },
+  'failed':         { label: 'Failed',         bg: 'var(--state-error-soft)', color: 'var(--state-error-text)' },
 
 // Derive unique customer names from all PROJECTS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()
@@ -115,7 +115,7 @@ function SafetyDot({ ok, label }) {
   return (
     <span
       className="dfl-safety-dot"
-      style={{ background: ok ? 'var(--success)' : 'var(--border-l)', color: ok ? '#fff' : 'var(--text-3)' }}
+      style={{ background: ok ? 'var(--state-success)' : 'var(--border-subtle)', color: ok ? '#fff' : 'var(--text-muted)' }}
       title={label}
     >
       {ok
@@ -198,7 +198,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
             >
               <Buildings size="0.75rem" style={{ flexShrink: 0, opacity: 0.5 }} />
               {name}
-              {name === value && <CheckCircle size="0.75rem" weight="fill" style={{ marginLeft: 'auto', color: 'var(--success-text)' }} />}
+              {name === value && <CheckCircle size="0.75rem" weight="fill" style={{ marginLeft: 'auto', color: 'var(--state-success-text)' }} />}
             </li>
           ))}
         </ul>
@@ -292,7 +292,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                 >
                   <MapPin size="0.8125rem" style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
                   <span style={{ flex: 1 }}>{job.name}</span>
-                  {isActive && <CheckCircle size="0.8125rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+                  {isActive && <CheckCircle size="0.8125rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
                 </div>
               )
             })
@@ -363,8 +363,8 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
             >
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span style={{ flex: 1 }}>{tech.name}</span>
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-3)', fontFamily: 'var(--mono)' }}>{tech.license}</span>
-              {value === tech.name && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{tech.license}</span>
+              {value === tech.name && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -471,8 +471,8 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               className={`dfl-typeahead-item ${value === opt.value ? 'selected' : ''}`}
               onMouseDown={() => select(opt)}
             >
-              <span style={{ flex: 1, fontFamily: 'var(--mono)', fontSize: '0.875rem' }}>{opt.label}</span>
-              {value === opt.value && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />}
+              <span style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.875rem' }}>{opt.label}</span>
+              {value === opt.value && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
             </li>
           ))}
         </ul>
@@ -624,7 +624,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
             <CaretDown
               size="0.875rem"
               style={{
-                color: 'var(--black)',
+                color: 'var(--text-primary)',
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.18s',
                 flexShrink: 0 }}
@@ -677,13 +677,13 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {/* Submitted: View PDF Submission */}
       {!isDraft && entry.pdf_url && (
         <div className="dfl-closeout-row">
-          <div className="dfl-closeout-hint" style={{ color: 'var(--success-text)' }}>
-            <SealCheck size="0.6875rem" weight="fill" style={{ color: 'var(--success-text)', flexShrink: 0 }} />
+          <div className="dfl-closeout-hint" style={{ color: 'var(--state-success-text)' }}>
+            <SealCheck size="0.6875rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />
             Log finalized and stored
           </div>
           <a
             className="dfl-closeout-btn"
-            style={{ background: 'var(--success-text)', textDecoration: 'none' }}
+            style={{ background: 'var(--state-success-text)', textDecoration: 'none' }}
             href={entry.pdf_url}
             target="_blank"
             rel="noopener noreferrer"
@@ -934,11 +934,11 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
         {/* Body */}
         <div className="dfl-form-body" style={{ overflowY: 'auto', flex: 1 }}>
           {loading ? (
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--pad-xxl)' }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--space-2xl)' }}>
               <div className="spinner" />
             </div>
           ) : (
-            <div style={{ padding: 'var(--pad-l)' }}>
+            <div style={{ padding: 'var(--space-l)' }}>
               <FormEngine
                 schema={schema}
                 values={values}
@@ -953,7 +953,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
           <button className="dfl-btn-secondary" onClick={onBack}>Back to Safety</button>
           <button
             className="dfl-btn-primary"
-            style={{ background: 'var(--success-text)' }}
+            style={{ background: 'var(--state-success-text)' }}
             onClick={() => onComplete(formKey, values)}
           >
             <CheckCircle size="0.875rem" weight="fill" />
@@ -1143,7 +1143,7 @@ const STEPS = [
                 <div key={key} className={`dfl-safety-form-item ${form[key] ? 'completed' : ''}`}>
                   <div className="dfl-safety-form-icon">
                     {form[key]
-                      ? <CheckCircle size="1.125rem" weight="fill" style={{ color: 'var(--success-text)' }} />
+                      ? <CheckCircle size="1.125rem" weight="fill" style={{ color: 'var(--state-success-text)' }} />
                       : <HardHat size="1.125rem" weight="bold" style={{ color: 'var(--grey-base)' }} />
                     }
                   </div>
@@ -1204,7 +1204,7 @@ const STEPS = [
           ) : (
             <button
               className="dfl-btn-primary"
-              style={{ background: canSave ? 'var(--success-text)' : 'var(--text-3)', cursor: canSave ? 'pointer' : 'not-allowed' }}
+              style={{ background: canSave ? 'var(--state-success-text)' : 'var(--text-muted)', cursor: canSave ? 'pointer' : 'not-allowed' }}
               onClick={() => canSave && onSave(form)}
               disabled={!canSave}
             >
@@ -1274,7 +1274,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
             <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Close Out Day</div>
             {entry && (
-              <div style={{ fontSize: '0.6875rem', color: 'var(--white)', marginTop: '0.125rem' }}>
+              <div style={{ fontSize: '0.6875rem', color: 'var(--surface-base)', marginTop: '0.125rem' }}>
                 {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
               </div>
             )}
@@ -1431,7 +1431,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
           ) : (
             <button
               className="dfl-btn-primary"
-              style={{ background: canSubmit ? bc.bgActive : 'var(--text-3)', cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+              style={{ background: canSubmit ? bc.bgActive : 'var(--text-muted)', cursor: canSubmit ? 'pointer' : 'not-allowed' }}
               onClick={() => canSubmit && onSubmit(form)}
               disabled={!canSubmit}
             >
@@ -1672,7 +1672,7 @@ export default function DailyFieldLog() {
       {/* ══ MANAGEMENT OVERVIEW — only on /installations/field-logs ══════════ */}
       {isManagement && (
         <>
-          <SectionDivider title="Field Logs" label="Management Overview" accent="var(--navy)" />
+          <SectionDivider title="Field Logs" label="Management Overview" accent="var(--brand-primary)" />
 
           <BranchTabs
             active={branch}
@@ -1698,7 +1698,7 @@ export default function DailyFieldLog() {
                   {s.icon}
                 </div>
                 <div>
-                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--black)' }}>
+                  <div className="dfl-summary-value" style={{ color: s.alert && s.value > 0 ? 'var(--warning-text)' : 'var(--text-primary)' }}>
                     {s.value}
                   </div>
                   <div className="dfl-summary-label">{s.label}</div>
@@ -1743,7 +1743,7 @@ export default function DailyFieldLog() {
                   ))}
                   {hasMore && (
                     <button onClick={loadMore} disabled={loadingMore}
-                      style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none' }}>
+                      style={{ width:'100%', padding:'var(--space-m)', textAlign:'center', color:'var(--text-muted)', fontSize:'var(--text-sm)', background:'none' }}>
                       {loadingMore ? 'Loading…' : 'Load more'}
                     </button>
                   )}
@@ -1755,7 +1755,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* New Daily Log button */}
-      <div style={{ display: 'flex', gap: 'var(--gap-s)', width: '100%', marginBottom: 'var(--mar-s)', overflow: 'hidden', boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-s)', width: '100%', marginBottom: 'var(--space-s)', overflow: 'hidden', boxSizing: 'border-box' }}>
         <button
           className="btn btn-primary"
           style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
@@ -1778,7 +1778,7 @@ export default function DailyFieldLog() {
 
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
-        <div className="card list-card" style={{ marginTop: 'var(--mar-s)' }}>
+        <div className="card list-card" style={{ marginTop: 'var(--space-s)' }}>
           <div className="list-card__header" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
             <span className="list-card__title">
               <Clock size="0.875rem" />
@@ -1799,7 +1799,7 @@ export default function DailyFieldLog() {
                 ))}
                 {hasMore && (
                   <button onClick={loadMore} disabled={loadingMore}
-                    style={{ width:'100%', padding:'var(--pad-m)', textAlign:'center', color:'var(--text-3)', fontSize:'var(--text-sm)', background:'none' }}>
+                    style={{ width:'100%', padding:'var(--space-m)', textAlign:'center', color:'var(--text-muted)', fontSize:'var(--text-sm)', background:'none' }}>
                     {loadingMore ? 'Loading…' : 'Load more'}
                   </button>
                 )}

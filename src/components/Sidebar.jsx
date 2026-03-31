@@ -81,7 +81,7 @@ function SubNav({ children, collapsed, navigate, goTo, currentPath }) {
           bottom: 4,
           width: 1,
           background: 'var(--border)',
-          borderRadius: 'var(--r-xs)' }} />
+          borderRadius: 'var(--radius-xs)' }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
           return (
@@ -122,7 +122,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         {collapsed && active && (
           <div style={{
             position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)' }} />
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--state-error)' }} />
         )}
       </button>
 

@@ -106,7 +106,7 @@ export default function FormPage() {
         <div className="empty">
           <div className="empty-title">Form not found</div>
           <div className="empty-desc">The form "{formType}" could not be loaded.</div>
-          <button className="btn btn-primary" style={{ marginTop: 'var(--mar-l)' }} onClick={()=>navigate('/forms')}>Back to Forms</button>
+          <button className="btn btn-primary" style={{ marginTop: 'var(--space-l)' }} onClick={()=>navigate('/forms')}>Back to Forms</button>
         </div>
       </div>
     )
@@ -115,19 +115,19 @@ export default function FormPage() {
   // ── Success ───────────────────────────────────────────────────────────────
   if (success) {
     return (
-      <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--pad-xxl) var(--pad-xxl)', textAlign:'center' }}>
-        <CheckCircle size="3.25rem" style={{ color: success.offline ? 'var(--warning)' : 'var(--success)', marginBottom:'var(--mar-m)' }} />
-        <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--mar-s)' }}>
+      <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--space-2xl) var(--space-2xl)', textAlign:'center' }}>
+        <CheckCircle size="3.25rem" style={{ color: success.offline ? 'var(--warning)' : 'var(--state-success)', marginBottom:'var(--space-m)' }} />
+        <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--space-s)' }}>
           {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>
-        <div style={{ color:'var(--black)', fontSize:'var(--text-md)', marginBottom:'var(--mar-xxl)' }}>
+        <div style={{ color:'var(--text-primary)', fontSize:'var(--text-md)', marginBottom:'var(--space-2xl)' }}>
           {success.offline
             ? `${success.formTitle} for ${success.siteName} has been queued and will sync when you're back online.`
             : `${success.formTitle} for ${success.siteName} has been saved.`
           }</div>
-        <div style={{ display:'flex', gap:'var(--gap-m)' }}>
+        <div style={{ display:'flex', gap:'var(--space-m)' }}>
           <button onClick={()=>navigate('/forms')}
-            style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius:'var(--r-m)', background: 'var(--white)', fontSize:'var(--text-sm)', color:'var(--black)' }}>
+            style={{ padding: 'var(--space-s) var(--space-xl)', borderRadius:'var(--radius-m)', background: 'var(--surface-base)', fontSize:'var(--text-sm)', color:'var(--text-primary)' }}>
             Back to Forms
           </button>
           <button className="btn btn-primary" onClick={()=>{ setSuccess(null); setValues({ date_completed: new Date().toISOString().slice(0,10) }) }}>
@@ -142,14 +142,14 @@ export default function FormPage() {
   return (
     <div className="page-content fade-in">
       {/* Action bar — ref tag + Edit Form button */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--mar-l)' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--space-l)' }}>
         {schema.ref
-          ? <div style={{ fontFamily:'var(--mono)', fontSize:'var(--text-xs)', color:'var(--black)' }}>{schema.ref}</div>
+          ? <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', color:'var(--text-primary)' }}>{schema.ref}</div>
           : <div />
         }
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--gap-xs)', padding: 'var(--pad-xs) var(--pad-m)', borderRadius:'var(--r-s)', fontSize:'var(--text-xs)', color:'var(--black)', background: 'var(--white)', fontFamily:'var(--mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-xs)', color:'var(--text-primary)', background: 'var(--surface-base)', fontFamily:'var(--font-mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
           <PencilSimple size="0.75rem" /> Edit Form
         </button>
       </div>
@@ -185,23 +185,23 @@ export default function FormPage() {
           />
 
           {submitErr && (
-            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
+            <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background:'var(--red-soft)', borderRadius:'var(--radius-m)', fontSize:'var(--text-sm)', color:'var(--state-error)' }}>
               {submitErr}
             </div>
           )}
           {Object.keys(errors).length > 0 && (
-            <div style={{ padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-m)', background:'var(--red-soft)', borderRadius:'var(--r-m)', fontSize:'var(--text-sm)', color:'var(--red)' }}>
+            <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background:'var(--red-soft)', borderRadius:'var(--radius-m)', fontSize:'var(--text-sm)', color:'var(--state-error)' }}>
               Please fill in all required fields before submitting.
             </div>
           )}
 
           <button onClick={handleSubmit} disabled={submitting} style={{
-            width:'100%', padding:'0.75rem', borderRadius:'var(--r-m)', marginBottom:'2rem',
-            background: submitting?'var(--hover)':'var(--red)',
-            color: submitting?'var(--text-3)':'#fff',
-            fontFamily:'var(--mono)', fontSize:'var(--text-xs)', fontWeight:600,
+            width:'100%', padding:'0.75rem', borderRadius:'var(--radius-m)', marginBottom:'2rem',
+            background: submitting?'var(--surface-hover)':'var(--state-error)',
+            color: submitting?'var(--text-muted)':'#fff',
+            fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight:600,
             letterSpacing:'0.06em', textTransform:'uppercase',
-            border:`1px solid ${submitting?'var(--border-l)':'var(--red)'}`,
+            border:`1px solid ${submitting?'var(--border-subtle)':'var(--state-error)'}`,
             display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
             transition:'all var(--ease-fast)' }}>
             {submitting

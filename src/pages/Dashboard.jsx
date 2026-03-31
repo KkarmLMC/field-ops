@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display:'flex', flexDirection:'column', gap:'var(--gap-m)' }}>
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-m)' }}>
 
       {/* Branch selector */}
       <BranchTabs active={branch} onChange={setBranch} />
@@ -150,7 +150,7 @@ function EmptyState({ message }) {
   return (
     <div style={{
       padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-3)', fontSize: 'var(--text-md)' }}>
+      color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>
       {message}
     </div>
   )
@@ -171,7 +171,7 @@ function JobRow({ job, navigate }) {
             <>
               <span className="dash-job-dot">·</span>
               <div className="dash-progress-bar">
-                <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: 'var(--navy)' }} />
+                <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: 'var(--brand-primary)' }} />
               </div>
               <span className="dash-progress-pct">{job.progress}%</span>
             </>

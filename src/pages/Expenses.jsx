@@ -9,13 +9,13 @@ import { db } from '../lib/supabase.js'
 const STATUS = {
   draft:     { label: 'Draft',     color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
   submitted: { label: 'Submitted', color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  approved:  { label: 'Approved',  color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  rejected:  { label: 'Rejected',  color: 'var(--error-dark)', bg: 'var(--error-soft)' } }
+  approved:  { label: 'Approved',  color: 'var(--state-success-text)', bg: 'var(--state-success-soft)' },
+  rejected:  { label: 'Rejected',  color: 'var(--state-error-text)', bg: 'var(--state-error-soft)' } }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--r-s)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )
@@ -30,38 +30,38 @@ function ReportCard({ report, project, onClick }) {
   return (
     <button onClick={onClick} style={{
       width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem',
-      padding: 'var(--pad-m) var(--pad-l)', background: 'none',
-      borderBottom: '1px solid var(--border-l)', cursor: 'pointer', textAlign: 'left' }}>
+      padding: 'var(--space-m) var(--space-l)', background: 'none',
+      borderBottom: '1px solid var(--border-default)', cursor: 'pointer', textAlign: 'left' }}>
       <div style={{
-        width: 40, height: 40, borderRadius: 'var(--r-l)', flexShrink: 0,
+        width: 40, height: 40, borderRadius: 'var(--radius-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: report.division === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)',
+        background: report.division === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)',
         fontSize: 'var(--text-2xs)', fontWeight: 800,
-        color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>
+        color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', flexWrap: 'wrap', marginBottom: 2 }}>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', flexWrap: 'wrap', marginBottom: 2 }}>
+          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
             {report.employee_name}
           </span>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4,
-            background: isAdvance ? 'var(--success-soft)' : 'var(--blue-soft)', color: isAdvance ? 'var(--success-text)' : 'var(--blue)' }}>
+            background: isAdvance ? 'var(--state-success-soft)' : 'var(--state-info-soft)', color: isAdvance ? 'var(--state-success-text)' : 'var(--state-info)' }}>
             {isAdvance ? 'ADVANCE' : 'EXPENSE'}
           </span>
           <StatusBadge status={report.status} />
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {project?.name || 'No project'} · {date}
         </div>
       </div>
       <div style={{ flexShrink: 0, textAlign: 'right' }}>
         {report.grand_total > 0 && (
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
             ${Number(report.grand_total).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         )}
-        <CaretRight size="0.8125rem" style={{ color: 'var(--black)', marginTop: 2 }} />
+        <CaretRight size="0.8125rem" style={{ color: 'var(--text-primary)', marginTop: 2 }} />
       </div>
     </button>
   )
@@ -110,19 +110,19 @@ export default function Expenses() {
   return (
     <div className="page-content fade-in">
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--mar-m)', position: 'relative' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--space-m)', position: 'relative' }}>
         <button onClick={() => setShowNewMenu(m => !m)}
           className="btn btn-navy"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
           <Plus size="0.9375rem" /> New
         </button>
         {showNewMenu && (
-          <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--white)', borderRadius: 'var(--r-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', right: 0, top: '100%', marginTop: 4, background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', zIndex: 100, minWidth: 200, overflow: 'hidden' }}>
             {[['LM','advance'], ['LM','expense'], ['Bolt','advance'], ['Bolt','expense']].map(([div, type]) => (
               <button key={`${div}-${type}`}
                 onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}>
-                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--blue-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--blue)' }}>{div}</span>
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-default)' }}>
+                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>{div}</span>
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', textTransform: 'capitalize' }}>{type} {type === 'advance' ? 'Request' : 'Report'}</span>
               </button>
             ))}
@@ -132,7 +132,7 @@ export default function Expenses() {
 
       {/* Pending alert */}
       {submitted > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--warning-soft)', borderRadius: 'var(--r-m)', marginBottom: 'var(--mar-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', background: 'var(--warning-soft)', borderRadius: 'var(--radius-m)', marginBottom: 'var(--space-l)' }}>
           <Clock size="1.125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
@@ -142,29 +142,29 @@ export default function Expenses() {
       )}
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 'var(--space-m)', marginBottom: 'var(--space-l)' }}>
         {Object.entries(STATUS).map(([key, s]) => (
           <button key={key} onClick={() => setStatusFilter(statusFilter === key ? 'all' : key)}
-            style={{ background: statusFilter === key ? s.bg : 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', border: `1px solid ${statusFilter === key ? s.color + '40' : 'var(--border-l)'}`, cursor: 'pointer', textAlign: 'left' }}>
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: statusFilter === key ? s.color : 'var(--black)' }}>
+            style={{ background: statusFilter === key ? s.bg : 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)', border: `1px solid ${statusFilter === key ? s.color + '40' : 'var(--border-subtle)'}`, cursor: 'pointer', textAlign: 'left' }}>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: statusFilter === key ? s.color : 'var(--text-primary)' }}>
               {reports.filter(r => r.status === key).length}
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', marginTop: 2 }}>{s.label}</div>
+            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', marginTop: 2 }}>{s.label}</div>
           </button>
         ))}
       </div>
 
       {/* Type filter + search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+      <div style={{ position: 'relative', marginBottom: 'var(--space-m)' }}>
+        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search employee or project…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)' }}><X size="0.8125rem" /></button>}
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}><X size="0.8125rem" /></button>}
       </div>
-      <div style={{ display: 'flex', gap: 'var(--gap-s)', marginBottom: 'var(--mar-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
           <button key={val} onClick={() => setTypeFilter(val)}
-            style={{ flexShrink: 0, padding: 'var(--pad-xs) var(--pad-m)', borderRadius: 'var(--r-xxl)', border: `1px solid ${typeFilter === val ? 'var(--navy)' : 'var(--border-l)'}`, background: typeFilter === val ? 'var(--navy)' : 'var(--hover)', color: typeFilter === val ? '#fff' : 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ flexShrink: 0, padding: 'var(--space-xs) var(--space-m)', borderRadius: 'var(--radius-l)', border: `1px solid ${typeFilter === val ? 'var(--brand-primary)' : 'var(--border-subtle)'}`, background: typeFilter === val ? 'var(--brand-primary)' : 'var(--surface-hover)', color: typeFilter === val ? '#fff' : 'var(--text-primary)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
@@ -172,15 +172,15 @@ export default function Expenses() {
 
       {/* List */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Receipt size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 'var(--mar-m)' }} />
+          <Receipt size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 'var(--space-m)' }} />
           <div className="empty-title">No reports found</div>
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden' }}>
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

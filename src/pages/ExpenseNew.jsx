@@ -63,8 +63,8 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       grand_total: grandTotal, notes }, lines)
   }
 
-  const row = { marginBottom: 'var(--mar-m)' }
-  const grid2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)' }
+  const row = { marginBottom: 'var(--space-m)' }
+  const grid2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)' }
   const inputSm = { width: '100%', fontSize: 'var(--text-xs)' }
 
   return (
@@ -126,50 +126,50 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${hotelTotal.toFixed(2)}</div>
         </div>
         {/* Car rental */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Car Rental <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($125/day)</span></div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Car Rental <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($125/day)</span></div>
           <div />
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Days</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Days</div>
           <div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-m)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div />
           <div />
           <input type="number" min="0" value={carRental.days} onChange={e => setCarRental({ days: +e.target.value })} style={inputSm} />
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${carTotal.toFixed(2)}</div>
         </div>
         {/* Fuel */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Fuel</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Miles</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Mi/Gal</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>$/Gal</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Miles</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Mi/Gal</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>$/Gal</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-m)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right', gridColumn: '1' }}>${fuelTotal.toFixed(2)}</div>
           <input type="number" min="0" value={fuel.miles} onChange={e => setFuel(f => ({ ...f, miles: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={fuel.mpg} onChange={e => setFuel(f => ({ ...f, mpg: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" step="0.01" value={fuel.rate} onChange={e => setFuel(f => ({ ...f, rate: +e.target.value }))} style={inputSm} />
         </div>
         {/* Parking */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Tampa Airport Parking <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($18/day)</span></div>
-          <div /><div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Days</div><div />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Tampa Airport Parking <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($18/day)</span></div>
+          <div /><div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Days</div><div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-m)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div />
           <div />
           <input type="number" min="0" value={parking.days} onChange={e => setParking({ days: +e.target.value })} style={inputSm} />
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${parkingTotal.toFixed(2)}</div>
         </div>
         {/* Airline baggage */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Airline Baggage Fees <span style={{ color: 'var(--text-3)', fontWeight: 400 }}>($80/flight)</span></div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Bags</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center' }}>Flights</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Airline Baggage Fees <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($80/flight)</span></div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Bags</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Flights</div>
           <div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-m)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div />
           <input type="number" min="0" value={baggageFees.bags} onChange={e => setBaggageFees(b => ({ ...b, bags: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={baggageFees.flights} onChange={e => setBaggageFees(b => ({ ...b, flights: +e.target.value }))} style={inputSm} />
@@ -177,7 +177,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Other lines */}
         {others.map((o, idx) => (
-          <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
+          <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
             <input value={o.desc} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, desc: e.target.value } : x))} placeholder="Other…" style={inputSm} />
             <div />
             <input type="number" min="0" value={o.days} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, days: +e.target.value } : x))} style={inputSm} />
