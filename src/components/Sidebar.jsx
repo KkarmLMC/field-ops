@@ -127,7 +127,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
       </button>
 
       {/* Children — visible only when this group is active */}
-      {hasChildren && active && !collapsed && (
+      {hasChildren && !collapsed && (
         <SubNav
           children={item.children}
           collapsed={collapsed}
