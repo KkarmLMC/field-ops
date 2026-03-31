@@ -4,7 +4,8 @@ import {
   MapPin, Buildings, CalendarBlank, Shield, FileText, User,
   Phone, Briefcase, Lightning, MagnifyingGlass, Wrench, ClipboardText,
   CheckCircle, Warning, Clock, CaretRight, Plus, CurrencyDollar,
-  TrendUp, Receipt, ArrowRight, NotePencil, SealCheck } from '@phosphor-icons/react'
+  TrendUp, Receipt, ArrowRight, NotePencil, SealCheck,
+  Truck, AirplaneTilt } from '@phosphor-icons/react'
 import { db } from '../lib/supabase'
 import { PROJECTS, TECHNICIANS, MOCK_REPORTS, MOCK_SUBMISSIONS } from '../data/mockData.js'
 import { projectStage, approvalStatus } from '../lib/statusColors.js'
@@ -121,6 +122,7 @@ export default function ProjectDetail() {
   const [project, setProject]         = useState(null)
   const [reports, setReports]         = useState([])
   const [submissions, setSubmissions] = useState([])
+  const [shipments, setShipments]     = useState([])
   const [loading, setLoading]         = useState(true)
   const [jobCost, setJobCost]         = useState(null)
 
@@ -149,7 +151,7 @@ export default function ProjectDetail() {
           const [{ data: expenses }, { data: soData }] = await Promise.race([
             Promise.all([
               db.from('expense_reports').select('type, grand_total, status').eq('project_id', id),
-              db.from('sales_orders').select('grand_total, materials_total, installation_total, status').eq('project_ref', proj?.job_number || ''),
+              db.from('sales_orders').select('id, grand_total, materials_total, installation_total, status').eq('project_ref', proj?.job_number || ''),
             ]),
             timeout(5000),
           ])
@@ -167,6 +169,16 @@ export default function ProjectDetail() {
             soTotal:       (soData || []).reduce((s, so) => s + (parseFloat(so.grand_total) || 0), 0),
             materialsTotal:(soData || []).reduce((s, so) => s + (parseFloat(so.materials_total) || 0), 0),
             installTotal:  (soData || []).reduce((s, so) => s + (parseFloat(so.installation_total) || 0), 0) })
+
+          // Fetch shipments for all linked SOs
+          const soIds = (soData || []).map(so => so.id).filter(Boolean)
+          if (soIds.length > 0 && !cancelled) {
+            const { data: sh } = await db.from('shipments')
+              .select('*')
+              .in('so_id', soIds)
+              .order('shipped_at', { ascending: false })
+            if (!cancelled) setShipments(sh || [])
+          }
         } catch { /* job cost is optional — page still renders */ }
       } catch {
         if (cancelled) return
@@ -373,6 +385,89 @@ export default function ProjectDetail() {
             </div>
           </div>
         )}
+
+        {/* ── Deliveries ──────────────────────────────────────────────────── */}
+        {shipments.length > 0 && (() => {
+          const warehouseShipments = shipments.filter(s => s.shipment_type !== 'dropship')
+          const dropShipments      = shipments.filter(s => s.shipment_type === 'dropship')
+          const fmtShipDate = d => d ? new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'
+          return (
+            <div className="card">
+              <div className="list-card__header">
+                <span className="list-card__title"><Truck size="0.875rem" /> Deliveries</span>
+                <span className="list-card__meta">{shipments.length} shipment{shipments.length !== 1 ? 's' : ''}</span>
+              </div>
+
+              {/* Warehouse shipments */}
+              {warehouseShipments.map(s => (
+                <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
+                    <Truck size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }} />
+                    <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      {s.carrier || 'Warehouse Shipment'}
+                    </span>
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                      background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-info-soft)',
+                      color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }}>
+                      {s.status === 'shipped' ? 'Shipped' : 'Pending'}
+                    </span>
+                  </div>
+                  {s.tracking_number && (
+                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      Tracking: {s.tracking_number}
+                    </div>
+                  )}
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                    {s.shipped_at ? `Shipped ${fmtShipDate(s.shipped_at)}` : `Created ${fmtShipDate(s.created_at)}`}
+                    {s.notes && <span> · {s.notes}</span>}
+                  </div>
+                </div>
+              ))}
+
+              {/* Drop ship deliveries sub-section */}
+              {dropShipments.length > 0 && (
+                <>
+                  <div style={{ padding: 'var(--space-s) var(--space-l)', background: 'var(--state-warning-soft)', display: 'flex', alignItems: 'center', gap: 'var(--space-s)',
+                    borderBottom: '1px solid var(--border-subtle)' }}>
+                    <AirplaneTilt size="0.75rem" weight="fill" style={{ color: 'var(--state-warning-text)' }} />
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--state-warning-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      Drop Ship Deliveries
+                    </span>
+                  </div>
+                  {dropShipments.map(s => (
+                    <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
+                        <AirplaneTilt size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning)' }} />
+                        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                          {s.carrier || 'PLP Direct'} — Drop Ship
+                        </span>
+                        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                          background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-warning-soft)',
+                          color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning-text)' }}>
+                          {s.status === 'shipped' ? 'Delivered' : 'Awaiting PLP'}
+                        </span>
+                      </div>
+                      {s.tracking_number && (
+                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                          Tracking: {s.tracking_number}
+                        </div>
+                      )}
+                      {s.supplier_reference && (
+                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+                          PLP Ref: {s.supplier_reference}
+                        </div>
+                      )}
+                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                        {s.shipped_at ? `Shipped ${fmtShipDate(s.shipped_at)}` : `Created ${fmtShipDate(s.created_at)}`}
+                        {s.notes && <span> · {s.notes}</span>}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          )
+        })()}
 
         {/* ── Daily Field Reports ───────────────────────────────────────────── */}
         {reports.length > 0 && (
