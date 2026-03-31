@@ -369,8 +369,8 @@ export default function Installations() {
 
         {/* All Projects list */}
         <div className="card dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
+          <div className="card-header" style={headStyle}>
+            <span className="card-title">
               <Buildings size={14} />
               {stageFilter !== 'all'
                 ? `${STAGE_CFG[stageFilter]?.label || stageFilter} Projects`
@@ -378,7 +378,7 @@ export default function Installations() {
               }
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="dash-card-meta">{filtered.length}</span>
+              <span className="card-header__meta">{filtered.length}</span>
               <button
                 style={{
                   background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)',
@@ -450,12 +450,12 @@ export default function Installations() {
         <div className="field-pipeline-grid">
           {/* Upcoming */}
           <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title">
+            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="card-title">
                 <Clock size={12} />
                 Upcoming
               </span>
-              <span className="dash-card-meta">{upcomingProjects.length}</span>
+              <span className="card-header__meta">{upcomingProjects.length}</span>
             </div>
             {upcomingProjects.length === 0 ? (
               <EmptyState message="None" />
@@ -466,12 +466,12 @@ export default function Installations() {
 
           {/* Active */}
           <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title">
+            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="card-title">
                 <span className="live-dot" />
                 Active
               </span>
-              <span className="dash-card-meta">{activeProjects.length}</span>
+              <span className="card-header__meta">{activeProjects.length}</span>
             </div>
             {activeProjects.length === 0 ? (
               <EmptyState message="None" />
@@ -482,12 +482,12 @@ export default function Installations() {
 
           {/* Pending Review */}
           <div className="card dash-card" style={{ margin: 0 }}>
-            <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
-              <span className="dash-card-title">
+            <div className="card-header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+              <span className="card-title">
                 <Warning size={12} />
                 In Review
               </span>
-              <span className="dash-card-meta">{pendingReviewProjects.length}</span>
+              <span className="card-header__meta">{pendingReviewProjects.length}</span>
             </div>
             {pendingReviewProjects.length === 0 ? (
               <EmptyState message="None" />

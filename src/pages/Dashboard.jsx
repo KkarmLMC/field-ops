@@ -70,14 +70,14 @@ export default function Dashboard() {
 
         {/* Today's Schedule */}
         <div className="card dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
+          <div className="card-header" style={headStyle}>
+            <span className="card-title">
               <Clock size={14} />
               Today's Schedule
             </span>
-            <span className="dash-card-meta">{todayStr}</span>
+            <span className="card-header__meta">{todayStr}</span>
           </div>
-          <div className="dash-card-body">
+          <div className="card-body">
             {todayJobs.length === 0
               ? <EmptyState message="No jobs scheduled today" />
               : todayJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
@@ -87,16 +87,16 @@ export default function Dashboard() {
 
         {/* Active Jobs */}
         <div className="card dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
+          <div className="card-header" style={headStyle}>
+            <span className="card-title">
               <span className="live-dot" />
               Active Jobs
             </span>
-            <button className="dash-card-link" onClick={() => navigate('/installations/installs')}>
+            <button className="card-header__action" onClick={() => navigate('/installations/installs')}>
               View all <CaretRight size={11} />
             </button>
           </div>
-          <div className="dash-card-body">
+          <div className="card-body">
             {activeJobs.length === 0
               ? <EmptyState message="No active jobs" />
               : activeJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
@@ -106,8 +106,8 @@ export default function Dashboard() {
 
         {/* Needs Attention */}
         <div className="card dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
+          <div className="card-header" style={headStyle}>
+            <span className="card-title">
               <Warning size={14} />
               Needs Attention
             </span>
@@ -115,7 +115,7 @@ export default function Dashboard() {
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'inherit' }}>{failedJobs.length} failed</span>
             )}
           </div>
-          <div className="dash-card-body">
+          <div className="card-body">
             {failedJobs.length === 0
               ? <EmptyState message="All clear — no issues" />
               : failedJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)
@@ -125,13 +125,13 @@ export default function Dashboard() {
 
         {/* Upcoming */}
         <div className="card dash-card">
-          <div className="dash-card-head" style={headStyle}>
-            <span className="dash-card-title">
+          <div className="card-header" style={headStyle}>
+            <span className="card-title">
               <Lightning size={14} />
               Upcoming
             </span>
           </div>
-          <div className="dash-card-body">
+          <div className="card-body">
             {upcomingJobs.length === 0
               ? <EmptyState message="Nothing scheduled ahead" />
               : upcomingJobs.map(job => <JobRow key={job.id} job={job} navigate={navigate} />)

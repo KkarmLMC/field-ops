@@ -178,14 +178,14 @@ export default function Inspections() {
         {/* Inspections list */}
         <div className="card dash-card">
           <div
-            className="dash-card-head"
+            className="card-header"
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
           >
-            <span className="dash-card-title">
+            <span className="card-title">
               <MagnifyingGlass size={14} />
               Inspections
             </span>
-            <span className="dash-card-meta">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</span>
+            <span className="card-header__meta">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</span>
           </div>
           <div>
             {filtered.length === 0 ? (
