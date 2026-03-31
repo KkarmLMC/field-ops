@@ -1914,8 +1914,7 @@ textarea { resize: vertical; }
   align-items: center;
   gap: 0.625rem;
   padding: 0.75rem 0.875rem;
-  border-radius: var(--r-m);
-  background: var(--white);
+  margin-bottom: 0;
   cursor: pointer;
   transition: opacity var(--ease-fast);
   text-align: left;
@@ -1937,10 +1936,8 @@ textarea { resize: vertical; }
 }
 
 .dash-card {
-  background: var(--white);
   border: none;
-  border-radius: var(--r-m);
-  overflow: hidden;
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
 }

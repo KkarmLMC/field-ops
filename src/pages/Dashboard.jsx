@@ -52,7 +52,7 @@ export default function Dashboard() {
         ].map(a => (
           <button
             key={a.path}
-            className="dash-tile"
+            className="card dash-tile"
             onClick={() => navigate(a.path)}
           >
             <div className="dash-tile-icon"><a.Icon size={18} /></div>
@@ -69,7 +69,7 @@ export default function Dashboard() {
       <div className="dash-grid">
 
         {/* Today's Schedule */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Clock size={14} />
@@ -86,7 +86,7 @@ export default function Dashboard() {
         </div>
 
         {/* Active Jobs */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <span className="live-dot" />
@@ -105,7 +105,7 @@ export default function Dashboard() {
         </div>
 
         {/* Needs Attention */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Warning size={14} />
@@ -124,7 +124,7 @@ export default function Dashboard() {
         </div>
 
         {/* Upcoming */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Lightning size={14} />
