@@ -55,7 +55,7 @@ function StagePill({ stageKey, count, active, onClick }) {
         border: 'none',
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
-      <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
+      <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: active ? cfg.color : 'var(--black)', fontFamily: 'var(--mono)', lineHeight: 1 }}>
         {count}
       </div>
       <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--black)', marginTop: 3 }}>
