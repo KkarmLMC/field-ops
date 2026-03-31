@@ -89,7 +89,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <span className="live-dot" />
+              <Lightning size={14} />
               Active Jobs
             </span>
             <button className="list-card__action" onClick={() => navigate('/installations/installs')}>
