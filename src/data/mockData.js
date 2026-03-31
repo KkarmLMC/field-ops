@@ -9,7 +9,6 @@
 // the completion form is signed and the job is billed out.
 //
 // stage:
-//   awarded        → contract won, PO / scope being finalised
 //   scheduled      → date confirmed, not yet started
 //   in-progress    → active work, DFLs being submitted
 //   pending-review → completion form submitted, awaiting management sign-off
@@ -453,7 +452,7 @@ export const PROJECTS = [
     branch: 'lm',
     name: 'ExxonMobil Refinery LPS — Unit 7',
     type: 'installation',
-    stage: 'awarded',
+    stage: 'scheduled',
     customer: 'ExxonMobil',
     customer_account: 'ExxonMobil Corporation',
     address: '1600 Refinery Blvd',
@@ -480,7 +479,7 @@ export const PROJECTS = [
     branch: 'bolt',
     name: 'Marriott Sawgrass Resort Survey',
     type: 'site-survey',
-    stage: 'awarded',
+    stage: 'scheduled',
     customer: 'Marriott International',
     customer_account: 'Marriott Sawgrass Resort',
     address: '1000 PGA Tour Blvd',
@@ -507,7 +506,7 @@ export const PROJECTS = [
     branch: 'bolt',
     name: 'Tesla Gigafactory Texas LPS',
     type: 'installation',
-    stage: 'awarded',
+    stage: 'scheduled',
     customer: 'Tesla',
     customer_account: 'Tesla Inc.',
     address: '13101 Harold Green Rd',

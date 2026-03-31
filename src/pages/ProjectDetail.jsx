@@ -11,7 +11,6 @@ import { projectStage, approvalStatus } from '../lib/statusColors.js'
 
 // ─── Stage config ─────────────────────────────────────────────────────────────
 const STAGE_CFG = {
-  'awarded':        { ...projectStage('awarded'),        order: 0 },
   'scheduled':      { ...projectStage('scheduled'),      order: 1 },
   'in-progress':    { ...projectStage('in-progress'),    order: 2 },
   'pending-review': { ...projectStage('pending-review'), order: 3 },
@@ -19,7 +18,7 @@ const STAGE_CFG = {
   'postponed':      { ...projectStage('postponed'),      order: 5 },
   'failed':         { ...projectStage('failed'),         order: 6 } }
 
-const STAGE_PIPELINE = ['awarded','scheduled','in-progress','pending-review','complete']
+const STAGE_PIPELINE = ['scheduled','in-progress','pending-review','complete']
 
 const COMPLETION_FORM_CFG = {
   'draft':           { label: 'Draft',            color: 'var(--grey-base)',     bg: 'var(--white)' },

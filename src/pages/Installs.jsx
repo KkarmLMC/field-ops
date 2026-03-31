@@ -28,7 +28,6 @@ const PRIORITY_DOT = {
   low:    'var(--grey-tint-40)' }
 
 const KANBAN_COLS = [
-  { id: 'awarded',        label: 'Awarded',                Icon: CalendarBlank, accent: 'var(--purple)', stages: ['awarded']                        },
   { id: 'scheduled',      label: 'Upcoming',               Icon: CalendarBlank, accent: 'var(--purple-tint-20)', stages: ['scheduled']                      },
   { id: 'in-progress',    label: 'Active',                 Icon: HardHat,       accent: 'var(--warning)', stages: ['in-progress']                    },
   { id: 'pending-review', label: 'Pending Review',         Icon: Clipboard,     accent: 'var(--blue-tint-40)', stages: ['pending-review']                 },

@@ -15,7 +15,6 @@ const today = () => { const d = new Date(); d.setHours(0,0,0,0); return d }
 // ─── Stage config — thin wrapper over projectStage() tokens ───────────────────
 // `short` label is Installations-specific (not in the shared token) so we extend here
 const STAGE_CFG = {
-  'awarded':        { ...projectStage('awarded'),        short: 'Awarded'   },
   'scheduled':      { ...projectStage('scheduled'),      short: 'Upcoming'  },
   'in-progress':    { ...projectStage('in-progress'),    short: 'Active'    },
   'pending-review': { ...projectStage('pending-review'), short: 'In Review' },
@@ -260,7 +259,7 @@ export default function Installations() {
   // ── Data ──────────────────────────────────────────────────────────────────
   const branchProjects = PROJECTS.filter(p => p.branch === branch && !p.archived)
 
-  const stageCounts = ['awarded','scheduled','in-progress','pending-review','complete','postponed','failed']
+  const stageCounts = ['scheduled','in-progress','pending-review','complete','postponed','failed']
     .reduce((acc, s) => ({ ...acc, [s]: branchProjects.filter(p => p.stage === s).length }), {})
 
   const filtered = branchProjects.filter(p => {
@@ -307,7 +306,7 @@ export default function Installations() {
 
         {/* Stage stat pills */}
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: 2 }}>
-          {['awarded','scheduled','in-progress','pending-review','complete'].map(s => (
+          {['scheduled','in-progress','pending-review','complete'].map(s => (
             <StagePill
               key={s}
               stageKey={s}

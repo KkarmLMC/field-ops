@@ -51,7 +51,6 @@ const JOB_STATUS_STYLE = {
   'postponed':      { label: 'Postponed',      bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
   'complete':       { label: 'Completed',      bg: 'var(--success-soft)', color: 'var(--success-text)' },
   'failed':         { label: 'Failed',         bg: 'var(--error-soft)', color: 'var(--error-dark)' },
-  'awarded':        { label: 'Awarded',        bg: 'var(--purple-soft)', color: 'var(--purple)' } }
 
 // Derive unique customer names from all PROJECTS (alphabetical)
 const ALL_CUSTOMERS = [...new Set(PROJECTS.map(p => p.customer))].sort()
@@ -218,7 +217,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
   const [open, setOpen] = useState(false)
   const ref             = useRef(null)
 
-  const ORDER          = ['in-progress', 'scheduled', 'pending-review', 'postponed', 'awarded', 'complete', 'failed']
+  const ORDER          = ['in-progress', 'scheduled', 'pending-review', 'postponed', 'complete', 'failed']
   const customerLocked = Boolean(customer && customer.trim())
 
   // All projects across all branches; filter by customer once one is selected
