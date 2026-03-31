@@ -16,7 +16,7 @@ export default function StatCard({ label, value, color, onClick, sub }) {
       onClick={onClick}
       style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
-      <div className="stat-card__label">{label}</div>
+      <div className="nav-card__label">{label}</div>
       <div className="stat-card__value" style={color ? { color } : undefined}>
         {value}
       </div>

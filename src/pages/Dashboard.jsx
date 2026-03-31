@@ -43,7 +43,7 @@ export default function Dashboard() {
       <BranchTabs active={branch} onChange={setBranch} />
 
       {/* Quick nav tiles */}
-      <div className="stat-card-grid">
+      <div className="nav-card-grid">
         {[
           { Icon: Lightning,     label: 'Installs',       sub: `${activeJobs.length} active`,       path: '/installations/installs' },
           { Icon: HardHat,       label: 'Technicians',    sub: `${techsInField} in field`,          path: '/technicians' },
@@ -52,15 +52,15 @@ export default function Dashboard() {
         ].map(a => (
           <button
             key={a.path}
-            className="card stat-card"
+            className="card nav-card"
             onClick={() => navigate(a.path)}
           >
-            <div className="stat-card__icon"><a.Icon size={18} /></div>
-            <div className="stat-card__text">
-              <div className="stat-card__label">{a.label}</div>
-              <div className="stat-card__sub">{a.sub}</div>
+            <div className="nav-card__icon"><a.Icon size={18} /></div>
+            <div className="nav-card__text">
+              <div className="nav-card__label">{a.label}</div>
+              <div className="nav-card__sub">{a.sub}</div>
             </div>
-            <ArrowRight size={14} className="stat-card__arrow" />
+            <ArrowRight size={14} className="nav-card__arrow" />
           </button>
         ))}
       </div>

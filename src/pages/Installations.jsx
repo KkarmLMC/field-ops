@@ -328,42 +328,42 @@ export default function Installations() {
         </div>
 
         {/* Quick nav tiles */}
-        <div className="stat-card-grid">
+        <div className="nav-card-grid">
           <button
-            className="card stat-card"
+            className="card nav-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
-            <div className="stat-card__icon"><SquaresFour size={18} /></div>
-            <div className="stat-card__text">
-              <div className="stat-card__label">Project Pipeline</div>
-              <div className="stat-card__sub">{stageCounts['in-progress'] || 0} active</div>
+            <div className="nav-card__icon"><SquaresFour size={18} /></div>
+            <div className="nav-card__text">
+              <div className="nav-card__label">Project Pipeline</div>
+              <div className="nav-card__sub">{stageCounts['in-progress'] || 0} active</div>
             </div>
-            <ArrowRight size={14} className="stat-card__arrow" />
+            <ArrowRight size={14} className="nav-card__arrow" />
           </button>
           <button
-            className="card stat-card"
+            className="card nav-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
-            <div className="stat-card__icon"><BookOpen size={18} /></div>
-            <div className="stat-card__text">
-              <div className="stat-card__label">Field Logs</div>
-              <div className="stat-card__sub">Daily activity</div>
+            <div className="nav-card__icon"><BookOpen size={18} /></div>
+            <div className="nav-card__text">
+              <div className="nav-card__label">Field Logs</div>
+              <div className="nav-card__sub">Daily activity</div>
             </div>
-            <ArrowRight size={14} className="stat-card__arrow" />
+            <ArrowRight size={14} className="nav-card__arrow" />
           </button>
           <button
-            className="card stat-card"
+            className="card nav-card"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
-            <div className="stat-card__icon"><FileText size={18} /></div>
-            <div className="stat-card__text">
-              <div className="stat-card__label">Field Reports</div>
-              <div className="stat-card__sub">Submitted forms</div>
+            <div className="nav-card__icon"><FileText size={18} /></div>
+            <div className="nav-card__text">
+              <div className="nav-card__label">Field Reports</div>
+              <div className="nav-card__sub">Submitted forms</div>
             </div>
-            <ArrowRight size={14} className="stat-card__arrow" />
+            <ArrowRight size={14} className="nav-card__arrow" />
           </button>
         </div>
 
@@ -498,7 +498,7 @@ export default function Installations() {
         </div>
 
         {/* Field quick actions */}
-        <div className="stat-card-grid">
+        <div className="nav-card-grid">
           {[
             { Icon: ClipboardText, label: 'Daily Log',    sub: 'Log today\'s work',   path: '/daily-field-log' },
             { Icon: BookOpen,      label: 'JSA',          sub: 'Safety analysis',      path: '/forms/jsa'       },
@@ -506,16 +506,16 @@ export default function Installations() {
           ].map(a => (
             <button
               key={a.path}
-              className="card stat-card"
+              className="card nav-card"
               onClick={() => navigate(a.path)}
               style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             >
-              <div className="stat-card__icon"><a.Icon size={18} /></div>
-              <div className="stat-card__text">
-                <div className="stat-card__label">{a.label}</div>
-                <div className="stat-card__sub">{a.sub}</div>
+              <div className="nav-card__icon"><a.Icon size={18} /></div>
+              <div className="nav-card__text">
+                <div className="nav-card__label">{a.label}</div>
+                <div className="nav-card__sub">{a.sub}</div>
               </div>
-              <ArrowRight size={14} className="stat-card__arrow" />
+              <ArrowRight size={14} className="nav-card__arrow" />
             </button>
           ))}
         </div>

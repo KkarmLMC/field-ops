@@ -1889,15 +1889,15 @@ textarea { resize: vertical; }
   margin-top: 0.1875rem;
 }
 
-/* ── Stat Card ── quick-link nav tiles ─────────────────────────────────────── */
+/* ── Nav Card ── quick-link navigation tiles ─────────────────────────────────────── */
 
-.stat-card-grid {
+.nav-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.125rem), 1fr));
   gap: var(--gap-s);
 }
 
-.stat-card {
+.nav-card {
   display: flex;
   align-items: center;
   gap: 0.625rem;
@@ -1908,12 +1908,12 @@ textarea { resize: vertical; }
   text-align: left;
 }
 
-.stat-card:hover     { opacity: 0.85; }
-.stat-card__icon     { font-size: 1.25rem; flex-shrink: 0; color: var(--black); }
-.stat-card__text     { flex: 1; min-width: 0; }
-.stat-card__label    { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-1); }
-.stat-card__sub      { font-size: var(--text-xs); color: var(--text-3); margin-top: 0.0625rem; }
-.stat-card__arrow    { color: var(--black); opacity: 0.5; flex-shrink: 0; }
+.nav-card:hover     { opacity: 0.85; }
+.nav-card__icon     { font-size: 1.25rem; flex-shrink: 0; color: var(--black); }
+.nav-card__text     { flex: 1; min-width: 0; }
+.nav-card__label    { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-1); }
+.nav-card__sub      { font-size: var(--text-xs); color: var(--text-3); margin-top: 0.0625rem; }
+.nav-card__arrow    { color: var(--black); opacity: 0.5; flex-shrink: 0; }
 
 /* ── Dashboard card grid ─────────────────────────────────────────────────────── */
 
