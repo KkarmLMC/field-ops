@@ -45,16 +45,15 @@ export default function Dashboard() {
       {/* Quick nav tiles */}
       <div className="dash-tiles">
         {[
-          { Icon: Lightning,   label: 'Installs',       sub: `${activeJobs.length} active`,     path: '/installations/installs', color: '#000000', bg: 'var(--bg)' },
-          { Icon: HardHat,     label: 'Technicians',    sub: `${techsInField} in field`,         path: '/technicians',            color: '#000000', bg: 'var(--bg)' },
-          { Icon: ClipboardText, label: 'Field Reports', sub: `${STATS.reportsThisMonth} this mo`, path: '/reports',              color: '#000000', bg: 'var(--bg)' },
-          { Icon: Buildings,   label: 'Installations',  sub: `${branchJobs.length} total`,       path: '/installations',          color: '#000000', bg: 'var(--bg)' },
+          { Icon: Lightning,     label: 'Installs',       sub: `${activeJobs.length} active`,       path: '/installations/installs' },
+          { Icon: HardHat,       label: 'Technicians',    sub: `${techsInField} in field`,          path: '/technicians' },
+          { Icon: ClipboardText, label: 'Field Reports',  sub: `${STATS.reportsThisMonth} this mo`, path: '/reports' },
+          { Icon: Buildings,     label: 'Installations',  sub: `${branchJobs.length} total`,        path: '/installations' },
         ].map(a => (
           <button
             key={a.path}
             className="dash-tile"
             onClick={() => navigate(a.path)}
-            style={{ '--tile-color': a.color, '--tile-bg': a.bg }}
           >
             <div className="dash-tile-icon"><a.Icon size={18} /></div>
             <div className="dash-tile-text">
@@ -159,7 +158,7 @@ function EmptyState({ message }) {
 function JobRow({ job, navigate }) {
   return (
     <div className="dash-job-row" onClick={() => navigate(`/installations/${job.id}`)}>
-      <div className="dash-job-icon" style={{ background: 'var(--bg)' }}>
+      <div className="dash-job-icon" style={{ background: 'var(--surface-raised)' }}>
         {(() => { const I = TYPE_ICON[job.type] || Lightning; return <I size={16} /> })()}
       </div>
       <div className="dash-job-info">
@@ -170,14 +169,14 @@ function JobRow({ job, navigate }) {
             <>
               <span className="dash-job-dot">·</span>
               <div className="dash-progress-bar">
-                <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: '#000000' }} />
+                <div className="dash-progress-fill" style={{ width: `${job.progress}%`, background: 'var(--navy)' }} />
               </div>
               <span className="dash-progress-pct">{job.progress}%</span>
             </>
           )}
         </div>
       </div>
-      <div className="dash-status-pill" style={{ background: 'var(--bg)', color: '#000000' }}>
+      <div className="dash-status-pill" style={{ background: 'var(--surface-raised)', color: 'var(--text-2)' }}>
         {job.stage}
       </div>
     </div>
