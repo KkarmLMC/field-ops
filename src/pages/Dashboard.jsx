@@ -73,7 +73,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Clock size={14} />
+              <Clock size={16} />
               Today's Schedule
             </span>
             <span className="list-card__meta">{todayStr}</span>
@@ -90,7 +90,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Lightning size={14} />
+              <Lightning size={16} />
               Active Jobs
             </span>
             <button className="list-card__action" onClick={() => navigate('/installations/installs')}>
@@ -109,7 +109,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Warning size={14} />
+              <Warning size={16} />
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
@@ -128,7 +128,7 @@ export default function Dashboard() {
         <div className="card list-card">
           <div className="list-card__header" style={headStyle}>
             <span className="list-card__title">
-              <Lightning size={14} />
+              <Lightning size={16} />
               Upcoming
             </span>
           </div>
