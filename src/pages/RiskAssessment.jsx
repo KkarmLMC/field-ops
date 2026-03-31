@@ -466,7 +466,7 @@ export default function RiskAssessment() {
         </div>
 
         {/* Assessments list */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div
             className="dash-card-head"
             style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}

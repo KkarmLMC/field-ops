@@ -1720,7 +1720,7 @@ export default function DailyFieldLog() {
           )}
 
           {/* Entries list */}
-          <div className="dash-card">
+          <div className="card dash-card">
             <div
               className="dash-card-head"
               style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}
@@ -1779,7 +1779,7 @@ export default function DailyFieldLog() {
 
       {/* Field-only: show the entries list below the action buttons */}
       {!isManagement && (
-        <div className="dash-card" style={{ marginTop: 'var(--mar-s)' }}>
+        <div className="card dash-card" style={{ marginTop: 'var(--mar-s)' }}>
           <div className="dash-card-head" style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}>
             <span className="dash-card-title">
               <Clock size={14} />

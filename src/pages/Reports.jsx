@@ -227,7 +227,7 @@ export default function Reports() {
       </div>
 
       {/* Archive list */}
-      <div className="dash-card" style={{ marginTop: 4 }}>
+      <div className="card dash-card" style={{ marginTop: 4 }}>
         <div
           className="dash-card-head"
           style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}

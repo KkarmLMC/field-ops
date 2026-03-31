@@ -330,7 +330,7 @@ export default function Installations() {
         {/* Quick nav tiles */}
         <div className="dash-tiles">
           <button
-            className="dash-tile"
+            className="card dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
@@ -342,7 +342,7 @@ export default function Installations() {
             <ArrowRight size={14} className="dash-tile-arrow" />
           </button>
           <button
-            className="dash-tile"
+            className="card dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
@@ -354,7 +354,7 @@ export default function Installations() {
             <ArrowRight size={14} className="dash-tile-arrow" />
           </button>
           <button
-            className="dash-tile"
+            className="card dash-tile"
             style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
@@ -368,7 +368,7 @@ export default function Installations() {
         </div>
 
         {/* All Projects list */}
-        <div className="dash-card">
+        <div className="card dash-card">
           <div className="dash-card-head" style={headStyle}>
             <span className="dash-card-title">
               <Buildings size={14} />
@@ -449,7 +449,7 @@ export default function Installations() {
         {/* Pipeline 3-card grid */}
         <div className="field-pipeline-grid">
           {/* Upcoming */}
-          <div className="dash-card" style={{ margin: 0 }}>
+          <div className="card dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
               <span className="dash-card-title">
                 <Clock size={12} />
@@ -465,7 +465,7 @@ export default function Installations() {
           </div>
 
           {/* Active */}
-          <div className="dash-card" style={{ margin: 0 }}>
+          <div className="card dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
               <span className="dash-card-title">
                 <span className="live-dot" />
@@ -481,7 +481,7 @@ export default function Installations() {
           </div>
 
           {/* Pending Review */}
-          <div className="dash-card" style={{ margin: 0 }}>
+          <div className="card dash-card" style={{ margin: 0 }}>
             <div className="dash-card-head" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
               <span className="dash-card-title">
                 <Warning size={12} />
@@ -506,7 +506,7 @@ export default function Installations() {
           ].map(a => (
             <button
               key={a.path}
-              className="dash-tile"
+              className="card dash-tile"
               onClick={() => navigate(a.path)}
               style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
             >
