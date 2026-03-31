@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowLeft } from '@phosphor-icons/react'
+import { ArrowLeft, SignOut } from '@phosphor-icons/react'
 import Sidebar       from './components/Sidebar'
 import SyncBadge     from './components/SyncBadge'
 import BottomNav     from './components/BottomNav'
@@ -123,33 +123,32 @@ function MobileHeader() {
 function DesktopTopBar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const meta   = getPageMeta(location.pathname)
+  const { signOut } = useAuth()
+  const meta = getPageMeta(location.pathname)
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/login')
+  }
 
   return (
     <div className="desktop-topbar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
         {meta.parent && (
-          <button
-            onClick={() => navigate(meta.parent)}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '0.3125rem',
-              fontSize: '0.75rem', color: 'var(--text-3)', background: 'none',
-              cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem',
-              transition: 'color 0.12s' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--black)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-3)'}
-          >
-            <ArrowLeft size="0.8125rem" />
-            Back
+          <button onClick={() => navigate(meta.parent)}
+            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            <ArrowLeft size="1.125rem" color="var(--white)" />
           </button>
         )}
-        {meta.sub && (
-          <div style={{ fontSize: '0.625rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            {meta.sub}
-          </div>
-        )}
+        <div className="desktop-topbar__title">{meta.title}</div>
       </div>
-      <SyncBadge />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+        <SyncBadge />
+        <button onClick={handleSignOut}
+          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <SignOut size="1rem" color="rgba(255,255,255,0.7)" />
+        </button>
+      </div>
     </div>
   )
 }

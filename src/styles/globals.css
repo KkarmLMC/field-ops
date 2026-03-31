@@ -992,9 +992,16 @@ textarea { resize: vertical; }
   display: none;
   align-items: center;
   justify-content: space-between;
-  padding: var(--pad-s) var(--pad-xxl) 0;
+  padding: 0 var(--pad-l);
+  height: 3.25rem;
   flex-shrink: 0;
-  min-height: 2rem;
+  background: var(--navy);
+}
+.desktop-topbar__title {
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  color: var(--white);
+  letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
