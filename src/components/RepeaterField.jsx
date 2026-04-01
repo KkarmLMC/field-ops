@@ -141,7 +141,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
           <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)' }}>
             {title}
           </div>
-          <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+          <div className="flex-gap-s">
             <button type="button" onClick={onClose} style={{
               width: '2.25rem', height: '2.25rem', borderRadius: 'var(--radius-l)', background: 'var(--surface-base)',
               color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>

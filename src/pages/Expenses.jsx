@@ -113,7 +113,7 @@ export default function Expenses() {
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--space-m)', position: 'relative' }}>
         <button onClick={() => setShowNewMenu(m => !m)}
           className="btn btn-navy"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+          className="flex-gap-s">
           <Plus size="0.9375rem" /> New
         </button>
         {showNewMenu && (
@@ -180,7 +180,7 @@ export default function Expenses() {
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden' }}>
+        <div className="card-section">
           {filtered.map(r => (
             <ReportCard key={r.id} report={r} project={projects[r.project_id]}
               onClick={() => navigate(`/expenses/${r.id}`)} />

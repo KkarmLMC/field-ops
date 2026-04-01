@@ -111,7 +111,7 @@ export default function PartRequest() {
       </button>
 
       {/* Job details */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
         </div>
@@ -142,7 +142,7 @@ export default function PartRequest() {
       </div>
 
       {/* Parts */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
           <span className="list-card__meta">{items.length} line{items.length !== 1 ? 's' : ''}</span>

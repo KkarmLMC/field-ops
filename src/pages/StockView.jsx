@@ -168,7 +168,7 @@ export default function StockView() {
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>
       ) : (
-        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden' }}>
+        <div className="card-section">
           {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
             {['Part', 'Stock', ''].map((h, i) => (

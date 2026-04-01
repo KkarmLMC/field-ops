@@ -183,7 +183,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
           >
             <DotsSixVertical size="1.125rem" weight="bold" />
           </div>
-          <div style={{ flex:1, minWidth:0 }}>
+          <div className="content-body">
             <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
               {field.label || <span style={{ color:'var(--text-muted)', fontStyle:'italic' }}>Unlabelled field</span>}
             </div>
@@ -499,7 +499,7 @@ export default function FormBuilder() {
           <div className="empty"><div className="empty-desc">No forms found in database.</div></div>
         ) : forms.map(form => (
           <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: '0.875rem var(--space-l)', borderBottom:'1px solid var(--border-default)' }}>
-            <div style={{ flex:1, minWidth:0 }}>
+            <div className="content-body">
               <div className="project-name">{form.title}</div>
               <div className="project-meta">
                 {form.short} · {form.sections?.length || 0} sections · {(form.sections||[]).reduce((n,s)=>n+(s.fields?.length||0),0)} fields

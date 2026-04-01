@@ -202,7 +202,7 @@ export default function Inspections() {
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
         <SectionDivider title="Inspections" label="Field Overview" accent="var(--brand-primary)" />
 
-        <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+        <div className="flex-gap-s">
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

@@ -180,7 +180,7 @@ export function SigPad({ value, onChange, readOnly }) {
         /* Signed state */
         <div style={{ borderRadius:'var(--radius-m)', overflow:'hidden' }}>
           <div style={{ padding: 'var(--space-s) var(--space-m)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--surface-base)', borderBottom:'1px solid var(--border-default)' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'var(--space-s)' }}>
+            <div className="flex-gap-s">
               <CheckCircle size="0.875rem" weight="fill" style={{ color:'var(--state-success)', flexShrink:0 }} />
               <span style={{ fontSize:'var(--text-xs)', color:'var(--text-primary)', fontFamily:'var(--font-mono)' }}>
                 {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
@@ -410,7 +410,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         )}
 
         {/* Progress / waveform bar + timer */}
-        <div style={{ flex:1, minWidth:0 }}>
+        <div className="content-body">
           <div style={{ height:'0.375rem', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', overflow:'hidden', marginBottom:'var(--space-xs)' }}>
             <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--state-error)':'var(--brand-primary)', borderRadius: 'var(--radius-s)', transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
           </div>

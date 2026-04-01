@@ -58,7 +58,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
           </div>
 
-          <div style={{ margin: 'var(--space-m) 0', paddingTop: 'var(--space-m)' }}>
+          <div className="section-gap">
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Location</div>
           </div>
 
@@ -73,7 +73,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} /></div>
           </div>
 
-          <div style={{ margin: 'var(--space-m) 0', paddingTop: 'var(--space-m)' }}>
+          <div className="section-gap">
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Contact</div>
           </div>
 
@@ -317,7 +317,7 @@ export default function Inventory() {
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-default)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+              <div className="flex-gap-s">
                 <Receipt size="0.9375rem" style={{ color: 'var(--brand-primary)' }} />
                 <span className="text-sm-bold">Sales Orders</span>
                 {submitted.length > 0 && (
@@ -358,7 +358,7 @@ export default function Inventory() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', flexShrink: 0 }}>
                   <Badge label={po.status} variant={po.status === 'submitted' ? 'warning' : 'primary'} />
                   {po.grand_total > 0 && (
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    <span className="text-label">
                       ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                     </span>
                   )}

@@ -424,7 +424,7 @@ export default function WarehouseDetail() {
                       {po.status}
                     </span>
                     {po.grand_total > 0 && (
-                      <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      <span className="text-label">
                         ${po.grand_total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                       </span>
                     )}
@@ -441,7 +441,7 @@ export default function WarehouseDetail() {
       <Card>
         <button onClick={loadTransactions}
           style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 0, background: 'none', cursor: 'pointer', marginBottom: showTx ? 'var(--space-m)' : 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+          <div className="flex-gap-s">
             <ClipboardText size="1rem" style={{ color: 'var(--text-primary)' }} />
             <span className="text-sm-bold">Transaction History</span>
           </div>

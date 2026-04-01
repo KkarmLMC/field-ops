@@ -15,7 +15,7 @@ function WarehouseRow({ level, warehouseName }) {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+      <div className="flex-gap-s">
         <Buildings size="1rem" style={{ color: 'var(--text-primary)' }} />
         <div>
           <div className="text-sm-semi">{warehouseName}</div>
@@ -27,7 +27,7 @@ function WarehouseRow({ level, warehouseName }) {
           </div>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+      <div className="flex-gap-s">
         <span style={{ padding: '3px 10px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-sm)', fontWeight: 700, background: bg, color }}>
           {level.quantity_on_hand}
         </span>
@@ -162,7 +162,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
           </div>
 
           {/* Divider */}
-          <div style={{ margin: 'var(--space-m) 0', paddingTop: 'var(--space-m)' }}>
+          <div className="section-gap">
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Stock Adjustment</div>
           </div>
 
@@ -190,7 +190,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
           </div>
 
           {/* Divider */}
-          <div style={{ margin: 'var(--space-m) 0', paddingTop: 'var(--space-m)' }}>
+          <div className="section-gap">
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Thresholds</div>
           </div>
 
@@ -298,7 +298,7 @@ export default function PartDetail() {
       </div>
 
       {/* Stock by warehouse */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <div style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
           <div className="text-sm-bold">Stock by Warehouse</div>
         </div>
@@ -310,7 +310,7 @@ export default function PartDetail() {
       </div>
 
       {/* Part details */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <div style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
           <div className="text-sm-bold">Part Details</div>
         </div>
@@ -322,7 +322,7 @@ export default function PartDetail() {
           ['Barcode', part.barcode],
         ].filter(([, v]) => v).map(([label, value]) => (
           <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{label}</span>
+            <span className="meta-text">{label}</span>
             <span className="text-sm-semi">{value}</span>
           </div>
         ))}
@@ -335,11 +335,11 @@ export default function PartDetail() {
       </div>
 
       {/* Transaction history */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <button
           onClick={() => setShowTx(!showTx)}
           style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+          <div className="flex-gap-s">
             <ClipboardText size="1rem" style={{ color: 'var(--text-primary)' }} />
             <span className="text-sm-bold">Transaction History</span>
             <span style={{ padding: '1px 8px', borderRadius: 'var(--radius-s)', background: 'var(--surface-hover)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{transactions.length}</span>

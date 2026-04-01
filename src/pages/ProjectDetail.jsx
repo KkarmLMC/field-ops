@@ -249,7 +249,7 @@ export default function ProjectDetail() {
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 4 }}>
               {project.name}
             </div>
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+            <div className="meta-text">
               {project.customer_account}
               {project.job_number && (
                 <span style={{ fontFamily: 'var(--font-mono)', marginLeft: 8 }}>{project.job_number}</span>
@@ -352,7 +352,7 @@ export default function ProjectDetail() {
 
         {/* ── Field actions ─────────────────────────────────────────────────── */}
         {(project.stage === 'in-progress' || project.stage === 'scheduled') && (
-          <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+          <div className="flex-gap-s">
             <button
               className="btn btn-primary"
               style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
@@ -497,10 +497,10 @@ export default function ProjectDetail() {
 
         {/* ── Job Cost Overview ─────────────────────────────────────────── */}
         {jobCost && (
-          <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden' }}>
+          <div className="card-section">
             {/* Header */}
             <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+              <div className="flex-gap-s">
                 <CurrencyDollar size="1rem" style={{ color: 'var(--surface-base)' }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
               </div>
@@ -534,9 +534,9 @@ export default function ProjectDetail() {
                 { label: 'Advances Issued',value: jobCost.advanceTotal,   color: 'var(--grey-base)' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+                  <div className="flex-gap-s">
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{r.label}</span>
+                    <span className="text-sm-bold">{r.label}</span>
                   </div>
                   <span className="text-sm-bold">
                     ${r.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

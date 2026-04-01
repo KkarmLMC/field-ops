@@ -113,7 +113,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       </div>
 
       {/* Section */}
-      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
+      <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
           <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
           {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>{current.description}</div>}

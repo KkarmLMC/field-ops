@@ -107,7 +107,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${mealsTotal.toFixed(2)}</div>
         </div>
         <div className="expense-total-row">
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
+          <span className="text-label">Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
         </div>
       </Card>
 
@@ -185,7 +185,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           </div>
         ))}
         <div className="expense-total-row">
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Travel Advance: ${travelTotal.toFixed(2)}</span>
+          <span className="text-label">Travel Advance: ${travelTotal.toFixed(2)}</span>
         </div>
       </Card>
 
@@ -201,7 +201,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}><Warning size="0.875rem" />{error}</div>}
+      {error && <div className="form-error flex-gap-s"><Warning size="0.875rem" />{error}</div>}
 
       <div className="action-grid-2">
         <Button onClick={() => handleSave(false)} disabled={saving}>
@@ -303,7 +303,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         </button>
         {/* Subtotal */}
         <div className="expense-total-row">
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Subtotal: ${subtotal.toFixed(2)}</span>
+          <span className="text-label">Subtotal: ${subtotal.toFixed(2)}</span>
         </div>
       </Card>
 
@@ -324,7 +324,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         </button>
         <div style={{ marginTop: 'var(--space-m)', paddingTop: 'var(--space-s)', display: 'flex', justifyContent: 'space-between' }}>
           <span className="meta-text">{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Mileage: ${mileageTotal.toFixed(2)}</span>
+          <span className="text-label">Mileage: ${mileageTotal.toFixed(2)}</span>
         </div>
       </Card>
 
@@ -334,20 +334,20 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (
           <div key={lbl} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{lbl}</span>
+            <span className="text-sm-bold">{lbl}</span>
             <span className="text-sm-bold">${val.toFixed(2)}</span>
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Less Cash Advance</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+          <span className="text-sm-bold">Less Cash Advance</span>
+          <div className="flex-gap-s">
             <span className="meta-text">$</span>
             <input type="number" min="0" step="0.01" value={lessAdvance} onChange={e => setLessAdvance(e.target.value)}
               style={{ width: 80, textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 700 }} />
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Mileage Reimbursement</span>
+          <span className="text-sm-bold">Mileage Reimbursement</span>
           <span className="text-sm-bold">${mileageTotal.toFixed(2)}</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l) 0', background: 'var(--brand-primary)', marginLeft: -24, marginRight: -24, marginBottom: -24, paddingLeft: 24, paddingRight: 24 }}>
@@ -361,7 +361,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
       </div>
 
-      {error && <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}><Warning size="0.875rem" />{error}</div>}
+      {error && <div className="form-error flex-gap-s"><Warning size="0.875rem" />{error}</div>}
 
       <div className="action-grid-2">
         <Button onClick={() => handleSave(false)} disabled={saving}>

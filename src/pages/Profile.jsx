@@ -345,7 +345,7 @@ export default function Profile() {
         {editingName ? (
           <div style={{ marginBottom: 'var(--space-m)' }}>
             <label className="form-field__label">Full Name</label>
-            <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+            <div className="flex-gap-s">
               <input value={nameVal} onChange={e => setNameVal(e.target.value)} autoFocus style={{ flex: 1 }} onKeyDown={e => e.key === 'Enter' && saveName()} />
               <Button onClick={saveName} disabled={nameSaving}>
                 {nameSaving ? 'Saving…' : 'Save'}
@@ -478,7 +478,7 @@ export default function Profile() {
                 </button>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+            <div className="flex-gap-s">
               <Button variant="secondary" onClick={() => { setShowPwForm(false); setNewPw(''); setNewEmail('') }} style={{ flex: 1 }}>
                 Cancel
               </Button>

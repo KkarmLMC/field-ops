@@ -299,7 +299,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           border:`1px solid ${result.required ? 'var(--state-error)' : 'var(--state-success)'}`,
           borderRadius:'var(--radius-l)', padding:'1rem', marginBottom: 'var(--space-m)' }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--space-m)' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'var(--space-s)' }}>
+            <div className="flex-gap-s">
               {result.required
                 ? <Warning size="1.25rem" style={{ color:'var(--state-error)' }} />
                 : <CheckCircle size="1.25rem" style={{ color:'var(--state-success)' }} />
@@ -364,7 +364,7 @@ function AssessmentRow({ a }) {
         display:'flex', alignItems:'center', justifyContent:'center' }}>
         {req ? <Warning size="1rem" style={{ color:'var(--state-error)' }} /> : <CheckCircle size="1rem" style={{ color:'var(--state-success)' }} />}
       </div>
-      <div style={{ flex:1, minWidth:0 }}>
+      <div className="content-body">
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
@@ -496,7 +496,7 @@ export default function RiskAssessment() {
         {/* ══ FIELD ══════════════════════════════════════════════════════════ */}
         <SectionDivider title="Risk Assessment" label="Field Overview" accent="var(--brand-primary)" />
 
-        <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+        <div className="flex-gap-s">
           <button
             className="btn btn-primary"
             style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

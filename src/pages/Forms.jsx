@@ -35,7 +35,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
                 <div style={{ width:8, height:8, borderRadius:'50%', background: form.color || bc.bgActive, flexShrink:0 }} />
-                <div style={{ flex:1, minWidth:0 }}>
+                <div className="content-body">
                   <div className="project-name">{form.title}</div>
                   {form.description && <div className="project-meta">{form.description}</div>}
                 </div>
@@ -59,7 +59,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >
                       <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-muted)', flexShrink:0 }} />
-                      <div style={{ flex:1, minWidth:0 }}>
+                      <div className="content-body">
                         <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--text-primary)' }}>{sub.title}</span>
                         {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
                       </div>
