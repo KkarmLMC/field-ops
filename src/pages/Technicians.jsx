@@ -98,7 +98,7 @@ export default function Technicians() {
         <div className="flex-gap-s">
           <button
             className="btn btn-primary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => navigate('/daily-field-log')}
           >
             <BookOpen size="0.875rem" weight="bold" />
@@ -106,7 +106,7 @@ export default function Technicians() {
           </button>
           <button
             className="btn btn-secondary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => navigate('/forms/jsa')}
           >
             <HardHat size="0.875rem" weight="bold" />

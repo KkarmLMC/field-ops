@@ -130,7 +130,7 @@ export default function StockView() {
       </div>
 
       {/* Search + filter */}
-      <div style={{ position: 'relative', marginBottom: 'var(--space-m)' }}>
+      <div className="position-relative mb-m">
         <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
         <input
           value={search}
@@ -191,7 +191,7 @@ export default function StockView() {
                     {l.parts?.name}
                   </div>
                   {l.parts?.sku && (
-                    <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>{l.parts.sku}</div>
+                    <div className="text-xs-mono">{l.parts.sku}</div>
                   )}
                 </div>
                 <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 800, color: isOut ? 'var(--state-error-text)' : isLow ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>

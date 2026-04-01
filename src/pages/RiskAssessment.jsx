@@ -499,7 +499,7 @@ export default function RiskAssessment() {
         <div className="flex-gap-s">
           <button
             className="btn btn-primary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => setView('new')}
           >
             <Plus size="0.875rem" weight="bold" />

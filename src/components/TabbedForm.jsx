@@ -89,7 +89,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
     <div>
       {/* Progress */}
       <div style={{ marginBottom: 'var(--space-l)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-s)' }}>
+        <div className="flex-gap-s">
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-muted)' }}>
             Step {page + 1} of {total}
           </span>
@@ -162,7 +162,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
             cursor: submitting ? 'default' : 'pointer' }}>
-            {submitting ? <><SpinnerGap size="0.875rem" style={{ animation: 'spin 1s linear infinite' }} /> Submitting…</> : <><CheckCircle size="0.875rem" /> Submit Form</>}
+            {submitting ? <><SpinnerGap size="0.875rem" className="anim-spin" /> Submitting…</> : <><CheckCircle size="0.875rem" /> Submit Form</>}
           </button>
         )}
       </div>

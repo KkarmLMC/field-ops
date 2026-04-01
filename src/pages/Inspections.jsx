@@ -205,7 +205,7 @@ export default function Inspections() {
         <div className="flex-gap-s">
           <button
             className="btn btn-primary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => navigate('/daily-field-log')}
           >
             <Plus size="0.875rem" weight="bold" />
@@ -213,7 +213,7 @@ export default function Inspections() {
           </button>
           <button
             className="btn btn-secondary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => navigate('/forms/jsa')}
           >
             <Plus size="0.875rem" weight="bold" />

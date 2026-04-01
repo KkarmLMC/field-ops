@@ -125,7 +125,7 @@ function MgmtRow({ p, navigate }) {
             <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 120 }}>
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>{p.progress}%</span>
+            <span className="text-xs-mono">{p.progress}%</span>
           </div>
         )}
       </div>

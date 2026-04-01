@@ -155,7 +155,7 @@ export default function Expenses() {
       </div>
 
       {/* Type filter + search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--space-m)' }}>
+      <div className="position-relative mb-m">
         <MagnifyingGlass size="0.875rem" className="search-overlay-icon" />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search employee or project…"
           style={{ width: '100%', paddingLeft: 30 }} />

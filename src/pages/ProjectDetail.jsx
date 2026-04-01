@@ -355,7 +355,7 @@ export default function ProjectDetail() {
           <div className="flex-gap-s">
             <button
               className="btn btn-primary"
-              style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+              className="content-body flex-gap-s"
               onClick={() => navigate(`/daily-field-log?project=${project.id}`)}
             >
               <Plus size="1rem" weight="bold" />
@@ -364,7 +364,7 @@ export default function ProjectDetail() {
             {project.stage === 'in-progress' && !cfStatus && (
               <button
                 className="btn btn-secondary"
-                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                className="content-body flex-gap-s"
                 onClick={() => navigate(`/forms?project=${project.id}`)}
               >
                 <FileText size="0.875rem" />

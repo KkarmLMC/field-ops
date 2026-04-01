@@ -104,7 +104,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div className="text-xs-semi">Meals <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($68/day)</span></div>
           <input type="number" min="0" value={meals.persons} onChange={e => setMeals(m => ({ ...m, persons: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${mealsTotal.toFixed(2)}</div>
+          <div className="text-xs-right">${mealsTotal.toFixed(2)}</div>
         </div>
         <div className="expense-total-row">
           <span className="text-label">Per Diem Total: ${perDiemTotal.toFixed(2)}</span>
@@ -123,7 +123,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div />
           <input type="number" min="0" value={hotel.rooms} onChange={e => setHotel(h => ({ ...h, rooms: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={hotel.nights} onChange={e => setHotel(h => ({ ...h, nights: +e.target.value }))} style={inputSm} />
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${hotelTotal.toFixed(2)}</div>
+          <div className="text-xs-right">${hotelTotal.toFixed(2)}</div>
         </div>
         {/* Car rental */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
@@ -136,7 +136,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div />
           <div />
           <input type="number" min="0" value={carRental.days} onChange={e => setCarRental({ days: +e.target.value })} style={inputSm} />
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${carTotal.toFixed(2)}</div>
+          <div className="text-xs-right">${carTotal.toFixed(2)}</div>
         </div>
         {/* Fuel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
@@ -160,7 +160,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div />
           <div />
           <input type="number" min="0" value={parking.days} onChange={e => setParking({ days: +e.target.value })} style={inputSm} />
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${parkingTotal.toFixed(2)}</div>
+          <div className="text-xs-right">${parkingTotal.toFixed(2)}</div>
         </div>
         {/* Airline baggage */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
@@ -173,7 +173,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div />
           <input type="number" min="0" value={baggageFees.bags} onChange={e => setBaggageFees(b => ({ ...b, bags: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={baggageFees.flights} onChange={e => setBaggageFees(b => ({ ...b, flights: +e.target.value }))} style={inputSm} />
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${baggageTotal.toFixed(2)}</div>
+          <div className="text-xs-right">${baggageTotal.toFixed(2)}</div>
         </div>
         {/* Other lines */}
         {others.map((o, idx) => (
@@ -181,7 +181,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
             <input value={o.desc} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, desc: e.target.value } : x))} placeholder="Other…" style={inputSm} />
             <div />
             <input type="number" min="0" value={o.days} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, days: +e.target.value } : x))} style={inputSm} />
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${(o.days * o.rate).toFixed(2)}</div>
+            <div className="text-xs-right">${(o.days * o.rate).toFixed(2)}</div>
           </div>
         ))}
         <div className="expense-total-row">

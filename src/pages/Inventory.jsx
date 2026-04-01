@@ -59,7 +59,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div className="section-gap">
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Location</div>
+            <div className="text-label mb-m">Location</div>
           </div>
 
           <div style={{ marginBottom: 'var(--space-m)' }}>
@@ -74,7 +74,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           </div>
 
           <div className="section-gap">
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-m)' }}>Contact</div>
+            <div className="text-label mb-m">Contact</div>
           </div>
 
           <div style={{ marginBottom: 'var(--space-m)' }}>
@@ -355,7 +355,7 @@ export default function Inventory() {
                   <div className="text-sm-truncate">{po.customer_name}</div>
                   <div className="meta-text">{po.project_name || po.so_number}</div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', flexShrink: 0 }}>
+                <div className="flex-gap-s shrink-0">
                   <Badge label={po.status} variant={po.status === 'submitted' ? 'warning' : 'primary'} />
                   {po.grand_total > 0 && (
                     <span className="text-label">

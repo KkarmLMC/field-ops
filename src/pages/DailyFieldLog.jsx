@@ -1759,7 +1759,7 @@ export default function DailyFieldLog() {
       <div style={{ display: 'flex', gap: 'var(--space-s)', width: '100%', marginBottom: 'var(--space-s)', overflow: 'hidden', boxSizing: 'border-box' }}>
         <button
           className="btn btn-primary"
-          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+          className="content-body flex-gap-s"
           onClick={() => setFormMode('part1')}
         >
           <Plus size="0.875rem" weight="bold" />
@@ -1768,7 +1768,7 @@ export default function DailyFieldLog() {
         {draftCount > 0 && (
           <button
             className="btn btn-secondary"
-            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+            className="content-body flex-gap-s"
             onClick={() => openCloseOut(reports.find(r => r.status === 'Draft')?.id)}
           >
             <ArrowsClockwise size="0.875rem" weight="bold" />
