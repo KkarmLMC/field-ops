@@ -247,7 +247,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             padding:'0.5rem 0.75rem', borderRadius:'var(--radius-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--state-info)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
-            {locating ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : <Crosshair size="0.8125rem" />}
+            {locating ? <SpinnerGap size="0.8125rem" className="anim-spin" /> : <Crosshair size="0.8125rem" />}
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
         </div>
@@ -338,7 +338,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
               letterSpacing: 'var(--tracking-wide)', textTransform:'uppercase',
               display:'flex', alignItems:'center', justifyContent:'center', gap: 'var(--space-s)' }}>
-              {saving ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : null}
+              {saving ? <SpinnerGap size="0.8125rem" className="anim-spin" /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
             <button onClick={()=>setResult(null)} style={{

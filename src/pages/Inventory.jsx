@@ -38,7 +38,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
   return (
     <>
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 'var(--z-sheet-overlay)', background: 'var(--overlay-bg)', animation: 'anim-fade-in 0.15s ease' }} />
+      <div onClick={onClose} className="modal-overlay" />
       <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 'var(--z-sheet)', background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Header */}
         <div className="inventory-43ec">

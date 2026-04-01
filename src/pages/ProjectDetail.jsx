@@ -534,7 +534,7 @@ export default function ProjectDetail() {
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                   <div className="flex-gap-s">
-                    <div style={{ width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', background: r.color, flexShrink: 0 }} />
+                    <div className="status-dot" />
                     <span className="text-sm-bold">{r.label}</span>
                   </div>
                   <span className="text-sm-bold">

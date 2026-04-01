@@ -113,10 +113,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
   return (
     <>
       {/* Backdrop */}
-      <div onClick={onClose} style={{
-        position: 'fixed', inset: 0, zIndex: 'var(--z-sheet-overlay)',
-        background: 'var(--overlay-bg)',
-        animation: 'anim-fade-in 0.15s ease' }} />
+      <div onClick={onClose} className="modal-overlay" />
 
       {/* Sheet */}
       <div style={{

@@ -205,7 +205,7 @@ export default function FormPage() {
             display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
             transition:'all var(--ease-fast)' }}>
             {submitting
-              ? <><SpinnerGap size="0.875rem" style={{ animation:'spin 1s linear infinite' }} /> Submitting…</>
+              ? <><SpinnerGap size="0.875rem" className="anim-spin" /> Submitting…</>
               : <><CheckCircle size="0.875rem" /> Submit Form</>
             }
           </button>

@@ -399,7 +399,7 @@ function FormEditor({ form, onSave, onCancel }) {
           <button type="button" onClick={onCancel} className="form-builder-d063">Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
             style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-s)', background:saved?'var(--state-success)':saving?'var(--surface-hover)':'var(--brand-primary)', color:saved||!saving?'#fff':'var(--text-muted)', fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)', transition:'background var(--ease-fast)' }}>
-            {saving ? <><SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size="0.8125rem"/> Saved!</> : <><FloppyDisk size="0.8125rem"/> Save Changes</>}
+            {saving ? <><SpinnerGap size="0.8125rem" className="anim-spin"/> Saving…</> : saved ? <><CheckCircle size="0.8125rem"/> Saved!</> : <><FloppyDisk size="0.8125rem"/> Save Changes</>}
           </button>
         </div>
       </div>

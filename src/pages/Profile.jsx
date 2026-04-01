@@ -157,9 +157,7 @@ function ActivityLog({ userId }) {
                 padding: 'var(--space-m) var(--space-l)',
                 borderBottom: i < logs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                 {/* Category dot */}
-                <div style={{
-                  width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
-                  background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
+                <div className="status-dot" />
                 <div className="content-body">
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 'var(--leading-normal)' }}>
                     {log.label}

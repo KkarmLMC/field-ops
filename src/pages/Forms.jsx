@@ -31,7 +31,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
-                <div style={{ width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', background: form.color || bc.bgActive, flexShrink:0 }} />
+                <div className="status-dot" />
                 <div className="content-body">
                   <div className="project-name">{form.title}</div>
                   {form.description && <div className="project-meta">{form.description}</div>}
