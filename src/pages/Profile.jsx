@@ -41,7 +41,7 @@ function PinPad({ onComplete }) {
     <div>
       <div className="profile-00b7">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
+          <div key={i} style={{ width: 14, height: 14, borderRadius: 'var(--radius-round)', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
       </div>
       <div className="grid-3col">
@@ -158,10 +158,10 @@ function ActivityLog({ userId }) {
                 borderBottom: i < logs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                 {/* Category dot */}
                 <div style={{
-                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--space-xs)',
+                  width: 8, height: 8, borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
                   background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
                 <div className="content-body">
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 1.4 }}>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 'var(--leading-normal)' }}>
                     {log.label}
                   </div>
                   <div className="profile-1f00">
@@ -316,7 +316,7 @@ export default function Profile() {
           </div>
           <div>
             <div className="profile-176c">ACCOUNT</div>
-            <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', lineHeight: 1.1 }}>{profile?.full_name || 'My Profile'}</div>
+            <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', lineHeight: 'var(--leading-tight)' }}>{profile?.full_name || 'My Profile'}</div>
             <div className="meta-text">{user?.email}</div>
           </div>
         </div>
@@ -404,7 +404,7 @@ export default function Profile() {
           </div>
         )}
 
-        <div style={{ padding: 'var(--space-m)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+        <div style={{ padding: 'var(--space-m)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 'var(--leading-relaxed)' }}>
           Role assignments are managed by your administrator. Contact admin to request changes.
         </div>
       </Section>

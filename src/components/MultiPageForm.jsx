@@ -23,14 +23,14 @@ function FieldLabel({ field, error }) {
     <div className="mb-s">
       <div style={{
         fontSize: 'var(--text-sm)',
-        fontWeight: 600,
+        fontWeight: 'var(--fw-semibold)',
         color: error ? 'var(--state-error)' : 'var(--text-primary)',
-        lineHeight: 1.4 }}>
+        lineHeight: 'var(--leading-normal)' }}>
         {field.label}
         {field.required && <span className="multi-page-form-5d1f">*</span>}
       </div>
       {field.hint && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 'var(--leading-normal)', marginTop: 'var(--space-3xs)' }}>
           {field.hint}
         </div>
       )}
@@ -85,8 +85,8 @@ function SectionView({ section, values, onChange, errors, onBack }) {
           type="button"
           onClick={onBack}
           style={{
-            width: '2.25rem',
-            height: '2.25rem',
+            width: 'var(--icon-size-md)',
+            height: 'var(--icon-size-md)',
             borderRadius: 'var(--radius-l)',
             background: 'var(--surface-base)',
             color: 'var(--text-primary)',
@@ -223,7 +223,7 @@ export default function MultiPageForm({
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
-        <div style={{ height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
+        <div style={{ height: 'var(--space-2xs)', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${(sections.filter(s => isSectionComplete(s, values)).length / sections.length) * 100}%`,
@@ -278,7 +278,7 @@ export default function MultiPageForm({
                   fontSize: 'var(--text-md)',
                   fontWeight: complete ? 600 : 500,
                   color: complete ? 'var(--text-primary)' : 'var(--text-primary)',
-                  marginBottom: 2 }}>
+                  marginBottom: 'var(--space-3xs)' }}>
                   {section.title}
                   {hasRequired && !complete && (
                     <span className="multi-page-form-1b78">*</span>
@@ -321,7 +321,7 @@ export default function MultiPageForm({
           color: !allComplete || submitting ? 'var(--text-muted)' : '#fff',
           fontFamily: 'var(--font-body)',
           fontSize: 'var(--text-sm)',
-          fontWeight: 700,
+          fontWeight: 'var(--fw-bold)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

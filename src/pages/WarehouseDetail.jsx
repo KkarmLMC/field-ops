@@ -127,7 +127,7 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
         {/* Footer */}
         <div className="sheet__footer">
           <button onClick={handleSave} disabled={saving || !form.name.trim()}
-            style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: !form.name.trim() ? 'var(--surface-hover)' : 'var(--brand-primary)', color: !form.name.trim() ? 'var(--text-muted)' : '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+            style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: !form.name.trim() ? 'var(--surface-hover)' : 'var(--brand-primary)', color: !form.name.trim() ? 'var(--text-muted)' : '#fff', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: !form.name.trim() ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
             {saving ? 'Saving…' : <><Check size="0.9375rem" /> Save Changes</>}
           </button>
         </div>
@@ -261,7 +261,7 @@ export default function WarehouseDetail() {
         <div className="wh-header__top">
           <div className="flex-gap-m">
             <div className="wh-header__icon">
-              <Buildings size="1.375rem" style={{ color: '#fff' }} />
+              <Buildings size="1.375rem" style={{ color: 'var(--color-white)' }} />
             </div>
             <div>
               <div className="wh-header__name">{warehouse.name}</div>
@@ -274,7 +274,7 @@ export default function WarehouseDetail() {
             </div>
           </div>
           <button onClick={() => setShowEdit(true)}
-            style={{ width: '2.25rem', height: '2.25rem', borderRadius: 'var(--radius-l)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            style={{ width: 'var(--icon-size-md)', height: 'var(--icon-size-md)', borderRadius: 'var(--radius-l)', background: 'transparent', color: 'var(--color-white)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
             <PencilSimple size="0.9375rem" />
           </button>
         </div>
@@ -312,8 +312,8 @@ export default function WarehouseDetail() {
       <div className="stats-grid-2">
         <Card><div className="flex-gap-s mb-s"><div className="warehouse-detail-9315"><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span className="text-xs-semi">SKUs In Stock</span></div><div className="warehouse-detail-8a26">{totalSkus.toLocaleString()}</div></Card>
         <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span className="text-xs-semi">Total Units</span></div><div className="warehouse-detail-8a26">{totalUnits.toLocaleString()}</div></Card>
-        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
-        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
       </div>
 
       {/* Value */}
@@ -349,7 +349,7 @@ export default function WarehouseDetail() {
         <div className="position-relative mb-m">
           <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search parts…"
-            style={{ width: '100%', paddingLeft: 34, paddingRight: search ? 34 : 12 }} />
+            style={{ width: '100%', paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }} />
           {search && (
             <button onClick={() => setSearch('')} className="search-overlay-clear">
               <X size="0.8125rem" />
@@ -454,7 +454,7 @@ export default function WarehouseDetail() {
             ) : transactions.map(tx => (
               <div key={tx.id} className="warehouse-detail-6b4d">
                 <div className={`tx-icon tx-icon--${tx.quantity_delta > 0 ? 'positive' : 'negative'}`}>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: tx.quantity_delta > 0 ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-black)', color: tx.quantity_delta > 0 ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {tx.quantity_delta > 0 ? '+' : ''}{tx.quantity_delta}
                   </span>
                 </div>

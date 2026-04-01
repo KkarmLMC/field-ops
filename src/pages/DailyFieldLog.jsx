@@ -197,7 +197,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
               className={`dfl-typeahead-item ${name === value ? 'selected' : ''}`}
               onMouseDown={() => select(name)}
             >
-              <Buildings size="0.75rem" style={{ flexShrink: 0, opacity: 0.5 }} />
+              <Buildings size="0.75rem" style={{ flexShrink: 0, opacity: 'var(--opacity-muted)' }} />
               {name}
               {name === value && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-6597" />}
             </li>
@@ -412,7 +412,7 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
           {/* + on last row, invisible spacer on others — keeps all inputs the same width */}
           {idx === rows.length - 1
             ? <button type="button" className="dfl-crew-add-btn" onClick={addRow} title="Add another"><Plus size="0.875rem" /></button>
-            : <div style={{ width: '1.75rem', flexShrink: 0 }} />
+            : <div style={{ width: 'var(--icon-size-sm)', flexShrink: 0 }} />
           }
         </div>
       ))}
@@ -920,7 +920,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
   if (!schema && !loading) return null
 
   return (
-    <div className="dfl-form-overlay" onClick={onBack} style={{ zIndex: 250 }}>
+    <div className="dfl-form-overlay" onClick={onBack} style={{ zIndex: 'var(--z-toast)' }}>
       <div className="dfl-form-panel" onClick={e => e.stopPropagation()} style={{ maxWidth: '36rem' }}>
 
         {/* Header */}
@@ -1043,7 +1043,7 @@ const STEPS = [
               {/* Customer — typeahead autocomplete */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Buildings size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <Buildings size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   Customer <span className="dfl-req">*</span>
                 </label>
                 <CustomerTypeahead
@@ -1056,7 +1056,7 @@ const STEPS = [
               {/* Jobsite — dropdown from Kanban */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <MapPin size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <MapPin size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   Jobsite <span className="dfl-req">*</span>
                 </label>
                 <JobsiteSelect
@@ -1079,7 +1079,7 @@ const STEPS = [
 
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Crosshair size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <Crosshair size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   GPS Coordinates <span className="dfl-req">*</span>
                 </label>
                 <GpsCoordinateField
@@ -1097,7 +1097,7 @@ const STEPS = [
               {/* Supervisor — single typeahead */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <User size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <User size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   Supervisor Onsite <span className="dfl-req">*</span>
                 </label>
                 <div className="dfl-crew-row">
@@ -1113,14 +1113,14 @@ const STEPS = [
                     />
                   </div>
                   {/* spacer matches the button column width in crew rows */}
-                  <div style={{ width: '1.75rem', flexShrink: 0 }} />
+                  <div style={{ width: 'var(--icon-size-sm)', flexShrink: 0 }} />
                 </div>
               </div>
 
               {/* Installers Onsite — multi typeahead with chips */}
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Users size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <Users size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   Installers Onsite
                 </label>
                 <TechMultiTypeahead
@@ -1275,7 +1275,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
             <div className="text-sm-bold--inverse">Close Out Day</div>
             {entry && (
-              <div style={{ fontSize: '0.6875rem', color: 'var(--surface-base)', marginTop: '0.125rem' }}>
+              <div style={{ fontSize: '0.6875rem', color: 'var(--surface-base)', marginTop: 'var(--space-3xs)' }}>
                 {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
               </div>
             )}
@@ -1327,7 +1327,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
                 {form.work_types.includes('Other') && (
                   <input
                     className="dfl-input"
-                    style={{ marginTop: '0.5rem' }}
+                    style={{ marginTop: 'var(--space-s)' }}
                     placeholder="Describe other work..."
                     value={form.work_other}
                     onChange={e => set('work_other', e.target.value)}
@@ -1341,7 +1341,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
           {step === 1 && (
             <div className="dfl-form-section">
               <div className="dfl-field">
-                <label className="dfl-label"><Truck size="0.75rem" style={{ marginRight: '0.25rem' }} />Miles Driven <span className="dfl-req">*</span></label>
+                <label className="dfl-label"><Truck size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />Miles Driven <span className="dfl-req">*</span></label>
                 <input
                   className="dfl-input"
                   type="number"
@@ -1391,7 +1391,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
               </div>
               <div className="dfl-field">
                 <label className="dfl-label">
-                  <Pencil size="0.75rem" style={{ marginRight: '0.25rem' }} />
+                  <Pencil size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} />
                   Supervisor Signature <span className="dfl-req">*</span>
                 </label>
                 <SignaturePad

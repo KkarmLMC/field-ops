@@ -24,7 +24,7 @@ import { FormField } from './FormEngine.jsx'
 function SubLabel({ field, error }) {
   return (
     <div style={{ marginBottom: 'var(--space-xs)' }}>
-      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>
+      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 'var(--leading-normal)' }}>
         {field.label}
         {field.required && <span className="text-error-marker">*</span>}
       </div>
@@ -60,10 +60,10 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
     <div className="repeater-field-e406">
       {/* Entry number badge */}
       <div style={{
-        width: '1.75rem', height: '1.75rem', borderRadius: 'var(--radius-l)',
-        background: 'var(--brand-primary)', color: '#fff',
+        width: 'var(--icon-size-sm)', height: 'var(--icon-size-sm)', borderRadius: 'var(--radius-l)',
+        background: 'var(--brand-primary)', color: 'var(--color-white)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0 }}>
+        fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', flexShrink: 0 }}>
         {index + 1}
       </div>
 
@@ -114,13 +114,13 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
     <>
       {/* Backdrop */}
       <div onClick={onClose} style={{
-        position: 'fixed', inset: 0, zIndex: 299,
-        background: 'rgba(0,0,0,0.5)',
+        position: 'fixed', inset: 0, zIndex: 'var(--z-sheet-overlay)',
+        background: 'var(--overlay-bg)',
         animation: 'anim-fade-in 0.15s ease' }} />
 
       {/* Sheet */}
       <div style={{
-        position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 300,
+        position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 'var(--z-sheet)',
         background: 'var(--surface-base)',
         borderRadius: 'var(--radius-l) var(--radius-l) 0 0',
         maxHeight: '90vh',
@@ -133,14 +133,14 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
           </div>
           <div className="flex-gap-s">
             <button type="button" onClick={onClose} style={{
-              width: '2.25rem', height: '2.25rem', borderRadius: 'var(--radius-l)', background: 'var(--surface-base)',
+              width: 'var(--icon-size-md)', height: 'var(--icon-size-md)', borderRadius: 'var(--radius-l)', background: 'var(--surface-base)',
               color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size="1rem" />
             </button>
             <button type="button" onClick={handleSave} style={{
-              height: '2.25rem', padding: '0 1rem', borderRadius: 'var(--radius-l)',
+              height: 'var(--icon-size-md)', padding: '0 1rem', borderRadius: 'var(--radius-l)',
               background: 'var(--brand-primary)',
-              color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700,
+              color: 'var(--color-white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
               display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
               <CheckCircle size="0.875rem" /> Save
             </button>
@@ -224,13 +224,13 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Add Entry button */}
       <button type="button" onClick={openAdd} style={{
-        display: 'flex', alignItems: 'center', gap: '0.5rem',
+        display: 'flex', alignItems: 'center', gap: 'var(--space-s)',
         padding: 'var(--space-s) var(--space-l)',
         borderRadius: 'var(--radius-m)',
         
         background: 'transparent',
         color: 'var(--brand-primary)',
-        fontSize: 'var(--text-sm)', fontWeight: 700,
+        fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
         cursor: 'pointer',
         transition: 'all var(--ease-fast)' }}>
         <Plus size="0.9375rem" /> Add Entry

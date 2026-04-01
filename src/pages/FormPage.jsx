@@ -149,7 +149,7 @@ export default function FormPage() {
         }
         <button
           onClick={() => navigate(`/forms/builder?slug=${formType}`)}
-          style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-xs)', color:'var(--text-primary)', background: 'var(--surface-base)', fontFamily:'var(--font-mono)', textTransform:'uppercase', letterSpacing:'0.06em' }}>
+          style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-xs)', color:'var(--text-primary)', background: 'var(--surface-base)', fontFamily:'var(--font-mono)', textTransform:'uppercase', letterSpacing: 'var(--tracking-wide)' }}>
           <PencilSimple size="0.75rem" /> Edit Form
         </button>
       </div>

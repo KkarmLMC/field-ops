@@ -15,7 +15,7 @@ const STATUS = {
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>
+    <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )
@@ -36,7 +36,7 @@ function ReportCard({ report, project, onClick }) {
         width: 40, height: 40, borderRadius: 'var(--radius-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: report.division === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)',
-        fontSize: 'var(--text-2xs)', fontWeight: 800,
+        fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)',
         color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
       </div>
@@ -45,7 +45,7 @@ function ReportCard({ report, project, onClick }) {
           <span className="text-sm-bold">
             {report.employee_name}
           </span>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4,
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-xs)',
             background: isAdvance ? 'var(--state-success-soft)' : 'var(--state-info-soft)', color: isAdvance ? 'var(--state-success-text)' : 'var(--state-info)' }}>
             {isAdvance ? 'ADVANCE' : 'EXPENSE'}
           </span>
@@ -122,7 +122,7 @@ export default function Expenses() {
               <button key={`${div}-${type}`}
                 onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                 className="expenses-0615">
-                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 4, background: div === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>{div}</span>
+                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 'var(--radius-xs)', background: div === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>{div}</span>
                 <span className="expenses-0430">{type} {type === 'advance' ? 'Request' : 'Report'}</span>
               </button>
             ))}
@@ -146,7 +146,7 @@ export default function Expenses() {
         {Object.entries(STATUS).map(([key, s]) => (
           <button key={key} onClick={() => setStatusFilter(statusFilter === key ? 'all' : key)}
             style={{ background: statusFilter === key ? s.bg : 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)', border: `1px solid ${statusFilter === key ? s.color + '40' : 'var(--border-subtle)'}`, cursor: 'pointer', textAlign: 'left' }}>
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: statusFilter === key ? s.color : 'var(--text-primary)' }}>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', color: statusFilter === key ? s.color : 'var(--text-primary)' }}>
               {reports.filter(r => r.status === key).length}
             </div>
             <div className="expenses-de37">{s.label}</div>

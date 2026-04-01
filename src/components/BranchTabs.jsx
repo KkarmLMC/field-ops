@@ -135,7 +135,7 @@ export default function BranchTabs({ active, onChange, lmCount, boltCount }) {
                 <div className="branch-card-top">
                   <div className="branch-card-name" style={{ color: text, transition: 'color 0.15s' }}>{tab.label}</div>
                   <div className={`branch-card-pill${showActive ? ' branch-card-pill--on' : ''}`}
-                    style={{ background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive, color: '#fff', transition: 'background 0.15s' }}>
+                    style={{ background: showActive ? 'rgba(255,255,255,0.2)' : tab.bgActive, color: 'var(--color-white)', transition: 'background 0.15s' }}>
                     {tab.stats.active} active
                   </div>
                 </div>

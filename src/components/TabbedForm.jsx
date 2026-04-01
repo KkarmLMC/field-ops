@@ -14,12 +14,12 @@ function FieldLabel({ field, error }) {
   return (
     <div className="mb-s">
       <div style={{
-        fontSize: 'var(--text-sm)', fontWeight: 600,
-        color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>
+        fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
+        color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 'var(--leading-normal)' }}>
         {field.label}
         {field.required && <span className="tabbed-form-5d1f">*</span>}
       </div>
-      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
+      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 'var(--leading-normal)', marginTop: 'var(--space-3xs)' }}>{field.hint}</div>}
       {error && <div className="validation-error">{error}</div>}
     </div>
   )
@@ -95,7 +95,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           </span>
           <span className="meta-text">{current.title}</span>
         </div>
-        <div style={{ height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
+        <div style={{ height: 'var(--space-2xs)', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
           <div style={{
             height: '100%', width: `${((page + 1) / total) * 100}%`,
             background: 'var(--brand-primary)', borderRadius: 'var(--radius-l)',
@@ -140,8 +140,8 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
         {!isFirst && (
           <button type="button" onClick={back} style={{
             flex: 1, padding: '0.75rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)',
-            color: 'var(--text-primary)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+            color: 'var(--text-primary)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', cursor: 'pointer' }}>
             <ArrowLeft size="1rem" /> Back
           </button>
         )}
@@ -149,8 +149,8 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           <button type="button" onClick={advance} style={{
             flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--radius-m)',
             background: 'var(--brand-primary)',
-            color: '#fff', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+            color: 'var(--color-white)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', cursor: 'pointer' }}>
             Next <ArrowRight size="1rem" />
           </button>
         ) : (
@@ -159,8 +159,8 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             
             background: submitting ? 'var(--surface-hover)' : 'var(--state-error)',
             color: submitting ? 'var(--text-muted)' : '#fff',
-            fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+            fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)',
             cursor: submitting ? 'default' : 'pointer' }}>
             {submitting ? <><SpinnerGap size="0.875rem" className="anim-spin" /> Submitting…</> : <><CheckCircle size="0.875rem" /> Submit Form</>}
           </button>

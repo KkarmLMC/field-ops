@@ -134,11 +134,11 @@ function DragGhost({ label, pos, visible }) {
       pointerEvents: 'none',
       zIndex: 9999,
       background: 'var(--brand-primary)',
-      color: '#fff',
+      color: 'var(--color-white)',
       padding: 'var(--space-s) var(--space-l)',
       borderRadius: 'var(--radius-m)',
       fontSize: 'var(--text-sm)',
-      fontWeight: 600,
+      fontWeight: 'var(--fw-semibold)',
       display: 'flex',
       alignItems: 'center',
       gap: 'var(--space-s)',
@@ -146,7 +146,7 @@ function DragGhost({ label, pos, visible }) {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis' }}>
-      <DotsSixVertical size="0.875rem" weight="bold" style={{ flexShrink: 0, opacity: 0.7 }} />
+      <DotsSixVertical size="0.875rem" weight="bold" style={{ flexShrink: 0, opacity: 'var(--opacity-soft)' }} />
       {label}
     </div>
   )
@@ -182,7 +182,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
             <DotsSixVertical size="1.125rem" weight="bold" />
           </div>
           <div className="content-body">
-            <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.1rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+            <div style={{ fontWeight: 'var(--fw-semibold)', fontSize:'var(--text-md)', marginBottom: 'var(--space-3xs)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
               {field.label || <span className="form-builder-b448">Unlabelled field</span>}
             </div>
             <div className="form-builder-6108">
@@ -258,7 +258,7 @@ function TypePickerSheet({ onPick, onClose }) {
       {/* Sheet */}
       <div className="form-builder-5c77">
         {/* Handle */}
-        <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin:'0 auto var(--space-l)' }} />
+        <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin:'0 auto var(--space-l)' }} />
         <div className="form-builder-57ac">Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
           <div key={group.label} className="mb-l">
@@ -318,7 +318,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
         <div className="flex-gap-s">
           <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color: 'var(--surface-base)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size="0.8125rem"/></button>
           <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color: 'var(--surface-base)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size="0.8125rem"/></button>
-          <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size="0.8125rem"/></button>
+          <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color: 'var(--state-error)' }}><Trash size="0.8125rem"/></button>
         </div>
       </div>
 
@@ -398,7 +398,7 @@ function FormEditor({ form, onSave, onCancel }) {
         <div className="flex-gap-s">
           <button type="button" onClick={onCancel} className="form-builder-d063">Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
-            style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-s)', background:saved?'var(--state-success)':saving?'var(--surface-hover)':'var(--brand-primary)', color:saved||!saving?'#fff':'var(--text-muted)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
+            style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-s)', background:saved?'var(--state-success)':saving?'var(--surface-hover)':'var(--brand-primary)', color:saved||!saving?'#fff':'var(--text-muted)', fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)', transition:'background var(--ease-fast)' }}>
             {saving ? <><SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }}/> Saving…</> : saved ? <><CheckCircle size="0.8125rem"/> Saved!</> : <><FloppyDisk size="0.8125rem"/> Save Changes</>}
           </button>
         </div>
@@ -417,7 +417,7 @@ function FormEditor({ form, onSave, onCancel }) {
           ].map(opt => (
             <button key={opt.value} type="button" onClick={() => setFormMode(opt.value)}
               style={{
-                flex:1, padding:'0.5rem', borderRadius:'var(--radius-s)', fontSize:'var(--text-xs)', fontWeight:600,
+                flex:1, padding:'0.5rem', borderRadius:'var(--radius-s)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
                 background: formMode===opt.value?'var(--brand-primary)':'transparent',
                 color: formMode===opt.value?'#fff':'var(--text-muted)',
                 cursor:'pointer', transition:'all var(--ease-fast)' }}>

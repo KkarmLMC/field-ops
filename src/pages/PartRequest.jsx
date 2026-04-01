@@ -182,8 +182,8 @@ export default function PartRequest() {
 
       {/* Submit */}
       <button onClick={handleSubmit} disabled={saving}
-        style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: saving ? 'var(--text-muted)' : 'var(--brand-primary)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
-        {saving ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Submitting…</> : 'Submit Part Request →'}
+        style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: saving ? 'var(--text-muted)' : 'var(--brand-primary)', color: 'var(--color-white)', fontWeight: 'var(--fw-black)', fontSize: 'var(--text-md)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+        {saving ? <><div className="spinner" style={{ borderTopColor: 'var(--color-white)' }} /> Submitting…</> : 'Submit Part Request →'}
       </button>
       <div className="part-request-f925">
         This request goes to Mission Control for management review before any parts are pulled.

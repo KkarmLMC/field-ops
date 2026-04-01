@@ -139,7 +139,7 @@ function SignatureModal({ onSave, onClose }) {
             <ArrowCounterClockwise size="0.875rem"/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
-            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--space-s)', padding: 'var(--space-m)', borderRadius:'var(--radius-m)', background: hasStrokes ? 'var(--brand-primary)' : 'var(--surface-hover)', color: hasStrokes ? '#fff' : 'var(--text-muted)', fontSize:'var(--text-md)', fontWeight:600, transition:'all var(--ease-fast)' }}>
+            style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--space-s)', padding: 'var(--space-m)', borderRadius:'var(--radius-m)', background: hasStrokes ? 'var(--brand-primary)' : 'var(--surface-hover)', color: hasStrokes ? '#fff' : 'var(--text-muted)', fontSize:'var(--text-md)', fontWeight: 'var(--fw-semibold)', transition:'all var(--ease-fast)' }}>
             <CheckCircle size="1rem" weight={hasStrokes ? 'fill' : 'regular'}/> Confirm Signature
           </button>
         </div>
@@ -239,7 +239,7 @@ function GpsField({ value, onChange, readOnly }) {
     <div className="form-engine-b5c8">
       <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder="lat, lng" style={{ flex:1 }} />
       <button type="button" onClick={capture} disabled={loading}
-        style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', background:'var(--brand-primary)', color:'#fff', fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
+        style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', background:'var(--brand-primary)', color: 'var(--color-white)', fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
         <MapPin size="0.75rem" /> {loading ? 'Getting…' : 'Get GPS'}
       </button>
       {error && <span className="form-engine-94c4">{error}</span>}
@@ -270,7 +270,7 @@ function PhotoField({ value, onChange, readOnly }) {
             <img src={src} alt={`Photo ${i+1}`} className="form-engine-556a" />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--radius-l)', background:'var(--state-error)', color:'#fff', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
+                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width: 'var(--icon-size-xs)', height: 'var(--icon-size-xs)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight: 'var(--leading-none)' }}>✕</button>
             )}
           </div>
         ))}
@@ -372,7 +372,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
   if (readOnly) {
     if (!value?.audio) return <span className="form-engine-b448">No recording</span>
     return (
-      <audio controls src={value.audio} style={{ width:'100%', height:'2.5rem' }} />
+      <audio controls src={value.audio} style={{ width:'100%', height: 'var(--icon-size-lg)' }} />
     )
   }
 
@@ -391,24 +391,24 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {/* Main action button */}
         {state === 'recording' ? (
           <button type="button" onClick={stopRecording}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--radius-l)', background:'var(--state-error)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
+            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
             <Stop size="1rem" weight="fill" />
           </button>
         ) : hasRecording ? (
           <button type="button" onClick={playPause}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--radius-l)', background:'var(--brand-primary)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--brand-primary)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
             {state === 'playing' ? <Pause size="1rem" weight="fill" /> : <Play size="1rem" weight="fill" />}
           </button>
         ) : (
           <button type="button" onClick={startRecording}
-            style={{ width:'2.5rem', height:'2.5rem', borderRadius:'var(--radius-l)', background:'var(--state-error)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
             <Microphone size="1rem" weight="fill" />
           </button>
         )}
 
         {/* Progress / waveform bar + timer */}
         <div className="content-body">
-          <div style={{ height:'0.375rem', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', overflow:'hidden', marginBottom:'var(--space-xs)' }}>
+          <div style={{ height: 'var(--space-xs)', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', overflow:'hidden', marginBottom:'var(--space-xs)' }}>
             <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--state-error)':'var(--brand-primary)', borderRadius: 'var(--radius-s)', transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
           </div>
           <div className="form-engine-82a6">
@@ -461,7 +461,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     return <input type="date" value={value||''} onChange={e=>onChange(e.target.value)} style={{ width:'100%' }} />
 
   if (type==='textarea')
-    return <textarea value={value||''} onChange={e=>onChange(e.target.value)} rows={3} style={{ width:'100%', resize:'vertical', lineHeight:1.5 }} />
+    return <textarea value={value||''} onChange={e=>onChange(e.target.value)} rows={3} style={{ width:'100%', resize:'vertical', lineHeight: 'var(--leading-relaxed)' }} />
 
   if (type==='select')
     return (
@@ -479,7 +479,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <div className="form-engine-e219">
           {[['pass','Pass','var(--state-success)'],['fail','Fail','var(--state-error)']].map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
-              style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight:600,
+              style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
                 background: pf.result===k?col:'var(--surface-base)',
                 color: pf.result===k?'#fff':'var(--text-primary)', transition:'all var(--ease-fast)' }}>
               {lbl}
@@ -501,7 +501,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <div className="form-engine-e219">
           {cfg.map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
-              style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight:600,
+              style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
                 background: okv.result===k?col:'var(--surface-base)',
                 color: okv.result===k?(k==='na'?'var(--text-primary)':'#fff'):'var(--text-primary)',
                 transition:'all var(--ease-fast)' }}>
@@ -564,7 +564,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         <input value={p.name||''}     onChange={e=>setP('name',e.target.value)}     placeholder="Name"          style={{ flex:2 }} />
         <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
         <button type="button" onClick={()=>setP('signed',!p.signed)}
-          style={{ flexShrink:0, padding:'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight:600,
+          style={{ flexShrink:0, padding:'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
             background: p.signed?'var(--state-success)':'var(--surface-base)',
             color: p.signed?'#fff':'var(--text-primary)', transition:'all var(--ease-fast)', whiteSpace:'nowrap' }}>
           {p.signed ? '✓ Signed' : 'Sign'}
@@ -639,12 +639,12 @@ export function FormField({ field, value, onChange, error, readOnly }) {
 function FieldLabel({ field, error }) {
   return (
     <div style={{ marginBottom: 'var(--space-xs)' }}>
-      <div style={{ fontSize:'var(--text-sm)', fontWeight:600, color: error?'var(--state-error)':'var(--text-primary)', marginBottom: field.hint?'0.125rem':0 }}>
+      <div style={{ fontSize:'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: error?'var(--state-error)':'var(--text-primary)', marginBottom: field.hint?'0.125rem':0 }}>
         {field.label}
         {field.required && <span className="form-engine-f0a3">*</span>}
       </div>
-      {field.hint && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', lineHeight:1.4 }}>{field.hint}</div>}
-      {error        && <div style={{ fontSize:'var(--text-xs)', color:'var(--state-error)',   marginTop:'0.125rem' }}>{error}</div>}
+      {field.hint && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', lineHeight: 'var(--leading-normal)' }}>{field.hint}</div>}
+      {error        && <div style={{ fontSize:'var(--text-xs)', color:'var(--state-error)',   marginTop: 'var(--space-3xs)' }}>{error}</div>}
     </div>
   )
 }

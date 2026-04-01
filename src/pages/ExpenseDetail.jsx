@@ -80,7 +80,7 @@ export default function ExpenseDetail() {
             <div className="page-heading">{report.employee_name}</div>
             {project && <div className="meta-text--inverse">{project.name}</div>}
           </div>
-          <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
+          <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}
           </span>
         </div>
@@ -120,13 +120,13 @@ export default function ExpenseDetail() {
       {!isAdvance && lines.length > 0 && (
         <div className="card-section">
           <div style={{ overflowX: 'auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)', minWidth: 800 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 'var(--space-2xs)', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
                 <div key={h} className="expense-detail-abfb">{h}</div>
               ))}
             </div>
             {lines.map(l => (
-              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
+              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 'var(--space-2xs)', padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
                 <div>
                   <div className="text-sm-semi">{l.vendor_description || '—'}</div>
                   {l.line_date && <div className="meta-text">{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
@@ -191,7 +191,7 @@ export default function ExpenseDetail() {
 
       {flow?.next && (
         <button onClick={advance} disabled={advancing}
-          style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: flow.bg, color: flow.color, fontWeight: 700, fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-l)' }}>
+          style={{ width: '100%', padding: 'var(--space-l)', borderRadius: 'var(--radius-m)', background: flow.bg, color: flow.color, fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-md)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-l)' }}>
           {advancing ? 'Processing…' : <><ArrowRight size="1.125rem" /> {flow.label}</>}
         </button>
       )}

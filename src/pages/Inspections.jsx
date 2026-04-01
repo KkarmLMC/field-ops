@@ -150,7 +150,7 @@ export default function Inspections() {
                   background: active ? cfg.color : 'var(--border)',
                   color: active ? '#fff' : 'var(--text-primary)',
                   borderRadius: 'var(--radius-m)', padding: '0 5px',
-                  fontSize: 'var(--text-2xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
+                  fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', lineHeight: '16px' }}>{count}</span>
               </button>
             )
           })}

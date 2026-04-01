@@ -30,16 +30,16 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       background: active ? 'var(--brand-primary)' : 'var(--surface-base)',
       cursor: 'pointer', textAlign: 'left',
       minWidth: 140 }}>
-      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: active ? '#fff' : 'var(--text-primary)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', color: active ? '#fff' : 'var(--text-primary)', marginBottom: 'var(--space-3xs)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {warehouse.name.replace(' Warehouse', '')}
       </div>
       <div style={{ fontSize: 'var(--text-xs)', color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-muted)' }}>
         {warehouse.city}, {warehouse.state}
       </div>
       <div className="stock-view-84b5">
-        {outCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--error-tint-40)' : 'var(--state-error-text)' }}>{outCount} out</span>}
-        {lowCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--warning-border)' : 'var(--state-warning-text)' }}>{lowCount} low</span>}
-        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-muted)' }}>All OK</span>}
+        {outCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', color: active ? 'var(--error-tint-40)' : 'var(--state-error-text)' }}>{outCount} out</span>}
+        {lowCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', color: active ? 'var(--warning-border)' : 'var(--state-warning-text)' }}>{lowCount} low</span>}
+        {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-muted)' }}>All OK</span>}
       </div>
     </button>
   )
@@ -114,8 +114,8 @@ export default function StockView() {
           className="stock-view-7262">
           <ArrowsLeftRight size="1rem" />
           <div>
-            <div style={{ fontWeight: 700 }}>Transfer Request</div>
-            <div style={{ fontSize: 'var(--text-sm)', opacity: 0.7, fontWeight: 400 }}>Move stock to your location</div>
+            <div style={{ fontWeight: 'var(--fw-bold)' }}>Transfer Request</div>
+            <div style={{ fontSize: 'var(--text-sm)', opacity: 'var(--opacity-soft)', fontWeight: 'var(--fw-regular)' }}>Move stock to your location</div>
           </div>
         </button>
 
@@ -123,7 +123,7 @@ export default function StockView() {
           className="stock-view-ecba">
           <Package size="1rem" />
           <div>
-            <div style={{ fontWeight: 700 }}>Part Request</div>
+            <div style={{ fontWeight: 'var(--fw-bold)' }}>Part Request</div>
             <div className="stock-view-9141">Submit for approval</div>
           </div>
         </button>
@@ -136,7 +136,7 @@ export default function StockView() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search part name or SKU…"
-          style={{ width: '100%', paddingLeft: 34, paddingRight: search ? 34 : 12 }}
+          style={{ width: '100%', paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }}
         />
         {search && (
           <button onClick={() => setSearch('')}
@@ -172,7 +172,7 @@ export default function StockView() {
           {/* Column headers */}
           <div className="stock-view-171c">
             {['Part', 'Stock', ''].map((h, i) => (
-              <div key={i} style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
+              <div key={i} style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-bold)', color: 'var(--surface-base)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
           </div>
 
@@ -181,7 +181,7 @@ export default function StockView() {
             const isLow = l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level
             return (
               <div key={l.id} style={{
-                display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: '0.5rem',
+                display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--space-s)',
                 padding: 'var(--space-m) var(--space-l)',
                 borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-default)' : 'none',
                 alignItems: 'center',
@@ -194,7 +194,7 @@ export default function StockView() {
                     <div className="text-xs-mono">{l.parts.sku}</div>
                   )}
                 </div>
-                <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 800, color: isOut ? 'var(--state-error-text)' : isLow ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>
+                <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-black)', color: isOut ? 'var(--state-error-text)' : isLow ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>
                   {l.quantity_on_hand.toLocaleString()}
                 </div>
                 <div className="stock-view-1451">

@@ -55,10 +55,10 @@ function StagePill({ stageKey, count, active, onClick }) {
         border: 'none',
         cursor: 'pointer', textAlign: 'center', transition: 'all 0.14s' }}
     >
-      <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: active ? cfg.color : 'var(--text-primary)', fontFamily: 'var(--font-mono)', lineHeight: 1 }}>
+      <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 'var(--fw-bold)', color: active ? cfg.color : 'var(--text-primary)', fontFamily: 'var(--font-mono)', lineHeight: 'var(--leading-none)' }}>
         {count}
       </div>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: active ? cfg.color : 'var(--text-primary)', marginTop: 3 }}>
+      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: active ? cfg.color : 'var(--text-primary)', marginTop: 'var(--space-2xs)' }}>
         {cfg.short || cfg.label}
       </div>
     </button>
@@ -88,13 +88,13 @@ function MgmtRow({ p, navigate }) {
       </div>
 
       {/* Info */}
-      <div className="dash-job-info" style={{ gap: 3 }}>
+      <div className="dash-job-info" style={{ gap: 'var(--space-3xs)' }}>
         <div className="installations-d7ff">
           <div className="dash-job-name">{p.name}</div>
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
-              fontSize: 'var(--text-2xs)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-              background: 'var(--state-info)', color: '#fff', padding: '2px 5px', borderRadius: 'var(--radius-xs)',
+              fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase',
+              background: 'var(--state-info)', color: 'var(--color-white)', padding: '2px 5px', borderRadius: 'var(--radius-xs)',
               flexShrink: 0 }}>
               Review
             </span>
@@ -157,8 +157,8 @@ function FieldRow({ p, navigate }) {
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
-              marginLeft: 6, fontSize: 'var(--text-2xs)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
-              background: 'var(--brand-primary)', color: '#fff', padding: '1px 5px', borderRadius: 'var(--radius-xs)' }}>
+              marginLeft: 'var(--space-xs)', fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)',
+              background: 'var(--brand-primary)', color: 'var(--color-white)', padding: '1px 5px', borderRadius: 'var(--radius-xs)' }}>
               NFPA {p.nfpa_class}
             </span>
           )}
@@ -169,7 +169,7 @@ function FieldRow({ p, navigate }) {
             <div className="installations-e0b1">
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
-            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: cfg.color, fontWeight: 'var(--fw-semibold)' }}>{p.progress}%</span>
           </div>
         )}
         <div className="meta-text meta-text--mt">
@@ -381,8 +381,8 @@ export default function Installations() {
               {stageFilter !== 'all' && (
                 <button
                   style={{
-                    background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)',
-                    padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 600,
+                    background: 'var(--overlay-white-soft)', borderRadius: 'var(--radius-s)',
+                    padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
                     color: 'inherit', letterSpacing: '0.02em' }}
                   onClick={() => setStageFilter('all')}
                 >

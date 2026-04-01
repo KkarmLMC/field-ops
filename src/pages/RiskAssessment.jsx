@@ -96,8 +96,8 @@ function ResultBadge({ result, ratio }) {
     <span style={{
       display:'inline-flex', alignItems:'center', gap:'0.25rem',
       padding:'0.1875rem 0.625rem', borderRadius:'var(--radius-s)',
-      fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight:600,
-      letterSpacing:'0.05em', textTransform:'uppercase',
+      fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
+      letterSpacing: 'var(--tracking-wide)', textTransform:'uppercase',
       background: req ? 'var(--red-soft)' : 'var(--state-success-soft)',
       color:       req ? 'var(--state-error)'     : 'var(--state-success)' }}>
       {req ? <Warning size="0.6875rem" /> : <CheckCircle size="0.6875rem" />}
@@ -243,7 +243,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" style={{ width:'100%' }} />
           </div>
           <button onClick={handleGPS} disabled={locating} style={{
-            display:'flex', alignItems:'center', gap:'0.5rem',
+            display:'flex', alignItems:'center', gap: 'var(--space-s)',
             padding:'0.5rem 0.75rem', borderRadius:'var(--radius-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--state-info)', whiteSpace:'nowrap',
             flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
@@ -251,7 +251,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
         </div>
-        <p style={{ fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:1.5, margin:0 }}>
+        <p style={{ fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight: 'var(--leading-relaxed)', margin:0 }}>
           Typical: Florida 6–9 · Gulf Coast 4–7 · Southeast 3–5 · Northeast 1–3 · Texas 3–6
         </p>
       </CardSection>
@@ -304,7 +304,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
                 ? <Warning size="1.25rem" style={{ color:'var(--state-error)' }} />
                 : <CheckCircle size="1.25rem" style={{ color:'var(--state-success)' }} />
               }
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-xl)', fontWeight:700, color: result.required ? 'var(--state-error)' : 'var(--state-success)' }}>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-xl)', fontWeight: 'var(--fw-bold)', color: result.required ? 'var(--state-error)' : 'var(--state-success)' }}>
                 {result.required ? 'LPS Required' : 'LPS Not Required'}
               </span>
             </div>
@@ -317,14 +317,14 @@ function NewAssessmentForm({ onSave, onCancel }) {
               { label:'Nc (Tolerable)',     val: result.Nc.toExponential(2)    },
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
-              <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--radius-s)', padding:'0.5rem 0.625rem' }}>
+              <div key={label} style={{ background: 'var(--overlay-bg-subtle)', borderRadius:'var(--radius-s)', padding:'0.5rem 0.625rem' }}>
                 <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--space-xs)' }}>{label}</div>
                 <div className="risk-assessment-af70">{val}</div>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize:'var(--text-sm)', color:'var(--text-primary)', marginBottom:'var(--space-m)', lineHeight:1.5 }}>
+          <p style={{ fontSize:'var(--text-sm)', color:'var(--text-primary)', marginBottom:'var(--space-m)', lineHeight: 'var(--leading-relaxed)' }}>
             {result.required
               ? `Nd/Nc = ${result.ratio.toFixed(3)} ≥ 1.0 — Expected strikes exceed tolerable risk. LPS recommended per NFPA 780.`
               : `Nd/Nc = ${result.ratio.toFixed(3)} < 1.0 — Within tolerable risk. LPS is optional but may still be advisable.`
@@ -334,10 +334,10 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <div className="flex-gap-s">
             <button onClick={handleSave} disabled={saving} style={{
               flex:1, padding:'0.625rem', borderRadius:'var(--radius-s)',
-              background:'var(--state-error)', color:'#fff',
-              fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight:600,
-              letterSpacing:'0.06em', textTransform:'uppercase',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem' }}>
+              background:'var(--state-error)', color: 'var(--color-white)',
+              fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
+              letterSpacing: 'var(--tracking-wide)', textTransform:'uppercase',
+              display:'flex', alignItems:'center', justifyContent:'center', gap: 'var(--space-s)' }}>
               {saving ? <SpinnerGap size="0.8125rem" style={{ animation:'spin 1s linear infinite' }} /> : null}
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
@@ -359,13 +359,13 @@ function AssessmentRow({ a }) {
   return (
     <div style={{ ...S.row, cursor:'default' }}>
       <div style={{
-        width:'2.25rem', height:'2.25rem', borderRadius:'var(--radius-m)', flexShrink:0,
+        width: 'var(--icon-size-md)', height: 'var(--icon-size-md)', borderRadius:'var(--radius-m)', flexShrink:0,
         background: req ? 'var(--red-soft)' : 'var(--state-success-soft)',
         display:'flex', alignItems:'center', justifyContent:'center' }}>
         {req ? <Warning size="1rem" style={{ color:'var(--state-error)' }} /> : <CheckCircle size="1rem" style={{ color:'var(--state-success)' }} />}
       </div>
       <div className="content-body">
-        <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+        <div style={{ fontWeight: 'var(--fw-semibold)', fontSize:'var(--text-md)', marginBottom: 'var(--space-3xs)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
         <div className="risk-assessment-34d3">
@@ -488,7 +488,7 @@ export default function RiskAssessment() {
           }
         </div>
 
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 1.6, padding: '0.625rem 0.875rem', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-loose)', padding: '0.625rem 0.875rem', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
           <span className="risk-assessment-81f3">NFPA 780 Annex L · </span>
           Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
         </p>

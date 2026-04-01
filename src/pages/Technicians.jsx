@@ -47,16 +47,16 @@ export default function Technicians() {
               <div style={{ padding: 'var(--space-m)', borderBottom: techJobs.length > 0 ? '1px solid var(--border-default)' : 'none' }}>
                 <div className="technicians-8b5b">
                   <div style={{
-                    width: '2.5rem', height: '2.5rem', borderRadius: '0.375rem',
+                    width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius: '0.375rem',
                     background: tech.status === 'field' ? 'var(--state-warning-soft)' : 'var(--state-info-soft)',
                     color: tech.status === 'field' ? 'var(--state-warning-text)' : 'var(--state-info)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
+                    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)' }}>
                     {tech.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div className="content-body">
                     <div className="technicians-96f6">{tech.name}</div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: '0.125rem' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 'var(--space-3xs)' }}>
                       {tech.license} · {tech.phone}
                     </div>
                   </div>
@@ -76,7 +76,7 @@ export default function Technicians() {
                     <div
                       key={job.id}
                       className="project-item"
-                      style={{ padding: '8px 0', gap: '0.5rem' }}
+                      style={{ padding: '8px 0', gap: 'var(--space-s)' }}
                       onClick={() => navigate(`/installations/${job.id}`)}
                     >
                       <div className="content-body">

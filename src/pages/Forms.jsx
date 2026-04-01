@@ -34,7 +34,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
-                <div style={{ width:8, height:8, borderRadius:'50%', background: form.color || bc.bgActive, flexShrink:0 }} />
+                <div style={{ width:8, height:8, borderRadius: 'var(--radius-round)', background: form.color || bc.bgActive, flexShrink:0 }} />
                 <div className="content-body">
                   <div className="project-name">{form.title}</div>
                   {form.description && <div className="project-meta">{form.description}</div>}
@@ -51,7 +51,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                       key={sub.slug}
                       onClick={() => onStart(sub.slug)}
                       style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
-                        display:'flex', alignItems:'center', gap:'0.5rem',
+                        display:'flex', alignItems:'center', gap: 'var(--space-s)',
                         padding: '0.625rem var(--space-l) 0.625rem 2.75rem',
                         borderBottom:'1px solid var(--border-default)',
                         transition:'background var(--ease-fast)' }}

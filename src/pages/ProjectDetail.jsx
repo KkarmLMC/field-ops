@@ -54,7 +54,7 @@ function InfoRow({ icon: Icon, label, value }) {
     <div className="project-detail-2e0d">
       <Icon size="0.875rem" className="project-detail-dafa" />
       <div>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-muted)', letterSpacing: 'var(--tracking-tight)', marginBottom: 'var(--space-3xs)' }}>{label}</div>
         <div className="project-detail-3a68">{value}</div>
       </div>
     </div>
@@ -79,7 +79,7 @@ function StagePipeline({ stage }) {
                 <div style={{
                   width:  isCurrent ? 14 : 10,
                   height: isCurrent ? 14 : 10,
-                  borderRadius: '50%',
+                  borderRadius: 'var(--radius-round)',
                   background: isCurrent ? cfg.color : isDone ? 'var(--state-success)' : 'var(--border)',
                   border: 'none',
                   transition: 'all 0.2s',
@@ -102,9 +102,9 @@ function StagePipeline({ stage }) {
         })}
       </div>
       {isOffPipeline && (
-        <div style={{ marginTop: 8 }}>
+        <div style={{ marginTop: 'var(--space-s)' }}>
           <span style={{
-            fontSize: 'var(--text-xs)', fontWeight: 700, color: STAGE_CFG[stage]?.color || 'var(--text-muted)',
+            fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: STAGE_CFG[stage]?.color || 'var(--text-muted)',
             background: STAGE_CFG[stage]?.bg || 'var(--surface-base)',
             padding: '3px 10px', borderRadius: 'var(--radius-m)' }}>
             {STAGE_CFG[stage]?.label || stage}
@@ -205,7 +205,7 @@ export default function ProjectDetail() {
         <div className="empty-icon">🔍</div>
         <div className="empty-title">Project not found</div>
         <div className="empty-desc">"{id}" could not be found.</div>
-        <button className="btn btn-primary" style={{ marginTop: 12 }} onClick={() => navigate('/installations')}>
+        <button className="btn btn-primary" style={{ marginTop: 'var(--space-m)' }} onClick={() => navigate('/installations')}>
           Back to Installations
         </button>
       </div>
@@ -233,7 +233,7 @@ export default function ProjectDetail() {
             <div className="project-detail-0ee5">
               <div className="project-detail-d7ff">
                 <TypeIcon size="0.875rem" style={{ color: stageCfg.color }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: stageCfg.color }}>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
                 </span>
               </div>
@@ -246,7 +246,7 @@ export default function ProjectDetail() {
               </div>
             </div>
             {/* Project name */}
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 4 }}>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', lineHeight: 'var(--leading-tight)', marginBottom: 'var(--space-2xs)' }}>
               {project.name}
             </div>
             <div className="meta-text">
@@ -265,7 +265,7 @@ export default function ProjectDetail() {
             <div style={{ padding: '0 14px 14px' }}>
               <div className="project-detail-d4b0">
                 <span className="project-detail-6fe4">Progress</span>
-                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: stageCfg.color, fontWeight: 700 }}>
+                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: stageCfg.color, fontWeight: 'var(--fw-bold)' }}>
                   {project.progress}%
                 </span>
               </div>
@@ -285,7 +285,7 @@ export default function ProjectDetail() {
               padding: '8px 12px', borderRadius: 'var(--radius-m)',
               background: cfCfg.bg, border: `1px solid ${cfCfg.color}33`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: cfCfg.color }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: cfCfg.color }}>
                 Completion Form: {cfCfg.label}
               </span>
               {cfStatus === 'submitted' && (
@@ -326,11 +326,11 @@ export default function ProjectDetail() {
             {tech ? (
               <div className="project-detail-8b5b">
                 <div style={{
-                  width: '2.5rem', height: '2.5rem', borderRadius: '0.5rem',
+                  width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius: '0.5rem',
                   background: tech.status === 'field' ? 'var(--state-warning-soft)' : 'var(--state-info-soft)',
                   color:      tech.status === 'field' ? 'var(--state-warning-text)' : 'var(--state-info)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
+                  fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)' }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="content-body">
@@ -380,7 +380,7 @@ export default function ProjectDetail() {
             <div className="list-card__header">
               <span className="list-card__title"><NotePencil size="0.875rem" /> Notes</span>
             </div>
-            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 'var(--leading-loose)' }}>
               {project.notes}
             </div>
           </div>
@@ -406,7 +406,7 @@ export default function ProjectDetail() {
                     <span className="text-sm-bold">
                       {s.carrier || 'Warehouse Shipment'}
                     </span>
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-s)',
                       background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-info-soft)',
                       color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }}>
                       {s.status === 'shipped' ? 'Shipped' : 'Pending'}
@@ -429,7 +429,7 @@ export default function ProjectDetail() {
                 <>
                   <div className="project-detail-d4c2">
                     <AirplaneTilt size="0.75rem" weight="fill" style={{ color: 'var(--state-warning-text)' }} />
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--state-warning-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--state-warning-text)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' }}>
                       Drop Ship Deliveries
                     </span>
                   </div>
@@ -440,7 +440,7 @@ export default function ProjectDetail() {
                         <span className="text-sm-bold">
                           {s.carrier || 'PLP Direct'} — Drop Ship
                         </span>
-                        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-s)',
                           background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-warning-soft)',
                           color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning-text)' }}>
                           {s.status === 'shipped' ? 'Delivered' : 'Awaiting PLP'}
@@ -534,7 +534,7 @@ export default function ProjectDetail() {
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                   <div className="flex-gap-s">
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
+                    <div style={{ width: 8, height: 8, borderRadius: 'var(--radius-round)', background: r.color, flexShrink: 0 }} />
                     <span className="text-sm-bold">{r.label}</span>
                   </div>
                   <span className="text-sm-bold">
@@ -552,14 +552,14 @@ export default function ProjectDetail() {
               const isPositive = margin >= 0
               return (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)', background: isPositive ? 'var(--state-success-soft)' : 'var(--state-error-soft)', borderTop: '2px solid var(--border-default)' }}>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
                   <div className="text-right">
-                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
+                    <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                       ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? 'var(--state-success-text)' : 'var(--error-alt)', fontWeight: 600 }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: isPositive ? 'var(--state-success-text)' : 'var(--error-alt)', fontWeight: 'var(--fw-semibold)' }}>
                       {isPositive ? '+' : '-'}{Math.abs(marginPct)}%
                     </div>
                   </div>

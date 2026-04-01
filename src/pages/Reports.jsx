@@ -65,7 +65,7 @@ function TypePill({ typeKey, count, active, onClick }) {
       <span style={{
         background: active ? cfg.color : 'var(--border)',
         color: active ? '#fff' : 'var(--text-primary)',
-        borderRadius: 'var(--radius-m)', padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '16px' }}>{count}</span>
+        borderRadius: 'var(--radius-m)', padding: '0 5px', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', lineHeight: '16px' }}>{count}</span>
     </button>
   )
 }
@@ -87,7 +87,7 @@ function ReportRow({ r }) {
           {r.project_name}
         </div>
         <div className="reports-d9a5">
-          <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 4, fontWeight: 600, fontSize: 'var(--text-xs)' }}>{type.label}</span>
+          <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 'var(--radius-xs)', fontWeight: 'var(--fw-semibold)', fontSize: 'var(--text-xs)' }}>{type.label}</span>
           <span>{r.job_number}</span>
           <span>·</span>
           <span>{r.submitted_by}</span>
@@ -98,7 +98,7 @@ function ReportRow({ r }) {
 
       {/* Status badge */}
       <span style={{
-        fontSize: 'var(--text-xs)', fontWeight: 600, padding: '3px 8px', borderRadius: 'var(--radius-s)', flexShrink: 0,
+        fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', padding: '3px 8px', borderRadius: 'var(--radius-s)', flexShrink: 0,
         background: status.bg, color: status.color, whiteSpace: 'nowrap' }}>
         {status.label}
       </span>
@@ -216,13 +216,13 @@ export default function Reports() {
             <span style={{
               background: activeStatus === key ? cfg.color : 'var(--border)',
               color: activeStatus === key ? '#fff' : 'var(--text-primary)',
-              borderRadius: 'var(--radius-m)', padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 700, lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
+              borderRadius: 'var(--radius-m)', padding: '0 4px', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', lineHeight: '15px' }}>{statusCounts[key] || 0}</span>
           </button>
         ))}
       </div>
 
       {/* Archive list */}
-      <div className="card list-card" style={{ marginTop: 4 }}>
+      <div className="card list-card" style={{ marginTop: 'var(--space-2xs)' }}>
         <div
           className="list-card__header"
           style={{ background: bc.bgActive, color: bc.textActive, transition: 'background 0.2s ease' }}

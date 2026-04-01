@@ -38,11 +38,11 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
   return (
     <>
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 299, background: 'rgba(0,0,0,0.5)', animation: 'anim-fade-in 0.15s ease' }} />
-      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 300, background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 'var(--z-sheet-overlay)', background: 'var(--overlay-bg)', animation: 'anim-fade-in 0.15s ease' }} />
+      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 'var(--z-sheet)', background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Header */}
         <div className="inventory-43ec">
-          <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-m)' }} />
+          <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-m)' }} />
           <div className="inventory-d4f3">
             <div className="inventory-860f">Add Warehouse</div>
             <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -122,8 +122,8 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       {/* Header — clickable, goes to warehouse detail */}
       <button onClick={onPress} className="inventory-4e80">
         <div className="flex-gap-m">
-          <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--radius-l)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Buildings size="1.25rem" style={{ color: '#fff' }} />
+          <div style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius: 'var(--radius-l)', background: 'var(--overlay-white-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Buildings size="1.25rem" style={{ color: 'var(--color-white)' }} />
           </div>
           <div>
             <div className="page-heading--inverse">{warehouse.name}</div>
@@ -153,11 +153,11 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' },
         ].map(s => (
           <div key={s.label} className="inventory-efee">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)', color: s.color, marginBottom: 'var(--space-2xs)' }}>
               <s.Icon size="0.8125rem" />
               <span className="text-xs-semi">{s.label}</span>
             </div>
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.value}</div>
+            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', color: s.color }}>{s.value}</div>
           </div>
         ))}
       </div>
@@ -335,7 +335,7 @@ export default function Inventory() {
                 { label: 'Published', count: published.length, color: published.length > 0 ? 'var(--state-info)' : 'var(--grey-base)', bg: published.length > 0 ? 'var(--state-info-soft)' : 'var(--surface-base)' },
               ].map(s => (
                 <div key={s.label} style={{ background: s.bg, padding: 'var(--space-m) var(--space-l)' }}>
-                  <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.count}</div>
+                  <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', color: s.color }}>{s.count}</div>
                   <div className="inventory-de37">{s.label}</div>
                 </div>
               ))}
@@ -346,7 +346,7 @@ export default function Inventory() {
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                 className="inventory-fbee">
                 <div style={{
-                  fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
+                  fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 'var(--radius-xs)', flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)',
                   color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
@@ -406,10 +406,10 @@ export default function Inventory() {
             >
               <DotsSixVertical size="1.375rem" className="row-item__caret" />
               <div style={{
-                width: '2.5rem', height: '2.5rem', borderRadius: 'var(--radius-l)',
+                width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius: 'var(--radius-l)',
                 background: 'var(--brand-primary)', display: 'flex', alignItems: 'center',
                 justifyContent: 'center', flexShrink: 0 }}>
-                <Buildings size="1.125rem" style={{ color: '#fff' }} />
+                <Buildings size="1.125rem" style={{ color: 'var(--color-white)' }} />
               </div>
               <div className="content-body">
                 <div className="inventory-11de">{wh.name}</div>
@@ -419,7 +419,7 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', padding: '2px 10px' }}>
+              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', padding: '2px 10px' }}>
                 #{idx + 1}
               </div>
             </div>
