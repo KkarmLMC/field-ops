@@ -344,7 +344,7 @@ export default function Profile() {
 
         {editingName ? (
           <div style={{ marginBottom: 'var(--space-m)' }}>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>Full Name</label>
+            <label className="form-field__label">Full Name</label>
             <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
               <input value={nameVal} onChange={e => setNameVal(e.target.value)} autoFocus style={{ flex: 1 }} onKeyDown={e => e.key === 'Enter' && saveName()} />
               <Button onClick={saveName} disabled={nameSaving}>
@@ -465,11 +465,11 @@ export default function Profile() {
         {showPwForm ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>New Email (optional)</label>
+              <label className="form-field__label">New Email (optional)</label>
               <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="Leave blank to keep current" />
             </div>
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>New Password</label>
+              <label className="form-field__label">New Password</label>
               <div style={{ position: 'relative' }}>
                 <input type={showPw ? 'text' : 'password'} value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Minimum 8 characters" style={{ paddingRight: 'var(--sp-10)' }} />
                 <button onClick={() => setShowPw(v => !v)}

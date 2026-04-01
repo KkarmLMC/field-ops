@@ -10,7 +10,7 @@ import { db } from '../lib/supabase.js'
 // ─── Shared label ─────────────────────────────────────────────────────────────
 function Label({ children }) {
   return (
-    <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>
+    <label className="form-field__label">
       {children}
     </label>
   )
