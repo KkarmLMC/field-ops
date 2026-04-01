@@ -109,21 +109,21 @@ export default function BottomNav() {
   if (shouldHide(location.pathname)) return null
 
   return (
-    <nav className="bottom-nav">
-      <div className="bottom-nav__track" ref={trackRef}>
+    <nav className="app-footer">
+      <div className="app-footer__track" ref={trackRef}>
         {items.map(item => {
           const active = isActive(item, location.pathname)
           return (
             <button
               key={item.id}
-              className={`bottom-nav__tab ${active ? 'bottom-nav__tab--active' : ''}`}
+              className={`app-footer__tab ${active ? 'app-footer__tab--active' : ''}`}
               onClick={() => navigate(item.path)}
             >
-              <div className="bottom-nav__indicator" />
-              <div className="bottom-nav__icon">
+              <div className="app-footer__indicator" />
+              <div className="app-footer__icon">
                 <item.Icon size="1.375rem" weight={active ? 'fill' : 'regular'} />
               </div>
-              <span className="bottom-nav__label">{item.label}</span>
+              <span className="app-footer__label">{item.label}</span>
             </button>
           )
         })}

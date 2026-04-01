@@ -263,9 +263,9 @@ export default function App() {
           </Routes>
           </Suspense>
         </PageTransition>
+        <BottomNav />
+        <PageSubNav />
       </div>
-      <BottomNav />
-      <PageSubNav />
     </div>
   )
 }
