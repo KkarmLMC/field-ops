@@ -68,7 +68,7 @@ export default function Technicians() {
 
               {/* Assigned jobs */}
               {techJobs.length > 0 && (
-                <div style={{ padding: '8px 14px 10px' }}>
+                <div style={{ padding: 'var(--space-s) var(--space-l) var(--space-m)' }}>
                   <div className="technicians-c65e">
                     Assigned Jobs ({techJobs.length})
                   </div>
@@ -76,12 +76,12 @@ export default function Technicians() {
                     <div
                       key={job.id}
                       className="project-item"
-                      style={{ padding: '8px 0', gap: 'var(--space-s)' }}
+                      style={{ padding: 'var(--space-s) 0', gap: 'var(--space-s)' }}
                       onClick={() => navigate(`/installations/${job.id}`)}
                     >
                       <div className="content-body">
                         <div className="technicians-ae4a">{job.name}</div>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>{job.job_number}</div>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-2xs)', color: 'var(--text-muted)' }}>{job.job_number}</div>
                       </div>
                       <span className={`badge badge-${job.stage === 'in-progress' ? 'active' : job.stage === 'complete' ? 'completed' : job.stage}`}>{job.stage}</span>
                     </div>

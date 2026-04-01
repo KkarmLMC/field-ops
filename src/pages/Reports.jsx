@@ -87,7 +87,7 @@ function ReportRow({ r }) {
           {r.project_name}
         </div>
         <div className="reports-d9a5">
-          <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 'var(--radius-xs)', fontWeight: 'var(--fw-semibold)', fontSize: 'var(--text-xs)' }}>{type.label}</span>
+          <span style={{ background: type.bg, color: type.color, padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)', fontWeight: 'var(--fw-semibold)', fontSize: 'var(--text-xs)' }}>{type.label}</span>
           <span>{r.job_number}</span>
           <span>·</span>
           <span>{r.submitted_by}</span>

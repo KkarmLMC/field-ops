@@ -80,7 +80,7 @@ export default function ExpenseDetail() {
             <div className="page-heading">{report.employee_name}</div>
             {project && <div className="meta-text--inverse">{project.name}</div>}
           </div>
-          <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', flexShrink: 0, textTransform: 'capitalize' }}>
+          <span style={{ padding: 'var(--space-2xs) var(--space-m)', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}
           </span>
         </div>

@@ -451,7 +451,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
       <div className="dfl-typeahead-input-wrap" ref={inputWrapRef}>
         <input
           className="dfl-input"
-          style={{ paddingRight: '2rem' }}
+          style={{ paddingRight: 'var(--space-3xl)' }}
           placeholder={placeholder}
           value={query}
           onChange={e => { setQuery(e.target.value); onChange(''); openDropdown() }}
@@ -472,7 +472,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               className={`dfl-typeahead-item ${value === opt.value ? 'selected' : ''}`}
               onMouseDown={() => select(opt)}
             >
-              <span style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.875rem' }}>{opt.label}</span>
+              <span style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)' }}>{opt.label}</span>
               {value === opt.value && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-a4aa" />}
             </li>
           ))}

@@ -15,7 +15,7 @@ const STATUS = {
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.draft
   return (
-    <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>
+    <span style={{ padding: 'var(--space-3xs) var(--space-s)', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>
       {s.label}
     </span>
   )
@@ -45,7 +45,7 @@ function ReportCard({ report, project, onClick }) {
           <span className="text-sm-bold">
             {report.employee_name}
           </span>
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-xs)',
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)',
             background: isAdvance ? 'var(--state-success-soft)' : 'var(--state-info-soft)', color: isAdvance ? 'var(--state-success-text)' : 'var(--state-info)' }}>
             {isAdvance ? 'ADVANCE' : 'EXPENSE'}
           </span>
@@ -122,7 +122,7 @@ export default function Expenses() {
               <button key={`${div}-${type}`}
                 onClick={() => { setShowNewMenu(false); navigate(`/expenses/new?type=${type}&division=${div}`) }}
                 className="expenses-0615">
-                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 'var(--radius-xs)', background: div === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>{div}</span>
+                <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)', background: div === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)', color: div === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>{div}</span>
                 <span className="expenses-0430">{type} {type === 'advance' ? 'Request' : 'Report'}</span>
               </button>
             ))}

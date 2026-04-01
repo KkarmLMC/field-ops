@@ -1805,8 +1805,8 @@ textarea,
 .pin-pad { display: flex; flex-direction: column; align-items: center; gap: var(--space-l); }
 .pin-pad__dots { display: flex; gap: var(--space-m); height: 20px; align-items: center; }
 .pin-pad__dot { border-radius: var(--radius-round); transition: all 0.12s; }
-.pin-pad__dot--empty { width: 14px; height: 14px; }
-.pin-pad__dot--filled { width: 16px; height: 16px; }
+.pin-pad__dot--empty { width: var(--space-l); height: var(--space-l); }
+.pin-pad__dot--filled { width: var(--space-l); height: var(--space-l); }
 .pin-pad__hint { font-size: var(--text-xs); font-weight: var(--fw-bold); text-align: center; }
 .pin-pad__grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -1856,7 +1856,7 @@ textarea,
 
 /* --- Avatar Circle --- */
 .avatar {
-  width: 38px; height: 38px; border-radius: var(--radius-round);
+  width: var(--icon-size-md); height: var(--icon-size-md); border-radius: var(--radius-round);
   background: var(--brand-primary);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
@@ -1896,7 +1896,7 @@ textarea,
 .um-user-name { font-weight: var(--fw-bold); font-size: var(--text-sm); }
 .um-user-email { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3xs); }
 .um-self-badge {
-  font-size: var(--text-xs); font-weight: var(--fw-semibold); padding: 1px 5px;
+  font-size: var(--text-xs); font-weight: var(--fw-semibold); padding: var(--space-3xs) var(--space-xs);
   border-radius: var(--radius-xs); background: var(--surface-base); color: var(--text-muted);
 }
 .um-edit-btn {
@@ -2049,7 +2049,7 @@ textarea,
 .mb-l { margin-bottom: var(--space-l); }
 
 /* --- Round 6 --- */
-.spinner--xs { width: 16px; height: 16px; border-width: 2px; }
+.spinner--xs { width: var(--space-l); height: var(--space-l); border-width: 2px; }
 .text-error-marker { color: var(--state-error); margin-left: var(--space-2xs); }
 .badge--brand { background: var(--brand-soft); color: var(--brand-primary); }
 
@@ -3042,7 +3042,7 @@ textarea,
 
 .filter-chip.active {
   background: #000000;
-  border-color: #000000;
+  border-color: var(--color-black);
   color: #ffffff;
   font-weight: var(--fw-semibold);
 }
@@ -4459,10 +4459,10 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .so-list-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-m) var(--space-l); border-bottom: 1px solid var(--border-subtle); }
 .so-list-header__left { display: flex; align-items: center; gap: var(--space-s); }
-.so-list-header__count { font-size: var(--text-xs); color: var(--text-muted); background: var(--surface-hover); padding: 2px 8px; border-radius: var(--radius-s); font-weight: var(--fw-semibold); }
+.so-list-header__count { font-size: var(--text-xs); color: var(--text-muted); background: var(--surface-hover); padding: var(--space-3xs) var(--space-s); border-radius: var(--radius-s); font-weight: var(--fw-semibold); }
 .so-list-header__link { font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--brand-primary); background: none; cursor: pointer; padding: 0; }
 
-.division-badge { font-size: var(--text-2xs); font-weight: var(--fw-black); padding: 2px 6px; border-radius: var(--radius-xs); flex-shrink: 0; }
+.division-badge { font-size: var(--text-2xs); font-weight: var(--fw-black); padding: var(--space-3xs) var(--space-xs); border-radius: var(--radius-xs); flex-shrink: 0; }
 .division-badge--bolt { background: #FFF1F2; color: var(--state-error-text); }
 .division-badge--lm { background: var(--state-info-soft); color: var(--state-info); }
 
@@ -5400,7 +5400,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .installations-c392 {
   font-size: var(--text-sm);
-  padding: 8px 14px;
+  padding: var(--space-s) var(--space-l);
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -5409,7 +5409,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .installations-06cd {
   font-size: var(--text-sm);
-  padding: 8px 14px;
+  padding: var(--space-s) var(--space-l);
   white-space: nowrap;
 }
 
@@ -5421,7 +5421,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .installations-e74b {
-  padding: 10px 14px;
+  padding: var(--space-m) var(--space-l);
   border-bottom: 1px solid var(--border-default);
   display: flex;
   gap: 10px;
@@ -5479,7 +5479,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .installations-5086 {
-  padding: 8px 14px;
+  padding: var(--space-s) var(--space-l);
   border-bottom: 1px solid var(--border-default);
   display: flex;
   align-items: center;
@@ -5571,7 +5571,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
   gap: var(--space-2xs);
   background: var(--warning-soft);
   border-radius: var(--radius-l);
-  padding: 3px 10px;
+  padding: var(--space-2xs) var(--space-m);
 }
 
 .inventory-9a8a {
@@ -6086,7 +6086,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .part-detail-ffc0 {
-  padding: 3px 10px;
+  padding: var(--space-2xs) var(--space-m);
   border-radius: var(--radius-s);
   font-size: var(--text-sm);
   font-weight: var(--fw-bold);
@@ -6322,7 +6322,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
   margin-left: var(--space-xs);
   background: rgba(255,255,255,0.15);
   border-radius: var(--radius-xs);
-  padding: 1px 6px;
+  padding: var(--space-3xs) var(--space-xs);
 }
 
 .parts-catalog-4c92 {
@@ -6632,7 +6632,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .project-detail-0620 {
   font-size: var(--text-xs);
-  padding: 3px 10px;
+  padding: var(--space-2xs) var(--space-m);
 }
 
 .project-detail-6045 {
@@ -7081,7 +7081,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .warehouse-detail-ffc0 {
-  padding: 3px 10px;
+  padding: var(--space-2xs) var(--space-m);
   border-radius: var(--radius-s);
   font-size: var(--text-sm);
   font-weight: var(--fw-bold);
@@ -7840,8 +7840,8 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
+  width: var(--space-l);
+  height: var(--space-l);
 }
 
 .project-picker-5de7 {
@@ -7874,7 +7874,7 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
   margin-left: auto;
   font-size: var(--text-xs);
   font-weight: var(--fw-semibold);
-  padding: 1px 6px;
+  padding: var(--space-3xs) var(--space-xs);
   border-radius: var(--radius-xs);
   background: var(--surface-base);
   color: var(--text-muted);

@@ -258,7 +258,7 @@ function TypePickerSheet({ onPick, onClose }) {
       {/* Sheet */}
       <div className="form-builder-5c77">
         {/* Handle */}
-        <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin:'0 auto var(--space-l)' }} />
+        <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin: '0 auto var(--space-l)' }} />
         <div className="form-builder-57ac">Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
           <div key={group.label} className="mb-l">
@@ -493,7 +493,7 @@ export default function FormBuilder() {
         ) : forms.length === 0 ? (
           <div className="empty"><div className="empty-desc">No forms found in database.</div></div>
         ) : forms.map(form => (
-          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: '0.875rem var(--space-l)', borderBottom:'1px solid var(--border-default)' }}>
+          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: 'var(--space-l) var(--space-l)', borderBottom:'1px solid var(--border-default)' }}>
             <div className="content-body">
               <div className="project-name">{form.title}</div>
               <div className="project-meta">

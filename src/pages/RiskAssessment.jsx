@@ -317,7 +317,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               { label:'Nc (Tolerable)',     val: result.Nc.toExponential(2)    },
               { label:'Nd / Nc Ratio',      val: result.ratio.toFixed(3)       },
             ].map(({ label, val }) => (
-              <div key={label} style={{ background: 'var(--overlay-bg-subtle)', borderRadius:'var(--radius-s)', padding:'0.5rem 0.625rem' }}>
+              <div key={label} style={{ background: 'var(--overlay-bg-subtle)', borderRadius:'var(--radius-s)', padding: 'var(--space-s) var(--space-xs)' }}>
                 <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--space-xs)' }}>{label}</div>
                 <div className="risk-assessment-af70">{val}</div>
               </div>
@@ -342,7 +342,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
               {saving ? 'Saving…' : 'Save Assessment'}
             </button>
             <button onClick={()=>setResult(null)} style={{
-              padding:'0.625rem 0.875rem', borderRadius:'var(--radius-s)',
+              padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)',
               background:'var(--surface-base)', fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>
               Recalculate
             </button>
@@ -488,7 +488,7 @@ export default function RiskAssessment() {
           }
         </div>
 
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-loose)', padding: '0.625rem 0.875rem', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-loose)', padding: 'var(--space-xs) var(--space-m)', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
           <span className="risk-assessment-81f3">NFPA 780 Annex L · </span>
           Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
         </p>

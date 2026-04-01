@@ -106,7 +106,7 @@ function MgmtRow({ p, navigate }) {
           {p.city}, {p.state}
         </div>
         <div className="installations-8a89">
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-2xs)', color: 'var(--text-muted)' }}>
             {p.job_number}
           </span>
           <span className="installations-144a">
@@ -158,7 +158,7 @@ function FieldRow({ p, navigate }) {
           {p.nfpa_class && (
             <span style={{
               marginLeft: 'var(--space-xs)', fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)',
-              background: 'var(--brand-primary)', color: 'var(--color-white)', padding: '1px 5px', borderRadius: 'var(--radius-xs)' }}>
+              background: 'var(--brand-primary)', color: 'var(--color-white)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)' }}>
               NFPA {p.nfpa_class}
             </span>
           )}
@@ -324,7 +324,7 @@ export default function Installations() {
         <div className="nav-card-grid">
           <button
             className="card nav-card"
-            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
+            style={{ '--tile-color': 'var(--color-black)', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/pipeline')}
           >
             <div className="nav-card__icon"><SquaresFour size="1.125rem" /></div>
@@ -336,7 +336,7 @@ export default function Installations() {
           </button>
           <button
             className="card nav-card"
-            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
+            style={{ '--tile-color': 'var(--color-black)', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-logs')}
           >
             <div className="nav-card__icon"><BookOpen size="1.125rem" /></div>
@@ -348,7 +348,7 @@ export default function Installations() {
           </button>
           <button
             className="card nav-card"
-            style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
+            style={{ '--tile-color': 'var(--color-black)', '--tile-bg': 'var(--bg)' }}
             onClick={() => navigate('/installations/field-reports')}
           >
             <div className="nav-card__icon"><FileText size="1.125rem" /></div>
@@ -436,7 +436,7 @@ export default function Installations() {
         <div className="field-pipeline-grid">
           {/* Upcoming */}
           <div className="card list-card" style={{ margin: 0 }}>
-            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: 'var(--space-m) var(--space-l)' }}>
               <span className="list-card__title">
                 <Clock size="0.75rem" />
                 Upcoming
@@ -452,7 +452,7 @@ export default function Installations() {
 
           {/* Active */}
           <div className="card list-card" style={{ margin: 0 }}>
-            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: 'var(--space-m) var(--space-l)' }}>
               <span className="list-card__title">
                 <span className="live-dot" />
                 Active
@@ -468,7 +468,7 @@ export default function Installations() {
 
           {/* Pending Review */}
           <div className="card list-card" style={{ margin: 0 }}>
-            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: '10px 12px' }}>
+            <div className="list-card__header" style={{ ...fieldHeadStyle, padding: 'var(--space-m) var(--space-l)' }}>
               <span className="list-card__title">
                 <Warning size="0.75rem" />
                 In Review
@@ -494,7 +494,7 @@ export default function Installations() {
               key={a.path}
               className="card nav-card"
               onClick={() => navigate(a.path)}
-              style={{ '--tile-color': '#000000', '--tile-bg': 'var(--bg)' }}
+              style={{ '--tile-color': 'var(--color-black)', '--tile-bg': 'var(--bg)' }}
             >
               <div className="nav-card__icon"><a.Icon size="1.125rem" /></div>
               <div className="nav-card__text">

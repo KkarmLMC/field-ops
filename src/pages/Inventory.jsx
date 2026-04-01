@@ -45,7 +45,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
           <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-m)' }} />
           <div className="inventory-d4f3">
             <div className="inventory-860f">Add Warehouse</div>
-            <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: 'var(--space-3xl)', height: 'var(--space-3xl)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size="0.875rem" style={{ color: 'var(--text-primary)' }} />
             </button>
           </div>
@@ -346,7 +346,7 @@ export default function Inventory() {
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
                 className="inventory-fbee">
                 <div style={{
-                  fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: '2px 6px', borderRadius: 'var(--radius-xs)', flexShrink: 0,
+                  fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-black)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)', flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)',
                   color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
@@ -419,7 +419,7 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', padding: '2px 10px' }}>
+              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', padding: 'var(--space-3xs) var(--space-m)' }}>
                 #{idx + 1}
               </div>
             </div>

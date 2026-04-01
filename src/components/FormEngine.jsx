@@ -270,7 +270,7 @@ function PhotoField({ value, onChange, readOnly }) {
             <img src={src} alt={`Photo ${i+1}`} className="form-engine-556a" />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width: 'var(--icon-size-xs)', height: 'var(--icon-size-xs)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight: 'var(--leading-none)' }}>✕</button>
+                style={{ position:'absolute', top: 'calc(-1 * var(--space-xs))', right: 'calc(-1 * var(--space-xs))', width: 'var(--icon-size-xs)', height: 'var(--icon-size-xs)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight: 'var(--leading-none)' }}>✕</button>
             )}
           </div>
         ))}

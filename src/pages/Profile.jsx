@@ -41,7 +41,7 @@ function PinPad({ onComplete }) {
     <div>
       <div className="profile-00b7">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, borderRadius: 'var(--radius-round)', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
+          <div key={i} style={{ width: 'var(--space-l)', height: 'var(--space-l)', borderRadius: 'var(--radius-round)', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
       </div>
       <div className="grid-3col">
@@ -158,7 +158,7 @@ function ActivityLog({ userId }) {
                 borderBottom: i < logs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                 {/* Category dot */}
                 <div style={{
-                  width: 8, height: 8, borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
+                  width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
                   background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
                 <div className="content-body">
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 'var(--leading-normal)' }}>

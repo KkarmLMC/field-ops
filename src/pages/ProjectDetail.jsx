@@ -106,7 +106,7 @@ function StagePipeline({ stage }) {
           <span style={{
             fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: STAGE_CFG[stage]?.color || 'var(--text-muted)',
             background: STAGE_CFG[stage]?.bg || 'var(--surface-base)',
-            padding: '3px 10px', borderRadius: 'var(--radius-m)' }}>
+            padding: 'var(--space-2xs) var(--space-m)', borderRadius: 'var(--radius-m)' }}>
             {STAGE_CFG[stage]?.label || stage}
           </span>
         </div>
@@ -262,7 +262,7 @@ export default function ProjectDetail() {
 
           {/* Progress bar */}
           {project.progress > 0 && (
-            <div style={{ padding: '0 14px 14px' }}>
+            <div style={{ padding: '0 var(--space-l) var(--space-l)' }}>
               <div className="project-detail-d4b0">
                 <span className="project-detail-6fe4">Progress</span>
                 <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: stageCfg.color, fontWeight: 'var(--fw-bold)' }}>
@@ -322,7 +322,7 @@ export default function ProjectDetail() {
           <div className="list-card__header">
             <span className="list-card__title"><User size="0.875rem" /> Lead Technician</span>
           </div>
-          <div style={{ padding: '10px 14px 14px' }}>
+          <div style={{ padding: 'var(--space-m) var(--space-l) var(--space-l)' }}>
             {tech ? (
               <div className="project-detail-8b5b">
                 <div style={{
@@ -380,7 +380,7 @@ export default function ProjectDetail() {
             <div className="list-card__header">
               <span className="list-card__title"><NotePencil size="0.875rem" /> Notes</span>
             </div>
-            <div style={{ padding: '10px 14px 14px', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 'var(--leading-loose)' }}>
+            <div style={{ padding: 'var(--space-m) var(--space-l) var(--space-l)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 'var(--leading-loose)' }}>
               {project.notes}
             </div>
           </div>
@@ -406,7 +406,7 @@ export default function ProjectDetail() {
                     <span className="text-sm-bold">
                       {s.carrier || 'Warehouse Shipment'}
                     </span>
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-s)',
                       background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-info-soft)',
                       color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }}>
                       {s.status === 'shipped' ? 'Shipped' : 'Pending'}
@@ -440,7 +440,7 @@ export default function ProjectDetail() {
                         <span className="text-sm-bold">
                           {s.carrier || 'PLP Direct'} — Drop Ship
                         </span>
-                        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: '1px 6px', borderRadius: 'var(--radius-s)',
+                        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-s)',
                           background: s.status === 'shipped' ? 'var(--state-success-soft)' : 'var(--state-warning-soft)',
                           color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning-text)' }}>
                           {s.status === 'shipped' ? 'Delivered' : 'Awaiting PLP'}
@@ -534,7 +534,7 @@ export default function ProjectDetail() {
               ].filter(r => r.value > 0).map((r, i, arr) => (
                 <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
                   <div className="flex-gap-s">
-                    <div style={{ width: 8, height: 8, borderRadius: 'var(--radius-round)', background: r.color, flexShrink: 0 }} />
+                    <div style={{ width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', background: r.color, flexShrink: 0 }} />
                     <span className="text-sm-bold">{r.label}</span>
                   </div>
                   <span className="text-sm-bold">
