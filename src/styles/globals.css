@@ -880,14 +880,7 @@ textarea,
   gap: var(--space-l);
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-
+/* .app removed — use .app-shell */
 /* =============================================================================
    6. SIDEBAR
    ============================================================================= */
