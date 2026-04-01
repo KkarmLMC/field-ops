@@ -27,10 +27,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
             <div key={form.slug}>
               <button
                 onClick={() => hasChildren ? onToggle(isExpanded ? null : form.slug) : onStart(form.slug)}
-                style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
-                  display:'flex', alignItems:'center', gap:'0.75rem',
-                  padding: '0.75rem var(--space-l)', borderBottom:'1px solid var(--border-default)',
-                  transition:'background var(--ease-fast)' }}
+                className="row-btn"
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
               >
@@ -50,11 +47,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                     <button
                       key={sub.slug}
                       onClick={() => onStart(sub.slug)}
-                      style={{ width:'100%', textAlign:'left', background:'none', cursor:'pointer',
-                        display:'flex', alignItems:'center', gap: 'var(--space-s)',
-                        padding: '0.625rem var(--space-l) 0.625rem 2.75rem',
-                        borderBottom:'1px solid var(--border-default)',
-                        transition:'background var(--ease-fast)' }}
+                      className="row-btn"
                       onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >
