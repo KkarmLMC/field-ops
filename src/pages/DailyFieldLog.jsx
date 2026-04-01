@@ -364,7 +364,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
             >
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span className="content-body">{tech.name}</span>
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{tech.license}</span>
+              <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{tech.license}</span>
               {value === tech.name && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-a4aa" />}
             </li>
           ))}
@@ -1275,7 +1275,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
             <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
             <div className="text-sm-bold--inverse">Close Out Day</div>
             {entry && (
-              <div style={{ fontSize: '0.6875rem', color: 'var(--surface-base)', marginTop: 'var(--space-3xs)' }}>
+              <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--surface-base)', marginTop: 'var(--space-3xs)' }}>
                 {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
               </div>
             )}
