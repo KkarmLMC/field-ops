@@ -2082,7 +2082,7 @@ textarea,
 .card-form { padding: var(--space-l); display: flex; flex-direction: column; gap: var(--space-m); }
 
 /* --- Semantic Layout Helpers --- */
-.content-body { flex: 1; min-width: 0; }
+.content-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-3xs); }
 .card-section {
   background: var(--surface-base); border-radius: var(--radius-m);
   padding: var(--space-l); margin-bottom: var(--space-l);
@@ -5597,8 +5597,8 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .installations-86dc {
   align-items: flex-start;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: var(--space-m);
+  padding-bottom: var(--space-m);
 }
 
 .installations-d7ff {

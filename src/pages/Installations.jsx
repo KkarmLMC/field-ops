@@ -78,7 +78,7 @@ function MgmtRow({ p, navigate }) {
       onClick={() => navigate(`/installations/${p.id}`)}
     >
       {/* Icon */}
-      <div className="dash-job-icon" style={{ marginTop: 1 }}>
+      <div className="dash-job-icon">
         {p.stage === 'complete'
           ? <CheckCircle size="0.9375rem" />
           : p.stage === 'pending-review'

@@ -54,7 +54,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                       <div className="forms-77c5" />
                       <div className="content-body">
                         <span className="forms-f1b6">{sub.title}</span>
-                        {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
+                        {sub.description && <div className="project-meta">{sub.description}</div>}
                       </div>
                       <CaretRight size="0.625rem" className="forms-9914" />
                     </button>
