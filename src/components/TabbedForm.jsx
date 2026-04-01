@@ -93,7 +93,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-muted)' }}>
             Step {page + 1} of {total}
           </span>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{current.title}</span>
+          <span className="meta-text">{current.title}</span>
         </div>
         <div style={{ height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', overflow: 'hidden' }}>
           <div style={{

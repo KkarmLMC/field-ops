@@ -323,7 +323,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           <Plus size="0.75rem" /> Add entry
         </button>
         <div style={{ marginTop: 'var(--space-m)', paddingTop: 'var(--space-s)', display: 'flex', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
+          <span className="meta-text">{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>Mileage: ${mileageTotal.toFixed(2)}</span>
         </div>
       </Card>
@@ -335,20 +335,20 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         ].map(([lbl, val]) => (
           <div key={lbl} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
             <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{lbl}</span>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${val.toFixed(2)}</span>
+            <span className="text-sm-bold">${val.toFixed(2)}</span>
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Less Cash Advance</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>$</span>
+            <span className="meta-text">$</span>
             <input type="number" min="0" step="0.01" value={lessAdvance} onChange={e => setLessAdvance(e.target.value)}
               style={{ width: 80, textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 700 }} />
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Mileage Reimbursement</span>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${mileageTotal.toFixed(2)}</span>
+          <span className="text-sm-bold">${mileageTotal.toFixed(2)}</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l) 0', background: 'var(--brand-primary)', marginLeft: -24, marginRight: -24, marginBottom: -24, paddingLeft: 24, paddingRight: 24 }}>
           <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Total</span>

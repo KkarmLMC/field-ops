@@ -84,7 +84,7 @@ function ReportRow({ r }) {
       <Icon size="0.9375rem" weight="bold" style={{ color: type.color }} />
 
       {/* Main info */}
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="content-body">
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {r.project_name}
         </div>

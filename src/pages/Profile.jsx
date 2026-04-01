@@ -160,13 +160,13 @@ function ActivityLog({ userId }) {
                 <div style={{
                   width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--space-xs)',
                   background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="content-body">
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 1.4 }}>
                     {log.label}
                   </div>
                   <div style={{ display: 'flex', gap: 'var(--space-s)', marginTop: 3, flexWrap: 'wrap', alignItems: 'center' }}>
-                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{fmtTime(log.created_at)}</span>
-                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>·</span>
+                    <span className="meta-text">{fmtTime(log.created_at)}</span>
+                    <span className="meta-text">·</span>
                     <span style={{
                       fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
                       color: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }}>{APP_LABELS[log.app] || log.app}</span>
@@ -180,7 +180,7 @@ function ActivityLog({ userId }) {
                 style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: page === 0 ? 'var(--text-muted)' : 'var(--brand-primary)', background: 'none', cursor: page === 0 ? 'default' : 'pointer', padding: 0 }}>
                 ← Previous
               </button>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>Page {page + 1}</span>
+              <span className="meta-text">Page {page + 1}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={logs.length < PER_PAGE}
                 style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: logs.length < PER_PAGE ? 'var(--text-muted)' : 'var(--brand-primary)', background: 'none', cursor: logs.length < PER_PAGE ? 'default' : 'pointer', padding: 0 }}>
                 Next →
@@ -317,7 +317,7 @@ export default function Profile() {
           <div>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>ACCOUNT</div>
             <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', lineHeight: 1.1 }}>{profile?.full_name || 'My Profile'}</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>{user?.email}</div>
+            <div className="meta-text">{user?.email}</div>
           </div>
         </div>
       </div>
@@ -422,7 +422,7 @@ export default function Profile() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)' }}>{hasPin ? '6-digit PIN is set ✓' : 'No PIN set'}</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                <div className="meta-text">
                   {hasPin
                     ? `Last set: ${profile?.pin_set_at ? new Date(profile.pin_set_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown'}`
                     : 'Set a PIN to log in faster — no password needed'}
@@ -470,7 +470,7 @@ export default function Profile() {
             </div>
             <div>
               <label className="form-field__label">New Password</label>
-              <div style={{ position: 'relative' }}>
+              <div className="position-relative">
                 <input type={showPw ? 'text' : 'password'} value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Minimum 8 characters" style={{ paddingRight: 'var(--sp-10)' }} />
                 <button onClick={() => setShowPw(v => !v)}
                   style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}>

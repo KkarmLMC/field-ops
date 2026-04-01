@@ -79,7 +79,7 @@ export default function Technicians() {
                       style={{ padding: '8px 0', gap: '0.5rem' }}
                       onClick={() => navigate(`/installations/${job.id}`)}
                     >
-                      <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="content-body">
                         <div style={{ fontSize: 'var(--text-md)', fontWeight: 500 }}>{job.name}</div>
                         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>{job.job_number}</div>
                       </div>

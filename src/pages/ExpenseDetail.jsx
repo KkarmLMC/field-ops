@@ -59,7 +59,7 @@ export default function ExpenseDetail() {
     setAdvancing(false)
   }
 
-  if (loading) return <div className="page-content fade-in" className="spinner-pad"><div className="spinner" /></div>
+  if (loading) return <div className="page-content fade-in spinner-pad"><div className="spinner" /></div>
   if (!report) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Report not found</div></div></div>
 
   const sc = approvalStatus(report.status)
@@ -77,7 +77,7 @@ export default function ExpenseDetail() {
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', fontWeight: 700, marginBottom: 4 }}>
               {report.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {isAdvance ? 'Advance Request' : 'Expense Report'}
             </div>
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>{report.employee_name}</div>
+            <div className="page-heading">{report.employee_name}</div>
             {project && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--surface-base)', marginTop: 4 }}>{project.name}</div>}
           </div>
           <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
@@ -104,13 +104,13 @@ export default function ExpenseDetail() {
           {advanceLines.map(l => (
             <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.description}</div>
+                <div className="text-sm-semi">{l.description}</div>
                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
                   {l.days > 0 && `${l.days} days`}{l.nights > 0 && ` · ${l.nights} nights`}{l.miles > 0 && ` · ${l.miles} mi`}
                   {l.rate > 0 && ` @ $${l.rate}`}
                 </div>
               </div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${Number(l.total).toFixed(2)}</div>
+              <div className="text-sm-bold">${Number(l.total).toFixed(2)}</div>
             </div>
           ))}
         </div>
@@ -128,7 +128,7 @@ export default function ExpenseDetail() {
             {lines.map(l => (
               <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{l.vendor_description || '—'}</div>
+                  <div className="text-sm-semi">{l.vendor_description || '—'}</div>
                   {l.line_date && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}
                 </div>
                 {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
@@ -152,7 +152,7 @@ export default function ExpenseDetail() {
           {mileage.map(m => (
             <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{m.entry_date ? new Date(m.entry_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>{m.miles}</div>
+              <div className="text-sm-bold">{m.miles}</div>
             </div>
           ))}
         </div>
@@ -164,7 +164,7 @@ export default function ExpenseDetail() {
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Subtotal</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${Number(report.subtotal || 0).toFixed(2)}</span>
+              <span className="text-sm-bold">${Number(report.subtotal || 0).toFixed(2)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Less Cash Advance</span>
@@ -172,7 +172,7 @@ export default function ExpenseDetail() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
               <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>${Number(report.mileage_total || 0).toFixed(2)}</span>
+              <span className="text-sm-bold">${Number(report.mileage_total || 0).toFixed(2)}</span>
             </div>
           </>
         )}
@@ -183,7 +183,7 @@ export default function ExpenseDetail() {
       </div>
 
       {report.notes && (
-        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
+        <div className="card-section">
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>{report.notes}</div>
         </div>

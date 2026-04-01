@@ -115,7 +115,7 @@ function MgmtRow({ p, navigate }) {
           {p.scheduled_date && (
             <>
               <span className="dash-job-dot">·</span>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{fmtDate(p.scheduled_date)}</span>
+              <span className="meta-text">{fmtDate(p.scheduled_date)}</span>
             </>
           )}
         </div>
@@ -151,7 +151,7 @@ function FieldRow({ p, navigate }) {
       <Icon size="1rem" style={{ color: cfg.color }} />
 
       {/* Middle: info */}
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="content-body">
         <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--text-primary)', marginBottom: 2 }}>
           {p.name}
         </div>
@@ -226,7 +226,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
       <div className="dash-job-icon">
         <Icon size="0.9375rem" />
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="content-body">
         <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {p.name}
         </div>

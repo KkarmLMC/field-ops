@@ -40,9 +40,9 @@ function ReportCard({ report, project, onClick }) {
         color: report.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
         {report.division === 'Bolt' ? 'BOLT' : 'LM'}
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="content-body">
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', flexWrap: 'wrap', marginBottom: 2 }}>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+          <span className="text-sm-bold">
             {report.employee_name}
           </span>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4,
@@ -57,7 +57,7 @@ function ReportCard({ report, project, onClick }) {
       </div>
       <div style={{ flexShrink: 0, textAlign: 'right' }}>
         {report.grand_total > 0 && (
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+          <div className="text-sm-bold">
             ${Number(report.grand_total).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         )}

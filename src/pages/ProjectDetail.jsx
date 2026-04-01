@@ -403,7 +403,7 @@ export default function ProjectDetail() {
                 <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
                     <Truck size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }} />
-                    <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    <span className="text-sm-bold">
                       {s.carrier || 'Warehouse Shipment'}
                     </span>
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
@@ -417,7 +417,7 @@ export default function ProjectDetail() {
                       Tracking: {s.tracking_number}
                     </div>
                   )}
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                  <div className="meta-text">
                     {s.shipped_at ? `Shipped ${fmtShipDate(s.shipped_at)}` : `Created ${fmtShipDate(s.created_at)}`}
                     {s.notes && <span> · {s.notes}</span>}
                   </div>
@@ -438,7 +438,7 @@ export default function ProjectDetail() {
                     <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
                         <AirplaneTilt size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning)' }} />
-                        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                        <span className="text-sm-bold">
                           {s.carrier || 'PLP Direct'} — Drop Ship
                         </span>
                         <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 'var(--radius-s)',
@@ -453,11 +453,11 @@ export default function ProjectDetail() {
                         </div>
                       )}
                       {s.supplier_reference && (
-                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+                        <div className="meta-text">
                           PLP Ref: {s.supplier_reference}
                         </div>
                       )}
-                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                      <div className="meta-text">
                         {s.shipped_at ? `Shipped ${fmtShipDate(s.shipped_at)}` : `Created ${fmtShipDate(s.created_at)}`}
                         {s.notes && <span> · {s.notes}</span>}
                       </div>
@@ -538,7 +538,7 @@ export default function ProjectDetail() {
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, flexShrink: 0 }} />
                     <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{r.label}</span>
                   </div>
-                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+                  <span className="text-sm-bold">
                     ${r.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>

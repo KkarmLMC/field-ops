@@ -319,7 +319,7 @@ export default function Inventory() {
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-default)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
                 <Receipt size="0.9375rem" style={{ color: 'var(--brand-primary)' }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Sales Orders</span>
+                <span className="text-sm-bold">Sales Orders</span>
                 {submitted.length > 0 && (
                   <Badge label={`${submitted.length} need review`} variant="warning" />
                 )}
@@ -351,9 +351,9 @@ export default function Inventory() {
                   color: po.division === 'Bolt' ? 'var(--red-shade-40)' : 'var(--state-info)' }}>
                   {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                 </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{po.customer_name}</div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{po.project_name || po.so_number}</div>
+                <div className="content-body">
+                  <div className="text-sm-truncate">{po.customer_name}</div>
+                  <div className="meta-text">{po.project_name || po.so_number}</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', flexShrink: 0 }}>
                   <Badge label={po.status} variant={po.status === 'submitted' ? 'warning' : 'primary'} />
@@ -414,7 +414,7 @@ export default function Inventory() {
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 'var(--text-md)', fontWeight: 700 }}>{wh.name}</div>
                 {(wh.city || wh.state) && (
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+                  <div className="meta-text">
                     {[wh.city, wh.state].filter(Boolean).join(', ')}
                   </div>
                 )}

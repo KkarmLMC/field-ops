@@ -28,7 +28,7 @@ function SubLabel({ field, error }) {
         {field.label}
         {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 4 }}>*</span>}
       </div>
-      {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>{field.hint}</div>}
+      {field.hint && <div className="meta-text">{field.hint}</div>}
       {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>{error}</div>}
     </div>
   )
@@ -74,11 +74,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
       </div>
 
       {/* Summary text */}
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="content-body">
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {summary || `Entry ${index + 1}`}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>
+        <div className="meta-text">
           {hasPhoto && <span>📷 </span>}
           {subFields.filter(f => entry[f.id] !== undefined && entry[f.id] !== null && entry[f.id] !== '').length} of {subFields.length} fields filled
         </div>

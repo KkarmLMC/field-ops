@@ -158,7 +158,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
   const needsOptions = ['select','radio','checklist','checkbox-group'].includes(field.type)
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="position-relative">
       {/* Drop indicator line above this row */}
       {isOver && (
         <div style={{

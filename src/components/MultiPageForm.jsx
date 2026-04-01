@@ -305,7 +305,7 @@ export default function MultiPageForm({
               </div>
 
               {/* Label */}
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="content-body">
                 <div style={{
                   fontSize: 'var(--text-md)',
                   fontWeight: complete ? 600 : 500,
@@ -316,7 +316,7 @@ export default function MultiPageForm({
                     <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)', fontSize: 'var(--text-xs)' }}>*</span>
                   )}
                 </div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+                <div className="meta-text">
                   {complete ? 'Complete' : started ? 'In progress' : `${section.fields.filter(f=>f.required).length} required fields`}
                 </div>
               </div>

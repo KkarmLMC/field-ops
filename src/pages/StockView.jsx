@@ -187,7 +187,7 @@ export default function StockView() {
                 alignItems: 'center',
                 background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent' }}>
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div className="text-sm-truncate">
                     {l.parts?.name}
                   </div>
                   {l.parts?.sku && (
@@ -210,8 +210,8 @@ export default function StockView() {
       {(filtered.some(l => l.quantity_on_hand === 0 || (l.min_level && l.quantity_on_hand <= l.min_level))) && (
         <div style={{ marginTop: 'var(--space-l)', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-m)' }}>
           <div>
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Need parts restocked?</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>Submit a transfer request to move stock from another warehouse.</div>
+            <div className="text-sm-bold">Need parts restocked?</div>
+            <div className="meta-text">Submit a transfer request to move stock from another warehouse.</div>
           </div>
           <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>

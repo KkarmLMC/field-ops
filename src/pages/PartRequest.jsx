@@ -90,7 +90,7 @@ export default function PartRequest() {
   if (saved) return (
     <div className="page-content fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 'var(--space-l)', textAlign: 'center' }}>
       <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--state-success)' }} />
-      <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Request Submitted</div>
+      <div className="page-heading">Request Submitted</div>
       <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', maxWidth: 280 }}>
         Your part request is pending management review in Mission Control. You'll be notified once it's approved.
       </div>
@@ -102,7 +102,7 @@ export default function PartRequest() {
     </div>
   )
 
-  if (loading) return <div className="page-content" className="spinner-pad"><div className="spinner" /></div>
+  if (loading) return <div className="page-content spinner-pad"><div className="spinner" /></div>
 
   return (
     <div className="page-content fade-in">
