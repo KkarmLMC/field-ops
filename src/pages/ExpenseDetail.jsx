@@ -126,7 +126,7 @@ export default function ExpenseDetail() {
               ))}
             </div>
             {lines.map(l => (
-              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 'var(--space-2xs)', padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
+              <div key={l.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 'var(--space-2xs)', padding: 'var(--space-s) var(--space-l)', borderBottom: 'var(--border-width-1) solid var(--border-default)', minWidth: 800, alignItems: 'center' }}>
                 <div>
                   <div className="text-sm-semi">{l.vendor_description || '—'}</div>
                   {l.line_date && <div className="meta-text">{new Date(l.line_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>}

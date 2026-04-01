@@ -183,7 +183,7 @@ export default function StockView() {
               <div key={l.id} style={{
                 display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--space-s)',
                 padding: 'var(--space-m) var(--space-l)',
-                borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-default)' : 'none',
+                borderBottom: idx < filtered.length - 1 ? 'var(--border-width-1) solid var(--border-default)' : 'none',
                 alignItems: 'center',
                 background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent' }}>
                 <div className="min-width-0">

@@ -139,7 +139,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       <div className="tabbed-form-54a5">
         {!isFirst && (
           <button type="button" onClick={back} style={{
-            flex: 1, padding: '0.75rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)',
+            flex: 1, padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)',
             color: 'var(--text-primary)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', cursor: 'pointer' }}>
             <ArrowLeft size="1rem" /> Back
@@ -147,7 +147,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
         )}
         {!isLast ? (
           <button type="button" onClick={advance} style={{
-            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--radius-m)',
+            flex: isFirst ? 1 : 2, padding: 'var(--space-m)', borderRadius: 'var(--radius-m)',
             background: 'var(--brand-primary)',
             color: 'var(--color-white)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', cursor: 'pointer' }}>
@@ -155,7 +155,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
           </button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} style={{
-            flex: isFirst ? 1 : 2, padding: '0.75rem', borderRadius: 'var(--radius-m)',
+            flex: isFirst ? 1 : 2, padding: 'var(--space-m)', borderRadius: 'var(--radius-m)',
             
             background: submitting ? 'var(--surface-hover)' : 'var(--state-error)',
             color: submitting ? 'var(--text-muted)' : '#fff',

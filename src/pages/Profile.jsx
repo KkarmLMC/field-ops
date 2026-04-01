@@ -153,9 +153,9 @@ function ActivityLog({ userId }) {
           <>
             {logs.map((log, i) => (
               <div key={log.id} style={{
-                display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
+                display: 'flex', alignItems: 'flex-start', gap: 'var(--space-m)',
                 padding: 'var(--space-m) var(--space-l)',
-                borderBottom: i < logs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
+                borderBottom: i < logs.length - 1 ? 'var(--border-width-1) solid var(--border-default)' : 'none' }}>
                 {/* Category dot */}
                 <div className="status-dot" />
                 <div className="content-body">

@@ -402,7 +402,7 @@ export default function WarehouseDetail() {
               const sc = soStatus(po.status)
               return (
                 <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: idx < warehousePOs.length - 1 ? 'var(--border-width-1) solid var(--border-default)' : 'none' }}>
                   <div className={`division-badge division-badge--${po.division === 'Bolt' ? 'bolt' : 'lm'}`}>
                     {po.division === 'Bolt' ? 'BOLT' : 'LM'}
                   </div>

@@ -135,10 +135,10 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
               <X size="1rem" />
             </button>
             <button type="button" onClick={handleSave} style={{
-              height: 'var(--icon-size-md)', padding: '0 1rem', borderRadius: 'var(--radius-l)',
+              height: 'var(--icon-size-md)', padding: '0 var(--space-l)', borderRadius: 'var(--radius-l)',
               background: 'var(--brand-primary)',
               color: 'var(--color-white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)',
-              display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
+              display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)', cursor: 'pointer' }}>
               <CheckCircle size="0.875rem" /> Save
             </button>
           </div>
@@ -148,7 +148,7 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
         <div style={{
           flex: 1, overflowY: 'auto',
           padding: 'var(--space-l)',
-          display: 'flex', flexDirection: 'column', gap: '1.25rem',
+          display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)',
           paddingBottom: 'calc(var(--space-l) + env(safe-area-inset-bottom))' }}>
           {subFields.map(f => (
             <div key={f.id}>

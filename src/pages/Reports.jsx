@@ -98,7 +98,7 @@ function ReportRow({ r }) {
 
       {/* Status badge */}
       <span style={{
-        fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', padding: '3px 8px', borderRadius: 'var(--radius-s)', flexShrink: 0,
+        fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', padding: 'var(--space-2xs) var(--space-s)', borderRadius: 'var(--radius-s)', flexShrink: 0,
         background: status.bg, color: status.color, whiteSpace: 'nowrap' }}>
         {status.label}
       </span>

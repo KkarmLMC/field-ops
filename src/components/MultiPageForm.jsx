@@ -253,7 +253,7 @@ export default function MultiPageForm({
                 gap: 'var(--space-m)',
                 padding: 'var(--space-l)',
                 background: complete ? 'rgba(22,163,74,0.04)' : 'transparent',
-                borderBottom: isLast ? 'none' : '1px solid var(--border-default)',
+                borderBottom: isLast ? 'none' : 'var(--border-width-1) solid var(--border-default)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'background var(--ease-fast)',

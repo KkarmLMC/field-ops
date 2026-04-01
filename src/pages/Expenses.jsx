@@ -29,9 +29,9 @@ function ReportCard({ report, project, onClick }) {
 
   return (
     <button onClick={onClick} style={{
-      width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem',
+      width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-m)',
       padding: 'var(--space-m) var(--space-l)', background: 'none',
-      borderBottom: '1px solid var(--border-default)', cursor: 'pointer', textAlign: 'left' }}>
+      borderBottom: 'var(--border-width-1) solid var(--border-default)', cursor: 'pointer', textAlign: 'left' }}>
       <div style={{
         width: 40, height: 40, borderRadius: 'var(--radius-l)', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',

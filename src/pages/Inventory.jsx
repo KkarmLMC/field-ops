@@ -118,7 +118,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
   return (
     <div style={{
       background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden',
-      border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-default)' }}>
+      border: hasAlerts ? '1px solid #FED7AA' : 'var(--border-width-1) solid var(--border-default)' }}>
       {/* Header — clickable, goes to warehouse detail */}
       <button onClick={onPress} className="inventory-4e80">
         <div className="flex-gap-m">
@@ -400,8 +400,8 @@ export default function Inventory() {
               onDragEnd={handleDragEnd}
               onDragOver={e => e.preventDefault()}
               style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem',
-                background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: '1rem',
+                display: 'flex', alignItems: 'center', gap: 'var(--space-m)',
+                background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)',
                 cursor: 'grab', userSelect: 'none' }}
             >
               <DotsSixVertical size="1.375rem" className="row-item__caret" />

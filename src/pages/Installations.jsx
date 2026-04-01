@@ -94,7 +94,7 @@ function MgmtRow({ p, navigate }) {
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
               fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase',
-              background: 'var(--state-info)', color: 'var(--color-white)', padding: '2px 5px', borderRadius: 'var(--radius-xs)',
+              background: 'var(--state-info)', color: 'var(--color-white)', padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)',
               flexShrink: 0 }}>
               Review
             </span>
@@ -382,8 +382,8 @@ export default function Installations() {
                 <button
                   style={{
                     background: 'var(--overlay-white-soft)', borderRadius: 'var(--radius-s)',
-                    padding: '3px 8px', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
-                    color: 'inherit', letterSpacing: '0.02em' }}
+                    padding: 'var(--space-2xs) var(--space-s)', cursor: 'pointer', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
+                    color: 'inherit', letterSpacing: 'var(--tracking-tight)' }}
                   onClick={() => setStageFilter('all')}
                 >
                   Clear ×

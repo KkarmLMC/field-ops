@@ -94,7 +94,7 @@ function ResultBadge({ result, ratio }) {
   const req = result === 'required'
   return (
     <span style={{
-      display:'inline-flex', alignItems:'center', gap:'0.25rem',
+      display:'inline-flex', alignItems:'center', gap: 'var(--space-2xs)',
       padding:'0.1875rem 0.625rem', borderRadius:'var(--radius-s)',
       fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
       letterSpacing: 'var(--tracking-wide)', textTransform:'uppercase',
@@ -244,9 +244,9 @@ function NewAssessmentForm({ onSave, onCancel }) {
           </div>
           <button onClick={handleGPS} disabled={locating} style={{
             display:'flex', alignItems:'center', gap: 'var(--space-s)',
-            padding:'0.5rem 0.75rem', borderRadius:'var(--radius-s)',
+            padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)',
             background:'var(--bg)', fontSize:'var(--text-sm)', color:'var(--state-info)', whiteSpace:'nowrap',
-            flexShrink:0, marginBottom:'1px', transition:'all var(--ease-fast)' }}>
+            flexShrink:0, marginBottom: 'var(--border-width-1)', transition:'all var(--ease-fast)' }}>
             {locating ? <SpinnerGap size="0.8125rem" className="anim-spin" /> : <Crosshair size="0.8125rem" />}
             {locating ? 'Locating…' : 'Suggest by GPS'}
           </button>
@@ -333,7 +333,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
           <div className="flex-gap-s">
             <button onClick={handleSave} disabled={saving} style={{
-              flex:1, padding:'0.625rem', borderRadius:'var(--radius-s)',
+              flex:1, padding: 'var(--space-m)', borderRadius:'var(--radius-s)',
               background:'var(--state-error)', color: 'var(--color-white)',
               fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', fontWeight: 'var(--fw-semibold)',
               letterSpacing: 'var(--tracking-wide)', textTransform:'uppercase',

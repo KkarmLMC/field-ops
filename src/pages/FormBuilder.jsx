@@ -132,7 +132,7 @@ function DragGhost({ label, pos, visible }) {
       top: pos.y,
       transform: 'translate(-50%, -50%) rotate(2deg)',
       pointerEvents: 'none',
-      zIndex: 9999,
+      zIndex: 'var(--z-max)',
       background: 'var(--brand-primary)',
       color: 'var(--color-white)',
       padding: 'var(--space-s) var(--space-l)',
@@ -493,7 +493,7 @@ export default function FormBuilder() {
         ) : forms.length === 0 ? (
           <div className="empty"><div className="empty-desc">No forms found in database.</div></div>
         ) : forms.map(form => (
-          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: 'var(--space-l) var(--space-l)', borderBottom:'1px solid var(--border-default)' }}>
+          <div key={form.slug} style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: 'var(--space-l) var(--space-l)', borderBottom:'var(--border-width-1) solid var(--border-default)' }}>
             <div className="content-body">
               <div className="project-name">{form.title}</div>
               <div className="project-meta">

@@ -532,7 +532,7 @@ export default function ProjectDetail() {
                 { label: 'Field Expenses',value: jobCost.expenseTotal,    color: 'var(--warning)' },
                 { label: 'Advances Issued',value: jobCost.advanceTotal,   color: 'var(--grey-base)' },
               ].filter(r => r.value > 0).map((r, i, arr) => (
-                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-default)' : 'none' }}>
+                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: i < arr.length - 1 ? 'var(--border-width-1) solid var(--border-default)' : 'none' }}>
                   <div className="flex-gap-s">
                     <div className="status-dot" />
                     <span className="text-sm-bold">{r.label}</span>
@@ -551,7 +551,7 @@ export default function ProjectDetail() {
               const marginPct = ((margin / project.contract_value) * 100).toFixed(1)
               const isPositive = margin >= 0
               return (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)', background: isPositive ? 'var(--state-success-soft)' : 'var(--state-error-soft)', borderTop: '2px solid var(--border-default)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)', background: isPositive ? 'var(--state-success-soft)' : 'var(--state-error-soft)', borderTop: 'var(--border-width-2) solid var(--border-default)' }}>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
