@@ -259,7 +259,7 @@ export default function WarehouseDetail() {
       {/* Header */}
       <div className="wh-header">
         <div className="wh-header__top">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)' }}>
+          <div className="flex-gap-m">
             <div className="wh-header__icon">
               <Buildings size="1.375rem" style={{ color: '#fff' }} />
             </div>
@@ -420,7 +420,7 @@ export default function WarehouseDetail() {
                     </div>
                   </div>
                   <div className="flex-gap-s shrink-0">
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, textTransform: 'capitalize' }}>
+                    <span className="text-label">
                       {po.status}
                     </span>
                     {po.grand_total > 0 && (

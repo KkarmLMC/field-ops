@@ -179,7 +179,7 @@ export default function InventoryTransfer() {
             Search for parts above to add them to the transfer
           </div>
         ) : items.map((item, idx) => (
-          <div key={item.part_id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+          <div key={item.part_id} className="flex-gap-m">
             <div className="content-body">
               <div className="text-sm-truncate">{item.part_name}</div>
               {item.part_sku && <div className="text-xs-mono">{item.part_sku}</div>}

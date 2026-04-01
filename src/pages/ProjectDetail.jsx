@@ -401,7 +401,7 @@ export default function ProjectDetail() {
               {/* Warehouse shipments */}
               {warehouseShipments.map(s => (
                 <div key={s.id} className="pad-row">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
+                  <div className="flex-gap-s">
                     <Truck size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }} />
                     <span className="text-sm-bold">
                       {s.carrier || 'Warehouse Shipment'}
@@ -436,7 +436,7 @@ export default function ProjectDetail() {
                   </div>
                   {dropShipments.map(s => (
                     <div key={s.id} className="pad-row">
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
+                      <div className="flex-gap-s">
                         <AirplaneTilt size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning)' }} />
                         <span className="text-sm-bold">
                           {s.carrier || 'PLP Direct'} — Drop Ship
@@ -499,7 +499,7 @@ export default function ProjectDetail() {
         {jobCost && (
           <div className="card-section">
             {/* Header */}
-            <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="pad-row">
               <div className="flex-gap-s">
                 <CurrencyDollar size="1rem" style={{ color: 'var(--surface-base)' }} />
                 <span className="text-sm-bold--inverse">Job Cost Overview</span>

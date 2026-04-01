@@ -49,7 +49,7 @@ function TransactionRow({ tx, warehouseName }) {
   }[tx.transaction_type] || tx.transaction_type
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+    <div className="flex-gap-m">
       <div style={{
         width: '2rem', height: '2rem', borderRadius: 'var(--radius-l)',
         background: isPositive ? 'var(--state-success-soft)' : 'var(--state-error-soft)',
@@ -279,7 +279,7 @@ export default function PartDetail() {
         </div>
 
         {/* Total stock */}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-s)' }}>
+        <div className="flex-gap-s">
           <div style={{ fontSize: '2.5rem', fontWeight: 800, lineHeight: 1 }}>{totalQty}</div>
           <div className="meta-text--inverse">{part.unit_of_measure} total</div>
         </div>
@@ -288,11 +288,11 @@ export default function PartDetail() {
       {/* Action buttons */}
       <div className="grid-2col mb-l">
         <button onClick={() => setShowAdjust(true)}
-          style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+          className="text-sm-bold">
           Adjust Stock
         </button>
         <button onClick={() => navigate('/warehouse-hq/transfer')}
-          style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--surface-base)', color: 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+          className="flex-gap-s">
           <ArrowsLeftRight size="1rem" /> Transfer
         </button>
       </div>

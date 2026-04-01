@@ -121,7 +121,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-default)' }}>
       {/* Header — clickable, goes to warehouse detail */}
       <button onClick={onPress} style={{ background: 'var(--brand-primary)', padding: 'var(--space-l) var(--space-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)' }}>
+        <div className="flex-gap-m">
           <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--radius-l)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Buildings size="1.25rem" style={{ color: '#fff' }} />
           </div>

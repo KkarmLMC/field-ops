@@ -143,7 +143,7 @@ export default function PartRequest() {
 
       {/* Parts */}
       <div className="card-section">
-        <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="pad-row">
           <div className="text-sm-bold--inverse">Parts Requested</div>
           <span className="list-card__meta">{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
