@@ -185,7 +185,7 @@ export default function ExpenseDetail() {
       {report.notes && (
         <div className="card-section">
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>{report.notes}</div>
+          <div className="text-sm">{report.notes}</div>
         </div>
       )}
 

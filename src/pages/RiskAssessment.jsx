@@ -331,7 +331,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             }
           </p>
 
-          <div style={{ display:'flex', gap:'var(--space-s)' }}>
+          <div className="flex-gap-s">
             <button onClick={handleSave} disabled={saving} style={{
               flex:1, padding:'0.625rem', borderRadius:'var(--radius-s)',
               background:'var(--state-error)', color:'#fff',

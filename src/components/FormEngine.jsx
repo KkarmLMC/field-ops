@@ -186,7 +186,7 @@ export function SigPad({ value, onChange, readOnly }) {
                 {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
               </span>
             </div>
-            <div style={{ display:'flex', gap:'var(--space-s)' }}>
+            <div className="flex-gap-s">
               <button type="button" onClick={() => setModalOpen(true)}
                 style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', display:'flex', alignItems:'center', gap:4 }}>
                 <PencilSimple size="0.75rem"/> Re-sign
@@ -578,7 +578,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
 
   if (type==='boolean')
     return (
-      <div style={{ display:'flex', gap:'var(--space-s)' }}>
+      <div className="flex-gap-s">
         {['Yes','No'].map(opt => {
           const active = opt==='Yes'?value===true:value===false
           return (

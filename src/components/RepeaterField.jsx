@@ -26,7 +26,7 @@ function SubLabel({ field, error }) {
     <div style={{ marginBottom: 'var(--space-xs)' }}>
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 4 }}>*</span>}
+        {field.required && <span className="text-error-marker">*</span>}
       </div>
       {field.hint && <div className="meta-text">{field.hint}</div>}
       {error && <div className="validation-error">{error}</div>}
@@ -75,7 +75,7 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
 
       {/* Summary text */}
       <div className="content-body">
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div className="text-sm-truncate">
           {summary || `Entry ${index + 1}`}
         </div>
         <div className="meta-text">

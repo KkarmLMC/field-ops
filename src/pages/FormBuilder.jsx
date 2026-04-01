@@ -320,7 +320,7 @@ function SectionEditor({ section, sectionIdx, totalSections, onChange, onDelete,
             style={{ background:'rgba(255,255,255,0.15)', borderRadius:'var(--radius-s)', color:'#fff', fontWeight:700, fontSize:'var(--text-md)', padding:'var(--space-xs) var(--space-s)', width:'100%' }}
           />
         </div>
-        <div style={{ display:'flex', gap:'var(--space-xs)' }}>
+        <div className="flex-gap-s">
           <button type="button" onClick={()=>onMoveSection(sectionIdx,-1)} disabled={sectionIdx===0} style={{ color: 'var(--surface-base)', opacity:sectionIdx===0?0.3:1 }}><ArrowUp size="0.8125rem"/></button>
           <button type="button" onClick={()=>onMoveSection(sectionIdx,1)} disabled={sectionIdx===totalSections-1} style={{ color: 'var(--surface-base)', opacity:sectionIdx===totalSections-1?0.3:1 }}><ArrowDown size="0.8125rem"/></button>
           <button type="button" onClick={()=>onDelete(sectionIdx)} style={{ color:'rgba(255,100,100,0.8)' }}><Trash size="0.8125rem"/></button>
@@ -400,7 +400,7 @@ function FormEditor({ form, onSave, onCancel }) {
           <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', color:'var(--text-primary)', marginBottom:'var(--space-xs)' }}>{form.ref || form.category}</div>
           <div style={{ fontSize:'var(--text-lg)', fontWeight:700 }}>{form.title}</div>
         </div>
-        <div style={{ display:'flex', gap:'var(--space-s)' }}>
+        <div className="flex-gap-s">
           <button type="button" onClick={onCancel} style={{ padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', color:'var(--text-primary)' }}>Cancel</button>
           <button type="button" onClick={handleSave} disabled={saving}
             style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-s)', background:saved?'var(--state-success)':saving?'var(--surface-hover)':'var(--brand-primary)', color:saved||!saving?'#fff':'var(--text-muted)', fontSize:'var(--text-sm)', fontWeight:600, transition:'background var(--ease-fast)' }}>
