@@ -101,7 +101,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div className="expense-line-header">Total</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Meals <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($68/day)</span></div>
+          <div className="text-xs-semi">Meals <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($68/day)</span></div>
           <input type="number" min="0" value={meals.persons} onChange={e => setMeals(m => ({ ...m, persons: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right' }}>${mealsTotal.toFixed(2)}</div>
@@ -114,7 +114,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       <Card title="Travel Expenses">
         {/* Hotel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Hotel <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($150/night)</span></div>
+          <div className="text-xs-semi">Hotel <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($150/night)</span></div>
           <div className="expense-line-header">Rooms</div>
           <div className="expense-line-header">Nights</div>
           <div className="expense-line-header">Total</div>
@@ -127,9 +127,9 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Car rental */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Car Rental <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($125/day)</span></div>
+          <div className="text-xs-semi">Car Rental <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($125/day)</span></div>
           <div />
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Days</div>
+          <div className="meta-text meta-text--center">Days</div>
           <div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
@@ -140,10 +140,10 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Fuel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Fuel</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Miles</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Mi/Gal</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>$/Gal</div>
+          <div className="text-xs-semi">Fuel</div>
+          <div className="meta-text meta-text--center">Miles</div>
+          <div className="meta-text meta-text--center">Mi/Gal</div>
+          <div className="meta-text meta-text--center">$/Gal</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right', gridColumn: '1' }}>${fuelTotal.toFixed(2)}</div>
@@ -153,8 +153,8 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Parking */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Tampa Airport Parking <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($18/day)</span></div>
-          <div /><div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Days</div><div />
+          <div className="text-xs-semi">Tampa Airport Parking <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($18/day)</span></div>
+          <div /><div className="meta-text meta-text--center">Days</div><div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
           <div />
@@ -164,9 +164,9 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Airline baggage */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Airline Baggage Fees <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($80/flight)</span></div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Bags</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center' }}>Flights</div>
+          <div className="text-xs-semi">Airline Baggage Fees <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($80/flight)</span></div>
+          <div className="meta-text meta-text--center">Bags</div>
+          <div className="meta-text meta-text--center">Flights</div>
           <div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
@@ -433,7 +433,7 @@ export default function ExpenseNew() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--space-xl)' }}>
+      <div className="mb-xl">
         <div className="section-heading">
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>

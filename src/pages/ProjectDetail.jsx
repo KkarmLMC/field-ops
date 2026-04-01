@@ -526,7 +526,7 @@ export default function ProjectDetail() {
             </div>
 
             {/* Cost breakdown */}
-            <div style={{ padding: 'var(--space-m) var(--space-l)' }}>
+            <div className="pad-row">
               {[
                 { label: 'Materials',     value: jobCost.materialsTotal,  color: 'var(--state-info)' },
                 { label: 'Installation',  value: jobCost.installTotal,    color: 'var(--purple)' },

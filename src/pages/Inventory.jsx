@@ -155,7 +155,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           <div key={s.label} style={{ background: 'var(--surface-base)', padding: 'var(--space-m) var(--space-l)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
               <s.Icon size="0.8125rem" />
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>{s.label}</span>
+              <span className="text-xs-semi">{s.label}</span>
             </div>
             <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.value}</div>
           </div>
@@ -167,7 +167,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
         <div style={{ padding: 'var(--space-m) var(--space-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-muted)' }}>
             <CurrencyDollar size="0.875rem" />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>Est. Inventory Value</span>
+            <span className="text-xs-semi">Est. Inventory Value</span>
           </div>
           <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--state-success-text)' }}>
             ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
@@ -313,7 +313,7 @@ export default function Inventory() {
         const draft     = pos.filter(p => p.status === 'draft')
         const totalActive = submitted.length + published.length
         return (
-          <Card style={{ marginBottom: 'var(--space-xl)' }}>
+          <Card className="mb-xl">
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-default)' }}>

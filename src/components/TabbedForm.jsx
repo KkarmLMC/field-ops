@@ -12,7 +12,7 @@ import { FormField } from './FormEngine.jsx'
 
 function FieldLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--space-s)' }}>
+    <div className="mb-s">
       <div style={{
         fontSize: 'var(--text-sm)', fontWeight: 600,
         color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>

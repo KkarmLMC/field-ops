@@ -106,7 +106,7 @@ export default function FormPage() {
         <div className="empty">
           <div className="empty-title">Form not found</div>
           <div className="empty-desc">The form "{formType}" could not be loaded.</div>
-          <button className="btn btn-primary" style={{ marginTop: 'var(--space-l)' }} onClick={()=>navigate('/forms')}>Back to Forms</button>
+          <button className="btn btn-primary mt-l" onClick={()=>navigate('/forms')}>Back to Forms</button>
         </div>
       </div>
     )

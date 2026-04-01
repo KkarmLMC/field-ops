@@ -20,7 +20,7 @@ import { FormField } from './FormEngine.jsx'
 // ─── Per-field label (mirrors FormEngine FieldLabel) ─────────────────────────
 function FieldLabel({ field, error }) {
   return (
-    <div style={{ marginBottom: 'var(--space-s)' }}>
+    <div className="mb-s">
       <div style={{
         fontSize: 'var(--text-sm)',
         fontWeight: 600,
@@ -294,7 +294,7 @@ export default function MultiPageForm({
               onTouchEnd={e => e.currentTarget.style.background = complete ? 'rgba(22,163,74,0.04)' : 'transparent'}
             >
               {/* Status icon */}
-              <div style={{ flexShrink: 0 }}>
+              <div className="shrink-0">
                 {complete ? (
                   <CheckCircle size="1.375rem" weight="fill" style={{ color: 'var(--state-success)' }} />
                 ) : started ? (

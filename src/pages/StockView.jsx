@@ -186,7 +186,7 @@ export default function StockView() {
                 borderBottom: idx < filtered.length - 1 ? '1px solid var(--border-default)' : 'none',
                 alignItems: 'center',
                 background: isOut ? '#FFF5F5' : isLow ? 'var(--warning-soft)' : 'transparent' }}>
-                <div style={{ minWidth: 0 }}>
+                <div className="min-width-0">
                   <div className="text-sm-truncate">
                     {l.parts?.name}
                   </div>

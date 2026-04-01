@@ -325,12 +325,12 @@ export default function Profile() {
       {/* Flash messages */}
       {success && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-success-soft)', borderRadius: 'var(--radius-l)', color: 'var(--state-success-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
-          <CheckCircle size="0.9375rem" weight="fill" style={{ flexShrink: 0 }} /> {success}
+          <CheckCircle size="0.9375rem" weight="fill" className="shrink-0" /> {success}
         </div>
       )}
       {error && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-error-soft)', borderRadius: 'var(--radius-l)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
-          <Warning size="0.9375rem" style={{ flexShrink: 0 }} /> {error}
+          <Warning size="0.9375rem" className="shrink-0" /> {error}
         </div>
       )}
 
