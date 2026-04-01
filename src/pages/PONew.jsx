@@ -4,7 +4,7 @@ import {
   Plus, Trash, MagnifyingGlass, X, CaretDown, CaretRight,
   DotsSixVertical, Buildings, Package, Wrench, Check,
   ArrowRight, Warning } from '@phosphor-icons/react'
-import { Button, Card, SearchInput, ActionButton } from '../components/ui'
+import { Card, Button, SearchInput } from '../components/ui'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -14,7 +14,7 @@ import ProjectPicker from '../components/ProjectPicker.jsx'
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function Label({ children, required }) {
   return (
-    <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 'var(--space-xs)' }}>
+    <label className="text-label">
       {children}{required && <span style={{ color: 'var(--state-error)', marginLeft: 3 }}>*</span>}
     </label>
   )
@@ -22,8 +22,8 @@ function Label({ children, required }) {
 
 function SectionDivider({ label }) {
   return (
-    <div style={{ margin: 'var(--space-l) 0', paddingTop: 'var(--space-m)' }}>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>{label}</div>
+    <div className="section-gap">
+      <div className="section-divider-label">{label}</div>
     </div>
   )
 }
@@ -78,19 +78,19 @@ function PartSearch({ onSelect, warehouseId }) {
   }
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
-      <div style={{ position: 'relative' }}>
-        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+    <div ref={ref} className="position-relative">
+      <div className="position-relative">
+        <MagnifyingGlass size="0.875rem" className="search-overlay-icon" />
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => query && setOpen(true)}
           placeholder="Search parts by name or SKU…"
-          style={{ width: '100%', paddingLeft: 30, paddingRight: 30 }}
+          style={{ width: "100%", paddingLeft: 30, paddingRight: 30 }}
         />
         {query && (
           <button onClick={() => { setQuery(''); setResults([]); setOpen(false) }}
-            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
+            className="search-overlay-clear">
             <X size="0.8125rem" />
           </button>
         )}
@@ -101,17 +101,17 @@ function PartSearch({ onSelect, warehouseId }) {
           background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', marginTop: 4,
           maxHeight: '16rem', overflowY: 'auto' }}>
           {loading ? (
-            <div style={{ padding: 'var(--space-m)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Searching…</div>
+            <div className="empty-message">Searching…</div>
           ) : results.map(part => (
             <button key={part.id} onMouseDown={() => handleSelect(part)}
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: 'var(--space-s) var(--space-m)', background: 'none',
-                cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-default)' }}
+                cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}
             >
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{part.name}</div>
-                <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>{part.sku}</div>
+                <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)' }}>{part.sku}</div>
               </div>
               <div style={{ flexShrink: 0, textAlign: 'right', marginLeft: 'var(--space-m)' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -136,15 +136,15 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
   const lineTotal = (parseFloat(item.quantity) || 0) * (parseFloat(item.unit_cost) || 0)
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 90px 80px 36px', gap: 'var(--space-s)', alignItems: 'center', padding: 'var(--space-s) 0', borderBottom: '1px solid var(--border-default)' }}>
-      <div style={{ minWidth: 0 }}>
-        {item.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginBottom: 2 }}>{item.sku}</div>}
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.description}</div>
+    <div className="grid-parts-table">
+      <div className="min-width-0">
+        {item.sku && <div className="text-xs-mono">{item.sku}</div>}
+        <div className="part-row-label--truncate">{item.description}</div>
         {warehouses.length > 1 && (
           <select
             value={item.warehouse_id || ''}
             onChange={e => onUpdate({ ...item, warehouse_id: e.target.value })}
-            style={{ fontSize: 'var(--text-xs)', marginTop: 4, padding: '2px 4px', borderRadius: 4, background: 'var(--surface-base)', color: 'var(--text-muted)', width: '100%' }}
+            className="input-meta-label"
           >
             <option value="">No warehouse</option>
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name.replace(' Warehouse','')}</option>)}
@@ -155,19 +155,20 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
         type="number" min="0" step="1"
         value={item.quantity}
         onChange={e => onUpdate({ ...item, quantity: e.target.value })}
-        style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }}
+        className="text-xs-right"
+       
       />
       <input
         type="number" min="0" step="0.01"
         value={item.unit_cost}
         onChange={e => onUpdate({ ...item, unit_cost: e.target.value })}
-        style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }}
+        className="text-xs-right"
+       
       />
-      <div style={{ textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 700, color: lineTotal > 0 ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+      <div className="text-xs-right" style={{ fontWeight: 700, color: lineTotal > 0 ? 'var(--text-primary)' : 'var(--text-muted)' }}>
         ${lineTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>
-      <button onClick={onRemove}
-        style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-hover)', borderRadius: 'var(--radius-m)', cursor: 'pointer', color: 'var(--state-error-text)' }}>
+      <button onClick={onRemove} className="icon-btn icon-btn--error">
         <Trash size="0.8125rem" />
       </button>
     </div>
@@ -209,18 +210,17 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
   }
 
   return (
-    <Card style={{ marginBottom: 'var(--space-l)' }}>
+    <Card className="margin-bottom-l">
       {/* Section header */}
-      <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
-        <button onClick={() => setExpanded(e => !e)}
-          style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'var(--surface-base)', display: 'flex' }}>
+      <div className="header-button-group">
+        <button onClick={() => setExpanded(e => !e)} className="header-button-group .button">
           <CaretDown size="0.875rem" style={{ transform: expanded ? 'none' : 'rotate(-90deg)', transition: 'transform 0.15s' }} />
         </button>
         <input
           value={section.title}
           onChange={e => onUpdate({ ...section, title: e.target.value })}
           placeholder="Section name (e.g. Green House Ground Ring)"
-          style={{ flex: 1, background: 'transparent', outline: 'none', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-body)' }}
+          style={{ flex: 1, background: 'transparent', outline: 'none', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font)' }}
         />
         {subtotal > 0 && (
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--surface-base)', whiteSpace: 'nowrap' }}>
@@ -237,9 +237,9 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
         <div style={{ padding: 'var(--space-m) var(--space-l)' }}>
           {/* Column headers */}
           {section.items.length > 0 && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 90px 80px 36px', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}>
+            <div className="grid-parts-table" style={{ marginBottom: 'var(--space-s)' }}>
               {['Item / SKU', 'Qty', 'Unit Cost', 'Amount', ''].map((h, i) => (
-                <div key={i} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textAlign: i > 0 && i < 4 ? 'right' : 'left' }}>{h}</div>
+                <div key={i} className="section-divider-label" style={{ textAlign: i > 0 && i < 4 ? 'right' : 'left' }}>{h}</div>
               ))}
             </div>
           )}
@@ -256,7 +256,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
           ))}
 
           {section.items.length === 0 && (
-            <div style={{ textAlign: 'center', padding: 'var(--space-l)', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
+            <div className="empty-message" style={{ padding: 'var(--space-l)' }}>
               No items yet. Search for a part or add manually.
             </div>
           )}
@@ -285,7 +285,7 @@ function LaborSection({ items, onUpdate }) {
   const removeItem = (key) => onUpdate(items.filter(i => i._key !== key))
 
   return (
-    <Card style={{ marginBottom: 'var(--space-l)' }}>
+    <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden', marginBottom: 'var(--space-l)' }}>
       <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
         <button onClick={() => setExpanded(e => !e)}
           style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'var(--surface-base)', display: 'flex' }}>
@@ -304,29 +304,27 @@ function LaborSection({ items, onUpdate }) {
       {expanded && (
         <div style={{ padding: 'var(--space-m) var(--space-l)' }}>
           {items.map(item => (
-            <div key={item._key} style={{ display: 'grid', gridTemplateColumns: '1fr 70px 100px 80px 36px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+            <div key={item._key} className="grid-parts-table" style={{ gridTemplateColumns: '1fr 70px 100px 80px 36px', marginBottom: 'var(--space-s)' }}>
               <input value={item.description} onChange={e => updateItem(item._key, { ...item, description: e.target.value })}
                 placeholder="Description (e.g. Bolt Install Crew)" style={{ width: '100%', fontSize: 'var(--text-xs)' }} />
               <input type="number" min="0" value={item.quantity} onChange={e => updateItem(item._key, { ...item, quantity: e.target.value })}
-                style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }} />
+                className="text-xs-right" />
               <input type="number" min="0" step="0.01" value={item.unit_cost} onChange={e => updateItem(item._key, { ...item, unit_cost: e.target.value })}
-                placeholder="0.00" style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }} />
-              <div style={{ textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
+                placeholder="0.00" className="text-xs-right" />
+              <div className="text-xs-right" style={{ fontWeight: 700 }}>
                 ${((parseFloat(item.quantity)||0)*(parseFloat(item.unit_cost)||0)).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
               </div>
-              <button onClick={() => removeItem(item._key)}
-                style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-hover)', borderRadius: 'var(--radius-m)', cursor: 'pointer', color: 'var(--state-error-text)' }}>
+              <button onClick={() => removeItem(item._key)} className="icon-btn icon-btn--error">
                 <Trash size="0.8125rem" />
               </button>
             </div>
           ))}
-          <button onClick={addLine}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-s)' }}>
+          <button onClick={addLine} className="flex-gap-s" style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-s)' }}>
             <Plus size="0.75rem" /> Add labor line
           </button>
         </div>
       )}
-    </Card>
+    </div>
   )
 }
 
@@ -534,43 +532,43 @@ export default function PONew() {
       </div>
 
       {/* Customer info */}
-      <Card style={{ marginBottom: 'var(--space-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--space-m)' }}>Customer</div>
 
         <div style={{ marginBottom: 'var(--space-m)' }}>
           <Label required>Customer Name</Label>
-          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. GNS Electric Inc" style={{ width: '100%' }} />
+          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. GNS Electric Inc" />
         </div>
 
         <div style={{ marginBottom: 'var(--space-m)' }}>
           <Label>Street Address</Label>
-          <input value={customerAddress} onChange={e => setCustomerAddress(e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
+          <input value={customerAddress} onChange={e => setCustomerAddress(e.target.value)} placeholder="123 Main St" />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 64px 88px', gap: 'var(--space-s)', marginBottom: 'var(--space-m)' }}>
-          <div><Label>City</Label><input value={customerCity} onChange={e => setCustomerCity(e.target.value)} placeholder="Dallas" style={{ width: '100%' }} /></div>
-          <div><Label>State</Label><input value={customerState} onChange={e => setCustomerState(e.target.value)} placeholder="TX" style={{ width: '100%' }} /></div>
-          <div><Label>ZIP</Label><input value={customerZip} onChange={e => setCustomerZip(e.target.value)} placeholder="75001" style={{ width: '100%' }} /></div>
+          <div><Label>City</Label><input value={customerCity} onChange={e => setCustomerCity(e.target.value)} placeholder="Dallas" /></div>
+          <div><Label>State</Label><input value={customerState} onChange={e => setCustomerState(e.target.value)} placeholder="TX" /></div>
+          <div><Label>ZIP</Label><input value={customerZip} onChange={e => setCustomerZip(e.target.value)} placeholder="75001" /></div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)' }}>
-          <div><Label>Phone</Label><input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
-          <div><Label>Email</Label><input value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} placeholder="name@company.com" style={{ width: '100%' }} /></div>
+          <div><Label>Phone</Label><input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="(555) 000-0000" /></div>
+          <div><Label>Email</Label><input value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} placeholder="name@company.com" /></div>
         </div>
-      </Card>
+      </div>
 
       {/* Project info */}
-      <Card style={{ marginBottom: 'var(--space-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--space-m)' }}>Project Details</div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)', marginBottom: 'var(--space-m)' }}>
           <div>
             <Label>Quote Number</Label>
-            <input value={quoteNumber} onChange={e => setQuoteNumber(e.target.value)} placeholder="W9-10-16699" style={{ width: '100%' }} />
+            <input value={quoteNumber} onChange={e => setQuoteNumber(e.target.value)} placeholder="W9-10-16699" />
           </div>
           <div>
             <Label>Date</Label>
-            <input type="date" value={poDate} onChange={e => setPoDate(e.target.value)} style={{ width: '100%' }} />
+            <input type="date" value={poDate} onChange={e => setPoDate(e.target.value)} />
           </div>
         </div>
 
@@ -587,23 +585,23 @@ export default function PONew() {
           <div style={{ marginBottom: 'var(--space-m)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)' }}>
             <div>
               <Label>Project Name</Label>
-              <input value={projectName} onChange={e => setProjectName(e.target.value)} style={{ width: '100%' }} />
+              <input value={projectName} onChange={e => setProjectName(e.target.value)} />
             </div>
             <div>
               <Label>Job #</Label>
-              <input value={projectRef} onChange={e => setProjectRef(e.target.value)} style={{ width: '100%' }} />
+              <input value={projectRef} onChange={e => setProjectRef(e.target.value)} />
             </div>
           </div>
         )}
 
         <div>
           <Label>Default Warehouse</Label>
-          <select value={defaultWarehouseId} onChange={e => setDefaultWarehouseId(e.target.value)} style={{ width: '100%' }}>
+          <select value={defaultWarehouseId} onChange={e => setDefaultWarehouseId(e.target.value)}>
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
           </select>
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>New line items will default to this warehouse. You can change per line.</div>
         </div>
-      </Card>
+      </div>
 
       {/* Scope sections */}
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--space-m)' }}>Line Items</div>
@@ -620,7 +618,7 @@ export default function PONew() {
       ))}
 
       <button onClick={addSection}
-        style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', border: '2px dashed var(--border-default)', background: 'transparent', color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', justifyContent: 'center', marginBottom: 'var(--space-l)' }}>
+        style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', border: '2px dashed var(--border-subtle)', background: 'transparent', color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', justifyContent: 'center', marginBottom: 'var(--space-l)' }}>
         <Plus size="0.9375rem" /> Add Scope Section
       </button>
 
@@ -628,10 +626,10 @@ export default function PONew() {
       <LaborSection items={laborItems} onUpdate={setLaborItems} />
 
       {/* Notes */}
-      <Card style={{ marginBottom: 'var(--space-l)' }}>
+      <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
         <Label>Notes</Label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
-      </Card>
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} />
+      </div>
 
       {/* Running total */}
       <TotalsBar sections={sections} laborItems={laborItems} />
@@ -646,12 +644,14 @@ export default function PONew() {
 
       {/* Save actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)', marginBottom: 'var(--space-2xl)' }}>
-        <Button variant="secondary" onClick={() => handleSave(false)} disabled={saving}>
+        <button onClick={() => handleSave(false)} disabled={saving}
+          style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)', color: 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : 'Save as Draft'}
-        </Button>
-        <Button onClick={() => handleSave(true)} disabled={saving}>
+        </button>
+        <button onClick={() => handleSave(true)} disabled={saving}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', borderRadius: 'var(--radius-m)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           {saving ? 'Saving…' : <><ArrowRight size="0.9375rem" /> Save & Submit</>}
-        </Button>
+        </button>
       </div>
     </div>
   )
