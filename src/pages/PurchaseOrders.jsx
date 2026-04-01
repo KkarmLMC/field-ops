@@ -175,7 +175,7 @@ export default function PurchaseOrders() {
           padding: 'var(--space-m) var(--space-l)', background: 'var(--warning-soft)',
           borderRadius: 'var(--radius-l)', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => setActiveTab('queued')}>
           <Warning size="1.125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
-          <div style={{ flex: 1 }}>
+          <div className="content-body">
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>
               {queuedCount} Sales Order{queuedCount !== 1 ? 's' : ''} in queue
             </div>

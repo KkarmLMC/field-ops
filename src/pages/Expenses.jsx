@@ -134,7 +134,7 @@ export default function Expenses() {
       {submitted > 0 && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', background: 'var(--warning-soft)', borderRadius: 'var(--radius-m)', marginBottom: 'var(--space-l)' }}>
           <Clock size="1.125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
-          <div style={{ flex: 1 }}>
+          <div className="content-body">
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning-text)' }}>{submitted} report{submitted !== 1 ? 's' : ''} awaiting approval</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-shade-20)' }}>${totalPending.toLocaleString('en-US', { minimumFractionDigits: 2 })} pending</div>
           </div>

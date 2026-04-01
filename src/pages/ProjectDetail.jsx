@@ -333,7 +333,7 @@ export default function ProjectDetail() {
                   fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <div style={{ flex: 1 }}>
+                <div className="content-body">
                   <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
                     {tech.license}
@@ -480,7 +480,7 @@ export default function ProjectDetail() {
             </div>
             {reports.map(r => (
               <div key={r.id} className="project-item">
-                <div style={{ flex: 1 }}>
+                <div className="content-body">
                   <div className="project-name">{fmtDate(r.report_date)}</div>
                   <div className="project-meta">
                     {r.submitted_by}
@@ -594,7 +594,7 @@ export default function ProjectDetail() {
               const sCfg = COMPLETION_FORM_CFG[s.status?.toLowerCase().replace(' ', '-')] || {}
               return (
                 <div key={s.id} className="project-item">
-                  <div style={{ flex: 1 }}>
+                  <div className="content-body">
                     <div className="project-name">{s.form_type ? `${s.form_type.charAt(0).toUpperCase() + s.form_type.slice(1)} Completion` : 'Completion Form'}</div>
                     <div className="project-meta">
                       {s.submitted_by} · {fmtDate(s.created_at)}

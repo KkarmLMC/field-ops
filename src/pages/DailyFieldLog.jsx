@@ -292,7 +292,7 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
                   <MapPin size="0.8125rem" style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
-                  <span style={{ flex: 1 }}>{job.name}</span>
+                  <span className="content-body">{job.name}</span>
                   {isActive && <CheckCircle size="0.8125rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
                 </div>
               )
@@ -363,7 +363,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
               onMouseDown={() => select(tech)}
             >
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
-              <span style={{ flex: 1 }}>{tech.name}</span>
+              <span className="content-body">{tech.name}</span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{tech.license}</span>
               {value === tech.name && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
             </li>
@@ -399,7 +399,7 @@ function TechMultiTypeahead({ value = [], onChange, exclude = [], placeholder = 
     <div className="dfl-multi-list">
       {rows.map((name, idx) => (
         <div key={idx} className="dfl-crew-row">
-          <div style={{ flex: 1 }}>
+          <div className="content-body">
             <TechTypeahead
               value={name}
               onChange={n => updateRow(idx, n)}
@@ -939,7 +939,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
               <div className="spinner" />
             </div>
           ) : (
-            <div style={{ padding: 'var(--space-l)' }}>
+            <div className="pad-l">
               <FormEngine
                 schema={schema}
                 values={values}
@@ -1101,7 +1101,7 @@ const STEPS = [
                   Supervisor Onsite <span className="dfl-req">*</span>
                 </label>
                 <div className="dfl-crew-row">
-                  <div style={{ flex: 1 }}>
+                  <div className="content-body">
                     <TechTypeahead
                       value={form.supervisor_name}
                       onChange={val => {

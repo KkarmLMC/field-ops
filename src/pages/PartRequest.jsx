@@ -151,7 +151,7 @@ export default function PartRequest() {
           {items.map((item, idx) => (
             <div key={idx} style={{ background: '#fff', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
               <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}>
-                <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} style={{ flex: 1 }}>
+                <select value={item.part_id} onChange={e => updateItem(idx, 'part_id', e.target.value)} className="content-body">
                   <option value="">— Select part —</option>
                   {parts.map(p => <option key={p.id} value={p.id}>{p.name}{p.sku ? ` (${p.sku})` : ''}</option>)}
                 </select>

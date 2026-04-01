@@ -53,7 +53,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
         {/* Fields */}
         <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--space-xl) var(--space-s)' }}>
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Warehouse Name *</Label>
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
           </div>
@@ -62,7 +62,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <div className="text-label mb-m">Location</div>
           </div>
 
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Street Address</Label>
             <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
           </div>
@@ -77,7 +77,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <div className="text-label mb-m">Contact</div>
           </div>
 
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Contact Name</Label>
             <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
           </div>
@@ -87,7 +87,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <div><Label>Email</Label><input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} /></div>
           </div>
 
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Notes</Label>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3}  />
           </div>
@@ -411,7 +411,7 @@ export default function Inventory() {
                 justifyContent: 'center', flexShrink: 0 }}>
                 <Buildings size="1.125rem" style={{ color: '#fff' }} />
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="content-body">
                 <div style={{ fontSize: 'var(--text-md)', fontWeight: 700 }}>{wh.name}</div>
                 {(wh.city || wh.state) && (
                   <div className="meta-text">

@@ -246,7 +246,7 @@ export default function MultiPageForm({
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 'var(--space-l)' }}>
+      <div className="mb-l">
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 600, marginBottom: 'var(--space-xs)' }}>
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>

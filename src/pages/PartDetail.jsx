@@ -154,7 +154,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
         </div>
 
         <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--space-xl)', paddingBottom: 'calc(var(--space-s))' }}>
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Warehouse</Label>
             <select value={warehouseId} onChange={e => handleWarehouseChange(e.target.value)} style={{ width: '100%' }}>
               {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
@@ -166,7 +166,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
             <div className="text-label mb-m">Stock Adjustment</div>
           </div>
 
-          <div style={{ marginBottom: 'var(--space-m)' }}>
+          <div className="mb-m">
             <Label>Transaction Type</Label>
             <select value={type} onChange={e => setType(e.target.value)} style={{ width: '100%' }}>
               <option value="adjustment">Manual Adjustment</option>
@@ -265,7 +265,7 @@ export default function PartDetail() {
       {/* Header */}
       <div style={{ background: 'var(--brand-primary)', borderRadius: 'var(--radius-m)', padding: 'var(--space-xl)', marginBottom: 'var(--space-l)', color: '#fff' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
-          <div style={{ flex: 1 }}>
+          <div className="content-body">
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginBottom: 4 }}>
               {part.part_categories?.name || 'Uncategorized'}
             </div>

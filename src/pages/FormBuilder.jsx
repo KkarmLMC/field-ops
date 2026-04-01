@@ -266,7 +266,7 @@ function TypePickerSheet({ onPick, onClose }) {
         <div style={{ width:'2.5rem', height:'0.25rem', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin:'0 auto var(--space-l)' }} />
         <div style={{ fontSize:'var(--text-md)', fontWeight:700, marginBottom:'var(--space-l)' }}>Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
-          <div key={group.label} style={{ marginBottom: 'var(--space-l)' }}>
+          <div key={group.label} className="mb-l">
             <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', color:'var(--text-primary)', marginBottom:'var(--space-s)' }}>
               {group.label}
             </div>

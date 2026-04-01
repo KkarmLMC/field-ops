@@ -54,7 +54,7 @@ export default function Technicians() {
                     fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
                     {tech.name.split(' ').map(n => n[0]).join('')}
                   </div>
-                  <div style={{ flex: 1 }}>
+                  <div className="content-body">
                     <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: '0.125rem' }}>
                       {tech.license} · {tech.phone}

@@ -88,7 +88,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
   return (
     <div>
       {/* Progress */}
-      <div style={{ marginBottom: 'var(--space-l)' }}>
+      <div className="mb-l">
         <div className="flex-gap-s">
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-muted)' }}>
             Step {page + 1} of {total}
