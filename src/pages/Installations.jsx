@@ -74,7 +74,7 @@ function MgmtRow({ p, navigate }) {
   return (
     <div
       className="page-content fade-in"
-      style={{ alignItems: 'flex-start', paddingTop: 10, paddingBottom: 10 }}
+      className="installations-86dc"
       onClick={() => navigate(`/installations/${p.id}`)}
     >
       {/* Icon */}
@@ -89,7 +89,7 @@ function MgmtRow({ p, navigate }) {
 
       {/* Info */}
       <div className="dash-job-info" style={{ gap: 3 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div className="installations-d7ff">
           <div className="dash-job-name">{p.name}</div>
           {needsReview && p.stage !== 'pending-review' && (
             <span style={{
@@ -105,11 +105,11 @@ function MgmtRow({ p, navigate }) {
           <span className="dash-job-dot">·</span>
           {p.city}, {p.state}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+        <div className="installations-8a89">
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>
             {p.job_number}
           </span>
-          <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-primary)', fontWeight: 600 }}>
+          <span className="installations-144a">
             {getTech(p.lead_tech_id)}
           </span>
           {p.scheduled_date && (
@@ -121,8 +121,8 @@ function MgmtRow({ p, navigate }) {
         </div>
         {/* Progress bar for in-progress */}
         {p.stage === 'in-progress' && p.progress > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 120 }}>
+          <div className="installations-35f5">
+            <div className="installations-4bba">
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
             <span className="text-xs-mono">{p.progress}%</span>
@@ -144,15 +144,13 @@ function FieldRow({ p, navigate }) {
   const Icon = TYPE_ICON[p.type] || Wrench
 
   return (
-    <div style={{
-      padding: '12px 14px', borderBottom: '1px solid var(--border-default)',
-      display: 'flex', gap: 12, alignItems: 'center' }}>
+    <div className="installations-5a72">
       {/* Left: icon */}
       <Icon size="1rem" style={{ color: cfg.color }} />
 
       {/* Middle: info */}
       <div className="content-body">
-        <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--text-primary)', marginBottom: 2 }}>
+        <div className="installations-1058">
           {p.name}
         </div>
         <div className="meta-text mb-s">
@@ -167,8 +165,8 @@ function FieldRow({ p, navigate }) {
         </div>
         {/* Progress */}
         {p.progress > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 140 }}>
+          <div className="installations-c222">
+            <div className="installations-e0b1">
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
             <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
@@ -180,17 +178,17 @@ function FieldRow({ p, navigate }) {
       </div>
 
       {/* Right: action */}
-      <div style={{ display: 'flex', flexDirection: 'row', gap: 6, flexShrink: 0, alignItems: 'center' }}>
+      <div className="installations-5a1f">
         <button
           className="btn btn-black"
-          style={{ fontSize: 'var(--text-sm)', padding: '8px 14px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 5 }}
+          className="installations-c392"
           onClick={e => { e.stopPropagation(); navigate(`/daily-field-log?project=${p.id}`) }}
         >
           <ClipboardText size="0.875rem" /> DFL
         </button>
         <button
           className="btn btn-black"
-          style={{ fontSize: 'var(--text-sm)', padding: '8px 14px', whiteSpace: 'nowrap' }}
+          className="installations-06cd"
           onClick={e => { e.stopPropagation(); navigate(`/installations/${p.id}`) }}
         >
           View
@@ -203,9 +201,7 @@ function FieldRow({ p, navigate }) {
 // ─── Empty state ──────────────────────────────────────────────────────────────
 function EmptyState({ message }) {
   return (
-    <div style={{
-      padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>
+    <div className="installations-6d11">
       {message}
     </div>
   )
@@ -218,24 +214,22 @@ function FieldMiniRow({ p, navigate, stageKey }) {
 
   return (
     <div
-      style={{
-        padding: '10px 14px', borderBottom: '1px solid var(--border-default)',
-        display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer' }}
+      className="installations-e74b"
       onClick={() => navigate(`/installations/${p.id}`)}
     >
       <div className="dash-job-icon">
         <Icon size="0.9375rem" />
       </div>
       <div className="content-body">
-        <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div className="installations-8617">
           {p.name}
         </div>
         <div className="meta-text">
           {getTech(p.lead_tech_id)}{p.scheduled_date ? ` · ${fmtDate(p.scheduled_date)}` : ''}
         </div>
         {stageKey === 'in-progress' && p.progress > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
-            <div style={{ flex: 1, height: 3, borderRadius: 2, background: 'var(--border-subtle)', overflow: 'hidden', maxWidth: 80 }}>
+          <div className="installations-45c8">
+            <div className="installations-7bed">
               <div style={{ height: '100%', width: `${p.progress}%`, background: cfg.color, borderRadius: 2 }} />
             </div>
             <span style={{ fontSize: 'var(--text-2xs)', fontFamily: 'var(--font-mono)', color: cfg.color }}>{p.progress}%</span>
@@ -305,7 +299,7 @@ export default function Installations() {
         />
 
         {/* Stage stat pills */}
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: 2 }}>
+        <div className="installations-1a27">
           {['scheduled','in-progress','pending-review','complete'].map(s => (
             <StagePill
               key={s}
@@ -376,13 +370,10 @@ export default function Installations() {
                 : 'All Projects'
               }
             </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div className="installations-2bce">
               <span className="list-card__meta">{filtered.length}</span>
               <button
-                style={{
-                  background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)',
-                  padding: '3px 7px', cursor: 'pointer', display: 'flex', alignItems: 'center',
-                  color: 'inherit' }}
+                className="installations-ef52"
                 onClick={() => setSearchOpen(o => !o)}
               >
                 <MagnifyingGlass size="0.8125rem" />
@@ -403,22 +394,18 @@ export default function Installations() {
 
           {/* Search bar */}
           {searchOpen && (
-            <div style={{
-              padding: '8px 14px', borderBottom: '1px solid var(--border-default)',
-              display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-base)' }}>
+            <div className="installations-5086">
               <MagnifyingGlass size="0.875rem" className="row-item__caret" />
               <input
                 autoFocus
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search projects, customers, job #…"
-                style={{
-                  flex: 1, outline: 'none', background: 'none',
-                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', color: 'var(--text-primary)' }}
+                className="installations-3fae"
               />
               {search && (
                 <button
-                  style={{ background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 2 }}
+                  className="installations-cd46"
                   onClick={() => setSearch('')}
                 >×</button>
               )}

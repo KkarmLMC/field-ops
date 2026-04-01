@@ -51,11 +51,11 @@ function fmtDate(d) {
 function InfoRow({ icon: Icon, label, value }) {
   if (!value) return null
   return (
-    <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-      <Icon size="0.875rem" style={{ color: 'var(--text-muted)', marginTop: 1, flexShrink: 0 }} />
+    <div className="project-detail-2e0d">
+      <Icon size="0.875rem" className="project-detail-dafa" />
       <div>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.03em', marginBottom: 1 }}>{label}</div>
-        <div style={{ fontSize: 'var(--text-md)', color: 'var(--text-primary)' }}>{value}</div>
+        <div className="project-detail-3a68">{value}</div>
       </div>
     </div>
   )
@@ -67,15 +67,15 @@ function StagePipeline({ stage }) {
   const isOffPipeline = currentIdx === -1 // postponed / failed
 
   return (
-    <div style={{ padding: '10px 14px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 0, minWidth: 'max-content' }}>
+    <div className="project-detail-4e3f">
+      <div className="project-detail-9b1c">
         {STAGE_PIPELINE.map((s, i) => {
           const cfg = STAGE_CFG[s]
           const isDone    = !isOffPipeline && i < currentIdx
           const isCurrent = !isOffPipeline && i === currentIdx
           return (
-            <div key={s} style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+            <div key={s} className="project-detail-81dd">
+              <div className="project-detail-b332">
                 <div style={{
                   width:  isCurrent ? 14 : 10,
                   height: isCurrent ? 14 : 10,
@@ -194,7 +194,7 @@ export default function ProjectDetail() {
   }, [id])
 
   if (loading) return (
-    <div className="page-content fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 60 }}>
+    <div className="page-content fade-in project-detail-961f">
       <div className="spinner" />
     </div>
   )
@@ -230,8 +230,8 @@ export default function ProjectDetail() {
             borderRadius: '0.5rem 0.5rem 0 0',
             borderBottom: `2px solid ${stageCfg.color || 'var(--border)'}22` }}>
             {/* Type + stage */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div className="project-detail-0ee5">
+              <div className="project-detail-d7ff">
                 <TypeIcon size="0.875rem" style={{ color: stageCfg.color }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: stageCfg.color }}>
                   {project.type?.replace('-', ' ')}
@@ -252,7 +252,7 @@ export default function ProjectDetail() {
             <div className="meta-text">
               {project.customer_account}
               {project.job_number && (
-                <span style={{ fontFamily: 'var(--font-mono)', marginLeft: 8 }}>{project.job_number}</span>
+                <span className="project-detail-4dff">{project.job_number}</span>
               )}
             </div>
           </div>
@@ -263,13 +263,13 @@ export default function ProjectDetail() {
           {/* Progress bar */}
           {project.progress > 0 && (
             <div style={{ padding: '0 14px 14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 500 }}>Progress</span>
+              <div className="project-detail-d4b0">
+                <span className="project-detail-6fe4">Progress</span>
                 <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: stageCfg.color, fontWeight: 700 }}>
                   {project.progress}%
                 </span>
               </div>
-              <div style={{ height: 5, borderRadius: 'var(--radius-xs)', background: 'var(--border-subtle)', overflow: 'hidden' }}>
+              <div className="project-detail-90f2">
                 <div style={{
                   height: '100%', width: `${project.progress}%`,
                   background: stageCfg.color || 'var(--state-warning-text)', borderRadius: 'var(--radius-xs)',
@@ -291,7 +291,7 @@ export default function ProjectDetail() {
               {cfStatus === 'submitted' && (
                 <button
                   className="btn btn-secondary"
-                  style={{ fontSize: 'var(--text-xs)', padding: '3px 10px' }}
+                  className="project-detail-0620"
                   onClick={() => navigate('/forms')}
                 >
                   Review →
@@ -306,7 +306,7 @@ export default function ProjectDetail() {
           <div className="list-card__header">
             <span className="list-card__title">Project Details</span>
           </div>
-          <div style={{ padding: '10px 14px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className="project-detail-6045">
             <InfoRow icon={MapPin}        label="Address"       value={[project.address, project.city, project.state].filter(Boolean).join(', ')} />
             <InfoRow icon={Buildings}     label="Structure"     value={project.structure} />
             <InfoRow icon={Shield}        label="NFPA Class"    value={project.nfpa_class ? `Class ${project.nfpa_class}` : null} />
@@ -324,7 +324,7 @@ export default function ProjectDetail() {
           </div>
           <div style={{ padding: '10px 14px 14px' }}>
             {tech ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div className="project-detail-8b5b">
                 <div style={{
                   width: '2.5rem', height: '2.5rem', borderRadius: '0.5rem',
                   background: tech.status === 'field' ? 'var(--state-warning-soft)' : 'var(--state-info-soft)',
@@ -334,8 +334,8 @@ export default function ProjectDetail() {
                   {tech.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="content-body">
-                  <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
+                  <div className="project-detail-96f6">{tech.name}</div>
+                  <div className="project-detail-ecb7">
                     {tech.license}
                     {tech.phone && ` · ${tech.phone}`}
                   </div>
@@ -345,7 +345,7 @@ export default function ProjectDetail() {
                 </span>
               </div>
             ) : (
-              <div style={{ color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>Unassigned</div>
+              <div className="project-detail-38b3">Unassigned</div>
             )}
           </div>
         </div>
@@ -427,8 +427,7 @@ export default function ProjectDetail() {
               {/* Drop ship deliveries sub-section */}
               {dropShipments.length > 0 && (
                 <>
-                  <div style={{ padding: 'var(--space-s) var(--space-l)', background: 'var(--state-warning-soft)', display: 'flex', alignItems: 'center', gap: 'var(--space-s)',
-                    borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div className="project-detail-d4c2">
                     <AirplaneTilt size="0.75rem" weight="fill" style={{ color: 'var(--state-warning-text)' }} />
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--state-warning-text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       Drop Ship Deliveries
@@ -512,15 +511,15 @@ export default function ProjectDetail() {
             </div>
 
             {/* Field stats row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1px', background: 'var(--border-subtle)' }}>
+            <div className="project-detail-3c04">
               {[
                 { label: 'Hours On-Site',  value: `${jobCost.totalHours}h` },
                 { label: 'Miles Driven',   value: jobCost.totalMiles.toLocaleString() },
                 { label: 'Crew Days',      value: `${jobCost.crewDays}d` + (jobCost.avgCrew > 0 ? ` · ${jobCost.avgCrew} avg` : '') },
               ].map(s => (
-                <div key={s.label} style={{ background: 'var(--surface-base)', padding: 'var(--space-m) var(--space-l)' }}>
-                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>{s.label}</div>
+                <div key={s.label} className="project-detail-efee">
+                  <div className="project-detail-03af">{s.value}</div>
+                  <div className="project-detail-3b43">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -570,11 +569,11 @@ export default function ProjectDetail() {
 
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer' }}>
+              className="project-detail-e521">
               <span className="text-xs-semi">
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--brand-primary)' }}>
+              <div className="project-detail-5acb">
                 View Expenses <CaretRight size="0.75rem" />
               </div>
             </button>

@@ -127,7 +127,7 @@ export default function Inspections() {
         </div>
 
         {/* Stage filter pills */}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+        <div className="inspections-ca34">
           {['all', 'in-progress', 'scheduled', 'complete', 'failed'].map(key => {
             const cfg   = key === 'all' ? { label: 'All', color: 'var(--grey-shade-40)', bg: 'var(--bg)' } : STAGE_CFG[key]
             const count = key === 'all' ? branchJobs.length : (stageCounts[key] || 0)

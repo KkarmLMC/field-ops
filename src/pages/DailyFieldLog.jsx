@@ -199,7 +199,7 @@ function CustomerTypeahead({ value, onChange, branch }) {
             >
               <Buildings size="0.75rem" style={{ flexShrink: 0, opacity: 0.5 }} />
               {name}
-              {name === value && <CheckCircle size="0.75rem" weight="fill" style={{ marginLeft: 'auto', color: 'var(--state-success-text)' }} />}
+              {name === value && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-6597" />}
             </li>
           ))}
         </ul>
@@ -291,9 +291,9 @@ function JobsiteSelect({ value, branch, customer, onChange }) {
                   className={`dfl-jobsite-item ${isActive ? 'selected' : ''}`}
                   onMouseDown={() => { onChange(job); setOpen(false) }}
                 >
-                  <MapPin size="0.8125rem" style={{ flexShrink: 0, color: 'var(--grey-base)' }} />
+                  <MapPin size="0.8125rem" className="daily-field-log-9155" />
                   <span className="content-body">{job.name}</span>
-                  {isActive && <CheckCircle size="0.8125rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
+                  {isActive && <CheckCircle size="0.8125rem" weight="fill" className="daily-field-log-a4aa" />}
                 </div>
               )
             })
@@ -365,7 +365,7 @@ function TechTypeahead({ value, onChange, exclude = [], placeholder = 'Search te
               <span className="dfl-tech-avatar-sm">{tech.name.split(' ').map(w => w[0]).join('')}</span>
               <span className="content-body">{tech.name}</span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{tech.license}</span>
-              {value === tech.name && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
+              {value === tech.name && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-a4aa" />}
             </li>
           ))}
         </ul>
@@ -473,7 +473,7 @@ function TimeOnsiteInput({ value, onChange, options = TIME_ONSITE_OPTIONS, place
               onMouseDown={() => select(opt)}
             >
               <span style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.875rem' }}>{opt.label}</span>
-              {value === opt.value && <CheckCircle size="0.75rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />}
+              {value === opt.value && <CheckCircle size="0.75rem" weight="fill" className="daily-field-log-a4aa" />}
             </li>
           ))}
         </ul>
@@ -661,7 +661,7 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {isDraft && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint">
-            <Warning size="0.6875rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+            <Warning size="0.6875rem" weight="fill" className="daily-field-log-6be6" />
             Complete end-of-day close-out to submit this log
           </div>
           <button
@@ -679,12 +679,12 @@ function EntryCard({ entry, bc, onCloseOut }) {
       {!isDraft && entry.pdf_url && (
         <div className="dfl-closeout-row">
           <div className="dfl-closeout-hint" style={{ color: 'var(--state-success-text)' }}>
-            <SealCheck size="0.6875rem" weight="fill" style={{ color: 'var(--state-success-text)', flexShrink: 0 }} />
+            <SealCheck size="0.6875rem" weight="fill" className="daily-field-log-a4aa" />
             Log finalized and stored
           </div>
           <a
             className="dfl-closeout-btn"
-            style={{ background: 'var(--state-success-text)', textDecoration: 'none' }}
+            className="daily-field-log-0b22"
             href={entry.pdf_url}
             target="_blank"
             rel="noopener noreferrer"
@@ -805,7 +805,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-pf-row">
           <span className="fr-pf-label">
             {field.label}
-            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
+            {field.required && <span className="daily-field-log-b4f1">*</span>}
           </span>
           <div className="fr-pf-buttons">
             <button type="button" className={`fr-pf-btn fr-pf-pass ${pf.result === 'pass' ? 'active' : ''}`} onClick={() => onChange({ ...pf, result: pf.result === 'pass' ? null : 'pass' })}>Pass</button>
@@ -822,7 +822,7 @@ function SafetyFieldRenderer({ field, value, onChange }) {
         <div className="fr-ok-row">
           <span className="fr-ok-label">
             {field.label}
-            {field.required && <span style={{ color: 'var(--error)', marginLeft: 2 }}>*</span>}
+            {field.required && <span className="daily-field-log-b4f1">*</span>}
           </span>
           <div className="fr-ok-buttons">
             {[['ok','OK'],['notok','Not OK'],['na','N/A']].map(([k, lbl]) => (
@@ -933,9 +933,9 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
         </div>
 
         {/* Body */}
-        <div className="dfl-form-body" style={{ overflowY: 'auto', flex: 1 }}>
+        <div className="dfl-form-body daily-field-log-ad62">
           {loading ? (
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'var(--space-2xl)' }}>
+            <div className="daily-field-log-1fb3">
               <div className="spinner" />
             </div>
           ) : (
@@ -1744,7 +1744,7 @@ export default function DailyFieldLog() {
                   ))}
                   {hasMore && (
                     <button onClick={loadMore} disabled={loadingMore}
-                      style={{ width:'100%', padding:'var(--space-m)', textAlign:'center', color:'var(--text-muted)', fontSize:'var(--text-sm)', background:'none' }}>
+                      className="daily-field-log-ac41">
                       {loadingMore ? 'Loading…' : 'Load more'}
                     </button>
                   )}
@@ -1756,7 +1756,7 @@ export default function DailyFieldLog() {
       )}
 
       {/* New Daily Log button */}
-      <div style={{ display: 'flex', gap: 'var(--space-s)', width: '100%', marginBottom: 'var(--space-s)', overflow: 'hidden', boxSizing: 'border-box' }}>
+      <div className="daily-field-log-4e54">
         <button
           className="btn btn-primary"
           className="content-body flex-gap-s"
@@ -1800,7 +1800,7 @@ export default function DailyFieldLog() {
                 ))}
                 {hasMore && (
                   <button onClick={loadMore} disabled={loadingMore}
-                    style={{ width:'100%', padding:'var(--space-m)', textAlign:'center', color:'var(--text-muted)', fontSize:'var(--text-sm)', background:'none' }}>
+                    className="daily-field-log-ac41">
                     {loadingMore ? 'Loading…' : 'Load more'}
                   </button>
                 )}

@@ -102,43 +102,40 @@ function SignatureModal({ onSave, onClose }) {
   return (
     <>
       {/* Backdrop */}
-      <div onClick={onClose} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:300 }} />
+      <div onClick={onClose} className="form-engine-32af" />
 
       {/* Modal */}
-      <div style={{
-        position: 'fixed', inset:0, zIndex:301,
-        display: 'flex', flexDirection:'column',
-        background: '#fff' }}>
+      <div className="form-engine-9b80">
         {/* Header */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'var(--space-l)', borderBottom:'1px solid var(--border-default)', background:'var(--brand-primary)' }}>
-          <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>Sign Here</span>
-          <button type="button" onClick={onClose} style={{ color: 'var(--surface-base)', padding:'var(--space-xs)' }}>
+        <div className="form-engine-d8e2">
+          <span className="form-engine-81f8">Sign Here</span>
+          <button type="button" onClick={onClose} className="form-engine-68bf">
             <X size="1.25rem" />
           </button>
         </div>
 
         {/* Canvas area */}
-        <div style={{ flex:1, position:'relative', background:'var(--surface-base)' }}>
+        <div className="form-engine-2d17">
           {/* Baseline guide */}
-          <div style={{ position:'absolute', left:'5%', right:'5%', bottom:'35%', height:1, background:'rgba(0,0,0,0.1)', pointerEvents:'none' }} />
+          <div className="form-engine-8cba" />
           {/* Placeholder text */}
           {!hasStrokes && (
-            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none' }}>
-              <span style={{ fontSize:'var(--text-lg)', color:'rgba(0,0,0,0.15)', fontStyle:'italic', userSelect:'none' }}>Sign above the line</span>
+            <div className="form-engine-a90e">
+              <span className="form-engine-41a3">Sign above the line</span>
             </div>
           )}
           <canvas
             ref={canvasRef}
             onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
             onTouchStart={start} onTouchMove={move} onTouchEnd={end}
-            style={{ width:'100%', height:'100%', cursor:'crosshair', touchAction:'none', display:'block' }}
+            className="form-engine-b1f0"
           />
         </div>
 
         {/* Footer actions */}
-        <div style={{ display:'flex', gap:'var(--space-m)', padding: 'var(--space-l)', marginTop:'var(--space-l)', background:'var(--surface-base)' }}>
+        <div className="form-engine-fdfe">
           <button type="button" onClick={clear}
-            style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-l)', borderRadius:'var(--radius-m)', fontSize:'var(--text-sm)', color:'var(--text-primary)', background: 'var(--surface-base)' }}>
+            className="form-engine-7238">
             <ArrowCounterClockwise size="0.875rem"/> Clear
           </button>
           <button type="button" onClick={save} disabled={!hasStrokes}
@@ -165,11 +162,11 @@ export function SigPad({ value, onChange, readOnly }) {
     : null
 
   if (readOnly) {
-    if (!hasSig) return <div style={{ height:'2rem', color:'var(--text-muted)', fontSize:'var(--text-sm)', fontStyle:'italic' }}>No signature</div>
+    if (!hasSig) return <div className="form-engine-67a4">No signature</div>
     return (
       <div>
-        <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'5rem', objectFit:'contain', borderRadius:'var(--radius-s)', background: 'var(--surface-base)' }} />
-        {fmtDate && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', fontFamily:'var(--font-mono)', marginTop:'var(--space-xs)' }}>Signed {fmtDate}</div>}
+        <img src={sigData.sig} alt="Signature" className="form-engine-b032" />
+        {fmtDate && <div className="form-engine-f33b">Signed {fmtDate}</div>}
       </div>
     )
   }
@@ -178,33 +175,33 @@ export function SigPad({ value, onChange, readOnly }) {
     <>
       {hasSig ? (
         /* Signed state */
-        <div style={{ borderRadius:'var(--radius-m)', overflow:'hidden' }}>
-          <div style={{ padding: 'var(--space-s) var(--space-m)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--surface-base)', borderBottom:'1px solid var(--border-default)' }}>
+        <div className="form-engine-90e0">
+          <div className="form-engine-e64f">
             <div className="flex-gap-s">
-              <CheckCircle size="0.875rem" weight="fill" style={{ color:'var(--state-success)', flexShrink:0 }} />
-              <span style={{ fontSize:'var(--text-xs)', color:'var(--text-primary)', fontFamily:'var(--font-mono)' }}>
+              <CheckCircle size="0.875rem" weight="fill" className="form-engine-dd00" />
+              <span className="form-engine-3c0b">
                 {fmtDate ? `Signed ${fmtDate}` : 'Signed'}
               </span>
             </div>
             <div className="flex-gap-s">
               <button type="button" onClick={() => setModalOpen(true)}
-                style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', display:'flex', alignItems:'center', gap:4 }}>
+                className="form-engine-f3e4">
                 <PencilSimple size="0.75rem"/> Re-sign
               </button>
               <button type="button" onClick={() => onChange(null)}
-                style={{ fontSize:'var(--text-xs)', color:'var(--state-error)', display:'flex', alignItems:'center', gap:4 }}>
+                className="form-engine-325e">
                 <Trash size="0.75rem"/> Clear
               </button>
             </div>
           </div>
-          <div style={{ padding: 'var(--space-s)', background:'#fff' }}>
-            <img src={sigData.sig} alt="Signature" style={{ width:'100%', maxHeight:'4rem', objectFit:'contain', display:'block' }} />
+          <div className="form-engine-d241">
+            <img src={sigData.sig} alt="Signature" className="form-engine-4c66" />
           </div>
         </div>
       ) : (
         /* Unsigned state */
         <button type="button" onClick={() => setModalOpen(true)}
-          style={{ width:'100%', padding:'var(--space-l)', borderRadius:'var(--radius-m)', border:'2px dashed var(--border-default)', background:'var(--surface-base)', display:'flex', alignItems:'center', justifyContent:'center', gap:'var(--space-s)', color:'var(--text-muted)', fontSize:'var(--text-sm)', transition:'all var(--ease-fast)' }}
+          className="form-engine-1ac1"
           onMouseEnter={e => { e.currentTarget.style.borderColor='var(--brand-primary)'; e.currentTarget.style.color='var(--brand-primary)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-subtle)'; e.currentTarget.style.color='var(--text-muted)' }}
         >
@@ -236,16 +233,16 @@ function GpsField({ value, onChange, readOnly }) {
     )
   }
 
-  if (readOnly) return <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-sm)' }}>{value || '—'}</span>
+  if (readOnly) return <span className="form-engine-b926">{value || '—'}</span>
 
   return (
-    <div style={{ display:'flex', gap:'var(--space-s)', alignItems:'center' }}>
+    <div className="form-engine-b5c8">
       <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder="lat, lng" style={{ flex:1 }} />
       <button type="button" onClick={capture} disabled={loading}
         style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', background:'var(--brand-primary)', color:'#fff', fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', whiteSpace:'nowrap', opacity: loading?0.6:1 }}>
         <MapPin size="0.75rem" /> {loading ? 'Getting…' : 'Get GPS'}
       </button>
-      {error && <span style={{ color:'var(--state-error)', fontSize:'var(--text-xs)' }}>{error}</span>}
+      {error && <span className="form-engine-94c4">{error}</span>}
     </div>
   )
 }
@@ -269,8 +266,8 @@ function PhotoField({ value, onChange, readOnly }) {
     <div>
       <div style={{ display:'flex', flexWrap:'wrap', gap:'var(--space-s)', marginBottom: photos.length?'var(--space-s)':0 }}>
         {photos.map((src,i) => (
-          <div key={i} style={{ position:'relative', width:'5rem', height:'5rem' }}>
-            <img src={src} alt={`Photo ${i+1}`} style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'var(--radius-m)' }} />
+          <div key={i} className="form-engine-ff0c">
+            <img src={src} alt={`Photo ${i+1}`} className="form-engine-556a" />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
                 style={{ position:'absolute', top:'-0.375rem', right:'-0.375rem', width:'1.25rem', height:'1.25rem', borderRadius:'var(--radius-l)', background:'var(--state-error)', color:'#fff', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
@@ -282,7 +279,7 @@ function PhotoField({ value, onChange, readOnly }) {
         <>
           <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" onChange={handleFiles} style={{ display:'none' }} />
           <button type="button" onClick={()=>fileRef.current.click()}
-            style={{ display:'flex', alignItems:'center', gap:'var(--space-s)', padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', background: 'var(--surface-base)', fontSize:'var(--text-sm)', color:'var(--text-primary)' }}>
+            className="form-engine-e5fe">
             <Camera size="0.875rem" /> Add Photo
           </button>
         </>
@@ -373,7 +370,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
 
   // Read-only playback
   if (readOnly) {
-    if (!value?.audio) return <span style={{ color:'var(--text-muted)', fontStyle:'italic' }}>No recording</span>
+    if (!value?.audio) return <span className="form-engine-b448">No recording</span>
     return (
       <audio controls src={value.audio} style={{ width:'100%', height:'2.5rem' }} />
     )
@@ -383,13 +380,13 @@ function VoiceNoteField({ value, onChange, readOnly }) {
   const progress = hasRecording ? (elapsed / (value?.duration || 1)) * 100 : (elapsed / MAX_SECS) * 100
 
   return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-s)' }}>
-      {error && <div style={{ fontSize:'var(--text-xs)', color:'var(--state-error)', padding:'var(--space-s) var(--space-m)', background:'var(--red-soft)', borderRadius:'var(--radius-s)' }}>{error}</div>}
+    <div className="form-engine-9577">
+      {error && <div className="form-engine-33fe">{error}</div>}
 
       {/* Hidden audio element for playback */}
       {hasRecording && <audio ref={audioRef} src={value.audio} preload="auto" style={{ display:'none' }} />}
 
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', padding: 'var(--space-m)', background: 'var(--surface-base)', borderRadius:'var(--radius-m)' }}>
+      <div className="form-engine-5933">
 
         {/* Main action button */}
         {state === 'recording' ? (
@@ -414,7 +411,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
           <div style={{ height:'0.375rem', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', overflow:'hidden', marginBottom:'var(--space-xs)' }}>
             <div style={{ height:'100%', width:`${Math.min(progress,100)}%`, background: state==='recording'?'var(--state-error)':'var(--brand-primary)', borderRadius: 'var(--radius-s)', transition: state==='recording'?'width 1s linear':'width 0.1s linear' }} />
           </div>
-          <div style={{ fontSize:'var(--text-xs)', fontFamily:'var(--font-mono)', color:'var(--text-muted)', display:'flex', justifyContent:'space-between' }}>
+          <div className="form-engine-82a6">
             <span style={{ color: state==='recording'?'var(--state-error)':'var(--text-muted)' }}>
               {state === 'recording' ? `● ${fmt(elapsed)}` : hasRecording ? fmt(elapsed) : 'Tap mic to record'}
             </span>
@@ -426,7 +423,7 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {/* Discard / re-record */}
         {hasRecording && state !== 'recording' && (
           <button type="button" onClick={discard} title="Discard and re-record"
-            style={{ color:'var(--text-muted)', padding:'var(--space-xs)', flexShrink:0 }}>
+            className="form-engine-bd6e">
             <ArrowCounterClockwise size="1rem" />
           </button>
         )}
@@ -451,7 +448,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     if (type==='photo')     return <PhotoField value={value} readOnly />
     if (type==='gps')       return <GpsField value={value} readOnly />
     if (type==='voice-note') return <VoiceNoteField value={value} readOnly />
-    return <span style={{ fontSize:'var(--text-md)', color:'var(--text-primary)' }}>{display}</span>
+    return <span className="form-engine-de5d">{display}</span>
   }
 
   if (type==='text'||type==='email')
@@ -478,8 +475,8 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   if (type==='pass-fail') {
     const pf = value && typeof value==='object' ? value : { result:null, comments:'' }
     return (
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--space-s)', flexWrap:'wrap' }}>
-        <div style={{ display:'flex', gap:'var(--space-xs)', flexShrink:0 }}>
+      <div className="form-engine-7668">
+        <div className="form-engine-e219">
           {[['pass','Pass','var(--state-success)'],['fail','Fail','var(--state-error)']].map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...pf, result: pf.result===k?null:k})}
               style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight:600,
@@ -490,7 +487,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
           ))}
         </div>
         <input value={pf.comments||''} onChange={e=>onChange({...pf,comments:e.target.value})}
-          placeholder="Comments" style={{ flex:1, minWidth:'8rem' }} />
+          placeholder="Comments" className="form-engine-38e4" />
       </div>
     )
   }
@@ -500,8 +497,8 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     const okv = value && typeof value==='object' ? value : { result:null, explanation:'' }
     const cfg = [['ok','OK','var(--state-success)'],['notok','Not OK','var(--state-error)'],['na','N/A','var(--text-muted)']]
     return (
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--space-s)', flexWrap:'wrap' }}>
-        <div style={{ display:'flex', gap:'var(--space-xs)', flexShrink:0 }}>
+      <div className="form-engine-7668">
+        <div className="form-engine-e219">
           {cfg.map(([k,lbl,col]) => (
             <button key={k} type="button" onClick={()=>onChange({...okv, result: okv.result===k?null:k})}
               style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius:'var(--radius-s)', fontSize:'var(--text-sm)', fontWeight:600,
@@ -514,7 +511,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
         </div>
         {okv.result==='notok' && (
           <input value={okv.explanation||''} onChange={e=>onChange({...okv,explanation:e.target.value})}
-            placeholder="Explanation required" style={{ flex:1, minWidth:'8rem', borderColor:'var(--state-error)' }} />
+            placeholder="Explanation required" className="form-engine-280a" />
         )}
       </div>
     )
@@ -563,7 +560,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     const p = value && typeof value==='object' ? value : { name:'', function:'', signed:false }
     const setP = (k,v) => onChange({...p,[k]:v})
     return (
-      <div style={{ display:'flex', gap:'var(--space-s)', alignItems:'center' }}>
+      <div className="form-engine-b5c8">
         <input value={p.name||''}     onChange={e=>setP('name',e.target.value)}     placeholder="Name"          style={{ flex:2 }} />
         <input value={p.function||''} onChange={e=>setP('function',e.target.value)} placeholder="Function/Role" style={{ flex:2 }} />
         <button type="button" onClick={()=>setP('signed',!p.signed)}
@@ -593,7 +590,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
 
   if (type==='radio')
     return (
-      <div style={{ display:'flex', flexWrap:'wrap', gap:'var(--space-s)' }}>
+      <div className="form-engine-1916">
         {options.map(opt => {
           const active = value===opt
           return (
@@ -613,13 +610,13 @@ export function FormField({ field, value, onChange, error, readOnly }) {
       onChange(next)
     }
     return (
-      <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-xs)' }}>
+      <div className="form-engine-76b6">
         {options.map(opt => {
           const checked = selected.includes(opt)
           return (
             <button key={opt} type="button" onClick={()=>toggle(opt)}
               style={{ display:'flex', alignItems:'center', gap:'var(--space-s)', padding: 'var(--space-s) var(--space-m)', borderRadius:'var(--radius-s)', background:checked?'rgba(4,36,92,0.06)':'var(--surface-base)', textAlign:'left', transition:'all var(--ease-fast)' }}>
-              {checked ? <CheckSquare size="1rem" style={{ color:'var(--brand-primary)', flexShrink:0 }} /> : <Square size="1rem" style={{ color:'var(--text-muted)', flexShrink:0 }} />}
+              {checked ? <CheckSquare size="1rem" className="form-engine-542a" /> : <Square size="1rem" className="form-engine-54de" />}
               <span style={{ fontSize:'var(--text-md)', color:checked?'var(--text-primary)':'var(--text-primary)' }}>{opt}</span>
             </button>
           )
@@ -644,7 +641,7 @@ function FieldLabel({ field, error }) {
     <div style={{ marginBottom: 'var(--space-xs)' }}>
       <div style={{ fontSize:'var(--text-sm)', fontWeight:600, color: error?'var(--state-error)':'var(--text-primary)', marginBottom: field.hint?'0.125rem':0 }}>
         {field.label}
-        {field.required && <span style={{ color:'var(--state-error)', marginLeft:'var(--space-xs)' }}>*</span>}
+        {field.required && <span className="form-engine-f0a3">*</span>}
       </div>
       {field.hint && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', lineHeight:1.4 }}>{field.hint}</div>}
       {error        && <div style={{ fontSize:'var(--text-xs)', color:'var(--state-error)',   marginTop:'0.125rem' }}>{error}</div>}
@@ -657,14 +654,14 @@ function Section({ section, values, onChange, errors, readOnly, defaultOpen=true
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div style={{ background:'var(--surface-base)', borderRadius:'var(--radius-l)', marginBottom:'var(--space-m)', overflow:'hidden' }}>
+    <div className="form-engine-9fd3">
       <button type="button" onClick={()=>setOpen(o=>!o)}
-        style={{ width:'100%', padding:'var(--space-m) var(--space-l)', display:'flex', alignItems:'center', justifyContent:'space-between', background:'var(--brand-primary)' }}>
-        <span style={{ fontSize:'var(--text-md)', fontWeight:700, color:'#fff' }}>{section.title}</span>
+        className="form-engine-5491">
+        <span className="form-engine-81f8">{section.title}</span>
         <CaretDown size="0.875rem" style={{ color: 'var(--surface-base)', transform:open?'rotate(180deg)':'none', transition:'transform var(--ease-base)' }} />
       </button>
       {open && (
-        <div style={{ padding: 'var(--space-l)', display:'flex', flexDirection:'column', gap:'var(--space-l)' }}>
+        <div className="form-engine-827d">
           {section.fields.map(field => (
             <div key={field.id}>
               <FieldLabel field={field} error={errors?.[field.id]} />
@@ -704,7 +701,7 @@ export function validateSchema(schema, values) {
 // ─── Main FormEngine Export ───────────────────────────────────────────────────
 export default function FormEngine({ schema, values = {}, onChange, errors = {}, readOnly = false }) {
   if (!schema || !schema.sections?.length) {
-    return <div style={{ padding: 'var(--space-2xl)', textAlign:'center', color:'var(--text-muted)' }}>No form schema loaded.</div>
+    return <div className="form-engine-0048">No form schema loaded.</div>
   }
 
   return (

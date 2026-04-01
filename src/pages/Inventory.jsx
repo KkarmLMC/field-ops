@@ -41,10 +41,10 @@ function AddWarehouseSheet({ onClose, onSaved }) {
       <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 299, background: 'rgba(0,0,0,0.5)', animation: 'anim-fade-in 0.15s ease' }} />
       <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 300, background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Header */}
-        <div style={{ padding: 'var(--space-l) var(--space-xl) 0', flexShrink: 0 }}>
+        <div className="inventory-43ec">
           <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-m)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-l)' }}>
-            <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>Add Warehouse</div>
+          <div className="inventory-d4f3">
+            <div className="inventory-860f">Add Warehouse</div>
             <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size="0.875rem" style={{ color: 'var(--text-primary)' }} />
             </button>
@@ -52,7 +52,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
         </div>
 
         {/* Fields */}
-        <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--space-xl) var(--space-s)' }}>
+        <div className="inventory-9bc3">
           <div className="mb-m">
             <Label>Warehouse Name *</Label>
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
@@ -67,7 +67,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 90px', gap: 'var(--space-s)', marginBottom: 'var(--space-m)' }}>
+          <div className="inventory-af03">
             <div><Label>City</Label><input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" style={{ width: '100%' }} /></div>
             <div><Label>State</Label><input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" style={{ width: '100%' }} /></div>
             <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} /></div>
@@ -92,11 +92,11 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3}  />
           </div>
 
-          {error && <div style={{ color: 'var(--state-error-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-m)', padding: 'var(--space-s) var(--space-m)', background: 'var(--state-error-soft)', borderRadius: 'var(--radius-m)' }}>{error}</div>}
+          {error && <div className="inventory-f854">{error}</div>}
         </div>
 
         {/* Footer */}
-        <div style={{ padding: 'var(--space-l) var(--space-xl)', paddingBottom: 'calc(var(--space-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
+        <div className="inventory-fa13">
           <Button onClick={handleSave} disabled={saving || !form.name.trim()} style={{ width: '100%' }}>
             {saving ? 'Creating…' : <><Check size="0.9375rem" /> Create Warehouse</>}
           </Button>
@@ -120,7 +120,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', overflow: 'hidden',
       border: hasAlerts ? '1px solid #FED7AA' : '1px solid var(--border-default)' }}>
       {/* Header — clickable, goes to warehouse detail */}
-      <button onClick={onPress} style={{ background: 'var(--brand-primary)', padding: 'var(--space-l) var(--space-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
+      <button onClick={onPress} className="inventory-4e80">
         <div className="flex-gap-m">
           <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: 'var(--radius-l)', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Buildings size="1.25rem" style={{ color: '#fff' }} />
@@ -128,16 +128,16 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
           <div>
             <div className="page-heading--inverse">{warehouse.name}</div>
             {(warehouse.city || warehouse.state) && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 2 }}>
+              <div className="inventory-b2b7">
                 {[warehouse.city, warehouse.state].filter(Boolean).join(', ')}
               </div>
             )}
           </div>
         </div>
         {hasAlerts ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--warning-soft)', borderRadius: 'var(--radius-l)', padding: '3px 10px' }}>
+          <div className="inventory-f25d">
             <WarningCircle size="0.8125rem" weight="fill" style={{ color: 'var(--warning)' }} />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning)' }}>{lowStockItems} low stock</span>
+            <span className="inventory-9a8a">{lowStockItems} low stock</span>
           </div>
         ) : (
           <CaretRight size="1rem" style={{ color: 'var(--surface-base)' }} />
@@ -145,14 +145,14 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
       </button>
 
       {/* Stats 2x2 grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--border-subtle)' }}>
+      <div className="inventory-c040">
         {[
           { label: 'SKUs In Stock', value: totalSkus.toLocaleString(), Icon: Package, color: 'var(--text-primary)' },
           { label: 'Total Units', value: totalUnits.toLocaleString(), Icon: TrendUp, color: 'var(--text-primary)' },
           { label: 'Low Stock', value: lowStockItems, Icon: WarningCircle, color: lowStockItems > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' },
           { label: 'On Order', value: totalOnOrder.toLocaleString(), Icon: Truck, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' },
         ].map(s => (
-          <div key={s.label} style={{ background: 'var(--surface-base)', padding: 'var(--space-m) var(--space-l)' }}>
+          <div key={s.label} className="inventory-efee">
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: s.color, marginBottom: 4 }}>
               <s.Icon size="0.8125rem" />
               <span className="text-xs-semi">{s.label}</span>
@@ -164,12 +164,12 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Value row */}
       {totalValue > 0 && (
-        <div style={{ padding: 'var(--space-m) var(--space-xl)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-muted)' }}>
+        <div className="inventory-b558">
+          <div className="inventory-a267">
             <CurrencyDollar size="0.875rem" />
             <span className="text-xs-semi">Est. Inventory Value</span>
           </div>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--state-success-text)' }}>
+          <span className="inventory-4d0b">
             ${totalValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}
           </span>
         </div>
@@ -177,23 +177,23 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
 
       {/* Low stock list */}
       {lowStockItems > 0 && (
-        <div style={{ padding: 'var(--space-m) var(--space-xl)', borderTop: '1px solid #FED7AA', background: 'var(--warning-soft)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--warning-text)', marginBottom: 'var(--space-s)' }}>Low Stock</div>
+        <div className="inventory-0ec9">
+          <div className="inventory-a7ac">Low Stock</div>
           {wLevels
             .filter(l => l.min_level && l.quantity_on_hand > 0 && l.quantity_on_hand <= l.min_level)
             .slice(0, 3)
             .map(l => (
-              <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginBottom: 2 }}>
-                <span style={{ fontFamily: 'var(--font-mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '60%' }}>{l.parts?.sku || '—'}</span>
-                <span style={{ fontWeight: 700, flexShrink: 0 }}>{l.quantity_on_hand} / min {l.min_level}</span>
+              <div key={l.id} className="inventory-a32b">
+                <span className="inventory-a80d">{l.parts?.sku || '—'}</span>
+                <span className="inventory-c7b3">{l.quantity_on_hand} / min {l.min_level}</span>
               </div>
             ))}
-          {lowStockItems > 3 && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--warning-text)', marginTop: 4 }}>+{lowStockItems - 3} more</div>}
+          {lowStockItems > 3 && <div className="inventory-84e7">+{lowStockItems - 3} more</div>}
         </div>
       )}
 
       {/* Actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)', padding: 'var(--space-m) var(--space-l)' }}>
+      <div className="inventory-88c4">
         <Button onClick={onViewParts} size="sm">
           <Package size="0.8125rem" /> View Parts
         </Button>
@@ -273,7 +273,7 @@ export default function Inventory() {
   return (
     <div className="page-content fade-in">
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-s)', flexWrap: 'wrap', marginBottom: 'var(--space-m)' }}>
+      <div className="inventory-535c">
         {editMode ? (
           <>
             <Button variant="secondary" onClick={() => setEditMode(false)}>
@@ -300,7 +300,7 @@ export default function Inventory() {
 
       {/* Edit mode hint */}
       {editMode && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m) var(--space-l)', background: 'var(--state-info-soft)', borderRadius: 'var(--radius-l)', marginBottom: 'var(--space-l)', fontSize: 'var(--text-sm)', color: 'var(--state-info)' }}>
+        <div className="inventory-eeed">
           <DotsSixVertical size="1rem" />
           Drag the handles to reorder warehouses, then tap Save Order.
         </div>
@@ -316,7 +316,7 @@ export default function Inventory() {
           <Card className="mb-xl">
             {/* Strip header */}
             <button onClick={() => navigate('/sales-orders')}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-default)' }}>
+              className="inventory-b90f">
               <div className="flex-gap-s">
                 <Receipt size="0.9375rem" style={{ color: 'var(--brand-primary)' }} />
                 <span className="text-sm-bold">Sales Orders</span>
@@ -328,7 +328,7 @@ export default function Inventory() {
             </button>
 
             {/* Stat row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--border-subtle)' }}>
+            <div className="inventory-c97f">
               {[
                 { label: 'Draft',     count: draft.length,     color: 'var(--grey-base)', bg: 'var(--surface-base)' },
                 { label: 'Submitted', count: submitted.length, color: submitted.length > 0 ? 'var(--warning)' : 'var(--grey-base)', bg: submitted.length > 0 ? 'var(--warning-soft)' : 'var(--surface-base)' },
@@ -336,7 +336,7 @@ export default function Inventory() {
               ].map(s => (
                 <div key={s.label} style={{ background: s.bg, padding: 'var(--space-m) var(--space-l)' }}>
                   <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: s.color }}>{s.count}</div>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', marginTop: 2 }}>{s.label}</div>
+                  <div className="inventory-de37">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -344,7 +344,7 @@ export default function Inventory() {
             {/* Recent active PO rows */}
             {[...submitted, ...published].slice(0, 3).map(po => (
               <button key={po.id} onClick={() => navigate(`/sales-orders/${po.id}`)}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-s) var(--space-l)', background: 'none', cursor: 'pointer', textAlign: 'left' }}>
+                className="inventory-fbee">
                 <div style={{
                   fontSize: 'var(--text-2xs)', fontWeight: 800, padding: '2px 6px', borderRadius: 4, flexShrink: 0,
                   background: po.division === 'Bolt' ? '#FFF1F2' : 'var(--state-info-soft)',
@@ -371,7 +371,7 @@ export default function Inventory() {
 
       {/* Network-wide summary */}
       {!editMode && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-m)', marginBottom: 'var(--space-2xl)' }}>
+        <div className="inventory-d0a0">
           <StatCard label="Unique SKUs" value={totalSkus.toLocaleString()} />
           <StatCard label="Total Units" value={totalUnits.toLocaleString()} />
           <StatCard label="Low Stock" value={totalLowStock} emphasis={totalLowStock > 0} />
@@ -412,7 +412,7 @@ export default function Inventory() {
                 <Buildings size="1.125rem" style={{ color: '#fff' }} />
               </div>
               <div className="content-body">
-                <div style={{ fontSize: 'var(--text-md)', fontWeight: 700 }}>{wh.name}</div>
+                <div className="inventory-11de">{wh.name}</div>
                 {(wh.city || wh.state) && (
                   <div className="meta-text">
                     {[wh.city, wh.state].filter(Boolean).join(', ')}

@@ -57,13 +57,7 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
   const hasPhoto  = subFields.some(f => f.type === 'photo' && entry[f.id])
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 'var(--space-m)',
-      padding: 'var(--space-m) var(--space-l)',
-      borderBottom: '1px solid var(--border-default)',
-      background: 'var(--surface-base)' }}>
+    <div className="repeater-field-e406">
       {/* Entry number badge */}
       <div style={{
         width: '1.75rem', height: '1.75rem', borderRadius: 'var(--radius-l)',
@@ -86,11 +80,11 @@ function EntryRow({ entry, index, subFields, onEdit, onDelete }) {
 
       {/* Edit + Delete */}
       <button type="button" onClick={onEdit}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        className="repeater-field-33d6">
         <PencilSimple size="0.875rem" />
       </button>
       <button type="button" onClick={onDelete}
-        style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)', color: 'var(--state-error)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+        className="repeater-field-9997">
         <Trash size="0.875rem" />
       </button>
     </div>
@@ -133,12 +127,8 @@ function EntrySheet({ subFields, entry, onSave, onClose, title }) {
         display: 'flex', flexDirection: 'column',
         animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Sheet header */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: 'var(--space-l)',
-          borderBottom: '1px solid var(--border-default)',
-          flexShrink: 0 }}>
-          <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)' }}>
+        <div className="repeater-field-9fa3">
+          <div className="repeater-field-fa4b">
             {title}
           </div>
           <div className="flex-gap-s">
@@ -211,9 +201,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
     <div>
       {/* Entry list */}
       {entries.length > 0 && (
-        <div style={{ borderRadius: 'var(--radius-l)',
-          overflow: 'hidden',
-          marginBottom: 'var(--space-m)' }}>
+        <div className="repeater-field-fc8a">
           {entries.map((entry, i) => (
             <EntryRow
               key={i}
@@ -229,14 +217,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Empty state */}
       {entries.length === 0 && (
-        <div style={{
-          padding: 'var(--space-xl)',
-          textAlign: 'center',
-          border: '1px dashed var(--border-default)',
-          borderRadius: 'var(--radius-l)',
-          marginBottom: 'var(--space-m)',
-          color: 'var(--text-muted)',
-          fontSize: 'var(--text-sm)' }}>
+        <div className="repeater-field-d65a">
           No entries yet — tap Add Entry to begin
         </div>
       )}
@@ -257,7 +238,7 @@ export default function RepeaterField({ field, value, onChange, error }) {
 
       {/* Error message */}
       {error && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 'var(--space-xs)' }}>
+        <div className="repeater-field-eb63">
           {error}
         </div>
       )}

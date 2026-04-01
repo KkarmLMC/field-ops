@@ -74,9 +74,9 @@ const calcNc = (c1,c2,c3,c4,c5,c6) => 1.5e-3 / (c1*c2*c3*c4*c5*c6)
 // ─── Shared sub-components ────────────────────────────────────────────────────
 function FieldLabel({ label, hint }) {
   return (
-    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'var(--space-xs)' }}>
+    <div className="risk-assessment-8cd6">
       <label style={S.label}>{label}</label>
-      {hint && <span style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>{hint}</span>}
+      {hint && <span className="risk-assessment-cf8d">{hint}</span>}
     </div>
   )
 }
@@ -190,11 +190,11 @@ function NewAssessmentForm({ onSave, onCancel }) {
   return (
     <div className="page-content fade-in">
       {/* Back header */}
-      <div style={{ display:'flex', alignItems:'center', gap:'var(--space-m)', marginBottom: 'var(--space-l)' }}>
-        <button onClick={onCancel} style={{ display:'flex', alignItems:'center', gap:'var(--space-xs)', color:'var(--text-primary)', fontSize:'var(--text-md)' }}>
+      <div className="risk-assessment-bd25">
+        <button onClick={onCancel} className="risk-assessment-907c">
           <ArrowLeft size="0.875rem" /> Back
         </button>
-        <div style={{ width:'1px', height:'1rem', background:'var(--border)' }} />
+        <div className="risk-assessment-0b8f" />
         <span style={{ ...S.label }}>NFPA 780 Annex L</span>
       </div>
 
@@ -208,7 +208,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           <FieldLabel label="Address" />
           <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="Street address" style={{ width:'100%' }} />
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'var(--space-m)' }}>
+        <div className="risk-assessment-1741">
           <div>
             <FieldLabel label="Technician" />
             <input value={form.techName} onChange={e=>set('techName',e.target.value)} placeholder="Your name" style={{ width:'100%' }} />
@@ -225,7 +225,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Dimensions */}
       <CardSection title="Structure Dimensions">
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--space-m)' }}>
+        <div className="risk-assessment-0191">
           {[['lengthFt','Length (ft)'],['widthFt','Width (ft)'],['heightFt','Height (ft)']].map(([k,l]) => (
             <div key={k}>
               <FieldLabel label={l} />
@@ -237,7 +237,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
 
       {/* Flash density */}
       <CardSection title="Lightning Ground Flash Density (Ng)">
-        <div style={{ display:'flex', gap:'var(--space-s)', alignItems:'flex-end' }}>
+        <div className="risk-assessment-0e95">
           <div style={{ flex:1 }}>
             <FieldLabel label="Flashes / km² / year" hint="From NOAA Keraunic map" />
             <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" style={{ width:'100%' }} />
@@ -298,7 +298,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           background: result.required ? 'var(--red-soft)'  : 'var(--state-success-soft)',
           border:`1px solid ${result.required ? 'var(--state-error)' : 'var(--state-success)'}`,
           borderRadius:'var(--radius-l)', padding:'1rem', marginBottom: 'var(--space-m)' }}>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--space-m)' }}>
+          <div className="risk-assessment-e5f1">
             <div className="flex-gap-s">
               {result.required
                 ? <Warning size="1.25rem" style={{ color:'var(--state-error)' }} />
@@ -311,7 +311,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             <button onClick={()=>setResult(null)} style={{ color:'var(--text-muted)' }}><X size="1rem" /></button>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'var(--space-s)', marginBottom: 'var(--space-m)' }}>
+          <div className="risk-assessment-b2b5">
             {[
               { label:'Nd (Strikes/yr)',    val: result.Nd.toExponential(2)    },
               { label:'Nc (Tolerable)',     val: result.Nc.toExponential(2)    },
@@ -319,7 +319,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
             ].map(({ label, val }) => (
               <div key={label} style={{ background:'rgba(0,0,0,0.06)', borderRadius:'var(--radius-s)', padding:'0.5rem 0.625rem' }}>
                 <div style={{ ...S.label, fontSize:'var(--text-2xs)', marginBottom:'var(--space-xs)' }}>{label}</div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-md)', fontWeight:600, color:'var(--text-primary)' }}>{val}</div>
+                <div className="risk-assessment-af70">{val}</div>
               </div>
             ))}
           </div>
@@ -368,13 +368,13 @@ function AssessmentRow({ a }) {
         <div style={{ fontWeight:600, fontSize:'var(--text-md)', marginBottom:'0.125rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {a.siteName}
         </div>
-        <div style={{ fontSize:'var(--text-sm)', color:'var(--text-muted)', display:'flex', alignItems:'center', gap:'var(--space-xs)' }}>
+        <div className="risk-assessment-34d3">
           <MapPin size="0.625rem" />{a.address}
         </div>
       </div>
-      <div style={{ textAlign:'right', flexShrink:0 }}>
+      <div className="risk-assessment-b040">
         <ResultBadge result={a.result} ratio={a.ratio} />
-        <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)', marginTop:'var(--space-xs)', fontFamily:'var(--font-mono)' }}>
+        <div className="risk-assessment-c1e3">
           {a.date} · {a.tech}
         </div>
       </div>
@@ -489,7 +489,7 @@ export default function RiskAssessment() {
         </div>
 
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 1.6, padding: '0.625rem 0.875rem', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', margin: 0 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>NFPA 780 Annex L · </span>
+          <span className="risk-assessment-81f3">NFPA 780 Annex L · </span>
           Simplified assessment. Nd/Nc ≥ 1.0 indicates LPS is recommended. Statutory and insurance requirements take precedence.
         </p>
 

@@ -71,7 +71,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
     <>
       <Card title="Employee & Project">
         <div className="form-group">
-          <label className="form-label">Employee Name <span style={{ color: 'var(--state-error-text)', marginLeft: 3 }}>*</span></label>
+          <label className="form-label">Employee Name <span className="expense-new-d18e">*</span></label>
           <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
         </div>
         <div className="form-grid-2">
@@ -94,13 +94,13 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       </Card>
 
       <Card title="Per Diem">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'end', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-d0f5">
           <div className="expense-line-header">Description</div>
           <div className="expense-line-header">Persons</div>
           <div className="expense-line-header">Days</div>
           <div className="expense-line-header">Total</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center' }}>
+        <div className="expense-new-6a76">
           <div className="text-xs-semi">Meals <span className="meta-text">($68/day)</span></div>
           <input type="number" min="0" value={meals.persons} onChange={e => setMeals(m => ({ ...m, persons: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
@@ -113,63 +113,63 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
 
       <Card title="Travel Expenses">
         {/* Hotel */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-b95c">
           <div className="text-xs-semi">Hotel <span className="meta-text">($150/night)</span></div>
           <div className="expense-line-header">Rooms</div>
           <div className="expense-line-header">Nights</div>
           <div className="expense-line-header">Total</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
+        <div className="expense-new-fff2">
           <div />
           <input type="number" min="0" value={hotel.rooms} onChange={e => setHotel(h => ({ ...h, rooms: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={hotel.nights} onChange={e => setHotel(h => ({ ...h, nights: +e.target.value }))} style={inputSm} />
           <div className="text-xs-right">${hotelTotal.toFixed(2)}</div>
         </div>
         {/* Car rental */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-b95c">
           <div className="text-xs-semi">Car Rental <span className="meta-text">($125/day)</span></div>
           <div />
           <div className="meta-text meta-text--center">Days</div>
           <div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
+        <div className="expense-new-fff2">
           <div />
           <div />
           <input type="number" min="0" value={carRental.days} onChange={e => setCarRental({ days: +e.target.value })} style={inputSm} />
           <div className="text-xs-right">${carTotal.toFixed(2)}</div>
         </div>
         {/* Fuel */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-b95c">
           <div className="text-xs-semi">Fuel</div>
           <div className="meta-text meta-text--center">Miles</div>
           <div className="meta-text meta-text--center">Mi/Gal</div>
           <div className="meta-text meta-text--center">$/Gal</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textAlign: 'right', gridColumn: '1' }}>${fuelTotal.toFixed(2)}</div>
+        <div className="expense-new-fff2">
+          <div className="expense-new-1dad">${fuelTotal.toFixed(2)}</div>
           <input type="number" min="0" value={fuel.miles} onChange={e => setFuel(f => ({ ...f, miles: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={fuel.mpg} onChange={e => setFuel(f => ({ ...f, mpg: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" step="0.01" value={fuel.rate} onChange={e => setFuel(f => ({ ...f, rate: +e.target.value }))} style={inputSm} />
         </div>
         {/* Parking */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-b95c">
           <div className="text-xs-semi">Tampa Airport Parking <span className="meta-text">($18/day)</span></div>
           <div /><div className="meta-text meta-text--center">Days</div><div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
+        <div className="expense-new-fff2">
           <div />
           <div />
           <input type="number" min="0" value={parking.days} onChange={e => setParking({ days: +e.target.value })} style={inputSm} />
           <div className="text-xs-right">${parkingTotal.toFixed(2)}</div>
         </div>
         {/* Airline baggage */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+        <div className="expense-new-b95c">
           <div className="text-xs-semi">Airline Baggage Fees <span className="meta-text">($80/flight)</span></div>
           <div className="meta-text meta-text--center">Bags</div>
           <div className="meta-text meta-text--center">Flights</div>
           <div />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
+        <div className="expense-new-fff2">
           <div />
           <input type="number" min="0" value={baggageFees.bags} onChange={e => setBaggageFees(b => ({ ...b, bags: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={baggageFees.flights} onChange={e => setBaggageFees(b => ({ ...b, flights: +e.target.value }))} style={inputSm} />
@@ -177,7 +177,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Other lines */}
         {others.map((o, idx) => (
-          <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
+          <div key={idx} className="expense-new-b95c">
             <input value={o.desc} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, desc: e.target.value } : x))} placeholder="Other…" style={inputSm} />
             <div />
             <input type="number" min="0" value={o.days} onChange={e => setOthers(arr => arr.map((x, i) => i === idx ? { ...x, days: +e.target.value } : x))} style={inputSm} />
@@ -259,7 +259,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
     <>
       <Card title="Employee & Project">
         <div className="form-group">
-          <label className="form-label">Employee Name <span style={{ color: 'var(--state-error-text)', marginLeft: 3 }}>*</span></label>
+          <label className="form-label">Employee Name <span className="expense-new-d18e">*</span></label>
           <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
         </div>
         <div className="form-grid-2">
@@ -279,7 +279,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
 
       <Card title="Expense Line Items">
         {/* Scrollable table */}
-        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <div className="expense-new-f6a3">
           {/* Header */}
           <div className="expense-line-table">
             {['Vendor / Description','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other','Date'].map(h => (
@@ -289,16 +289,16 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {/* Rows */}
           {lines.map(line => (
             <div key={line._key} className="expense-line-table">
-              <input value={line.vendor} onChange={e => updateLine(line._key, 'vendor', e.target.value)} placeholder="Vendor…" style={{ fontSize: 'var(--text-xs)', width: '100%' }} />
+              <input value={line.vendor} onChange={e => updateLine(line._key, 'vendor', e.target.value)} placeholder="Vendor…" className="expense-new-2e3f" />
               {['total','fuel','tolls','parking','car_rental','lodging','meals','supplies','rentals','other'].map(f => (
-                <input key={f} type="number" min="0" step="0.01" value={line[f]} onChange={e => updateLine(line._key, f, e.target.value)} style={{ fontSize: 'var(--text-xs)', width: '100%', textAlign: 'right' }} />
+                <input key={f} type="number" min="0" step="0.01" value={line[f]} onChange={e => updateLine(line._key, f, e.target.value)} className="expense-new-7221" />
               ))}
-              <input type="date" value={line.date} onChange={e => updateLine(line._key, 'date', e.target.value)} style={{ fontSize: 'var(--text-xs)', width: '100%' }} />
+              <input type="date" value={line.date} onChange={e => updateLine(line._key, 'date', e.target.value)} className="expense-new-2e3f" />
             </div>
           ))}
         </div>
         <button onClick={addLine}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-s)' }}>
+          className="expense-new-16b5">
           <Plus size="0.75rem" /> Add row
         </button>
         {/* Subtotal */}
@@ -314,15 +314,15 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         </div>
         {mileage.map(m => (
           <div key={m._key} className="mileage-grid">
-            <input type="date" value={m.date} onChange={e => updateMile(m._key, 'date', e.target.value)} style={{ width: '100%', fontSize: 'var(--text-xs)' }} />
-            <input type="number" min="0" value={m.miles} onChange={e => updateMile(m._key, 'miles', e.target.value)} style={{ width: '100%', fontSize: 'var(--text-xs)', textAlign: 'right' }} />
+            <input type="date" value={m.date} onChange={e => updateMile(m._key, 'date', e.target.value)} className="expense-new-d8b4" />
+            <input type="number" min="0" value={m.miles} onChange={e => updateMile(m._key, 'miles', e.target.value)} className="expense-new-f9d6" />
           </div>
         ))}
         <button onClick={addMile}
-          style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--space-2xs)' }}>
+          className="expense-new-cdfa">
           <Plus size="0.75rem" /> Add entry
         </button>
-        <div style={{ marginTop: 'var(--space-m)', paddingTop: 'var(--space-s)', display: 'flex', justifyContent: 'space-between' }}>
+        <div className="expense-new-977c">
           <span className="meta-text">{totalMiles} miles × ${MILEAGE_RATE}/mi</span>
           <span className="text-label">Mileage: ${mileageTotal.toFixed(2)}</span>
         </div>
@@ -333,24 +333,24 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
         {[
           ['Subtotal', subtotal],
         ].map(([lbl, val]) => (
-          <div key={lbl} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+          <div key={lbl} className="expense-new-1f09">
             <span className="text-sm-bold">{lbl}</span>
             <span className="text-sm-bold">${val.toFixed(2)}</span>
           </div>
         ))}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+        <div className="expense-new-93a6">
           <span className="text-sm-bold">Less Cash Advance</span>
           <div className="flex-gap-s">
             <span className="meta-text">$</span>
             <input type="number" min="0" step="0.01" value={lessAdvance} onChange={e => setLessAdvance(e.target.value)}
-              style={{ width: 80, textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 700 }} />
+              className="expense-new-26a5" />
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+        <div className="expense-new-1f09">
           <span className="text-sm-bold">Mileage Reimbursement</span>
           <span className="text-sm-bold">${mileageTotal.toFixed(2)}</span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l) 0', background: 'var(--brand-primary)', marginLeft: -24, marginRight: -24, marginBottom: -24, paddingLeft: 24, paddingRight: 24 }}>
+        <div className="expense-new-fe22">
           <span className="page-heading--inverse">Total</span>
           <span className="page-heading--inverse">${grandTotal.toFixed(2)}</span>
         </div>

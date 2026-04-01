@@ -36,7 +36,7 @@ function WarehouseTab({ warehouse, active, onClick, levels }) {
       <div style={{ fontSize: 'var(--text-xs)', color: active ? 'rgba(255,255,255,0.6)' : 'var(--text-muted)' }}>
         {warehouse.city}, {warehouse.state}
       </div>
-      <div style={{ display: 'flex', gap: 'var(--space-s)', marginTop: 4 }}>
+      <div className="stock-view-84b5">
         {outCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--error-tint-40)' : 'var(--state-error-text)' }}>{outCount} out</span>}
         {lowCount > 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'var(--warning-border)' : 'var(--state-warning-text)' }}>{lowCount} low</span>}
         {outCount === 0 && lowCount === 0 && <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: active ? 'rgba(255,255,255,0.5)' : 'var(--text-muted)' }}>All OK</span>}
@@ -96,7 +96,7 @@ export default function StockView() {
 
 
       {/* Warehouse selector — horizontal scroll */}
-      <div style={{ display: 'flex', gap: 'var(--space-s)', overflowX: 'auto', scrollbarWidth: 'none', marginBottom: 'var(--space-l)', paddingBottom: 2 }}>
+      <div className="stock-view-311c">
         {warehouses.map(w => (
           <WarehouseTab
             key={w.id}
@@ -111,7 +111,7 @@ export default function StockView() {
       {/* Quick actions */}
       <div className="grid-2col mb-l">
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m) var(--space-l)', borderRadius: 'var(--radius-m)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          className="stock-view-7262">
           <ArrowsLeftRight size="1rem" />
           <div>
             <div style={{ fontWeight: 700 }}>Transfer Request</div>
@@ -120,11 +120,11 @@ export default function StockView() {
         </button>
 
         <button onClick={() => navigate(`/stock/request${activeWH ? `?warehouse=${activeWH}` : ''}`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m) var(--space-l)', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)', color: 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
+          className="stock-view-ecba">
           <Package size="1rem" />
           <div>
             <div style={{ fontWeight: 700 }}>Part Request</div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 400, color: 'var(--text-muted)' }}>Submit for approval</div>
+            <div className="stock-view-9141">Submit for approval</div>
           </div>
         </button>
       </div>
@@ -140,20 +140,20 @@ export default function StockView() {
         />
         {search && (
           <button onClick={() => setSearch('')}
-            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}>
+            className="stock-view-ece0">
             <X size="0.875rem" />
           </button>
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div className="stock-view-67a5">
         {[['all','All Parts'], ['low','Low Stock'], ['out','Out of Stock']].map(([val, lbl]) => (
           <button key={val} onClick={() => setFilter(val)}
             style={{ flexShrink: 0, padding: 'var(--space-xs) var(--space-m)', borderRadius: 'var(--radius-l)', border: `1px solid ${filter === val ? 'var(--brand-primary)' : 'var(--border-subtle)'}`, background: filter === val ? 'var(--brand-primary)' : 'var(--surface-hover)', color: filter === val ? '#fff' : 'var(--text-primary)', fontSize: 'var(--text-xs)', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {lbl}
           </button>
         ))}
-        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', alignSelf: 'center', marginLeft: 'auto', whiteSpace: 'nowrap' }}>
+        <span className="stock-view-01d8">
           {filtered.length} parts
         </span>
       </div>
@@ -170,7 +170,7 @@ export default function StockView() {
       ) : (
         <div className="card-section">
           {/* Column headers */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 60px', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
+          <div className="stock-view-171c">
             {['Part', 'Stock', ''].map((h, i) => (
               <div key={i} style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)', textAlign: i > 0 ? 'right' : 'left' }}>{h}</div>
             ))}
@@ -197,7 +197,7 @@ export default function StockView() {
                 <div style={{ textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 800, color: isOut ? 'var(--state-error-text)' : isLow ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>
                   {l.quantity_on_hand.toLocaleString()}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <div className="stock-view-1451">
                   <StockBadge qty={l.quantity_on_hand} min={l.min_level} />
                 </div>
               </div>
@@ -208,13 +208,13 @@ export default function StockView() {
 
       {/* Transfer CTA at bottom when viewing a warehouse with issues */}
       {(filtered.some(l => l.quantity_on_hand === 0 || (l.min_level && l.quantity_on_hand <= l.min_level))) && (
-        <div style={{ marginTop: 'var(--space-l)', background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-m)' }}>
+        <div className="stock-view-86b2">
           <div>
             <div className="text-sm-bold">Need parts restocked?</div>
             <div className="meta-text">Submit a transfer request to move stock from another warehouse.</div>
           </div>
           <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+            className="stock-view-8134">
             Request <ArrowRight size="0.8125rem" />
           </button>
         </div>

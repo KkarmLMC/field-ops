@@ -17,7 +17,7 @@ function FieldLabel({ field, error }) {
         fontSize: 'var(--text-sm)', fontWeight: 600,
         color: error ? 'var(--state-error)' : 'var(--text-primary)', lineHeight: 1.4 }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)' }}>*</span>}
+        {field.required && <span className="tabbed-form-5d1f">*</span>}
       </div>
       {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
       {error && <div className="validation-error">{error}</div>}
@@ -90,7 +90,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       {/* Progress */}
       <div className="mb-l">
         <div className="flex-gap-s">
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-muted)' }}>
+          <span className="tabbed-form-34db">
             Step {page + 1} of {total}
           </span>
           <span className="meta-text">{current.title}</span>
@@ -101,7 +101,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
             background: 'var(--brand-primary)', borderRadius: 'var(--radius-l)',
             transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)' }} />
         </div>
-        <div style={{ display: 'flex', gap: 'var(--space-xs)', marginTop: 'var(--space-s)', justifyContent: 'center' }}>
+        <div className="tabbed-form-cd72">
           {sections.map((_, i) => (
             <div key={i} style={{
               width: i === page ? '1.5rem' : '0.4rem', height: '0.4rem',
@@ -114,11 +114,11 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Section */}
       <div className="card-section">
-        <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
+        <div className="tabbed-form-ec6b">
           <div className="page-heading--inverse">{current.title}</div>
-          {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>{current.description}</div>}
+          {current.description && <div className="tabbed-form-6929">{current.description}</div>}
         </div>
-        <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>
+        <div className="tabbed-form-41d3">
           {current.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
               <FieldLabel field={field} error={allErrors[field.id]} />
@@ -130,13 +130,13 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
 
       {/* Errors */}
       {(submitErr || Object.keys(pageErrors).length > 0) && (
-        <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background: 'var(--red-soft)', borderRadius: 'var(--radius-m)', fontSize: 'var(--text-sm)', color: 'var(--state-error)' }}>
+        <div className="tabbed-form-0483">
           {submitErr || 'Please fill in all required fields before continuing.'}
         </div>
       )}
 
       {/* Nav buttons */}
-      <div style={{ display: 'flex', gap: 'var(--space-m)', marginBottom: 'var(--space-2xl)' }}>
+      <div className="tabbed-form-54a5">
         {!isFirst && (
           <button type="button" onClick={back} style={{
             flex: 1, padding: '0.75rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-base)',

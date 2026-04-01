@@ -71,10 +71,10 @@ export default function ExpenseDetail() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ background: 'var(--brand-primary)', borderRadius: 'var(--radius-m)', padding: 'var(--space-xl)', marginBottom: 'var(--space-l)', color: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
+      <div className="expense-detail-154a">
+        <div className="expense-detail-c353">
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', fontWeight: 700, marginBottom: 4 }}>
+            <div className="expense-detail-6354">
               {report.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {isAdvance ? 'Advance Request' : 'Expense Report'}
             </div>
             <div className="page-heading">{report.employee_name}</div>
@@ -84,12 +84,12 @@ export default function ExpenseDetail() {
             {report.status}
           </span>
         </div>
-        <div style={{  paddingTop: 'var(--space-m)', display: 'flex', gap: 'var(--space-l)', flexWrap: 'wrap' }}>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)' }}>
+        <div className="expense-detail-42e8">
+          <div className="expense-detail-e09a">
             {report.report_date ? new Date(report.report_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—'}
           </div>
           {isAdvance && report.travel_days > 0 && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)' }}>{report.travel_days} travel days</div>
+            <div className="expense-detail-e09a">{report.travel_days} travel days</div>
           )}
         </div>
       </div>
@@ -97,12 +97,12 @@ export default function ExpenseDetail() {
       {/* Advance lines */}
       {isAdvance && advanceLines.length > 0 && (
         <div className="card-section">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Description</span>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Total</span>
+          <div className="expense-detail-802f">
+            <span className="expense-detail-2a24">Description</span>
+            <span className="expense-detail-2a24">Total</span>
           </div>
           {advanceLines.map(l => (
-            <div key={l.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+            <div key={l.id} className="expense-detail-9827">
               <div>
                 <div className="text-sm-semi">{l.description}</div>
                 <div className="meta-text">
@@ -122,7 +122,7 @@ export default function ExpenseDetail() {
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,1.5fr) 70px 60px 60px 60px 70px 70px 70px 70px 70px 70px', gap: 4, padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)', minWidth: 800 }}>
               {['Vendor','Total','Fuel','Tolls','Parking','Car Rental','Lodging','Meals','Supplies','Rentals','Other'].map(h => (
-                <div key={h} style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)', textAlign: 'right' }}>{h}</div>
+                <div key={h} className="expense-detail-abfb">{h}</div>
               ))}
             </div>
             {lines.map(l => (
@@ -145,12 +145,12 @@ export default function ExpenseDetail() {
       {/* Mileage log */}
       {!isAdvance && mileage.length > 0 && (
         <div className="card-section">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', background: 'var(--brand-primary)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--surface-base)' }}>Mileage Log</span>
-            <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--surface-base)' }}>Miles</span>
+          <div className="expense-detail-802f">
+            <span className="expense-detail-0e67">Mileage Log</span>
+            <span className="expense-detail-2a24">Miles</span>
           </div>
           {mileage.map(m => (
-            <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', padding: 'var(--space-s) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+            <div key={m.id} className="expense-detail-c1e9">
               <div className="text-sm-bold">{m.entry_date ? new Date(m.entry_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</div>
               <div className="text-sm-bold">{m.miles}</div>
             </div>
@@ -162,29 +162,29 @@ export default function ExpenseDetail() {
       <div className="card-section">
         {!isAdvance && (
           <>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+            <div className="expense-detail-0d18">
               <span className="text-sm-bold">Subtotal</span>
               <span className="text-sm-bold">${Number(report.subtotal || 0).toFixed(2)}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+            <div className="expense-detail-0d18">
               <span className="text-sm-bold">Less Cash Advance</span>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--state-error-text)' }}>-${Number(report.less_advance || 0).toFixed(2)}</span>
+              <span className="expense-detail-ad30">-${Number(report.less_advance || 0).toFixed(2)}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+            <div className="expense-detail-0d18">
               <span className="text-sm-bold">Mileage ({Number(report.mileage_miles || 0)} mi × ${report.mileage_rate || 0.725}/mi)</span>
               <span className="text-sm-bold">${Number(report.mileage_total || 0).toFixed(2)}</span>
             </div>
           </>
         )}
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l)', background: 'var(--brand-primary)' }}>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>Total</span>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: '#fff' }}>${Number(report.grand_total || 0).toFixed(2)}</span>
+        <div className="expense-detail-dc96">
+          <span className="expense-detail-7b45">Total</span>
+          <span className="expense-detail-7b45">${Number(report.grand_total || 0).toFixed(2)}</span>
         </div>
       </div>
 
       {report.notes && (
         <div className="card-section">
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
+          <div className="expense-detail-c350">Notes</div>
           <div className="text-sm">{report.notes}</div>
         </div>
       )}

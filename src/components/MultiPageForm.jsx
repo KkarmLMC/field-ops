@@ -27,7 +27,7 @@ function FieldLabel({ field, error }) {
         color: error ? 'var(--state-error)' : 'var(--text-primary)',
         lineHeight: 1.4 }}>
         {field.label}
-        {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)' }}>*</span>}
+        {field.required && <span className="multi-page-form-5d1f">*</span>}
       </div>
       {field.hint && (
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>
@@ -80,11 +80,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
   return (
     <div>
       {/* Header with back button */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--space-m)',
-        marginBottom: 'var(--space-l)' }}>
+      <div className="multi-page-form-e36b">
         <button
           type="button"
           onClick={onBack}
@@ -102,37 +98,27 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         >
           <ArrowLeft size="1rem" />
         </button>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', fontWeight: 500 }}>
+        <div className="multi-page-form-f48a">
           Back to sections
         </div>
       </div>
 
       {/* Section card */}
-      <div style={{
-        background: 'var(--surface-base)',
-        borderRadius: 'var(--radius-m)',
-        overflow: 'hidden',
-        marginBottom: 'var(--space-l)' }}>
+      <div className="multi-page-form-0d43">
         {/* Navy section header */}
-        <div style={{
-          background: 'var(--brand-primary)',
-          padding: 'var(--space-l)' }}>
+        <div className="multi-page-form-edfe">
           <div className="page-heading--inverse">
             {section.title}
           </div>
           {section.description && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>
+            <div className="multi-page-form-6929">
               {section.description}
             </div>
           )}
         </div>
 
         {/* Fields */}
-        <div style={{
-          padding: 'var(--space-l)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-xl)' }}>
+        <div className="multi-page-form-e8f3">
           {section.fields.map(field => (
             <div key={field.id} id={`field-${field.id}`}>
               <FieldLabel field={field} error={allErrors[field.id]} />
@@ -151,21 +137,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
       <button
         type="button"
         onClick={onBack}
-        style={{
-          width: '100%',
-          padding: 'var(--space-m)',
-          borderRadius: 'var(--radius-m)',
-          background: 'var(--brand-primary)',
-          color: '#fff',
-          fontFamily: 'var(--font-body)',
-          fontSize: 'var(--text-sm)',
-          fontWeight: 700,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 'var(--space-s)',
-          cursor: 'pointer',
-          marginBottom: 'var(--space-2xl)' }}
+        className="multi-page-form-3110"
       >
         <CheckCircle size="1rem" />
         Done — Back to Sections
@@ -247,7 +219,7 @@ export default function MultiPageForm({
     <div>
       {/* Header */}
       <div className="mb-l">
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 600, marginBottom: 'var(--space-xs)' }}>
+        <div className="multi-page-form-7393">
           {sections.filter(s => isSectionComplete(s, values)).length} of {sections.length} sections complete
         </div>
         {/* Overall progress bar */}
@@ -262,11 +234,7 @@ export default function MultiPageForm({
       </div>
 
       {/* Section list */}
-      <div style={{
-        background: 'var(--surface-base)',
-        borderRadius: 'var(--radius-m)',
-        overflow: 'hidden',
-        marginBottom: 'var(--space-l)' }}>
+      <div className="multi-page-form-0d43">
         {sections.map((section, idx) => {
           const complete  = isSectionComplete(section, values)
           const started   = isSectionStarted(section, values)
@@ -313,7 +281,7 @@ export default function MultiPageForm({
                   marginBottom: 2 }}>
                   {section.title}
                   {hasRequired && !complete && (
-                    <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)', fontSize: 'var(--text-xs)' }}>*</span>
+                    <span className="multi-page-form-1b78">*</span>
                   )}
                 </div>
                 <div className="meta-text">
@@ -329,25 +297,12 @@ export default function MultiPageForm({
 
       {/* Error / incomplete notice */}
       {submitErr && (
-        <div style={{
-          padding: 'var(--space-m) var(--space-l)',
-          marginBottom: 'var(--space-m)',
-          background: 'var(--red-soft)',
-          borderRadius: 'var(--radius-m)',
-          fontSize: 'var(--text-sm)',
-          color: 'var(--state-error)' }}>
+        <div className="multi-page-form-bbaf">
           {submitErr}
         </div>
       )}
       {!allComplete && (
-        <div style={{
-          padding: 'var(--space-m) var(--space-l)',
-          marginBottom: 'var(--space-m)',
-          background: 'var(--surface-base)',
-          borderRadius: 'var(--radius-m)',
-          fontSize: 'var(--text-xs)',
-          color: 'var(--text-muted)',
-          textAlign: 'center' }}>
+        <div className="multi-page-form-92cb">
           Complete all required sections to submit
         </div>
       )}

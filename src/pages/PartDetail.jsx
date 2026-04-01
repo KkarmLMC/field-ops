@@ -14,21 +14,21 @@ function WarehouseRow({ level, warehouseName }) {
   const bg = isOut ? 'var(--state-error-soft)' : isLow ? 'var(--state-warning-soft)' : 'var(--state-success-soft)'
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+    <div className="part-detail-c5b6">
       <div className="flex-gap-s">
         <Buildings size="1rem" style={{ color: 'var(--text-primary)' }} />
         <div>
           <div className="text-sm-semi">{warehouseName}</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', display: 'flex', gap: 'var(--space-s)', marginTop: 2 }}>
+          <div className="part-detail-9bcd">
             {level.min_level > 0 && <span>Min: {level.min_level}</span>}
             {level.quantity_on_order > 0 && (
-              <span style={{ color: 'var(--state-info)', fontWeight: 600 }}>+{level.quantity_on_order} on order</span>
+              <span className="part-detail-a9d4">+{level.quantity_on_order} on order</span>
             )}
           </div>
         </div>
       </div>
       <div className="flex-gap-s">
-        <span style={{ padding: '3px 10px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-sm)', fontWeight: 700, background: bg, color }}>
+        <span className="part-detail-ffc0">
           {level.quantity_on_hand}
         </span>
       </div>
@@ -148,12 +148,12 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
         background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0',
         maxHeight: '92vh', display: 'flex', flexDirection: 'column',
         animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
-        <div style={{ padding: 'var(--space-l) var(--space-xl) 0', flexShrink: 0 }}>
+        <div className="part-detail-43ec">
           <div style={{ width: '2.5rem', height: '0.25rem', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-l)' }} />
-          <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, marginBottom: 'var(--space-l)' }}>Adjust Stock</div>
+          <div className="part-detail-b4f9">Adjust Stock</div>
         </div>
 
-        <div style={{ overflowY: 'auto', flex: 1, padding: '0 var(--space-xl)', paddingBottom: 'calc(var(--space-s))' }}>
+        <div className="part-detail-6fe5">
           <div className="mb-m">
             <Label>Warehouse</Label>
             <select value={warehouseId} onChange={e => handleWarehouseChange(e.target.value)} style={{ width: '100%' }}>
@@ -198,7 +198,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
             <div>
               <Label>On Order</Label>
               <input type="number" min="0" value={onOrder} onChange={e => setOnOrder(e.target.value)} placeholder="0" style={{ width: '100%' }} />
-              <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--state-info)', marginTop: 3 }}>Incoming stock</div>
+              <div className="part-detail-aaea">Incoming stock</div>
             </div>
             <div>
               <Label>Min Level</Label>
@@ -208,7 +208,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
           </div>
         </div>
 
-        <div style={{ padding: 'var(--space-l) var(--space-xl)', paddingBottom: 'calc(var(--space-l) + env(safe-area-inset-bottom))', flexShrink: 0 }}>
+        <div className="part-detail-fa13">
           <button onClick={handleSave} disabled={saving || (delta === 0 && onOrder === '' && minLevel === '')}
             style={{
               width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-m)',
@@ -263,14 +263,14 @@ export default function PartDetail() {
   return (
     <div className="page-content fade-in">
       {/* Header */}
-      <div style={{ background: 'var(--brand-primary)', borderRadius: 'var(--radius-m)', padding: 'var(--space-xl)', marginBottom: 'var(--space-l)', color: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
+      <div className="part-detail-154a">
+        <div className="part-detail-c353">
           <div className="content-body">
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginBottom: 4 }}>
+            <div className="part-detail-50a0">
               {part.part_categories?.name || 'Uncategorized'}
             </div>
             <div className="page-heading">{part.name}</div>
-            {part.sku && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 4 }}>{part.sku}</div>}
+            {part.sku && <div className="part-detail-4440">{part.sku}</div>}
           </div>
           <button onClick={() => navigate(`/warehouse-hq/part/${id}/edit`)}
             style={{ width: '2.25rem', height: '2.25rem', borderRadius: 'var(--radius-l)', background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -299,7 +299,7 @@ export default function PartDetail() {
 
       {/* Stock by warehouse */}
       <div className="card-section">
-        <div style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+        <div className="part-detail-172c">
           <div className="text-sm-bold">Stock by Warehouse</div>
         </div>
         {levels.length === 0 ? (
@@ -311,7 +311,7 @@ export default function PartDetail() {
 
       {/* Part details */}
       <div className="card-section">
-        <div style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+        <div className="part-detail-172c">
           <div className="text-sm-bold">Part Details</div>
         </div>
         {[
@@ -321,7 +321,7 @@ export default function PartDetail() {
           ['Unit Cost', part.unit_cost ? `$${part.unit_cost}` : null],
           ['Barcode', part.barcode],
         ].filter(([, v]) => v).map(([label, value]) => (
-          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
+          <div key={label} className="part-detail-0d18">
             <span className="meta-text">{label}</span>
             <span className="text-sm-semi">{value}</span>
           </div>
@@ -338,7 +338,7 @@ export default function PartDetail() {
       <div className="card-section">
         <button
           onClick={() => setShowTx(!showTx)}
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer' }}>
+          className="part-detail-e521">
           <div className="flex-gap-s">
             <ClipboardText size="1rem" style={{ color: 'var(--text-primary)' }} />
             <span className="text-sm-bold">Transaction History</span>
@@ -350,7 +350,7 @@ export default function PartDetail() {
           <TransactionRow key={tx.id} tx={tx} warehouseName={whMap[tx.warehouse_id] || '—'} />
         ))}
         {showTx && transactions.length === 0 && (
-          <div style={{ padding: 'var(--space-l)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>No transactions yet</div>
+          <div className="part-detail-7479">No transactions yet</div>
         )}
       </div>
 

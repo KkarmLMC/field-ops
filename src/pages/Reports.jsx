@@ -77,18 +77,16 @@ function ReportRow({ r }) {
   const { Icon } = type
 
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', gap: 12,
-      padding: '10px 16px', borderBottom: '1px solid var(--border-default)' }}>
+    <div className="reports-b711">
       {/* Type icon badge */}
       <Icon size="0.9375rem" weight="bold" style={{ color: type.color }} />
 
       {/* Main info */}
       <div className="content-body">
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div className="reports-f2c9">
           {r.project_name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <div className="reports-d9a5">
           <span style={{ background: type.bg, color: type.color, padding: '1px 6px', borderRadius: 4, fontWeight: 600, fontSize: 'var(--text-xs)' }}>{type.label}</span>
           <span>{r.job_number}</span>
           <span>·</span>
@@ -106,10 +104,7 @@ function ReportRow({ r }) {
       </span>
 
       {/* View button */}
-      <button style={{
-        display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-        padding: '5px 10px', borderRadius: 'var(--radius-s)',
-        background: 'var(--surface-base)', color: 'var(--text-primary)', fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+      <button className="reports-6aa0">
         <Eye size="0.75rem" />
         View
       </button>
@@ -190,7 +185,7 @@ export default function Reports() {
       </div>
 
       {/* Form type filter pills */}
-      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+      <div className="reports-ca34">
         {['all', 'completion', 'inspection', 'jsa', 'site-survey'].map(key => (
           <TypePill
             key={key}
@@ -203,7 +198,7 @@ export default function Reports() {
       </div>
 
       {/* Status filter pills */}
-      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 4 }}>
+      <div className="reports-86c6">
         {Object.entries(STATUS_CFG).map(([key, cfg]) => (
           <button
             key={key}

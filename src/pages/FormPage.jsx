@@ -93,7 +93,7 @@ export default function FormPage() {
   // ── Loading ──────────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="page-content fade-in" style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:'12rem' }}>
+      <div className="page-content fade-in form-page-c1db">
         <div className="spinner" />
       </div>
     )
@@ -115,19 +115,19 @@ export default function FormPage() {
   // ── Success ───────────────────────────────────────────────────────────────
   if (success) {
     return (
-      <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'var(--space-2xl) var(--space-2xl)', textAlign:'center' }}>
+      <div className="page-content fade-in form-page-be03">
         <CheckCircle size="3.25rem" style={{ color: success.offline ? 'var(--warning)' : 'var(--state-success)', marginBottom:'var(--space-m)' }} />
-        <div style={{ fontSize:'var(--text-xl)', fontWeight:700, marginBottom:'var(--space-s)' }}>
+        <div className="form-page-1c4d">
           {success.offline ? 'Saved Locally' : 'Form Submitted'}
         </div>
-        <div style={{ color:'var(--text-primary)', fontSize:'var(--text-md)', marginBottom:'var(--space-2xl)' }}>
+        <div className="form-page-b120">
           {success.offline
             ? `${success.formTitle} for ${success.siteName} has been queued and will sync when you're back online.`
             : `${success.formTitle} for ${success.siteName} has been saved.`
           }</div>
-        <div style={{ display:'flex', gap:'var(--space-m)' }}>
+        <div className="form-page-41bf">
           <button onClick={()=>navigate('/forms')}
-            style={{ padding: 'var(--space-s) var(--space-xl)', borderRadius:'var(--radius-m)', background: 'var(--surface-base)', fontSize:'var(--text-sm)', color:'var(--text-primary)' }}>
+            className="form-page-cf01">
             Back to Forms
           </button>
           <button className="btn btn-primary" onClick={()=>{ setSuccess(null); setValues({ date_completed: new Date().toISOString().slice(0,10) }) }}>
@@ -142,9 +142,9 @@ export default function FormPage() {
   return (
     <div className="page-content fade-in">
       {/* Action bar — ref tag + Edit Form button */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'var(--space-l)' }}>
+      <div className="form-page-fae0">
         {schema.ref
-          ? <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-xs)', color:'var(--text-primary)' }}>{schema.ref}</div>
+          ? <div className="form-page-e7af">{schema.ref}</div>
           : <div />
         }
         <button
@@ -185,12 +185,12 @@ export default function FormPage() {
           />
 
           {submitErr && (
-            <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background:'var(--red-soft)', borderRadius:'var(--radius-m)', fontSize:'var(--text-sm)', color:'var(--state-error)' }}>
+            <div className="form-page-9566">
               {submitErr}
             </div>
           )}
           {Object.keys(errors).length > 0 && (
-            <div style={{ padding: 'var(--space-m) var(--space-l)', marginBottom: 'var(--space-m)', background:'var(--red-soft)', borderRadius:'var(--radius-m)', fontSize:'var(--text-sm)', color:'var(--state-error)' }}>
+            <div className="form-page-9566">
               Please fill in all required fields before submitting.
             </div>
           )}

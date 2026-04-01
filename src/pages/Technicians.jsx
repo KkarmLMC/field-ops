@@ -45,7 +45,7 @@ export default function Technicians() {
           return (
             <div key={tech.id} className="card">
               <div style={{ padding: 'var(--space-m)', borderBottom: techJobs.length > 0 ? '1px solid var(--border-default)' : 'none' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className="technicians-8b5b">
                   <div style={{
                     width: '2.5rem', height: '2.5rem', borderRadius: '0.375rem',
                     background: tech.status === 'field' ? 'var(--state-warning-soft)' : 'var(--state-info-soft)',
@@ -55,7 +55,7 @@ export default function Technicians() {
                     {tech.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div className="content-body">
-                    <div style={{ fontWeight: 600, fontSize: 'var(--text-lg)' }}>{tech.name}</div>
+                    <div className="technicians-96f6">{tech.name}</div>
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: '0.125rem' }}>
                       {tech.license} · {tech.phone}
                     </div>
@@ -69,7 +69,7 @@ export default function Technicians() {
               {/* Assigned jobs */}
               {techJobs.length > 0 && (
                 <div style={{ padding: '8px 14px 10px' }}>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>
+                  <div className="technicians-c65e">
                     Assigned Jobs ({techJobs.length})
                   </div>
                   {techJobs.map(job => (
@@ -80,7 +80,7 @@ export default function Technicians() {
                       onClick={() => navigate(`/installations/${job.id}`)}
                     >
                       <div className="content-body">
-                        <div style={{ fontSize: 'var(--text-md)', fontWeight: 500 }}>{job.name}</div>
+                        <div className="technicians-ae4a">{job.name}</div>
                         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-muted)' }}>{job.job_number}</div>
                       </div>
                       <span className={`badge badge-${job.stage === 'in-progress' ? 'active' : job.stage === 'complete' ? 'completed' : job.stage}`}>{job.stage}</span>

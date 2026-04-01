@@ -155,13 +155,13 @@ function StockRow({ level, onPress }) {
         <div className="text-sm-truncate">
           {level.parts?.name || '—'}
         </div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginTop: 2, display: 'flex', gap: 'var(--space-s)' }}>
+        <div className="warehouse-detail-5e1f">
           {level.parts?.sku && <span style={{ fontFamily: 'var(--font-mono)' }}>{level.parts.sku}</span>}
-          {level.quantity_on_order > 0 && <span style={{ color: 'var(--state-info)', fontWeight: 600 }}>+{level.quantity_on_order} on order</span>}
+          {level.quantity_on_order > 0 && <span className="warehouse-detail-a9d4">+{level.quantity_on_order} on order</span>}
         </div>
       </div>
       <div className="flex-gap-s shrink-0">
-        <span style={{ padding: '3px 10px', borderRadius: 'var(--radius-s)', fontSize: 'var(--text-sm)', fontWeight: 700, background: bg, color }}>
+        <span className="warehouse-detail-ffc0">
           {level.quantity_on_hand}
         </span>
         <CaretRight size="0.8125rem" style={{ color: 'var(--text-primary)' }} />
@@ -289,7 +289,7 @@ export default function WarehouseDetail() {
               </div>
             )}
             {warehouse.contact_name && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-inverse)' }}>Contact: {warehouse.contact_name}</div>
+              <div className="warehouse-detail-a78f">Contact: {warehouse.contact_name}</div>
             )}
             {warehouse.contact_phone && (
               <div className="wh-header__contact-row">
@@ -302,7 +302,7 @@ export default function WarehouseDetail() {
               </div>
             )}
             {warehouse.notes && (
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-inverse)', fontStyle: 'italic', marginTop: 2 }}>{warehouse.notes}</div>
+              <div className="warehouse-detail-c22a">{warehouse.notes}</div>
             )}
           </div>
         )}
@@ -310,8 +310,8 @@ export default function WarehouseDetail() {
 
       {/* Stats grid */}
       <div className="stats-grid-2">
-        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--state-info-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span className="text-xs-semi">SKUs In Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalSkus.toLocaleString()}</div></Card>
-        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span className="text-xs-semi">Total Units</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalUnits.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div className="warehouse-detail-9315"><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span className="text-xs-semi">SKUs In Stock</span></div><div className="warehouse-detail-8a26">{totalSkus.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span className="text-xs-semi">Total Units</span></div><div className="warehouse-detail-8a26">{totalUnits.toLocaleString()}</div></Card>
         <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
         <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
       </div>
@@ -357,7 +357,7 @@ export default function WarehouseDetail() {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-m)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+        <div className="warehouse-detail-52e8">
           {[['all', 'All'], ['in', 'In Stock'], ['low', `Low (${lowStock.length})`], ['out', `Out (${outOfStock.length})`]].map(([val, lbl]) => (
             <button key={val} onClick={() => setStockFilter(val)}
               style={{
@@ -452,7 +452,7 @@ export default function WarehouseDetail() {
             {transactions.length === 0 ? (
               <div className="empty-message">No transactions yet</div>
             ) : transactions.map(tx => (
-              <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+              <div key={tx.id} className="warehouse-detail-6b4d">
                 <div className={`tx-icon tx-icon--${tx.quantity_delta > 0 ? 'positive' : 'negative'}`}>
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: tx.quantity_delta > 0 ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {tx.quantity_delta > 0 ? '+' : ''}{tx.quantity_delta}

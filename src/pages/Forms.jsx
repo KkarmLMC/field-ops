@@ -13,7 +13,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
   const bc = BRANCH_COLORS[branch]
   if (!forms.length) return null
   return (
-    <div className="page-content fade-in" style={{ display:'flex', flexDirection:'column' }}>
+    <div className="page-content fade-in forms-b717">
       <div className="list-card__header" style={{ background: bc.bgActive }}>
         <span className="list-card__title"><ClipboardText size="0.875rem" /> 
           {category.label}
@@ -41,7 +41,7 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                 </div>
                 {hasChildren
                   ? <CaretDown size="0.75rem" style={{ color:'var(--text-primary)', flexShrink:0, transition:'transform 0.15s', transform: isExpanded ? 'rotate(180deg)' : 'none' }} />
-                  : <CaretRight size="0.75rem" style={{ color:'var(--text-primary)', flexShrink:0 }} />
+                  : <CaretRight size="0.75rem" className="forms-53a6" />
                 }
               </button>
               {hasChildren && isExpanded && (
@@ -58,12 +58,12 @@ function CategoryCard({ category, forms, children, branch, onStart, expandedSlug
                       onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-hover)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'none'}
                     >
-                      <div style={{ width:4, height:4, borderRadius:'50%', background:'var(--text-muted)', flexShrink:0 }} />
+                      <div className="forms-77c5" />
                       <div className="content-body">
-                        <span style={{ fontSize:'var(--text-sm)', fontWeight:500, color:'var(--text-primary)' }}>{sub.title}</span>
+                        <span className="forms-f1b6">{sub.title}</span>
                         {sub.description && <div className="project-meta" style={{ marginTop:1 }}>{sub.description}</div>}
                       </div>
-                      <CaretRight size="0.625rem" style={{ color:'var(--text-4)', flexShrink:0 }} />
+                      <CaretRight size="0.625rem" className="forms-9914" />
                     </button>
                   ))}
                 </div>

@@ -113,7 +113,7 @@ export default function Dashboard() {
               Needs Attention
             </span>
             {failedJobs.length > 0 && (
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'inherit' }}>{failedJobs.length} failed</span>
+              <span className="dashboard-639e">{failedJobs.length} failed</span>
             )}
           </div>
           <div className="list-card__body">
@@ -148,9 +148,7 @@ export default function Dashboard() {
 
 function EmptyState({ message }) {
   return (
-    <div style={{
-      padding: '28px 16px', textAlign: 'center',
-      color: 'var(--text-muted)', fontSize: 'var(--text-md)' }}>
+    <div className="dashboard-6d11">
       {message}
     </div>
   )

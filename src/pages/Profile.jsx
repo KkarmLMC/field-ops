@@ -39,7 +39,7 @@ function PinPad({ onComplete }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 'var(--space-xl)' }}>
+      <div className="profile-00b7">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
@@ -73,7 +73,7 @@ function RoleBadge({ label, color = 'var(--brand-primary)', bg = 'rgba(4,36,92,0
 function Section({ icon: Icon, title, children, action }) {
   return (
     <Card>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', borderRadius: '0' }}>
+      <div className="profile-8950">
         <div className="flex-gap-s">
           {Icon && <Icon size="0.9375rem" />} {title}
         </div>
@@ -86,9 +86,9 @@ function Section({ icon: Icon, title, children, action }) {
 
 function Row({ label, children }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+    <div className="profile-9b47">
       <div className="text-label">{label}</div>
-      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)', textAlign: 'right' }}>{children}</div>
+      <div className="profile-62b3">{children}</div>
     </div>
   )
 }
@@ -137,7 +137,7 @@ function ActivityLog({ userId }) {
 
   return (
     <Card>
-      <div style={{ padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', color: 'var(--surface-base)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>
+      <div className="profile-3515">
         Activity Log
       </div>
       <div style={{ padding: 'var(--space-s) 0' }}>
@@ -146,7 +146,7 @@ function ActivityLog({ userId }) {
             <Spinner />
           </div>
         ) : logs.length === 0 ? (
-          <div style={{ padding: 'var(--space-2xl)', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
+          <div className="profile-6091">
             No activity recorded yet
           </div>
         ) : (
@@ -164,7 +164,7 @@ function ActivityLog({ userId }) {
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--fw-medium)', lineHeight: 1.4 }}>
                     {log.label}
                   </div>
-                  <div style={{ display: 'flex', gap: 'var(--space-s)', marginTop: 3, flexWrap: 'wrap', alignItems: 'center' }}>
+                  <div className="profile-1f00">
                     <span className="meta-text">{fmtTime(log.created_at)}</span>
                     <span className="meta-text">·</span>
                     <span style={{
@@ -175,7 +175,7 @@ function ActivityLog({ userId }) {
               </div>
             ))}
             {/* Pagination */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-m) var(--space-l)' }}>
+            <div className="profile-f95e">
               <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
                 style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: page === 0 ? 'var(--text-muted)' : 'var(--brand-primary)', background: 'none', cursor: page === 0 ? 'default' : 'pointer', padding: 0 }}>
                 ← Previous
@@ -306,16 +306,16 @@ export default function Profile() {
       {/* Header */}
       <div style={{ marginBottom: 'var(--space-2xl)' }}>
         <button onClick={() => navigate(-1)}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)', background: 'none', color: 'var(--text-muted)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--space-m)' }}>
+          className="profile-7ba1">
           <ArrowLeft size="0.875rem" /> Back
         </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-l)' }}>
+        <div className="profile-82c4">
           {/* Avatar */}
-          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--brand-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--surface-base)', fontSize: 'var(--text-xl)', fontWeight: 'var(--fw-black)', flexShrink: 0 }}>
+          <div className="profile-3b4a">
             {initials}
           </div>
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>ACCOUNT</div>
+            <div className="profile-176c">ACCOUNT</div>
             <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', lineHeight: 1.1 }}>{profile?.full_name || 'My Profile'}</div>
             <div className="meta-text">{user?.email}</div>
           </div>
@@ -324,12 +324,12 @@ export default function Profile() {
 
       {/* Flash messages */}
       {success && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-success-soft)', borderRadius: 'var(--radius-l)', color: 'var(--state-success-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
+        <div className="profile-5420">
           <CheckCircle size="0.9375rem" weight="fill" className="shrink-0" /> {success}
         </div>
       )}
       {error && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m)', background: 'var(--state-error-soft)', borderRadius: 'var(--radius-l)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-l)' }}>
+        <div className="profile-a01d">
           <Warning size="0.9375rem" className="shrink-0" /> {error}
         </div>
       )}
@@ -363,16 +363,16 @@ export default function Profile() {
 
         {profile?.division && (
           <Row label="Division">
-            <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span className="profile-461a">
               <Buildings size="0.8125rem" style={{ color: 'var(--text-primary)' }} />
               {profile.division}
             </span>
           </Row>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-xs)', borderBottom: '1px solid var(--border-default)' }}>
+        <div className="profile-3979">
           <div className="text-label">Member Since</div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)' }}>
+          <div className="profile-c413">
             {profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
           </div>
         </div>
@@ -381,13 +381,13 @@ export default function Profile() {
       {/* ── Access & Roles ── */}
       <Section icon={Shield} title="Access & Roles">
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+        <div className="profile-9b47">
           <div className="text-label">App Role</div>
           <Badge label={profile?.role || 'user'} variant="secondary" />
         </div>
 
         {profile?.pipeline_role && pipelineStyle && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+          <div className="profile-9b47">
             <div className="text-label">Pipeline Role</div>
             <Badge label={profile.pipeline_role.replace('_', ' ')} variant="secondary" />
           </div>
@@ -395,8 +395,8 @@ export default function Profile() {
 
         {profile?.app_access?.length > 0 && (
           <div className="mb-m">
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: 8 }}>App Access</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-xs)' }}>
+            <div className="profile-bc90">App Access</div>
+            <div className="profile-e460">
               {profile.app_access.map(app => (
                 <Badge key={app} label={appLabels[app] || app} variant="secondary" />
               ))}
@@ -419,9 +419,9 @@ export default function Profile() {
 
         {pinSection === 'idle' ? (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
+            <div className="profile-9b47">
               <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)' }}>{hasPin ? '6-digit PIN is set ✓' : 'No PIN set'}</div>
+                <div className="profile-f468">{hasPin ? '6-digit PIN is set ✓' : 'No PIN set'}</div>
                 <div className="meta-text">
                   {hasPin
                     ? `Last set: ${profile?.pin_set_at ? new Date(profile.pin_set_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown'}`
@@ -441,10 +441,10 @@ export default function Profile() {
           </div>
         ) : (
           <div>
-            <div style={{ textAlign: 'center', marginBottom: 'var(--space-l)' }}>
-              <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-bold)', marginBottom: 4 }}>{pinLabel[pinSection]}</div>
+            <div className="profile-765d">
+              <div className="profile-1594">{pinLabel[pinSection]}</div>
               {pinError && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-xs)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', marginTop: 8 }}>
+                <div className="profile-4b00">
                   <Warning size="0.875rem" /> {pinError}
                 </div>
               )}
@@ -473,7 +473,7 @@ export default function Profile() {
               <div className="position-relative">
                 <input type={showPw ? 'text' : 'password'} value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Minimum 8 characters" style={{ paddingRight: 'var(--sp-10)' }} />
                 <button onClick={() => setShowPw(v => !v)}
-                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}>
+                  className="profile-761c">
                   {showPw ? <EyeSlash size="1rem" /> : <Eye size="1rem" />}
                 </button>
               </div>
@@ -496,7 +496,7 @@ export default function Profile() {
 
       {/* ── Sign out ── */}
       <Card>
-        <div style={{ padding: 'var(--space-m) var(--space-l)', background: 'var(--brand-primary)', color: 'var(--surface-base)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)' }}>Session</div>
+        <div className="profile-3515">Session</div>
         <div className="pad-l">
           <Button variant="danger" onClick={() => { signOut(); navigate('/login', { replace: true }) }}>
             <SignOut size="1rem" /> Sign Out of this app
