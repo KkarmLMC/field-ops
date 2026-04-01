@@ -270,7 +270,7 @@ function PhotoField({ value, onChange, readOnly }) {
             <img src={src} alt={`Photo ${i+1}`} className="form-engine-556a" />
             {!readOnly && (
               <button type="button" onClick={()=>remove(i)}
-                style={{ position:'absolute', top: 'calc(-1 * var(--space-xs))', right: 'calc(-1 * var(--space-xs))', width: 'var(--icon-size-xs)', height: 'var(--icon-size-xs)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', fontSize:'var(--text-2xs)', display:'flex', alignItems:'center', justifyContent:'center', lineHeight: 'var(--leading-none)' }}>✕</button>
+                className="floating-remove-btn">✕</button>
             )}
           </div>
         ))}
@@ -391,17 +391,17 @@ function VoiceNoteField({ value, onChange, readOnly }) {
         {/* Main action button */}
         {state === 'recording' ? (
           <button type="button" onClick={stopRecording}
-            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, animation:'pulse 1s ease-in-out infinite' }}>
+            className="audio-control-btn audio-control-btn--record-active">
             <Stop size="1rem" weight="fill" />
           </button>
         ) : hasRecording ? (
           <button type="button" onClick={playPause}
-            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--brand-primary)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            className="audio-control-btn audio-control-btn--play">
             {state === 'playing' ? <Pause size="1rem" weight="fill" /> : <Play size="1rem" weight="fill" />}
           </button>
         ) : (
           <button type="button" onClick={startRecording}
-            style={{ width: 'var(--icon-size-lg)', height: 'var(--icon-size-lg)', borderRadius:'var(--radius-l)', background:'var(--state-error)', color: 'var(--color-white)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            className="audio-control-btn audio-control-btn--record">
             <Microphone size="1rem" weight="fill" />
           </button>
         )}

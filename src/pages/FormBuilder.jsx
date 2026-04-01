@@ -258,7 +258,7 @@ function TypePickerSheet({ onPick, onClose }) {
       {/* Sheet */}
       <div className="form-builder-5c77">
         {/* Handle */}
-        <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background:'var(--border-subtle)', borderRadius: 'var(--radius-s)', margin: '0 auto var(--space-l)' }} />
+        <div className="sheet-handle" />
         <div className="form-builder-57ac">Choose Field Type</div>
         {TYPE_GROUPS.map(group => (
           <div key={group.label} className="mb-l">

@@ -58,7 +58,7 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
           <div className="sheet__handle" />
           <div className="sheet__header-row">
             <div className="sheet__title">Edit Warehouse</div>
-            <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: 'var(--space-3xl)', height: 'var(--space-3xl)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={onClose} className="sheet-close-btn">
               <X size="0.875rem" style={{ color: 'var(--text-primary)' }} />
             </button>
           </div>
@@ -270,7 +270,7 @@ export default function WarehouseDetail() {
             </div>
           </div>
           <button onClick={() => setShowEdit(true)}
-            style={{ width: 'var(--icon-size-md)', height: 'var(--icon-size-md)', borderRadius: 'var(--radius-l)', background: 'transparent', color: 'var(--color-white)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            className="header-edit-btn">
             <PencilSimple size="0.9375rem" />
           </button>
         </div>

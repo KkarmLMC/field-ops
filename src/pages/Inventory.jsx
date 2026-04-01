@@ -42,10 +42,10 @@ function AddWarehouseSheet({ onClose, onSaved }) {
       <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)', zIndex: 'var(--z-sheet)', background: 'var(--surface-base)', borderRadius: 'var(--radius-l) var(--radius-l) 0 0', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'anim-slide-up 0.22s cubic-bezier(0.32,0.72,0,1)' }}>
         {/* Header */}
         <div className="inventory-43ec">
-          <div style={{ width: 'var(--icon-size-lg)', height: 'var(--space-2xs)', background: 'var(--border-subtle)', borderRadius: 'var(--radius-l)', margin: '0 auto var(--space-m)' }} />
+          <div className="sheet-handle" />
           <div className="inventory-d4f3">
             <div className="inventory-860f">Add Warehouse</div>
-            <button onClick={onClose} style={{ background: 'var(--surface-hover)', borderRadius: 'var(--radius-l)', width: 'var(--space-3xl)', height: 'var(--space-3xl)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={onClose} className="sheet-close-btn">
               <X size="0.875rem" style={{ color: 'var(--text-primary)' }} />
             </button>
           </div>
