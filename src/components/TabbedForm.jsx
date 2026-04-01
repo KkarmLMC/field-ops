@@ -20,7 +20,7 @@ function FieldLabel({ field, error }) {
         {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 'var(--space-xs)' }}>*</span>}
       </div>
       {field.hint && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>{field.hint}</div>}
-      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>{error}</div>}
+      {error && <div className="validation-error">{error}</div>}
     </div>
   )
 }
@@ -115,7 +115,7 @@ export default function TabbedForm({ schema, values = {}, onChange, errors = {},
       {/* Section */}
       <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
-          <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>{current.title}</div>
+          <div className="page-heading--inverse">{current.title}</div>
           {current.description && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 'var(--space-xs)' }}>{current.description}</div>}
         </div>
         <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>

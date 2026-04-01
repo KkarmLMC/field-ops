@@ -109,7 +109,7 @@ export default function StockView() {
       </div>
 
       {/* Quick actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)', marginBottom: 'var(--space-l)' }}>
+      <div className="grid-2col mb-l">
         <button onClick={() => navigate(`/warehouse-hq/transfer?from=${activeWH}`)}
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-m) var(--space-l)', borderRadius: 'var(--radius-m)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', textAlign: 'left' }}>
           <ArrowsLeftRight size="1rem" />

@@ -481,7 +481,7 @@ export default function RiskAssessment() {
             ? <div className="dfl-empty-state">Loading…</div>
             : branchAssess.length === 0
               ? <div className="dfl-empty-state">
-                  <ChartBar size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <ChartBar size="1.75rem" weight="thin" className="mb-s" />
                   <div>No assessments for this branch yet</div>
                 </div>
               : branchAssess.map(a => <AssessmentRow key={a.id} a={a} />)

@@ -927,7 +927,7 @@ function SafetyFormModal({ formKey, prefill, onComplete, onBack, bc }) {
         <div className="dfl-form-header" style={{ background: 'var(--grey-shade-40)' }}>
           <div>
             <div className="dfl-form-part-label">{schema?.ref || ''}</div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>{schema?.title || ''}</div>
+            <div className="text-sm-bold--inverse">{schema?.title || ''}</div>
           </div>
           <button className="dfl-form-close" onClick={onBack}><X size="1rem" /></button>
         </div>
@@ -1014,7 +1014,7 @@ const STEPS = [
         <div className="dfl-form-header" style={{ background: bc.bgActive }}>
           <div>
             <div className="dfl-form-part-label">Part 1 of 2 · Before Work Begins</div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Morning Check-In</div>
+            <div className="text-sm-bold--inverse">Morning Check-In</div>
           </div>
           <button className="dfl-form-close" onClick={onClose}><X size="1rem" /></button>
         </div>
@@ -1273,7 +1273,7 @@ function Part2Form({ entry, onClose, onSubmit, bc }) {
         <div className="dfl-form-header dfl-form-header--p2" style={{ background: bc.bgActive }}>
           <div>
             <div className="dfl-form-part-label">Part 2 of 2 · End of Day</div>
-            <div style={{ fontSize: '1rem', fontWeight: 700, color: '#fff' }}>Close Out Day</div>
+            <div className="text-sm-bold--inverse">Close Out Day</div>
             {entry && (
               <div style={{ fontSize: '0.6875rem', color: 'var(--surface-base)', marginTop: '0.125rem' }}>
                 {entry.customer_site || entry.customer || '—'} · {fmtDate(entry.report_date)}
@@ -1734,7 +1734,7 @@ export default function DailyFieldLog() {
             <div>
               {reports.length === 0 ? (
                 <div className="dfl-empty-state">
-                  <FileText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                  <FileText size="1.75rem" weight="thin" className="mb-s" />
                   <div>No log entries for this branch</div>
                 </div>
               ) : (
@@ -1790,7 +1790,7 @@ export default function DailyFieldLog() {
           <div>
             {entries.length === 0 ? (
               <div className="dfl-empty-state">
-                <FileText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                <FileText size="1.75rem" weight="thin" className="mb-s" />
                 <div>No log entries yet — start one above</div>
               </div>
             ) : (

@@ -82,14 +82,14 @@ function AddWarehouseSheet({ onClose, onSaved }) {
             <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)', marginBottom: 'var(--space-m)' }}>
+          <div className="grid-2col mb-m">
             <div><Label>Phone</Label><input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
             <div><Label>Email</Label><input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} /></div>
           </div>
 
           <div style={{ marginBottom: 'var(--space-m)' }}>
             <Label>Notes</Label>
-            <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
+            <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes…" rows={3}  />
           </div>
 
           {error && <div style={{ color: 'var(--state-error-text)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-m)', padding: 'var(--space-s) var(--space-m)', background: 'var(--state-error-soft)', borderRadius: 'var(--radius-m)' }}>{error}</div>}
@@ -126,7 +126,7 @@ function WarehouseCard({ warehouse, levels, onPress, onViewParts, onTransfer }) 
             <Buildings size="1.25rem" style={{ color: '#fff' }} />
           </div>
           <div>
-            <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: '#fff' }}>{warehouse.name}</div>
+            <div className="page-heading--inverse">{warehouse.name}</div>
             {(warehouse.city || warehouse.state) && (
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--surface-base)', marginTop: 2 }}>
                 {[warehouse.city, warehouse.state].filter(Boolean).join(', ')}
@@ -390,7 +390,7 @@ export default function Inventory() {
         />
       ) : editMode ? (
         /* Edit mode: vertical drag list */
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
+        <div className="modal-body">
           {warehouses.map((wh, idx) => (
             <div
               key={wh.id}
@@ -404,7 +404,7 @@ export default function Inventory() {
                 background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: '1rem',
                 cursor: 'grab', userSelect: 'none' }}
             >
-              <DotsSixVertical size="1.375rem" style={{ color: 'var(--text-primary)', flexShrink: 0 }} />
+              <DotsSixVertical size="1.375rem" className="row-item__caret" />
               <div style={{
                 width: '2.5rem', height: '2.5rem', borderRadius: 'var(--radius-l)',
                 background: 'var(--brand-primary)', display: 'flex', alignItems: 'center',

@@ -155,7 +155,7 @@ function FieldRow({ p, navigate }) {
         <div style={{ fontWeight: 600, fontSize: 'var(--text-md)', color: 'var(--text-primary)', marginBottom: 2 }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: 4 }}>
+        <div className="meta-text mb-s">
           {p.structure?.split(' — ')[0] || p.type}
           {p.nfpa_class && (
             <span style={{
@@ -174,7 +174,7 @@ function FieldRow({ p, navigate }) {
             <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: cfg.color, fontWeight: 600 }}>{p.progress}%</span>
           </div>
         )}
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>
+        <div className="meta-text meta-text--mt">
           Lead: {getTech(p.lead_tech_id)}
         </div>
       </div>
@@ -230,7 +230,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
         <div style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {p.name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
+        <div className="meta-text">
           {getTech(p.lead_tech_id)}{p.scheduled_date ? ` · ${fmtDate(p.scheduled_date)}` : ''}
         </div>
         {stageKey === 'in-progress' && p.progress > 0 && (
@@ -242,7 +242,7 @@ function FieldMiniRow({ p, navigate, stageKey }) {
           </div>
         )}
       </div>
-      <ArrowRight size="0.75rem" style={{ color: 'var(--text-primary)', flexShrink: 0 }} />
+      <ArrowRight size="0.75rem" className="row-item__caret" />
     </div>
   )
 }
@@ -406,7 +406,7 @@ export default function Installations() {
             <div style={{
               padding: '8px 14px', borderBottom: '1px solid var(--border-default)',
               display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-base)' }}>
-              <MagnifyingGlass size="0.875rem" style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+              <MagnifyingGlass size="0.875rem" className="row-item__caret" />
               <input
                 autoFocus
                 value={search}

@@ -113,7 +113,7 @@ export default function PartRequest() {
       {/* Job details */}
       <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)' }}>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Details</div>
+          <div className="text-sm-bold--inverse">Job Details</div>
         </div>
         <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
           <ProjectPicker
@@ -123,7 +123,7 @@ export default function PartRequest() {
             required
           />
           <div>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>
+            <label className="form-field__label">
               Fulfillment Warehouse <span style={{ color: 'var(--error)' }}>*</span>
             </label>
             <select value={form.warehouse_id} onChange={e => setForm(f => ({ ...f, warehouse_id: e.target.value }))}>
@@ -132,7 +132,7 @@ export default function PartRequest() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>
+            <label className="form-field__label">
               Justification <span style={{ color: 'var(--error)' }}>*</span>
             </label>
             <textarea value={form.justification} onChange={e => setForm(f => ({ ...f, justification: e.target.value }))}
@@ -144,7 +144,7 @@ export default function PartRequest() {
       {/* Parts */}
       <div className="card-section">
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Parts Requested</div>
+          <div className="text-sm-bold--inverse">Parts Requested</div>
           <span className="list-card__meta">{items.length} line{items.length !== 1 ? 's' : ''}</span>
         </div>
         <div style={{ padding: 'var(--space-m)', display: 'flex', flexDirection: 'column', gap: 'var(--space-s)' }}>

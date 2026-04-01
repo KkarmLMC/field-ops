@@ -241,7 +241,7 @@ export default function Reports() {
 
         {filtered.length === 0 ? (
           <div className="dfl-empty-state">
-            <ClipboardText size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+            <ClipboardText size="1.75rem" weight="thin" className="mb-s" />
             <div>No submitted forms match these filters</div>
           </div>
         ) : (

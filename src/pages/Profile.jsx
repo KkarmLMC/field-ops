@@ -87,7 +87,7 @@ function Section({ icon: Icon, title, children, action }) {
 function Row({ label, children }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>{label}</div>
+      <div className="text-label">{label}</div>
       <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)', textAlign: 'right' }}>{children}</div>
     </div>
   )
@@ -371,7 +371,7 @@ export default function Profile() {
         )}
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-xs)', borderBottom: '1px solid var(--border-default)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>Member Since</div>
+          <div className="text-label">Member Since</div>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-primary)' }}>
             {profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
           </div>
@@ -382,13 +382,13 @@ export default function Profile() {
       <Section icon={Shield} title="Access & Roles">
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>App Role</div>
+          <div className="text-label">App Role</div>
           <Badge label={profile?.role || 'user'} variant="secondary" />
         </div>
 
         {profile?.pipeline_role && pipelineStyle && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 'var(--space-m)', marginBottom: 'var(--space-m)', borderBottom: '1px solid var(--border-default)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)' }}>Pipeline Role</div>
+            <div className="text-label">Pipeline Role</div>
             <Badge label={profile.pipeline_role.replace('_', ' ')} variant="secondary" />
           </div>
         )}
@@ -463,7 +463,7 @@ export default function Profile() {
         )}>
 
         {showPwForm ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
+          <div className="modal-body">
             <div>
               <label className="form-field__label">New Email (optional)</label>
               <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="Leave blank to keep current" />

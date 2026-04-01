@@ -220,7 +220,7 @@ export default function ProjectDetail() {
 
   return (
     <div className="page-content fade-in">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
+      <div className="modal-body">
 
         {/* ── Header card ──────────────────────────────────────────────────── */}
         <div className="card">
@@ -400,7 +400,7 @@ export default function ProjectDetail() {
 
               {/* Warehouse shipments */}
               {warehouseShipments.map(s => (
-                <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
+                <div key={s.id} className="pad-row">
                   <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
                     <Truck size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-info)' }} />
                     <span className="text-sm-bold">
@@ -413,7 +413,7 @@ export default function ProjectDetail() {
                     </span>
                   </div>
                   {s.tracking_number && (
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                    <div className="text-xs-mono">
                       Tracking: {s.tracking_number}
                     </div>
                   )}
@@ -435,7 +435,7 @@ export default function ProjectDetail() {
                     </span>
                   </div>
                   {dropShipments.map(s => (
-                    <div key={s.id} style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div key={s.id} className="pad-row">
                       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 4 }}>
                         <AirplaneTilt size="0.8125rem" style={{ color: s.status === 'shipped' ? 'var(--state-success-text)' : 'var(--state-warning)' }} />
                         <span className="text-sm-bold">
@@ -448,7 +448,7 @@ export default function ProjectDetail() {
                         </span>
                       </div>
                       {s.tracking_number && (
-                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                        <div className="text-xs-mono">
                           Tracking: {s.tracking_number}
                         </div>
                       )}
@@ -502,7 +502,7 @@ export default function ProjectDetail() {
             <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div className="flex-gap-s">
                 <CurrencyDollar size="1rem" style={{ color: 'var(--surface-base)' }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#fff' }}>Job Cost Overview</span>
+                <span className="text-sm-bold--inverse">Job Cost Overview</span>
               </div>
               {project.contract_value > 0 && (
                 <span className="list-card__meta">
@@ -571,7 +571,7 @@ export default function ProjectDetail() {
             {/* Quick link to expenses */}
             <button onClick={() => navigate('/expenses')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer' }}>
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
+              <span className="text-xs-semi">
                 {jobCost.expenseCount} expense report{jobCost.expenseCount !== 1 ? 's' : ''}
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--brand-primary)' }}>

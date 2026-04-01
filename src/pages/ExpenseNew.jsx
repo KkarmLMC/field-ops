@@ -101,7 +101,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           <div className="expense-line-header">Total</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center' }}>
-          <div className="text-xs-semi">Meals <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($68/day)</span></div>
+          <div className="text-xs-semi">Meals <span className="meta-text">($68/day)</span></div>
           <input type="number" min="0" value={meals.persons} onChange={e => setMeals(m => ({ ...m, persons: +e.target.value }))} style={inputSm} />
           <input type="number" min="0" value={meals.days} onChange={e => setMeals(m => ({ ...m, days: +e.target.value }))} style={inputSm} />
           <div className="text-xs-right">${mealsTotal.toFixed(2)}</div>
@@ -114,7 +114,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       <Card title="Travel Expenses">
         {/* Hotel */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div className="text-xs-semi">Hotel <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($150/night)</span></div>
+          <div className="text-xs-semi">Hotel <span className="meta-text">($150/night)</span></div>
           <div className="expense-line-header">Rooms</div>
           <div className="expense-line-header">Nights</div>
           <div className="expense-line-header">Total</div>
@@ -127,7 +127,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Car rental */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div className="text-xs-semi">Car Rental <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($125/day)</span></div>
+          <div className="text-xs-semi">Car Rental <span className="meta-text">($125/day)</span></div>
           <div />
           <div className="meta-text meta-text--center">Days</div>
           <div />
@@ -153,7 +153,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Parking */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div className="text-xs-semi">Tampa Airport Parking <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($18/day)</span></div>
+          <div className="text-xs-semi">Tampa Airport Parking <span className="meta-text">($18/day)</span></div>
           <div /><div className="meta-text meta-text--center">Days</div><div />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-m)' }}>
@@ -164,7 +164,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
         </div>
         {/* Airline baggage */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 80px', gap: 'var(--space-s)', alignItems: 'center', marginBottom: 'var(--space-s)' }}>
-          <div className="text-xs-semi">Airline Baggage Fees <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>($80/flight)</span></div>
+          <div className="text-xs-semi">Airline Baggage Fees <span className="meta-text">($80/flight)</span></div>
           <div className="meta-text meta-text--center">Bags</div>
           <div className="meta-text meta-text--center">Flights</div>
           <div />
@@ -208,7 +208,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
           {saving ? 'Saving…' : 'Save Draft'}
         </Button>
         <Button variant="primary" onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+          className="flex-gap-s">
           <ArrowRight size="0.9375rem" /> Submit Request
         </Button>
       </div>
@@ -351,8 +351,8 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           <span className="text-sm-bold">${mileageTotal.toFixed(2)}</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--space-l) 0', background: 'var(--brand-primary)', marginLeft: -24, marginRight: -24, marginBottom: -24, paddingLeft: 24, paddingRight: 24 }}>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Total</span>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>${grandTotal.toFixed(2)}</span>
+          <span className="page-heading--inverse">Total</span>
+          <span className="page-heading--inverse">${grandTotal.toFixed(2)}</span>
         </div>
       </Card>
 
@@ -368,7 +368,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
           {saving ? 'Saving…' : 'Save Draft'}
         </Button>
         <Button variant="primary" onClick={() => handleSave(true)} disabled={saving || !employee}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+          className="flex-gap-s">
           <ArrowRight size="0.9375rem" /> Submit Report
         </Button>
       </div>

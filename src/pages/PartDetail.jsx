@@ -181,7 +181,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
             <div>
               <Label>Qty Change</Label>
               <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value) || 0)} placeholder="0" style={{ width: '100%' }} />
-              <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)', marginTop: 3 }}>Negative to reduce</div>
+              <div className="meta-text meta-text--mt">Negative to reduce</div>
             </div>
             <div>
               <Label>Reason</Label>
@@ -194,7 +194,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
             <div className="text-label mb-m">Thresholds</div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)', marginBottom: 'var(--space-l)' }}>
+          <div className="grid-2col mb-l">
             <div>
               <Label>On Order</Label>
               <input type="number" min="0" value={onOrder} onChange={e => setOnOrder(e.target.value)} placeholder="0" style={{ width: '100%' }} />
@@ -203,7 +203,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
             <div>
               <Label>Min Level</Label>
               <input type="number" min="0" value={minLevel} onChange={e => setMinLevel(e.target.value)} placeholder="e.g. 10" style={{ width: '100%' }} />
-              <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)', marginTop: 3 }}>Low stock alert</div>
+              <div className="meta-text meta-text--mt">Low stock alert</div>
             </div>
           </div>
         </div>
@@ -281,12 +281,12 @@ export default function PartDetail() {
         {/* Total stock */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-s)' }}>
           <div style={{ fontSize: '2.5rem', fontWeight: 800, lineHeight: 1 }}>{totalQty}</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--surface-base)' }}>{part.unit_of_measure} total</div>
+          <div className="meta-text--inverse">{part.unit_of_measure} total</div>
         </div>
       </div>
 
       {/* Action buttons */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)', marginBottom: 'var(--space-l)' }}>
+      <div className="grid-2col mb-l">
         <button onClick={() => setShowAdjust(true)}
           style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
           Adjust Stock
@@ -328,7 +328,7 @@ export default function PartDetail() {
         ))}
         {part.description && (
           <div className="pad-row">
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: 4 }}>Description</div>
+            <div className="meta-text mb-s">Description</div>
             <div className="text-sm">{part.description}</div>
           </div>
         )}

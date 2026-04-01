@@ -29,7 +29,7 @@ function SubLabel({ field, error }) {
         {field.required && <span style={{ color: 'var(--state-error)', marginLeft: 4 }}>*</span>}
       </div>
       {field.hint && <div className="meta-text">{field.hint}</div>}
-      {error && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>{error}</div>}
+      {error && <div className="validation-error">{error}</div>}
     </div>
   )
 }

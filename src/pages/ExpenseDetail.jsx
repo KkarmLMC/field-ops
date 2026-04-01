@@ -78,7 +78,7 @@ export default function ExpenseDetail() {
               {report.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {isAdvance ? 'Advance Request' : 'Expense Report'}
             </div>
             <div className="page-heading">{report.employee_name}</div>
-            {project && <div style={{ fontSize: 'var(--text-sm)', color: 'var(--surface-base)', marginTop: 4 }}>{project.name}</div>}
+            {project && <div className="meta-text--inverse">{project.name}</div>}
           </div>
           <span style={{ padding: '4px 12px', borderRadius: 'var(--radius-s)', background: sc.bg, color: sc.color, fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, textTransform: 'capitalize' }}>
             {report.status}

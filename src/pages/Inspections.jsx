@@ -190,7 +190,7 @@ export default function Inspections() {
           <div>
             {filtered.length === 0 ? (
               <div className="dfl-empty-state">
-                <MagnifyingGlass size="1.75rem" weight="thin" style={{ opacity: 0.3, marginBottom: '0.5rem' }} />
+                <MagnifyingGlass size="1.75rem" weight="thin" className="mb-s" />
                 <div>No inspections match these filters</div>
               </div>
             ) : (

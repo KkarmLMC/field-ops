@@ -107,7 +107,7 @@ export default function InventoryTransfer() {
     <div className="page-content fade-in">
       <div style={{ background: 'var(--brand-primary)', borderRadius: 'var(--radius-m)', padding: 'var(--space-xl)', marginBottom: 'var(--space-l)', color: '#fff' }}>
         <div className="page-heading">Transfer Stock</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--surface-base)', marginTop: 4 }}>Move parts between warehouses</div>
+        <div className="meta-text--inverse">Move parts between warehouses</div>
       </div>
 
       {/* From / To */}
@@ -129,13 +129,13 @@ export default function InventoryTransfer() {
         </div>
 
         <div style={{ marginBottom: 'var(--space-l)' }}>
-          <label style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 600, marginBottom: 'var(--space-xs)' }}>Reason (optional)</label>
+          <label className="text-label">Reason (optional)</label>
           <input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. Resupply field crew" style={{ width: '100%' }} />
         </div>
 
         <div>
-          <label style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 600, marginBottom: 'var(--space-xs)' }}>Notes (optional)</label>
-          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} style={{ width: '100%', resize: 'vertical' }} />
+          <label className="text-label">Notes (optional)</label>
+          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2}  />
         </div>
       </div>
 
@@ -143,7 +143,7 @@ export default function InventoryTransfer() {
       <div className="card-section">
         <div style={{ padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
           <div className="text-sm-bold">Parts to Transfer</div>
-          {errors.items && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>{errors.items}</div>}
+          {errors.items && <div className="validation-error">{errors.items}</div>}
         </div>
 
         {/* Search */}
@@ -164,7 +164,7 @@ export default function InventoryTransfer() {
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: 'var(--space-m) var(--space-l)', background: 'none', cursor: 'pointer', borderBottom: '1px solid var(--border-default)', textAlign: 'left' }}>
                   <div>
                     <div className="text-sm-semi">{p.name}</div>
-                    {p.sku && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{p.sku}</div>}
+                    {p.sku && <div className="text-xs-mono">{p.sku}</div>}
                   </div>
                   <Plus size="1rem" style={{ color: 'var(--brand-primary)' }} />
                 </button>
@@ -182,7 +182,7 @@ export default function InventoryTransfer() {
           <div key={item.part_id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-m) var(--space-l)', borderBottom: '1px solid var(--border-default)' }}>
             <div className="content-body">
               <div className="text-sm-truncate">{item.part_name}</div>
-              {item.part_sku && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{item.part_sku}</div>}
+              {item.part_sku && <div className="text-xs-mono">{item.part_sku}</div>}
             </div>
             <input
               type="number" min="1"

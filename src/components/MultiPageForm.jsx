@@ -35,7 +35,7 @@ function FieldLabel({ field, error }) {
         </div>
       )}
       {error && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--state-error)', marginTop: 2 }}>
+        <div className="validation-error">
           {error}
         </div>
       )}
@@ -117,7 +117,7 @@ function SectionView({ section, values, onChange, errors, onBack }) {
         <div style={{
           background: 'var(--brand-primary)',
           padding: 'var(--space-l)' }}>
-          <div style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>
+          <div className="page-heading--inverse">
             {section.title}
           </div>
           {section.description && (
@@ -321,7 +321,7 @@ export default function MultiPageForm({
                 </div>
               </div>
 
-              <CaretRight size="1rem" style={{ color: 'var(--text-primary)', flexShrink: 0 }} />
+              <CaretRight size="1rem" className="row-item__caret" />
             </button>
           )
         })}

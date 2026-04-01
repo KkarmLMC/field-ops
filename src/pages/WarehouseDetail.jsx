@@ -118,7 +118,7 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
 
           <div className="form-group">
             <label className="form-label">Notes</label>
-            <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes about this warehouse…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
+            <textarea value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Any relevant notes about this warehouse…" rows={3}  />
           </div>
 
           {error && <div className="form-error">{error}</div>}
@@ -310,10 +310,10 @@ export default function WarehouseDetail() {
 
       {/* Stats grid */}
       <div className="stats-grid-2">
-        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--state-info-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>SKUs In Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalSkus.toLocaleString()}</div></Card>
-        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Total Units</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalUnits.toLocaleString()}</div></Card>
-        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
-        <Card><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)' }}><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--state-info-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size="0.875rem" style={{ color: 'var(--brand-primary)' }} /></div><span className="text-xs-semi">SKUs In Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalSkus.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendUp size="0.875rem" style={{ color: 'var(--text-primary)' }} /></div><span className="text-xs-semi">Total Units</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--text-primary)' }}>{totalUnits.toLocaleString()}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: lowStock.length > 0 ? 'var(--state-warning-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WarningCircle size="0.875rem" style={{ color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">Low Stock</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: lowStock.length > 0 ? 'var(--state-warning-text)' : 'var(--text-primary)' }}>{lowStock.length}</div></Card>
+        <Card><div className="flex-gap-s mb-s"><div style={{ width: '2rem', height: '2rem', borderRadius: 'var(--radius-m)', background: totalOnOrder > 0 ? 'var(--state-info-soft)' : 'var(--surface-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Truck size="0.875rem" style={{ color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-muted)' }} /></div><span className="text-xs-semi">On Order</span></div><div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: totalOnOrder > 0 ? 'var(--state-info)' : 'var(--text-primary)' }}>{totalOnOrder.toLocaleString()}</div></Card>
       </div>
 
       {/* Value */}
@@ -331,10 +331,10 @@ export default function WarehouseDetail() {
 
       {/* Actions */}
       <div className="action-grid-2">
-        <Button onClick={() => navigate(`/warehouse-hq/transfer?from=${id}`)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+        <Button onClick={() => navigate(`/warehouse-hq/transfer?from=${id}`)} className="flex-gap-s">
           <ArrowsLeftRight size="0.9375rem" /> Transfer
         </Button>
-        <Button variant="primary" onClick={() => navigate('/warehouse-hq/add-part')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+        <Button variant="primary" onClick={() => navigate('/warehouse-hq/add-part')} className="flex-gap-s">
           <Plus size="0.9375rem" /> Add Part
         </Button>
       </div>
@@ -414,7 +414,7 @@ export default function WarehouseDetail() {
                     <div className="text-sm-truncate">
                       {po.customer_name}
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 1 }}>
+                    <div className="meta-text">
                       {po.project_name || po.so_number}
                       {po.so_date ? ` · ${new Date(po.so_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''}
                     </div>
