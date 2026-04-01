@@ -223,7 +223,7 @@ export default function WarehouseDetail() {
     setShowTx(true)
   }
 
-  if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content fade-in" className="spinner-pad"><div className="spinner" /></div>
   if (!warehouse) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Warehouse not found</div></div></div>
 
   // Stats
@@ -351,7 +351,7 @@ export default function WarehouseDetail() {
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search parts…"
             style={{ width: '100%', paddingLeft: 34, paddingRight: search ? 34 : 12 }} />
           {search && (
-            <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+            <button onClick={() => setSearch('')} className="search-overlay-clear">
               <X size="0.8125rem" />
             </button>
           )}

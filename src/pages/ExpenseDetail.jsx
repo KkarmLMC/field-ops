@@ -59,7 +59,7 @@ export default function ExpenseDetail() {
     setAdvancing(false)
   }
 
-  if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content fade-in" className="spinner-pad"><div className="spinner" /></div>
   if (!report) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Report not found</div></div></div>
 
   const sc = approvalStatus(report.status)

@@ -102,7 +102,7 @@ export default function PartRequest() {
     </div>
   )
 
-  if (loading) return <div className="page-content" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
+  if (loading) return <div className="page-content" className="spinner-pad"><div className="spinner" /></div>
 
   return (
     <div className="page-content fade-in">

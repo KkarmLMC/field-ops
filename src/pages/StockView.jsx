@@ -131,7 +131,7 @@ export default function StockView() {
 
       {/* Search + filter */}
       <div style={{ position: 'relative', marginBottom: 'var(--space-m)' }}>
-        <MagnifyingGlass size="0.9375rem" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+        <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -160,10 +160,10 @@ export default function StockView() {
 
       {/* Parts list */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
+        <div className="spinner-pad"><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Package size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 'var(--space-m)' }} />
+          <Package size="2.25rem" className="empty-icon" />
           <div className="empty-title">{search ? 'No parts found' : 'No stock data'}</div>
           <div className="empty-desc">{search ? 'Try a different name or SKU.' : 'No inventory recorded for this warehouse.'}</div>
         </div>

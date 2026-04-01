@@ -381,7 +381,7 @@ export default function Inventory() {
 
       {/* Warehouse cards / drag list */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><Spinner /></div>
+        <div className="spinner-pad"><Spinner /></div>
       ) : warehouses.length === 0 ? (
         <EmptyState
           icon={<Buildings size="2rem" />}

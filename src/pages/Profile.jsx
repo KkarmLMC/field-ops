@@ -142,7 +142,7 @@ function ActivityLog({ userId }) {
       </div>
       <div style={{ padding: 'var(--space-s) 0' }}>
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}>
+          <div className="spinner-pad">
             <Spinner />
           </div>
         ) : logs.length === 0 ? (

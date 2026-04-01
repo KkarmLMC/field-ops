@@ -156,10 +156,10 @@ export default function Expenses() {
 
       {/* Type filter + search */}
       <div style={{ position: 'relative', marginBottom: 'var(--space-m)' }}>
-        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+        <MagnifyingGlass size="0.875rem" className="search-overlay-icon" />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search employee or project…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}><X size="0.8125rem" /></button>}
+        {search && <button onClick={() => setSearch('')} className="search-overlay-clear"><X size="0.8125rem" /></button>}
       </div>
       <div style={{ display: 'flex', gap: 'var(--space-s)', marginBottom: 'var(--space-l)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[['all','All'],['advance','Advances'],['expense','Expenses']].map(([val,lbl]) => (
@@ -172,10 +172,10 @@ export default function Expenses() {
 
       {/* List */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-2xl)' }}><div className="spinner" /></div>
+        <div className="spinner-pad"><div className="spinner" /></div>
       ) : filtered.length === 0 ? (
         <div className="empty">
-          <Receipt size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 'var(--space-m)' }} />
+          <Receipt size="2.25rem" className="empty-icon" />
           <div className="empty-title">No reports found</div>
           <div className="empty-desc">Create an advance request or expense report to get started.</div>
         </div>
