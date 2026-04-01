@@ -871,7 +871,6 @@ textarea,
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  width: 100%;
   min-height: 100%;
   background: var(--surface-page);
   padding: var(--content-pad) var(--content-pad) calc(var(--content-pad) + 4.5rem);
@@ -1661,7 +1660,6 @@ textarea,
 }
 
 .login-card {
-  width: 100%;
   max-width: 23.75rem;
   background: var(--login-card-bg);
   padding: var(--space-3xl);
@@ -1950,7 +1948,7 @@ textarea,
 .search-overlay-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
 .search-overlay-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; cursor: pointer; color: var(--text-muted); padding: 0; border: none; }
 .empty-message { padding: var(--space-m); text-align: center; color: var(--text-muted); font-size: var(--text-sm); }
-.input-meta-label { font-size: var(--text-xs); margin-top: var(--space-2xs); padding: 2px 4px; border-radius: var(--radius-xs); background: var(--surface-base); color: var(--text-muted); width: 100%; }
+.input-meta-label { font-size: var(--text-xs); margin-top: var(--space-2xs); padding: 2px 4px; border-radius: var(--radius-xs); background: var(--surface-base); color: var(--text-muted); }
 
 /* --- Parts Grid --- */
 .grid-parts-table { display: grid; grid-template-columns: 1fr 70px 90px 80px 36px; gap: var(--space-s); align-items: center; padding: var(--space-s) 0; border-bottom: 1px solid var(--border-subtle); }
@@ -2332,7 +2330,6 @@ textarea,
 }
 
 .sheet {
-  width: 100%;
   max-height: 92vh;
   overflow-y: auto;
   animation: anim-sheet-up 0.25s var(--ease-emphasized);
@@ -2687,8 +2684,7 @@ textarea,
   }
 
   .branch-tabs-mobile-track .branch-card {
-    width: 100%;
-  }
+    }
 
   .branch-dots {
     display: flex;
@@ -2703,7 +2699,6 @@ textarea,
 .branch-card {
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding: var(--space-xl) 1.125rem var(--space-l);
   border-radius: var(--radius-m);
   border: none;
@@ -3275,7 +3270,6 @@ textarea,
 }
 
 .dfl-form-panel {
-  width: 100%;
   max-width: 32rem;
   max-height: 92vh;
   background: var(--surface-base);
@@ -3305,7 +3299,7 @@ textarea,
 .dfl-label        { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-primary); display: flex; align-items: center; }
 .dfl-req          { color: var(--error); margin-left: 0.1875rem; }
 .dfl-gps-auto     { margin-left: auto; font-size: var(--text-2xs); font-weight: var(--fw-semibold); color: var(--success-text); background: var(--success-soft); border-radius: var(--radius-xs); padding: 0.125rem 0.375rem; }
-.dfl-input        { width: 100%; padding: 0.625rem 0.75rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-m); font-size: var(--text-md); font-family: var(--font); color: var(--text-primary); background: var(--surface-base); outline: none; box-sizing: border-box; transition: border-color var(--ease-base); }
+.dfl-input        { padding: 0.625rem 0.75rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-m); font-size: var(--text-md); font-family: var(--font); color: var(--text-primary); background: var(--surface-base); outline: none; box-sizing: border-box; transition: border-color var(--ease-base); }
 .dfl-input:focus  { border-color: #000; }
 .dfl-input-mono   { font-family: var(--mono); }
 .dfl-textarea     { min-height: 5rem; resize: vertical; line-height: var(--leading-relaxed); }
@@ -4500,7 +4494,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .add-edit-part-cce7 {
-  width: 100%;
   font-family: var(--font-mono);
 }
 
@@ -4558,7 +4551,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 .daily-field-log-4e54 {
   display: flex;
   gap: var(--space-s);
-  width: 100%;
   margin-bottom: var(--space-s);
   overflow: hidden;
   box-sizing: border-box;
@@ -4734,12 +4726,10 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 
 .expense-new-2e3f {
   font-size: var(--text-xs);
-  width: 100%;
 }
 
 .expense-new-7221 {
   font-size: var(--text-xs);
-  width: 100%;
   text-align: right;
 }
 
@@ -4757,12 +4747,10 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .expense-new-d8b4 {
-  width: 100%;
   font-size: var(--text-xs);
 }
 
 .expense-new-f9d6 {
-  width: 100%;
   font-size: var(--text-xs);
   text-align: right;
 }
@@ -4919,7 +4907,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .expenses-0561 {
-  width: 100%;
   padding-left: 30px;
 }
 
@@ -5095,7 +5082,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
   font-weight: var(--fw-bold);
   font-size: var(--text-md);
   padding: var(--space-xs) var(--space-s);
-  width: 100%;
 }
 
 .form-builder-fae0 {
@@ -5796,7 +5782,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .inventory-transfer-2b4d {
-  width: 100%;
   padding-left: 32px;
 }
 
@@ -5936,7 +5921,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .p-o-new-f2ca {
-  width: 100%;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -6007,7 +5991,6 @@ padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0rem));
 }
 
 .p-o-new-d8b4 {
-  width: 100%;
   font-size: var(--text-xs);
 }
 
