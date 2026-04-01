@@ -115,7 +115,7 @@ export default function PartRequest() {
         <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-m) var(--space-l)' }}>
           <div className="text-sm-bold--inverse">Job Details</div>
         </div>
-        <div style={{ padding: 'var(--space-l)', display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
+        <div className="card-form">
           <ProjectPicker
             value={project}
             onChange={setProject}

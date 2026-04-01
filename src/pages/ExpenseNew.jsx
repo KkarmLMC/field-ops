@@ -437,7 +437,7 @@ export default function ExpenseNew() {
         <div className="section-heading">
           {division === 'Bolt' ? 'BOLT LIGHTNING' : 'LIGHTNING MASTER'}
         </div>
-        <div style={{ fontSize: 'var(--text-md)', fontWeight: 800 }}>New {typeLabel}</div>
+        <div className="page-heading">New {typeLabel}</div>
       </div>
 
       {isAdvance

@@ -556,7 +556,7 @@ export default function ProjectDetail() {
                   <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                     {isPositive ? 'Estimated Margin' : 'Cost Overrun'}
                   </span>
-                  <div style={{ textAlign: 'right' }}>
+                  <div className="text-right">
                     <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: isPositive ? 'var(--state-success-text)' : 'var(--state-error-text)' }}>
                       ${Math.abs(margin).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </div>
