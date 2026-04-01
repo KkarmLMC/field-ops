@@ -202,20 +202,20 @@ function NewAssessmentForm({ onSave, onCancel }) {
       <CardSection title="Site Information">
         <div>
           <FieldLabel label="Site Name" />
-          <input value={form.siteName} onChange={e=>set('siteName',e.target.value)} placeholder="e.g. Ritz-Carlton Amelia Island" style={{ width:'100%' }} />
+          <input value={form.siteName} onChange={e=>set('siteName',e.target.value)} placeholder="e.g. Ritz-Carlton Amelia Island" />
         </div>
         <div>
           <FieldLabel label="Address" />
-          <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="Street address" style={{ width:'100%' }} />
+          <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="Street address" />
         </div>
         <div className="risk-assessment-1741">
           <div>
             <FieldLabel label="Technician" />
-            <input value={form.techName} onChange={e=>set('techName',e.target.value)} placeholder="Your name" style={{ width:'100%' }} />
+            <input value={form.techName} onChange={e=>set('techName',e.target.value)} placeholder="Your name" />
           </div>
           <div>
             <FieldLabel label="Branch" />
-            <select value={form.branch} onChange={e=>set('branch',e.target.value)} style={{ width:'100%' }}>
+            <select value={form.branch} onChange={e=>set('branch',e.target.value)}>
               <option value="lm">Lightning Master</option>
               <option value="bolt">Bolt Lightning</option>
             </select>
@@ -229,7 +229,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
           {[['lengthFt','Length (ft)'],['widthFt','Width (ft)'],['heightFt','Height (ft)']].map(([k,l]) => (
             <div key={k}>
               <FieldLabel label={l} />
-              <input type="number" value={form[k]} onChange={e=>set(k,e.target.value)} placeholder="0" style={{ width:'100%' }} />
+              <input type="number" value={form[k]} onChange={e=>set(k,e.target.value)} placeholder="0" />
             </div>
           ))}
         </div>
@@ -240,7 +240,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
         <div className="risk-assessment-0e95">
           <div style={{ flex:1 }}>
             <FieldLabel label="Flashes / km² / year" hint="From NOAA Keraunic map" />
-            <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" style={{ width:'100%' }} />
+            <input type="number" step="0.1" value={form.flashDensity} onChange={e=>set('flashDensity',e.target.value)} placeholder="e.g. 6" />
           </div>
           <button onClick={handleGPS} disabled={locating} style={{
             display:'flex', alignItems:'center', gap: 'var(--space-s)',
@@ -268,7 +268,7 @@ function NewAssessmentForm({ onSave, onCancel }) {
         ].map(([k, l, opts]) => (
           <div key={k}>
             <FieldLabel label={l} />
-            <select value={form[k]} onChange={e=>set(k,e.target.value)} style={{ width:'100%' }}>
+            <select value={form[k]} onChange={e=>set(k,e.target.value)}>
               <option value="">Select…</option>
               {opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>

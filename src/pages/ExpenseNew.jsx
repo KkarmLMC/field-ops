@@ -65,31 +65,31 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
 
   const row = { marginBottom: 'var(--space-m)' }
   const grid2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)' }
-  const inputSm = { width: '100%', fontSize: 'var(--text-xs)' }
+  const inputSm = { fontSize: 'var(--text-xs)' }
 
   return (
     <>
       <Card title="Employee & Project">
         <div className="form-group">
           <label className="form-label">Employee Name <span className="expense-new-d18e">*</span></label>
-          <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
+          <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" />
         </div>
         <div className="form-grid-2">
           <div>
             <label className="form-label">Project</label>
-            <select value={projectId} onChange={e => setProjectId(e.target.value)} style={{ width: '100%' }}>
+            <select value={projectId} onChange={e => setProjectId(e.target.value)}>
               <option value="">Select project…</option>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` (${p.job_number})` : ''}</option>)}
             </select>
           </div>
           <div>
             <label className="form-label">Date Needed</label>
-            <input type="date" value={dateNeeded} onChange={e => setDateNeeded(e.target.value)} style={{ width: '100%' }} />
+            <input type="date" value={dateNeeded} onChange={e => setDateNeeded(e.target.value)} />
           </div>
         </div>
         <div className="form-group">
           <label className="form-label">Number of Travel Days</label>
-          <input type="number" min="0" value={travelDays} onChange={e => setTravelDays(e.target.value)} style={{ width: '100%' }} />
+          <input type="number" min="0" value={travelDays} onChange={e => setTravelDays(e.target.value)} />
         </div>
       </Card>
 
@@ -198,7 +198,7 @@ function AdvanceForm({ division, projects, onSave, saving, error }) {
       {/* Notes */}
       <div className="form-group">
         <label className="form-label">Notes</label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" style={{ width: '100%' }} />
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any additional notes…" />
       </div>
 
       {error && <div className="form-error flex-gap-s"><Warning size="0.875rem" />{error}</div>}
@@ -260,19 +260,19 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
       <Card title="Employee & Project">
         <div className="form-group">
           <label className="form-label">Employee Name <span className="expense-new-d18e">*</span></label>
-          <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" style={{ width: '100%' }} />
+          <input value={employee} onChange={e => setEmployee(e.target.value)} placeholder="Full name" />
         </div>
         <div className="form-grid-2">
           <div>
             <label className="form-label">Project</label>
-            <select value={projectId} onChange={e => setProjectId(e.target.value)} style={{ width: '100%' }}>
+            <select value={projectId} onChange={e => setProjectId(e.target.value)}>
               <option value="">Select project…</option>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name}{p.job_number ? ` (${p.job_number})` : ''}</option>)}
             </select>
           </div>
           <div>
             <label className="form-label">Report Date</label>
-            <input type="date" value={reportDate} onChange={e => setReportDate(e.target.value)} style={{ width: '100%' }} />
+            <input type="date" value={reportDate} onChange={e => setReportDate(e.target.value)} />
           </div>
         </div>
       </Card>
@@ -358,7 +358,7 @@ function ExpenseForm({ division, projects, onSave, saving, error }) {
 
       <div className="form-group">
         <label className="form-label">Notes</label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" style={{ width: '100%' }} />
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Any notes…" />
       </div>
 
       {error && <div className="form-error flex-gap-s"><Warning size="0.875rem" />{error}</div>}

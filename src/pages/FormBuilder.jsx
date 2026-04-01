@@ -203,11 +203,11 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
             <div className="form-builder-1741">
               <div style={{ gridColumn:'1 / -1' }}>
                 <label className="form-builder-d669">Label *</label>
-                <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label" style={{ width:'100%' }}/>
+                <input value={field.label||''} onChange={e=>onChange(index,{...field, label:e.target.value, id: field.id||slugify(e.target.value)})} placeholder="Field label"/>
               </div>
               <div>
                 <label className="form-builder-d669">Type</label>
-                <select value={field.type||'text'} onChange={e=>onChange(index,{...field, type:e.target.value})} style={{ width:'100%' }}>
+                <select value={field.type||'text'} onChange={e=>onChange(index,{...field, type:e.target.value})}>
                   {FIELD_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
                 </select>
               </div>
@@ -220,7 +220,7 @@ function FieldRow({ field, index, onChange, onDelete, isDragging, isOver, dragHa
             </div>
             <div>
               <label className="form-builder-d669">Hint / Help text</label>
-              <input value={field.hint||''} onChange={e=>onChange(index,{...field,hint:e.target.value})} placeholder="Optional helper text shown below the label" style={{ width:'100%' }}/>
+              <input value={field.hint||''} onChange={e=>onChange(index,{...field,hint:e.target.value})} placeholder="Optional helper text shown below the label"/>
             </div>
             {needsOptions && (
               <div>

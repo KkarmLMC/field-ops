@@ -136,7 +136,7 @@ export default function StockView() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search part name or SKU…"
-          style={{ width: '100%', paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }}
+          style={{ paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }}
         />
         {search && (
           <button onClick={() => setSearch('')}

@@ -69,7 +69,7 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
 
           <div className="form-group">
             <label className="form-label">Warehouse Name *</label>
-            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Lightning Master Warehouse" style={{ width: '100%' }} />
+            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Lightning Master Warehouse" />
           </div>
 
           <div className="section-divider">
@@ -78,21 +78,21 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
 
           <div className="form-group">
             <label className="form-label">Street Address</label>
-            <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
+            <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" />
           </div>
 
           <div className="form-grid-3">
             <div>
               <label className="form-label">City</label>
-              <input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" style={{ width: '100%' }} />
+              <input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" />
             </div>
             <div>
               <label className="form-label">State</label>
-              <input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" style={{ width: '100%' }} />
+              <input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" />
             </div>
             <div>
               <label className="form-label">ZIP</label>
-              <input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} />
+              <input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" />
             </div>
           </div>
 
@@ -102,17 +102,17 @@ function EditWarehouseSheet({ warehouse, onClose, onSaved }) {
 
           <div className="form-group">
             <label className="form-label">Contact Name</label>
-            <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
+            <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" />
           </div>
 
           <div className="form-grid-2">
             <div>
               <label className="form-label">Phone</label>
-              <input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} />
+              <input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" />
             </div>
             <div>
               <label className="form-label">Email</label>
-              <input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} />
+              <input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" />
             </div>
           </div>
 
@@ -349,7 +349,7 @@ export default function WarehouseDetail() {
         <div className="position-relative mb-m">
           <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search parts…"
-            style={{ width: '100%', paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }} />
+            style={{ paddingLeft: 'var(--search-input-offset)', paddingRight: search ? 34 : 12 }} />
           {search && (
             <button onClick={() => setSearch('')} className="search-overlay-clear">
               <X size="0.8125rem" />

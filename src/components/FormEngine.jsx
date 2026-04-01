@@ -452,20 +452,20 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   }
 
   if (type==='text'||type==='email')
-    return <input type={type} value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={{ width:'100%' }} />
+    return <input type={type} value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} />
 
   if (type==='number')
-    return <input type="number" step="any" value={value||''} onChange={e=>onChange(e.target.value)} placeholder="0" style={{ width:'100%' }} />
+    return <input type="number" step="any" value={value||''} onChange={e=>onChange(e.target.value)} placeholder="0" />
 
   if (type==='date')
-    return <input type="date" value={value||''} onChange={e=>onChange(e.target.value)} style={{ width:'100%' }} />
+    return <input type="date" value={value||''} onChange={e=>onChange(e.target.value)} />
 
   if (type==='textarea')
-    return <textarea value={value||''} onChange={e=>onChange(e.target.value)} rows={3} style={{ width:'100%', resize:'vertical', lineHeight: 'var(--leading-relaxed)' }} />
+    return <textarea value={value||''} onChange={e=>onChange(e.target.value)} rows={3} style={{ resize:'vertical', lineHeight: 'var(--leading-relaxed)' }} />
 
   if (type==='select')
     return (
-      <select value={value||''} onChange={e=>onChange(e.target.value)} style={{ width:'100%' }}>
+      <select value={value||''} onChange={e=>onChange(e.target.value)}>
         <option value="">Select…</option>
         {options.map(o=><option key={o} value={o}>{o}</option>)}
       </select>
@@ -547,10 +547,10 @@ export function FormField({ field, value, onChange, error, readOnly }) {
     const setF = (k,v) => onChange({...row,[k]:v})
     return (
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,10rem),1fr))', gap:'var(--space-s)' }}>
-        <input value={row.activity||''}      onChange={e=>setF('activity',e.target.value)}      placeholder="Activity / Task"  style={{ width:'100%' }} />
-        <input value={row.hazards||''}       onChange={e=>setF('hazards',e.target.value)}        placeholder="Hazards"          style={{ width:'100%' }} />
-        <input value={row.controls||''}      onChange={e=>setF('controls',e.target.value)}       placeholder="Risk Controls"    style={{ width:'100%' }} />
-        <input value={row.responsibility||''} onChange={e=>setF('responsibility',e.target.value)} placeholder="Responsibility"   style={{ width:'100%' }} />
+        <input value={row.activity||''}      onChange={e=>setF('activity',e.target.value)}      placeholder="Activity / Task" />
+        <input value={row.hazards||''}       onChange={e=>setF('hazards',e.target.value)}        placeholder="Hazards" />
+        <input value={row.controls||''}      onChange={e=>setF('controls',e.target.value)}       placeholder="Risk Controls" />
+        <input value={row.responsibility||''} onChange={e=>setF('responsibility',e.target.value)} placeholder="Responsibility" />
       </div>
     )
   }
@@ -632,7 +632,7 @@ export function FormField({ field, value, onChange, error, readOnly }) {
   if (type==='repeater' || type==='activity-row')
     return <RepeaterField field={field} value={value} onChange={onChange} error={error} />
 
-  return <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} style={{ width:'100%' }} />
+  return <input value={value||''} onChange={e=>onChange(e.target.value)} placeholder={field.label} />
 }
 
 // ─── Field Label ──────────────────────────────────────────────────────────────

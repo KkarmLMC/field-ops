@@ -156,7 +156,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
         <div className="part-detail-6fe5">
           <div className="mb-m">
             <Label>Warehouse</Label>
-            <select value={warehouseId} onChange={e => handleWarehouseChange(e.target.value)} style={{ width: '100%' }}>
+            <select value={warehouseId} onChange={e => handleWarehouseChange(e.target.value)}>
               {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
             </select>
           </div>
@@ -168,7 +168,7 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
 
           <div className="mb-m">
             <Label>Transaction Type</Label>
-            <select value={type} onChange={e => setType(e.target.value)} style={{ width: '100%' }}>
+            <select value={type} onChange={e => setType(e.target.value)}>
               <option value="adjustment">Manual Adjustment</option>
               <option value="receiving">Receiving / New Stock</option>
               <option value="count_correction">Count Correction</option>
@@ -180,12 +180,12 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
           <div className="grid-2col mb-m">
             <div>
               <Label>Qty Change</Label>
-              <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value) || 0)} placeholder="0" style={{ width: '100%' }} />
+              <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value) || 0)} placeholder="0" />
               <div className="meta-text meta-text--mt">Negative to reduce</div>
             </div>
             <div>
               <Label>Reason</Label>
-              <input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. SO-2026-0001" style={{ width: '100%' }} />
+              <input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. SO-2026-0001" />
             </div>
           </div>
 
@@ -197,12 +197,12 @@ function AdjustSheet({ part, warehouses, levels, onClose, onDone }) {
           <div className="grid-2col mb-l">
             <div>
               <Label>On Order</Label>
-              <input type="number" min="0" value={onOrder} onChange={e => setOnOrder(e.target.value)} placeholder="0" style={{ width: '100%' }} />
+              <input type="number" min="0" value={onOrder} onChange={e => setOnOrder(e.target.value)} placeholder="0" />
               <div className="part-detail-aaea">Incoming stock</div>
             </div>
             <div>
               <Label>Min Level</Label>
-              <input type="number" min="0" value={minLevel} onChange={e => setMinLevel(e.target.value)} placeholder="e.g. 10" style={{ width: '100%' }} />
+              <input type="number" min="0" value={minLevel} onChange={e => setMinLevel(e.target.value)} placeholder="e.g. 10" />
               <div className="meta-text meta-text--mt">Low stock alert</div>
             </div>
           </div>

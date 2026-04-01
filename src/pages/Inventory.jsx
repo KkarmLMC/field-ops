@@ -55,7 +55,7 @@ function AddWarehouseSheet({ onClose, onSaved }) {
         <div className="inventory-9bc3">
           <div className="mb-m">
             <Label>Warehouse Name *</Label>
-            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" style={{ width: '100%' }} autoFocus />
+            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Bolt Florida Warehouse" autoFocus />
           </div>
 
           <div className="section-gap">
@@ -64,13 +64,13 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
           <div className="mb-m">
             <Label>Street Address</Label>
-            <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
+            <input value={form.address} onChange={e => set('address', e.target.value)} placeholder="123 Main St" />
           </div>
 
           <div className="inventory-af03">
-            <div><Label>City</Label><input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" style={{ width: '100%' }} /></div>
-            <div><Label>State</Label><input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" style={{ width: '100%' }} /></div>
-            <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" style={{ width: '100%' }} /></div>
+            <div><Label>City</Label><input value={form.city} onChange={e => set('city', e.target.value)} placeholder="Clearwater" /></div>
+            <div><Label>State</Label><input value={form.state} onChange={e => set('state', e.target.value)} placeholder="FL" /></div>
+            <div><Label>ZIP</Label><input value={form.zip} onChange={e => set('zip', e.target.value)} placeholder="33755" /></div>
           </div>
 
           <div className="section-gap">
@@ -79,12 +79,12 @@ function AddWarehouseSheet({ onClose, onSaved }) {
 
           <div className="mb-m">
             <Label>Contact Name</Label>
-            <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" style={{ width: '100%' }} />
+            <input value={form.contact_name} onChange={e => set('contact_name', e.target.value)} placeholder="John Smith" />
           </div>
 
           <div className="grid-2col mb-m">
-            <div><Label>Phone</Label><input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
-            <div><Label>Email</Label><input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" style={{ width: '100%' }} /></div>
+            <div><Label>Phone</Label><input value={form.contact_phone} onChange={e => set('contact_phone', e.target.value)} placeholder="(555) 000-0000" /></div>
+            <div><Label>Email</Label><input value={form.contact_email} onChange={e => set('contact_email', e.target.value)} placeholder="john@example.com" /></div>
           </div>
 
           <div className="mb-m">
